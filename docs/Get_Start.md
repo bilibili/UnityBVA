@@ -26,30 +26,29 @@ Must Meet:
 
 Disable assembly version validation
 
-![glb](../pics/assembly_version_validation.png)
+![glb](pics/assembly_version_validation.png)
 
 allow Unsafe Code
 
 set Managed Stripping Level to `Disabled`
 
-![glb](../pics/managed_stripping_level.png)
+![glb](pics/managed_stripping_level.png)
 
 Set `ColorSpace` to Linear 
 
-![glb](../pics/color_space_setting.png)
+![glb](pics/color_space_setting.png)
 
 Build Requirement:
 
 include shaders or shader variant collection 
 
-![glb](../pics/shader_stripping.png)
+![glb](pics/shader_stripping.png)
 
 
 # Manuals
 
-- [What's new in comparision with the VRM or MMD?](./what/WhatsNew.md)
-- [Understanding the Basics](./basic/Basics.md)
-- [Working with BVA](./work/Working.md)
-- [Avatar Setup](./work/Avatar.md)
-- [Tools](./tools/Tools.md)
-- [Third-Party Libraries](./third_party/Cites.md)
+- [Avatar Setup](work/Avatar.md)
+- [Scene Setup](work/Scene.md)
+- [Export](work/Export.md)
+- [Import](work/Import.md)
+- [Tools](tools/Tools.md)
