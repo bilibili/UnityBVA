@@ -1,23 +1,25 @@
 # Overview
 
-BVA is a GLTF-based, cross-platform file format that can handle the 3d data and more than that. The format can be supported by many tools such as game engines, WebGL, Maya, Blender, as well as cross-platform. The 3D data is stored in standard gltf scheme, the other infomation that BVA specific provide were totally extended by Extension & Extra and these are the things that distinguish it, it doesn't break the gltf-standard, so it can be opened directly by Windows 3D Viewer, Babylon.js, mainstream modeling software etc. Any tools that support gltf will also support viewing or editing the 3D part data of BVA.
+BVA is a GLTF-based, cross-platform format that store 3D data and far more than that. The format can be supported by many tools such as various game engines, Babylon.js, Maya, Blender. The 3D data is stored in standard gltf scheme, other infomation that BVA provides were totally extended by Extension & Extra ,thus it doesn't break the gltf-standard, and this will continue as tradition, to make it can be opened directly by Windows 3D Viewer, Babylon.js, mainstream modeling software etc. 
 
-What's more, it is designed to contains more than just the information that could construct the 3D world, it can also store any kind of data, like Multi-Media, animation clips, Custom data, even scripting.
+> Any tools that support gltf will also support viewing or editing the 3D part data of BVA.
 
-Furthermore, it might helps you create metaverse-like game like Roblox easily after the integretion of scripting.
+Technically, it can also store any kind of data, like Multi-Media, animation clips, Custom data, even scripting.
 
-## Installing BVA
+Furthermore, it might helps you create metaverse-like game like Roblox easily after integretion of user scripting, which was already on our roadmap.
 
-### System Requirements 
+# Installing BVA
 
-- Unity 2020.3 or later, works best on 2021.3 LTS
+## System Requirements 
 
-### Build Target
+- Unity 2020.3 or later, preferred version - 2021.3 LTS
 
-- Standalone(Windows10 testified, Mac or Linux should also be OK)
+## Build Target
+
+- Standalone (Windows10 testified, Mac or Linux should also be OK)
 - Android(vulkan or gles3.0 and linear texture must be supported)
 - iOS 10 or later
-- WebGL(works fine on Unity 2021 later,not tested)
+- WebGL (works fine on Unity 2021 later,not tested)
 
 ## Sample Build Requirements
 
@@ -27,14 +29,13 @@ All examples are located in `Assets/BVA/Samples`
 - MacOS
 - Android or iOS(only scene `WebLoad` is currently available, OpenFileDialog support standalone platform only)
 
-> Find more information [Get Start](docs/basic/GetStart.md)
+> Find more information [Get Start](docs/Get_Start.md)
 
 # Manuals
 
-- [Get Start](docs/GetStart.md)
+- [Get Start](docs/Get_Start.md)
 - [Avatar Setup](docs/work/Avatar.md)
 - [Tools](docs/tools/Tools.md)
-- [Third-Party Libraries](docs/third_party/Cites.md)
 
 
 # Samples
@@ -49,7 +50,7 @@ All examples are located in `Assets/BVA/Samples`
 
 # Working with UnityBVA SDK
 
-As a 3D gltf compatible file format, Virtual World Asset gives the ability to Load 3D GameObject regardless of the Engine's version, build target platform, which ease you the pain of creating the Apps that involve user creation. After all, creating such a format is not a piece of cake. A complete set of tools takes even more effort.
+As a 3D gltf compatible file format, BVA capable of loading 3D GameObjects regardless of the Engine's version, build target platform, which ease you the pain of creating the Apps that involve user-creation-contents (also known as UGC) . After all, creating such a format is not a piece of cake. A complete toolchain takes even more efforts.
 
 - [Editor Export](docs/work/Export.md)
 - [Editor Import](docs/work/Import.md)
@@ -58,7 +59,7 @@ As a 3D gltf compatible file format, Virtual World Asset gives the ability to Lo
 
 # Features
 
-We believe that UGC will overwhelm the whole industry and everybody were encourage to devote their effort on building the wonderland and spread the imaginatin.
+We believe that UGC will overwhelm the whole industry in the next decade and everybody will be encouraged to devote their effort on building the metaverse, let go of imagination and creativity.
 
 - Export Avatar & Scene (editor full ability & runtime partial ability)
 - Import VRM & MMD model as Prefab in Editor
@@ -101,7 +102,7 @@ http://www.apache.org/licenses/LICENSE-2.0
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
 ### Third party notice
-Builds upon and includes builds of Google's Draco 3D data compression library (released under the terms of Apache License 2.0).
+> Builds upon and includes builds of Google's Draco 3D data compression library (released under the terms of Apache License 2.0).
 
 ## NAudio
 https://github.com/naudio/NAudio
@@ -111,6 +112,9 @@ https://github.com/you-ri/LiliumToonGraph
 
 ## UniVRM
 https://github.com/vrm-c/UniVRM
+
+## KtxUnity
+https://github.com/atteneder/KtxUnity
 
 ## NaughtyAttributes
 https://github.com/dbrizov/NaughtyAttributes
@@ -124,7 +128,10 @@ https://github.com/khindemit/unity-wrapper-vorbis
 ## shader-variant-explorer
 https://github.com/needle-tools/shader-variant-explorer
 
-### Useful commercial resources
+## UnityIngameDebugConsole
+https://github.com/yasirkula/UnityIngameDebugConsole
+
+# Useful commercial resources
 - [Animation Converter](https://assetstore.unity.com/packages/tools/animation/animation-converter-107688) Convert animation clips (*.anim) between all 3 animation types (humanoid ⇆ generic ⇆ legacy).
 
 # License
