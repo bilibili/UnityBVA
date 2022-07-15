@@ -1,39 +1,60 @@
 # Overview
 
-BVA is a GLTF-based, cross-platform file format that can handle the 3d data and more than that. The format can be supported by many platform such as game engines, WebGL, Maya,Blender. The 3d data is stored in standard gltf format, the other info that BVA specific provide were totally extend by Extension & Extra and these are the things that distinguish it, and it doesn't break the gltf-standard, so it can be opened directly by Windows 3D Viewer, Babylon.js, three.js etc.Any tools that support gltf will also support viewing or editing the 3D part data of BVA.
+BVA is a GLTF-based, cross-platform file format that can handle the 3d data and more than that. The format can be supported by many tools such as game engines, WebGL, Maya, Blender, as well as cross-platform. The 3D data is stored in standard gltf scheme, the other infomation that BVA specific provide were totally extended by Extension & Extra and these are the things that distinguish it, it doesn't break the gltf-standard, so it can be opened directly by Windows 3D Viewer, Babylon.js, mainstream modeling software etc. Any tools that support gltf will also support viewing or editing the 3D part data of BVA.
 
-What's more, it is designed to contains more than just the information that construct the 3D world, it can also store any kind of data, like Multi-Media, animation clips, Custom data, even scripting.
+What's more, it is designed to contains more than just the information that could construct the 3D world, it can also store any kind of data, like Multi-Media, animation clips, Custom data, even scripting.
 
 Furthermore, it might helps you create metaverse-like game like Roblox easily after the integretion of scripting.
 
 ## Installing BVA
 
-### 2.1 System Requirements 
+### System Requirements 
 
 - Unity 2020.3 or later, works best on 2021.3 LTS
 
-### 2.2 Build Target
+### Build Target
 
 - Standalone(Windows10 testified, Mac or Linux should also be OK)
 - Android(vulkan or gles3.0 and linear texture must be supported)
 - iOS 10 or later
 - WebGL(works fine on Unity 2021 later,not tested)
 
-## 2.3 Sample Build Requirements
+## Sample Build Requirements
+
 All examples are located in `Assets/BVA/Samples`
 
 - Windows10 or later
 - MacOS
 - Android or iOS(only scene `WebLoad` is currently available, OpenFileDialog support standalone platform only)
 
+> Find more information [Get Start](docs/basic/GetStart.md)
 
-# Working with UnityBVA
+# Manuals
+
+- [Get Start](docs/GetStart.md)
+- [Avatar Setup](docs/work/Avatar.md)
+- [Tools](docs/tools/Tools.md)
+- [Third-Party Libraries](docs/third_party/Cites.md)
+
+
+# Samples
+
+- [Explor the files](docs/examples/FileViewer.md)
+- [Load BVA,GLB,VRM,PMX at Runtime](docs/examples/RuntimeLoad.md)
+- [Load BVA file from an url](docs/examples/WebLoad.md)
+- [Export GameObject at Runtime](docs/examples/RuntimeExport.md)
+- [Load multiple scene in single file at Runtime](docs/examples/MultipleScenePayload.md)
+- [Show how to config an Avatar with Dress Up System](docs/examples/AvatarConfig.md)
+
+
+# Working with UnityBVA SDK
 
 As a 3D gltf compatible file format, Virtual World Asset gives the ability to Load 3D GameObject regardless of the Engine's version, build target platform, which ease you the pain of creating the Apps that involve user creation. After all, creating such a format is not a piece of cake. A complete set of tools takes even more effort.
 
-- [Editor Export](docs/Export.md)
-- [Editor Import](docs/Import.md)
+- [Editor Export](docs/work/Export.md)
+- [Editor Import](docs/work/Import.md)
 - [Programming](docs/work/programing/Programing.md)
+
 
 # Features
 
@@ -58,12 +79,10 @@ We believe that UGC will overwhelm the whole industry and everybody were encoura
 - Reflection Probe(Custom Texture & Realtime)
 - Generic Transform & Blendshape Animation, Humanoid Avatar Animation
 - DynamicBone Physics ([Automatic-DynamicBone by OneYoungMan](https://github.com/OneYoungMean/Automatic-DynamicBone))
-- PostProcess
+- PostProcess (`Volume` component in Universal RP)
 - Custom Material Import & Export Code Generation
 - Component Code Generation (No nested structure)
 - RenderSettings
-- UI Framework
-- Scripting
 
 
 # Third-Party Cited
@@ -107,3 +126,6 @@ https://github.com/needle-tools/shader-variant-explorer
 
 ### Useful commercial resources
 - [Animation Converter](https://assetstore.unity.com/packages/tools/animation/animation-converter-107688) Convert animation clips (*.anim) between all 3 animation types (humanoid ⇆ generic ⇆ legacy).
+
+# License
+[Apache License, Version 2.0](License.md)

@@ -1,0 +1,25 @@
+{
+    "name": "VRM_GLTF",
+    "rootNamespace": "",
+    "references": [
+        "GUID:da3e51d19d51a544fa14d43fee843098",
+        "GUID:05dd262a0c0a2f841b8252c8c3815582",
+        "GUID:8d76e605759c3f64a957d63ef96ada7c",
+        "GUID:18d18f811ba286c49814567a3cfba688",
+        "GUID:1a0324566af4ed544918d6837a1f4e11",
+        "GUID:f630573f41c565143a3fdfcb97d98fd2",
+        "GUID:3d9f9b28db14e2842aef136856d37740",
+        "GUID:0f65aa97340947a43af1c76333c36e29"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

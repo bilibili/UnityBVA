@@ -1,0 +1,8 @@
+{
+  "name": "com.thirdparty.naudio",
+  "displayName": "NAudio",
+  "version": "0.0.1",
+  "unity": "2019.3",
+  "description": "",
+  "dependencies": { }
+}

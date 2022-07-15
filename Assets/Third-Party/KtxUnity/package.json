@@ -1,0 +1,27 @@
+{
+  "name": "com.atteneder.ktx",
+  "version": "2.1.2",
+  "displayName": "KTX/Basis Texture",
+  "description": "Load KTX and Basis Universal textures at runtime.",
+  "unity": "2021.2",
+  "dependencies": {
+    "com.unity.modules.unitywebrequest": "1.0.0"
+  },
+  "keywords": [
+    "texture",
+    "image",
+    "ktx",
+    "basis",
+    "universal",
+    "transcode",
+    "compress",
+    "ETC1s",
+    "UASTC",
+    "glTF"
+  ],
+  "author": {
+    "name": "Andreas Atteneder",
+    "email": "andreas.atteneder@gmail.com",
+    "url": "https://pixel.engineer"
+  }
+}

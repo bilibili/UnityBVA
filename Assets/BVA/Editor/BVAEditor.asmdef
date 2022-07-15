@@ -1,0 +1,27 @@
+{
+    "name": "BVAEditor",
+    "rootNamespace": "",
+    "references": [
+        "Unity.Collections",
+        "BVAScripts",
+        "Unity.RenderPipelines.Core.Runtime",
+        "Unity.RenderPipelines.Universal.Runtime",
+        "Unity.RenderPipelines.Universal.Editor",
+        "Unity.ShaderGraph.Utilities",
+        "Unity.ShaderGraph.Editor",
+        "AutomaticDnamicBone.Editor",
+        "AutomaticDynamicBone.Runtime",
+        "VorbisPluginImpl"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

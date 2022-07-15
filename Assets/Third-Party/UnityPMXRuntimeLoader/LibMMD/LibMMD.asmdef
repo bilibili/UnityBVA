@@ -1,0 +1,16 @@
+{
+    "name": "LibMMD",
+    "rootNamespace": "",
+    "references": [
+        "GUID:0f65aa97340947a43af1c76333c36e29"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

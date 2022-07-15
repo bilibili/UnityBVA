@@ -1,0 +1,30 @@
+1.添加Extension和ExtensionFactory
+2.重写序列化和反序列化函数
+3.GLTFProperty进行注册		
+private static Dictionary<string, ExtensionFactory> _extensionRegistry = new Dictionary<string, ExtensionFactory>()
+{
+	{ ExtTextureTransformExtensionFactory.EXTENSION_NAME, new ExtTextureTransformExtensionFactory() },
+	{ KHR_materials_pbrSpecularGlossinessExtensionFactory.EXTENSION_NAME, new KHR_materials_pbrSpecularGlossinessExtensionFactory() },
+	{ KHR_materials_unlitExtension.EXTENSION_NAME, new KHR_materials_unlitExtensionFactory() },
+	{ KHR_lights_punctualExtension.EXTENSION_NAME, new KHR_lights_punctualExtensionFactory() },
+	{ MSFT_LODExtensionFactory.EXTENSION_NAME, new MSFT_LODExtensionFactory() }
+};
+4.export 找到对应的导出函数，添加如下的代码添加Extension
+//export light attached to node
+Light unityLight = nodeTransform.GetComponent<Light>();
+if (unityLight != null && (unityLight.type == UnityEngine.LightType.Directional || unityLight.type == UnityEngine.LightType.Point || unityLight.type == UnityEngine.LightType.Spot))
+{
+    node.CreateExtension();
+    checkExtension(KHR_lights_punctualExtensionFactory.EXTENSION_NAME);
+    node.Extensions.Add(KHR_lights_punctualExtensionFactory.EXTENSION_NAME, ExportLight(unityLight));
+}
+5.import 找到对应的导入函数，判定是否有扩展以添加如下的代码
+if (_gltfRoot.ExtensionsUsed != null && _gltfRoot.ExtensionsUsed.Contains(KHR_lights_punctualExtension.EXTENSION_NAME)
+    && node.Extensions != null && node.Extensions.ContainsKey(KHR_lights_punctualExtension.EXTENSION_NAME))
+{
+    IExtension ext = node.Extensions[KHR_lights_punctualExtension.EXTENSION_NAME];
+                
+    KHR_lights_punctualExtension lightExt = (KHR_lights_punctualExtension)ext;
+    if (lightExt != null)
+        ImportLight(lightExt, nodeObj);
+}
