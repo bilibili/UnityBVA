@@ -1695,7 +1695,6 @@ Shader "MirrorFloor"
 
 			
 			#pragma only_renderers d3d11 glcore gles gles3 
-			#pragma multi_compile_fog
 			#pragma instancing_options renderinglayer
 			#pragma vertex vert
 			#pragma fragment frag

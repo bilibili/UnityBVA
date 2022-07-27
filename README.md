@@ -59,7 +59,11 @@ As a 3D gltf compatible file format, BVA capable of loading 3D GameObjects regar
 
 # Features
 
-We believe that UGC will overwhelm the whole industry in the next decade and everybody will be encouraged to devote their effort on building the metaverse, let go of imagination and creativity.
+We believe that UGC will overwhelm the whole industry in the next decade and everybody will be encouraged to devote their effort on building the metaverse, let go out of imagination and creativity.
+
+Uniform role model specification, provide a standard for facial & motion capture to better fit the model, and it can also be applied to VR games that need an Avatar, a single file can provide cinematic movement, the dressup system for role, scene, lighting, multimedia, all these content pack in a file and no additional attached configuration required, and it is **cross-platform as well as version compatibility, You don't have to use a particular version of the engine.**(AssetBundle has this problem)
+
+It comes with a very efficient dynamic bone system that supports parallel computing, by utilizing Unity’s Job System and Burst compiler to create efficient code. ([Automatic-DynamicBone by OneYoungMan](https://github.com/OneYoungMean/Automatic-DynamicBone))
 
 - Export Avatar & Scene (editor full ability & runtime partial ability)
 - Import VRM & MMD model as Prefab in Editor
@@ -79,16 +83,16 @@ We believe that UGC will overwhelm the whole industry in the next decade and eve
 - AutoBlink (auto blink eyes)
 - Reflection Probe(Custom Texture & Realtime)
 - Generic Transform & Blendshape Animation, Humanoid Avatar Animation
-- DynamicBone Physics ([Automatic-DynamicBone by OneYoungMan](https://github.com/OneYoungMean/Automatic-DynamicBone))
+- DynamicBone Physics
 - PostProcess (`Volume` component in Universal RP)
 - Custom Material Import & Export Code Generation
 - Component Code Generation (No nested structure)
-- RenderSettings
+- RenderSetting
 
 
 # Third-Party Cited
 
-Forked from another open source repository , but some modifications have been made.
+Forked from another open source repository , but some modifications may have been made.
 thanks the following open source projects
 
 ## Draco
@@ -113,6 +117,9 @@ https://github.com/you-ri/LiliumToonGraph
 ## UniVRM
 https://github.com/vrm-c/UniVRM
 
+## UniHumanoid
+https://github.com/ousttrue/UniHumanoid
+
 ## KtxUnity
 https://github.com/atteneder/KtxUnity
 
@@ -124,7 +131,7 @@ https://github.com/hobosore/UnityPMXRuntimeLoader
 
 ## unity-wrapper-vorbis
 https://github.com/khindemit/unity-wrapper-vorbis
-- 
+
 ## shader-variant-explorer
 https://github.com/needle-tools/shader-variant-explorer
 

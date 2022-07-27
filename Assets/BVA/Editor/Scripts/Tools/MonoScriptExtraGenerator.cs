@@ -120,7 +120,7 @@ namespace BVA
                         exportPath = DefaultExportPath;
                 }
                 EditorGUILayout.EndHorizontal();
-                if (GUILayout.Button("Generator Script"))
+                if (GUILayout.Button("Generate Script"))
                 {
                     ExportScript(monoClass, legalFields.Where(a => a.IsGenerate));
                 }

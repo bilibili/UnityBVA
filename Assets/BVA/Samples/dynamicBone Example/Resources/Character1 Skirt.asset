@@ -169,7 +169,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   elasticityMin: 0
   elasticityMax: 1
-  elasticityValue: 0.3
+  elasticityValue: 0.541
   iselasticityCurve: 0
   velocityIncreaseCurve:
     serializedVersion: 2
@@ -225,7 +225,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   stiffnessWorldMin: 0
   stiffnessWorldMax: 10
-  stiffnessWorldValue: 0
+  stiffnessWorldValue: 1.45
   isstiffnessWorldCurve: 0
   stiffnessLocalCurve:
     serializedVersion: 2
@@ -253,7 +253,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   stiffnessLocalMin: 0
   stiffnessLocalMax: 1
-  stiffnessLocalValue: 0.913
+  stiffnessLocalValue: 0
   isstiffnessLocalCurve: 0
   lengthLimitForceScaleCurve:
     serializedVersion: 2
@@ -291,7 +291,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   elasticityVelocityMin: 0
   elasticityVelocityMax: 1
-  elasticityVelocityValue: 0.025
+  elasticityVelocityValue: 0.459
   iselasticityVelocityCurve: 0
   structuralShrinkVerticalScaleCurve:
     serializedVersion: 2
@@ -655,9 +655,9 @@ MonoBehaviour:
     m_RotationOrder: 4
   pointRadiuMin: 0
   pointRadiuMax: 1
-  pointRadiuValue: 0
+  pointRadiuValue: 0.06
   ispointRadiuCurve: 0
-  value2Curve:
+  vrmStiffnessForceCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -681,7 +681,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  value2Value: 0
+  vrmStiffnessForceValue: 0
   value3Curve:
     serializedVersion: 2
     m_Curve:
@@ -899,8 +899,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  isComputeStructuralVertical: 1
-  isComputeStructuralHorizontal: 1
+  isComputeStructuralVertical: 0
+  isComputeStructuralHorizontal: 0
   isComputeShear: 0
   isComputeBendingVertical: 0
   isComputeBendingHorizontal: 0

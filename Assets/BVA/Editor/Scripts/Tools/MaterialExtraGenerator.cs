@@ -36,7 +36,7 @@ namespace BVA
             string lowerCase = paramName.ToLower();
             return lowerCase.EndsWith("normalmap") || lowerCase.EndsWith("bumpmap");
         }
-
+        
         void OnGUI()
         {
             shaderGraphObject = EditorGUILayout.ObjectField("Shader Graph ", shaderGraphObject, typeof(Shader), false) as Shader;
@@ -66,12 +66,11 @@ namespace BVA
             EditorGUILayout.EndScrollView();
             EditorGUILayout.BeginHorizontal();
             exportPath = EditorGUILayout.TextField("Path : ", exportPath);
-            if (GUILayout.Button("Choose", GUILayout.MaxWidth(100)))
+            if (GUILayout.Button("Choose", GUILayout.MaxWidth(96)))
             {
                 exportPath = EditorUtility.SaveFilePanelInProject("Choose Script Path", "BVA_Material_Extra", "cs", "save", DEFAULT_SCRIPT_PATH);
             }
-            EditorGUILayout.EndHorizontal();
-            if (GUILayout.Button("Generator Script"))
+            if (GUILayout.Button("Gen Script", GUILayout.MaxWidth(96)))
             {
                 List<ExportExtraMaterialProperty> exportProperties = new List<ExportExtraMaterialProperty>();
                 for (int j = 0; j < count; ++j)
@@ -109,6 +108,7 @@ namespace BVA
                 }
                 ExportScript(shaderGraphObject.name, exportProperties);
             }
+            EditorGUILayout.EndHorizontal();
         }
 
         private void ExportScript(string shaderName, List<ExportExtraMaterialProperty> properties)
@@ -145,7 +145,7 @@ namespace BVA
                     foreach (var v in properties)
                     {
                         v.constParameter = v.propertyName.Replace("_", "").ToUpper().Replace("1ST", "FIRST").Replace("2ND", "SECOND");
-                        v.parameterName = ParameterName(v.description);
+                        v.parameterName = ParameterName(v.propertyName);
                         sw.WriteLine($"public const string {v.constParameter} = \"{v.propertyName}\";");
                     }
                     // write parameter declaration
@@ -176,10 +176,13 @@ namespace BVA
                             sw.WriteLine($"public MaterialParam<int> {v.parameterName} = new MaterialParam<int>({v.constParameter}, 1);");
                         }
                     }
+                    sw.WriteLine($"public string[] keywords;");
                     // write construction function
                     sw.WriteLine($"public {className}(Material material, {nameof(ExportTextureInfo)} exportTextureInfo, {nameof(ExportTextureInfo)} exportNormalTextureInfo, {nameof(ExportCubemapInfo)} exportCubemapInfo)");
 
                     sw.WriteLine(startScope);
+
+                    sw.WriteLine("keywords = material.shaderKeywords;");
                     foreach (var v in properties)
                     {
                         if (v.propertyType == MaterialPropertyType.Texture2D)
@@ -275,6 +278,15 @@ namespace BVA
                                         }
                                         sw.WriteLine("break;");
                                     }
+                                    sw.WriteLine("case nameof(keywords):");
+                                    sw.WriteLine(startScope);
+                                    {
+                                        sw.WriteLine("var keywords = reader.ReadStringList();");
+                                        sw.WriteLine("foreach (var keyword in keywords)");
+                                        sw.WriteLine("matCache.EnableKeyword(keyword);");
+                                    }
+                                    sw.WriteLine(endScope);
+                                    sw.WriteLine("break;");
                                 }
                                 sw.WriteLine(endScope);
                             }
@@ -313,6 +325,15 @@ namespace BVA
                                     break;
                             }
                         }
+                        sw.WriteLine("if(keywords != null && keywords.Length > 0)");
+                        sw.WriteLine(startScope);
+                        {
+                            sw.WriteLine("JArray jKeywords = new JArray();");
+                            sw.WriteLine("foreach (var keyword in jKeywords)");
+                            sw.WriteLine("jKeywords.Add(keyword);");
+                            sw.WriteLine("jo.Add(nameof(keywords), jKeywords);");
+                        }
+                        sw.WriteLine(endScope);
                         sw.WriteLine($"return new JProperty({className}.SHADER_NAME, jo);");
                     }
                     sw.WriteLine(endScope);

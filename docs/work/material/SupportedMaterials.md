@@ -1,10 +1,10 @@
 # Mateirals
 
-There are four types of materials (shaders) supported by BVA. These are [unlit](Unlit.md), [lit](Lit.md), [complex lit](ComplexLit.md),  [MToon(VRM)](MToon.md).
+There are four types of materials (shaders) supported by BVA. These are [Lit](Lit.md), [Complex Lit](ComplexLit.md), [Unlit](Unlit.md), [MToon(URP ver)](https://vrm.dev/univrm/shaders/shader_mtoon.html), [UTS2](https://github.com/unity3d-jp/UnityChanToonShaderVer2_Project), [LiliumToonGraph](https://github.com/you-ri/LiliumToonGraph), ToonLit
 
 For custom shader, we implement a code-gen tools, so you can select shader parameters that you want to Export & Import, then generate code to import and export material information. 
 
-`All custom material information stores in extras, and will export KHR_materials_unlitExtension under the material.`
+> All custom material information stores in extras, and will export `KHR_materials_unlitExtension` under the material.
 
 To compatible with standard gltf parameter, material with these parameters will export as standard gltf material parameters.
 

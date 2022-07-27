@@ -4,25 +4,25 @@ RuntimeLoad.unity scene shows you how to load avatar assets.
 
 ### GLB file
 
-#### Common Method
+#### Common Method (Load scene in a recursive way)
 
 ```csharp
 await BVASceneManager.Instance.LoadSceneAsync(path);
 ```
 
-#### Avatar Optimized Method
+#### Avatar Optimized Load (Load parallelly)
 
 ```csharp
 await BVASceneManager.Instance.LoadAvatar(path);
 ```
 
-### PMX file
+### PMX (MMD model)
 
 ```csharp
 Transform alicia = await PMXModelLoader.LoadPMXModel(path, SampleAnimatorController);
 ```
 
-### VRM file
+### VRM
 
 ```csharp
 var data = new GlbFileParser(path).Parse();

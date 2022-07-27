@@ -102,7 +102,7 @@ namespace ADBRuntime
         /// <summary>
         /// localPosition's length
         /// </summary>
-        internal float initialLocalPositionLength;
+        public float initialLocalPositionLength;
         /// <summary>
         /// Position under its fixedpoint coordinate when initial
         /// </summary>
@@ -110,11 +110,11 @@ namespace ADBRuntime
         /// <summary>
         /// Point's localPosition when initial
         /// </summary>
-        internal quaternion initialLocalRotation;
+        public quaternion initialLocalRotation;
         /// <summary>
         ///  Rotation under its fixedpoint coordinate when initial
         /// </summary>
-        internal quaternion initialRotation;
+        public quaternion initialRotation;
         /// <summary>
         /// Damping for each iteration
         /// </summary>
@@ -131,6 +131,7 @@ namespace ADBRuntime
         ///  ElasticityVelocity:how much elasticity force applied in velocity.
         /// </summary>
         public float elasticityVelocity;
+        internal float vrmstiffnessForce;
 
 
         /*        public float value2;

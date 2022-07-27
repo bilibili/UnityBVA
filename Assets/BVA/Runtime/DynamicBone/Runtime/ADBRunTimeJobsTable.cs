@@ -339,7 +339,7 @@ namespace ADBRuntime.Internal
                 float3 targetDirection = math.mul(pPointReadWriteParent->rotationNoSelfRotateChange, pReadPointTarget->initialLocalPosition) * pReadPointTarget->initialLocalPositionLength;
 
                 float3 currentDirection = pReadWritePointTarget->position - pPointReadWriteParent->position;
-
+                currentDirection += targetDirection * pReadPointTarget->vrmstiffnessForce* oneDivideIteration;
                 //stiffness: Prevent excessive deflection and force back into the original position 
 
                 float3 difficult = currentDirection - targetDirection;

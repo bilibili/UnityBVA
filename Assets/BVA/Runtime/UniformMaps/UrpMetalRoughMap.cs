@@ -66,8 +66,8 @@ namespace BVA
             get { return _material.GetTexture("_MetallicGlossMap"); }
             set
             {
-                _material.SetTexture("_MetallicGlossMap", value);
-                _material.EnableKeyword("_METALLICSPECGLOSSMAP");
+               _material.SetTexture("_MetallicGlossMap", value);
+               _material.EnableKeyword("_METALLICSPECGLOSSMAP");
             }
         }
 

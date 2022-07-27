@@ -20,15 +20,17 @@ if (!string.IsNullOrEmpty(path))
 
 ## *Export as GLTF*
 
-Only need to change the Save function
+Only need to change the function
 
 ```csharp
 exporter.SaveGLTFandBin(Path.GetDirectoryName(path),Path.GetFileNameWithoutExtension(path));
 ```
 
+
 ## Avatar Specific
 
 When export an avatar, a `Enforce T-Pose` will be applyed. Only in this way can ensure the correctness of humanoid animation.
+
 
 ## Runtime Export Limitation
 

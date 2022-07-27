@@ -264,7 +264,7 @@ namespace VRM
             {
                 secondary.gameObject.AddComponent<VRMSpringBone>();
             }
-            secondary.gameObject.SetActive(false);
+            //secondary.gameObject.SetActive(false);
         }
     }
 }

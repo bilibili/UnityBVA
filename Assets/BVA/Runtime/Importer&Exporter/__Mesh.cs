@@ -6,9 +6,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using BVA.Cache;
 using BVA.Extensions;
-using BVA.Extensions.LowLevel.Unsafe;
+#if UNITY_STANDALONE
 using Draco.Encoder;
 using Draco;
+#endif
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -41,10 +42,12 @@ namespace BVA
             });
             return _assetCache.MeshCache[meshIndex].LoadedMesh;
         }
+#if UNITY_STANDALONE
         private bool UseDracoMeshCompression(MeshPrimitive meshPrim)
         {
             return _gltfRoot.ExtensionsUsed != null && meshPrim.Extensions != null && meshPrim.Extensions.ContainsKey(KHR_draco_mesh_compression_ExtensionFactory.EXTENSION_NAME);
         }
+#endif
         /// <summary>
         /// Triggers loading, converting, and constructing of a UnityEngine.Mesh, and stores it in the asset cache
         /// </summary>
@@ -71,7 +74,7 @@ namespace BVA
 
             MeshPrimitive firstPrim = meshPrimitives[0];
             MeshCacheData meshCache = _assetCache.MeshCache[meshIndex];
-
+#if UNITY_STANDALONE
             if (UseDracoMeshCompression(firstPrim))
             {
                 var extention = firstPrim.Extensions[KHR_draco_mesh_compression_ExtensionFactory.EXTENSION_NAME] as KHR_draco_mesh_compressionExtension;
@@ -85,12 +88,10 @@ namespace BVA
 
                 _assetCache.MeshCache[meshIndex].LoadedMesh = unityMesh;
 
-                bool shouldUseDefaultMaterial = firstPrim.Material == null;
-                GLTFMaterial materialToLoad = shouldUseDefaultMaterial ? DefaultMaterial : firstPrim.Material.Value;
-                if ((shouldUseDefaultMaterial && _defaultLoadedMaterial == null) ||
-                    (!shouldUseDefaultMaterial && _assetCache.MaterialCache[firstPrim.Material.Id] == null))
+                for (int i = 0; i < meshPrimitives.Count; ++i)
                 {
-                    await ConstructMaterial(materialToLoad, shouldUseDefaultMaterial ? -1 : firstPrim.Material.Id);
+                    GLTFMaterial materialToLoad = meshPrimitives[i].Material.Value;
+                    await ConstructMaterial(materialToLoad, meshPrimitives[i].Material.Id);
                 }
 
                 unityMesh.RecalculateBounds();
@@ -105,6 +106,7 @@ namespace BVA
                 }
             }
             else
+#endif
             {
                 if (firstPrimContainsAll)
                 {
@@ -170,7 +172,7 @@ namespace BVA
                     }
                     Statistics.VertexCount += firstPrimVertexCount;
 
-                    ConstructUnityMesh(unityData, meshIndex, mesh.Name,firstPrimContainsAll);
+                    ConstructUnityMesh(unityData, meshIndex, mesh.Name, firstPrimContainsAll);
                 }
                 else
                 {
@@ -228,7 +230,7 @@ namespace BVA
                         }
                     }
                     Statistics.VertexCount += vertOffset;
-                    ConstructUnityMesh(unityData, meshIndex, mesh.Name,firstPrimContainsAll);
+                    ConstructUnityMesh(unityData, meshIndex, mesh.Name, firstPrimContainsAll);
                 }
             }
         }
@@ -445,7 +447,7 @@ namespace BVA
         /// <param name="primitiveIndex"></param>
         /// <param name="unityMeshData"></param>
         /// <returns></returns>
-        protected void ConstructUnityMesh(UnityMeshData unityMeshData, int meshIndex, string meshName,bool firstPrimContainsAll)
+        protected void ConstructUnityMesh(UnityMeshData unityMeshData, int meshIndex, string meshName, bool firstPrimContainsAll)
         {
             Mesh mesh = new Mesh
             {
@@ -581,9 +583,10 @@ namespace BVA
 
         protected async Task ConstructPrimitiveAttributes(MeshPrimitive primitive, int meshIndex, int primitiveIndex)
         {
+#if UNITY_STANDALONE
             if (UseDracoMeshCompression(primitive))
                 return;
-
+#endif
             var primData = new MeshCacheData.PrimitiveCacheData();
             _assetCache.MeshCache[meshIndex].Primitives.Add(primData);
 
@@ -834,7 +837,7 @@ namespace BVA
             AccessorId aPosition = null, aNormal = null, aTangent = null,
                 aTexcoord0 = null, aTexcoord1 = null, aColor0 = null,
                 aJoints0 = null, aWeights0 = null;
-
+#if UNITY_STANDALONE
             if (ShouldCompressionMesh(meshObj, smr, prims))
             {
                 var rightHandMesh = ConvertLeftHandToRightHand(meshObj);
@@ -927,6 +930,7 @@ namespace BVA
                 }
             }
             else
+#endif
             {
                 aPosition = ExportAccessor(SchemaExtensions.ConvertVector3CoordinateSpaceAndCopy(meshObj.vertices, SchemaExtensions.CoordinateSpaceConversionScale));
                 if (meshObj.normals.Length != 0)
@@ -1217,6 +1221,7 @@ namespace BVA
 
             return id;
         }
+#if UNITY_STANDALONE
         private AccessorId GetDracoAccessorID(int[] arr, bool isIndices = false)
         {
             uint count = (uint)arr.Length;
@@ -1283,6 +1288,7 @@ namespace BVA
 
             return id;
         }
+#endif
         private AccessorId ExportAccessor(int[] arr, bool isIndices = false)
         {
             uint count = (uint)arr.Length;
@@ -1387,6 +1393,7 @@ namespace BVA
 
             return id;
         }
+#if UNITY_STANDALONE
         private AccessorId GetDracoAccessorID(float[] arr)
         {
             uint count = (uint)arr.Length;
@@ -1419,61 +1426,6 @@ namespace BVA
 
             accessor.Min = new List<double> { min };
             accessor.Max = new List<double> { max };
-
-            var id = new AccessorId
-            {
-                Id = _root.Accessors.Count,
-                Root = _root
-            };
-            _root.Accessors.Add(accessor);
-
-            return id;
-        }
-        private AccessorId ExportAccessor(float[] arr)
-        {
-            uint count = (uint)arr.Length;
-
-            if (count == 0)
-            {
-                throw new Exception("Accessors can not have a count of 0.");
-            }
-
-            var accessor = new Accessor();
-            accessor.ComponentType = GLTFComponentType.Float;
-            accessor.Count = count;
-            accessor.Type = GLTFAccessorAttributeType.SCALAR;
-
-            float min = arr[0];
-            float max = arr[0];
-
-            for (var i = 1; i < count; i++)
-            {
-                var cur = arr[i];
-
-                if (cur < min)
-                {
-                    min = cur;
-                }
-                if (cur > max)
-                {
-                    max = cur;
-                }
-            }
-
-            accessor.Min = new List<double> { min };
-            accessor.Max = new List<double> { max };
-
-            AlignToBoundary(_bufferWriter.BaseStream, 0x00);
-            uint byteOffset = CalculateAlignment((uint)_bufferWriter.BaseStream.Position, 4);
-
-            foreach (var vec in arr)
-            {
-                _bufferWriter.Write(vec);
-            }
-
-            uint byteLength = CalculateAlignment((uint)_bufferWriter.BaseStream.Position - byteOffset, 4);
-
-            accessor.BufferView = ExportBufferView(byteOffset, byteLength);
 
             var id = new AccessorId
             {
@@ -1525,6 +1477,350 @@ namespace BVA
             }
             accessor.Min = new List<double> { minX, minY };
             accessor.Max = new List<double> { maxX, maxY };
+
+            var id = new AccessorId
+            {
+                Id = _root.Accessors.Count,
+                Root = _root
+            };
+            _root.Accessors.Add(accessor);
+
+            return id;
+        }
+        private AccessorId GetDracoAccessorID(Vector3[] arr)
+        {
+            uint count = (uint)arr.Length;
+
+            if (count == 0)
+            {
+                throw new Exception("Accessors can not have a count of 0.");
+            }
+
+
+            var accessor = new Accessor();
+            accessor.ComponentType = GLTFComponentType.Float;
+            accessor.Count = count;
+            accessor.Type = GLTFAccessorAttributeType.VEC3;
+
+            float minX = arr[0].x;
+            float minY = arr[0].y;
+            float minZ = arr[0].z;
+            float maxX = arr[0].x;
+            float maxY = arr[0].y;
+            float maxZ = arr[0].z;
+
+            for (var i = 1; i < count; i++)
+            {
+                var cur = arr[i];
+
+                if (cur.x < minX)
+                {
+                    minX = cur.x;
+                }
+                if (cur.y < minY)
+                {
+                    minY = cur.y;
+                }
+                if (cur.z < minZ)
+                {
+                    minZ = cur.z;
+                }
+                if (cur.x > maxX)
+                {
+                    maxX = cur.x;
+                }
+                if (cur.y > maxY)
+                {
+                    maxY = cur.y;
+                }
+                if (cur.z > maxZ)
+                {
+                    maxZ = cur.z;
+                }
+            }
+
+            accessor.Min = new List<double> { minX, minY, minZ };
+            accessor.Max = new List<double> { maxX, maxY, maxZ };
+
+            var id = new AccessorId
+            {
+                Id = _root.Accessors.Count,
+                Root = _root
+            };
+            _root.Accessors.Add(accessor);
+
+            return id;
+        }
+        private AccessorId GetDracoAccessorID(Vector4[] arr)
+        {
+            uint count = (uint)arr.Length;
+
+            if (count == 0)
+            {
+                throw new Exception("Accessors can not have a count of 0.");
+            }
+
+
+            var accessor = new Accessor();
+            accessor.ComponentType = GLTFComponentType.Float;
+            accessor.Count = count;
+            accessor.Type = GLTFAccessorAttributeType.VEC4;
+
+            float minX = arr[0].x;
+            float minY = arr[0].y;
+            float minZ = arr[0].z;
+            float minW = arr[0].w;
+            float maxX = arr[0].x;
+            float maxY = arr[0].y;
+            float maxZ = arr[0].z;
+            float maxW = arr[0].w;
+
+            for (var i = 1; i < count; i++)
+            {
+                var cur = arr[i];
+
+                if (cur.x < minX)
+                {
+                    minX = cur.x;
+                }
+                if (cur.y < minY)
+                {
+                    minY = cur.y;
+                }
+                if (cur.z < minZ)
+                {
+                    minZ = cur.z;
+                }
+                if (cur.w < minW)
+                {
+                    minW = cur.w;
+                }
+                if (cur.x > maxX)
+                {
+                    maxX = cur.x;
+                }
+                if (cur.y > maxY)
+                {
+                    maxY = cur.y;
+                }
+                if (cur.z > maxZ)
+                {
+                    maxZ = cur.z;
+                }
+                if (cur.w > maxW)
+                {
+                    maxW = cur.w;
+                }
+            }
+
+            accessor.Min = new List<double> { minX, minY, minZ, minW };
+            accessor.Max = new List<double> { maxX, maxY, maxZ, maxW };
+
+            var id = new AccessorId
+            {
+                Id = _root.Accessors.Count,
+                Root = _root
+            };
+            _root.Accessors.Add(accessor);
+
+            return id;
+        }
+        private AccessorId GetDracoAccessorID(Vector4Int[] arr)
+        {
+            uint count = (uint)arr.Length;
+
+            if (count == 0)
+            {
+                throw new Exception("Accessors can not have a count of 0.");
+            }
+
+
+            var accessor = new Accessor();
+            accessor.ComponentType = GLTFComponentType.UnsignedShort;
+            accessor.Count = count;
+            accessor.Type = GLTFAccessorAttributeType.VEC4;
+
+            int minX = arr[0].x;
+            int minY = arr[0].y;
+            int minZ = arr[0].z;
+            int minW = arr[0].w;
+            int maxX = arr[0].x;
+            int maxY = arr[0].y;
+            int maxZ = arr[0].z;
+            int maxW = arr[0].w;
+
+            for (var i = 1; i < count; i++)
+            {
+                var cur = arr[i];
+
+                if (cur.x < minX)
+                {
+                    minX = cur.x;
+                }
+                if (cur.y < minY)
+                {
+                    minY = cur.y;
+                }
+                if (cur.z < minZ)
+                {
+                    minZ = cur.z;
+                }
+                if (cur.w < minW)
+                {
+                    minW = cur.w;
+                }
+                if (cur.x > maxX)
+                {
+                    maxX = cur.x;
+                }
+                if (cur.y > maxY)
+                {
+                    maxY = cur.y;
+                }
+                if (cur.z > maxZ)
+                {
+                    maxZ = cur.z;
+                }
+                if (cur.w > maxW)
+                {
+                    maxW = cur.w;
+                }
+            }
+
+            accessor.Min = new List<double> { minX, minY, minZ, minW };
+            accessor.Max = new List<double> { maxX, maxY, maxZ, maxW };
+
+            var id = new AccessorId
+            {
+                Id = _root.Accessors.Count,
+                Root = _root
+            };
+            _root.Accessors.Add(accessor);
+
+            return id;
+        }
+
+        private AccessorId GetDracoAccessorID(Color[] arr)
+        {
+            uint count = (uint)arr.Length;
+
+            if (count == 0)
+            {
+                throw new Exception("Accessors can not have a count of 0.");
+            }
+
+
+            var accessor = new Accessor();
+            accessor.ComponentType = GLTFComponentType.Float;
+            accessor.Count = count;
+            accessor.Type = GLTFAccessorAttributeType.VEC4;
+
+            float minR = arr[0].r;
+            float minG = arr[0].g;
+            float minB = arr[0].b;
+            float minA = arr[0].a;
+            float maxR = arr[0].r;
+            float maxG = arr[0].g;
+            float maxB = arr[0].b;
+            float maxA = arr[0].a;
+
+            for (var i = 1; i < count; i++)
+            {
+                var cur = arr[i];
+
+                if (cur.r < minR)
+                {
+                    minR = cur.r;
+                }
+                if (cur.g < minG)
+                {
+                    minG = cur.g;
+                }
+                if (cur.b < minB)
+                {
+                    minB = cur.b;
+                }
+                if (cur.a < minA)
+                {
+                    minA = cur.a;
+                }
+                if (cur.r > maxR)
+                {
+                    maxR = cur.r;
+                }
+                if (cur.g > maxG)
+                {
+                    maxG = cur.g;
+                }
+                if (cur.b > maxB)
+                {
+                    maxB = cur.b;
+                }
+                if (cur.a > maxA)
+                {
+                    maxA = cur.a;
+                }
+            }
+
+            accessor.Min = new List<double> { minR, minG, minB, minA };
+            accessor.Max = new List<double> { maxR, maxG, maxB, maxA };
+
+
+            var id = new AccessorId
+            {
+                Id = _root.Accessors.Count,
+                Root = _root
+            };
+            _root.Accessors.Add(accessor);
+
+            return id;
+        }
+#endif
+        private AccessorId ExportAccessor(float[] arr)
+        {
+            uint count = (uint)arr.Length;
+
+            if (count == 0)
+            {
+                throw new Exception("Accessors can not have a count of 0.");
+            }
+
+            var accessor = new Accessor();
+            accessor.ComponentType = GLTFComponentType.Float;
+            accessor.Count = count;
+            accessor.Type = GLTFAccessorAttributeType.SCALAR;
+
+            float min = arr[0];
+            float max = arr[0];
+
+            for (var i = 1; i < count; i++)
+            {
+                var cur = arr[i];
+
+                if (cur < min)
+                {
+                    min = cur;
+                }
+                if (cur > max)
+                {
+                    max = cur;
+                }
+            }
+
+            accessor.Min = new List<double> { min };
+            accessor.Max = new List<double> { max };
+
+            AlignToBoundary(_bufferWriter.BaseStream, 0x00);
+            uint byteOffset = CalculateAlignment((uint)_bufferWriter.BaseStream.Position, 4);
+
+            foreach (var vec in arr)
+            {
+                _bufferWriter.Write(vec);
+            }
+
+            uint byteLength = CalculateAlignment((uint)_bufferWriter.BaseStream.Position - byteOffset, 4);
+
+            accessor.BufferView = ExportBufferView(byteOffset, byteLength);
 
             var id = new AccessorId
             {
@@ -1591,70 +1887,6 @@ namespace BVA
             uint byteLength = CalculateAlignment((uint)_bufferWriter.BaseStream.Position - byteOffset, 4);
 
             accessor.BufferView = ExportBufferView(byteOffset, byteLength);
-
-            var id = new AccessorId
-            {
-                Id = _root.Accessors.Count,
-                Root = _root
-            };
-            _root.Accessors.Add(accessor);
-
-            return id;
-        }
-        private AccessorId GetDracoAccessorID(Vector3[] arr)
-        {
-            uint count = (uint)arr.Length;
-
-            if (count == 0)
-            {
-                throw new Exception("Accessors can not have a count of 0.");
-            }
-
-
-            var accessor = new Accessor();
-            accessor.ComponentType = GLTFComponentType.Float;
-            accessor.Count = count;
-            accessor.Type = GLTFAccessorAttributeType.VEC3;
-
-            float minX = arr[0].x;
-            float minY = arr[0].y;
-            float minZ = arr[0].z;
-            float maxX = arr[0].x;
-            float maxY = arr[0].y;
-            float maxZ = arr[0].z;
-
-            for (var i = 1; i < count; i++)
-            {
-                var cur = arr[i];
-
-                if (cur.x < minX)
-                {
-                    minX = cur.x;
-                }
-                if (cur.y < minY)
-                {
-                    minY = cur.y;
-                }
-                if (cur.z < minZ)
-                {
-                    minZ = cur.z;
-                }
-                if (cur.x > maxX)
-                {
-                    maxX = cur.x;
-                }
-                if (cur.y > maxY)
-                {
-                    maxY = cur.y;
-                }
-                if (cur.z > maxZ)
-                {
-                    maxZ = cur.z;
-                }
-            }
-
-            accessor.Min = new List<double> { minX, minY, minZ };
-            accessor.Max = new List<double> { maxX, maxY, maxZ };
 
             var id = new AccessorId
             {
@@ -1732,80 +1964,6 @@ namespace BVA
             uint byteLength = CalculateAlignment((uint)_bufferWriter.BaseStream.Position - byteOffset, 4);
 
             accessor.BufferView = ExportBufferView(byteOffset, byteLength);
-
-            var id = new AccessorId
-            {
-                Id = _root.Accessors.Count,
-                Root = _root
-            };
-            _root.Accessors.Add(accessor);
-
-            return id;
-        }
-        private AccessorId GetDracoAccessorID(Vector4[] arr)
-        {
-            uint count = (uint)arr.Length;
-
-            if (count == 0)
-            {
-                throw new Exception("Accessors can not have a count of 0.");
-            }
-
-
-            var accessor = new Accessor();
-            accessor.ComponentType = GLTFComponentType.Float;
-            accessor.Count = count;
-            accessor.Type = GLTFAccessorAttributeType.VEC4;
-
-            float minX = arr[0].x;
-            float minY = arr[0].y;
-            float minZ = arr[0].z;
-            float minW = arr[0].w;
-            float maxX = arr[0].x;
-            float maxY = arr[0].y;
-            float maxZ = arr[0].z;
-            float maxW = arr[0].w;
-
-            for (var i = 1; i < count; i++)
-            {
-                var cur = arr[i];
-
-                if (cur.x < minX)
-                {
-                    minX = cur.x;
-                }
-                if (cur.y < minY)
-                {
-                    minY = cur.y;
-                }
-                if (cur.z < minZ)
-                {
-                    minZ = cur.z;
-                }
-                if (cur.w < minW)
-                {
-                    minW = cur.w;
-                }
-                if (cur.x > maxX)
-                {
-                    maxX = cur.x;
-                }
-                if (cur.y > maxY)
-                {
-                    maxY = cur.y;
-                }
-                if (cur.z > maxZ)
-                {
-                    maxZ = cur.z;
-                }
-                if (cur.w > maxW)
-                {
-                    maxW = cur.w;
-                }
-            }
-
-            accessor.Min = new List<double> { minX, minY, minZ, minW };
-            accessor.Max = new List<double> { maxX, maxY, maxZ, maxW };
 
             var id = new AccessorId
             {
@@ -1894,80 +2052,6 @@ namespace BVA
             uint byteLength = CalculateAlignment((uint)_bufferWriter.BaseStream.Position - byteOffset, 4);
 
             accessor.BufferView = ExportBufferView(byteOffset, byteLength);
-
-            var id = new AccessorId
-            {
-                Id = _root.Accessors.Count,
-                Root = _root
-            };
-            _root.Accessors.Add(accessor);
-
-            return id;
-        }
-        private AccessorId GetDracoAccessorID(Vector4Int[] arr)
-        {
-            uint count = (uint)arr.Length;
-
-            if (count == 0)
-            {
-                throw new Exception("Accessors can not have a count of 0.");
-            }
-
-
-            var accessor = new Accessor();
-            accessor.ComponentType = GLTFComponentType.UnsignedShort;
-            accessor.Count = count;
-            accessor.Type = GLTFAccessorAttributeType.VEC4;
-
-            int minX = arr[0].x;
-            int minY = arr[0].y;
-            int minZ = arr[0].z;
-            int minW = arr[0].w;
-            int maxX = arr[0].x;
-            int maxY = arr[0].y;
-            int maxZ = arr[0].z;
-            int maxW = arr[0].w;
-
-            for (var i = 1; i < count; i++)
-            {
-                var cur = arr[i];
-
-                if (cur.x < minX)
-                {
-                    minX = cur.x;
-                }
-                if (cur.y < minY)
-                {
-                    minY = cur.y;
-                }
-                if (cur.z < minZ)
-                {
-                    minZ = cur.z;
-                }
-                if (cur.w < minW)
-                {
-                    minW = cur.w;
-                }
-                if (cur.x > maxX)
-                {
-                    maxX = cur.x;
-                }
-                if (cur.y > maxY)
-                {
-                    maxY = cur.y;
-                }
-                if (cur.z > maxZ)
-                {
-                    maxZ = cur.z;
-                }
-                if (cur.w > maxW)
-                {
-                    maxW = cur.w;
-                }
-            }
-
-            accessor.Min = new List<double> { minX, minY, minZ, minW };
-            accessor.Max = new List<double> { maxX, maxY, maxZ, maxW };
 
             var id = new AccessorId
             {
@@ -2227,82 +2311,6 @@ namespace BVA
             uint byteLength = CalculateAlignment((uint)_bufferWriter.BaseStream.Position - byteOffset, 4);
 
             accessor.BufferView = ExportBufferView(byteOffset, byteLength);
-
-            var id = new AccessorId
-            {
-                Id = _root.Accessors.Count,
-                Root = _root
-            };
-            _root.Accessors.Add(accessor);
-
-            return id;
-        }
-
-        private AccessorId GetDracoAccessorID(Color[] arr)
-        {
-            uint count = (uint)arr.Length;
-
-            if (count == 0)
-            {
-                throw new Exception("Accessors can not have a count of 0.");
-            }
-
-
-            var accessor = new Accessor();
-            accessor.ComponentType = GLTFComponentType.Float;
-            accessor.Count = count;
-            accessor.Type = GLTFAccessorAttributeType.VEC4;
-
-            float minR = arr[0].r;
-            float minG = arr[0].g;
-            float minB = arr[0].b;
-            float minA = arr[0].a;
-            float maxR = arr[0].r;
-            float maxG = arr[0].g;
-            float maxB = arr[0].b;
-            float maxA = arr[0].a;
-
-            for (var i = 1; i < count; i++)
-            {
-                var cur = arr[i];
-
-                if (cur.r < minR)
-                {
-                    minR = cur.r;
-                }
-                if (cur.g < minG)
-                {
-                    minG = cur.g;
-                }
-                if (cur.b < minB)
-                {
-                    minB = cur.b;
-                }
-                if (cur.a < minA)
-                {
-                    minA = cur.a;
-                }
-                if (cur.r > maxR)
-                {
-                    maxR = cur.r;
-                }
-                if (cur.g > maxG)
-                {
-                    maxG = cur.g;
-                }
-                if (cur.b > maxB)
-                {
-                    maxB = cur.b;
-                }
-                if (cur.a > maxA)
-                {
-                    maxA = cur.a;
-                }
-            }
-
-            accessor.Min = new List<double> { minR, minG, minB, minA };
-            accessor.Max = new List<double> { maxR, maxG, maxB, maxA };
-
 
             var id = new AccessorId
             {

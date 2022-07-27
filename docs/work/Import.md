@@ -30,8 +30,8 @@ MMD model file reference textures externally, so must copy whole folder that con
 ![glb](pics/import_pmx.png)
 
 
-## Runtimely Import
+## Runtime Import
 
-You can load model directly from the Editor Menu.
+You can load model directly from the Editor Menu. But before that, you have to click `play`
 
 ![glb](pics/runtime_load_on_menu.png)

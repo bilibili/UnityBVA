@@ -1,6 +1,6 @@
 # RuntimeExport
 
-This scene demonstrates how to export procedural generated models or loaded models runtimely
+This scene demonstrates how to export procedural generated models & loaded models runtimely
 
 ![glb](../pics/RuntimeExport_0.png)
 

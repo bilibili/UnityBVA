@@ -154,7 +154,7 @@
 				// All shaders must be compiled with HLSLcc and currently only gles is not using HLSLcc by default
 				#pragma prefer_hlslcc gles
 				#pragma exclude_renderers d3d11_9x
-				#pragma target 2.0
+				#pragma target 3.0
 
 				#pragma vertex vert
 				#pragma fragment frag
@@ -179,7 +179,7 @@
 				// All shaders must be compiled with HLSLcc and currently only gles is not using HLSLcc by default
 				#pragma prefer_hlslcc gles
 				#pragma exclude_renderers d3d11_9x
-				#pragma target 2.0
+				#pragma target 3.0
 
 
 				// -------------------------------------
@@ -192,10 +192,12 @@
 				//#pragma shader_feature _ROUGHNESS_TEXTURE_ALBEDO_CHANNEL_A
 				#pragma shader_feature _OCCLUSIONMAP  
 
-				#pragma multi_compile _ _SPECULARHIGHLIGHTS_OFF
-				#pragma multi_compile _ _ENVIRONMENTREFLECTIONS_OFF
+				//#pragma multi_compile _ _SPECULARHIGHLIGHTS_OFF
+				//#pragma multi_compile _ _ENVIRONMENTREFLECTIONS_OFF
 				#pragma multi_compile _ _SPECULAR_SETUP
 				#pragma multi_compile _ _RECEIVE_SHADOWS_OFF
+				#define _SPECULARHIGHLIGHTS_OFF
+				#define _ENVIRONMENTREFLECTIONS_OFF
 
 				// -------------------------------------
 				// Universal Pipeline keywords
@@ -208,13 +210,13 @@
 
 				// -------------------------------------
 				// Unity defined keywords
-				#pragma multi_compile _ DIRLIGHTMAP_COMBINED
-				#pragma multi_compile _ LIGHTMAP_ON
+				//#pragma multi_compile _ DIRLIGHTMAP_COMBINED
+				//#pragma multi_compile _ LIGHTMAP_ON
 				#pragma multi_compile_fog 
 
 				//--------------------------------------
 				// GPU Instancing
-				#pragma multi_compile_instancing
+				//#pragma multi_compile_instancing
 
 				#pragma vertex vert
 				#pragma fragment frag
@@ -361,7 +363,7 @@
 								// Required to compile gles 2.0 with standard srp library
 								#pragma prefer_hlslcc gles
 								#pragma exclude_renderers d3d11_9x
-								#pragma target 2.0
+								#pragma target 3.0
 
 								// -------------------------------------
 								// Material Keywords
@@ -401,7 +403,7 @@
 									// Required to compile gles 2.0 with standard srp library
 									#pragma prefer_hlslcc gles
 									#pragma exclude_renderers d3d11_9x
-									#pragma target 2.0
+									#pragma target 3.0
 
 									#pragma vertex DepthOnlyVertex
 									#pragma fragment DepthOnlyFragment

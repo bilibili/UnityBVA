@@ -634,7 +634,7 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.030395508
+      value: 0.05041504
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -642,8 +642,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 1
-      value: 0.05
+      time: 0.48428345
+      value: 0.117428586
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -655,9 +655,9 @@ MonoBehaviour:
     m_RotationOrder: 4
   pointRadiuMin: 0
   pointRadiuMax: 1
-  pointRadiuValue: 0
+  pointRadiuValue: 0.113
   ispointRadiuCurve: 1
-  value2Curve:
+  vrmStiffnessForceCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -681,7 +681,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  value2Value: 0
+  vrmStiffnessForceValue: 0
   value3Curve:
     serializedVersion: 2
     m_Curve:

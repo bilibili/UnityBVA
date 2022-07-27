@@ -124,7 +124,7 @@ namespace BVA
                         stream.Read(buffer, 0, (int)stream.Length);
                     }
 
-                    ImageMimeType mimeType = TextureMimeType(image);
+                    ImageMimeType mimeType = GetImageMimeType(image);
 
                     if (mimeType == ImageMimeType.KTX)
                     {

@@ -24,6 +24,24 @@ namespace BVA.Component
         //    return null;
         //}
 
+        private Dictionary<string, float> _runtimeWeight;
+        public Dictionary<string, float> RuntimeWeight
+        {
+            get
+            {
+                if (_runtimeWeight == null)
+                {
+                    _runtimeWeight = new Dictionary<string,float>();
+                    foreach (BlendShapeKey key in keys)
+                    {
+                        _runtimeWeight.Add(key.keyName, 0);
+                    }
+                }
+
+                return _runtimeWeight;
+            }
+        }
+
         private IEnumerator ItorSetState(BlendShapeKey key, float value, float transitionTime)
         {
             float sTime = 0f;

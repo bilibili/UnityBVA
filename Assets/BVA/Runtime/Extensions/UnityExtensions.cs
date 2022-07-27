@@ -62,19 +62,19 @@ namespace BVA.Extensions
 
         public static string GetNumberAlphaUnderLine(this string source)
         {
-            string ret = "";
+            StringWriter ret = new StringWriter();
             foreach (var v in source)
             {
                 if (v >= '0' && v <= '9')
-                    ret += v;
+                    ret.Write(v);
                 if (v >= 'a' && v <= 'z')
-                    ret += v;
+                    ret.Write(v);
                 if (v >= 'A' && v <= 'Z')
-                    ret += v;
+                    ret.Write(v);
                 if (v == '_')
-                    ret += v;
+                    ret.Write(v);
             }
-            return ret;
+            return ret.ToString();
         }
 
         public static string EncodeUTF8(this string input)

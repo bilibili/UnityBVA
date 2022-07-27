@@ -286,11 +286,12 @@ namespace GLTF.Schema.BVA
             jo.Add(nameof(ADBPhysicsSetting.moveInertCurve), physicsSetting.moveInertCurve.Serialize());
             jo.Add(nameof(ADBPhysicsSetting.dampingCurve), physicsSetting.dampingCurve.Serialize());
             jo.Add(nameof(ADBPhysicsSetting.elasticityCurve), physicsSetting.elasticityCurve.Serialize());
+            jo.Add(nameof(ADBPhysicsSetting.elasticityVelocityCurve), physicsSetting.elasticityVelocityCurve.Serialize());
             jo.Add(nameof(ADBPhysicsSetting.velocityIncreaseCurve), physicsSetting.velocityIncreaseCurve.Serialize());
             jo.Add(nameof(ADBPhysicsSetting.stiffnessWorldCurve), physicsSetting.stiffnessWorldCurve.Serialize());
             jo.Add(nameof(ADBPhysicsSetting.stiffnessLocalCurve), physicsSetting.stiffnessLocalCurve.Serialize());
 
-            jo.Add(nameof(ADBPhysicsSetting.value2Curve), physicsSetting.value2Curve.Serialize());
+            jo.Add(nameof(ADBPhysicsSetting.vrmStiffnessForceCurve), physicsSetting.vrmStiffnessForceCurve.Serialize());
             jo.Add(nameof(ADBPhysicsSetting.value3Curve), physicsSetting.value3Curve.Serialize());
             jo.Add(nameof(ADBPhysicsSetting.value4Curve), physicsSetting.value4Curve.Serialize());
             jo.Add(nameof(ADBPhysicsSetting.value5Curve), physicsSetting.value5Curve.Serialize());
@@ -325,12 +326,12 @@ namespace GLTF.Schema.BVA
             jo.Add(nameof(ADBPhysicsSetting.velocityIncreaseValue), physicsSetting.velocityIncreaseValue);
             jo.Add(nameof(ADBPhysicsSetting.dampingValue), physicsSetting.dampingValue);
             jo.Add(nameof(ADBPhysicsSetting.elasticityValue), physicsSetting.elasticityValue);
+            jo.Add(nameof(ADBPhysicsSetting.elasticityVelocityValue), physicsSetting.elasticityVelocityValue);
             jo.Add(nameof(ADBPhysicsSetting.stiffnessWorldValue), physicsSetting.stiffnessWorldValue);
             jo.Add(nameof(ADBPhysicsSetting.stiffnessLocalValue), physicsSetting.stiffnessLocalValue);
             jo.Add(nameof(ADBPhysicsSetting.lengthLimitForceScaleValue), physicsSetting.lengthLimitForceScaleValue);
-            jo.Add(nameof(ADBPhysicsSetting.elasticityVelocityValue), physicsSetting.elasticityVelocityValue);
 
-            jo.Add(nameof(ADBPhysicsSetting.value2Value), physicsSetting.value2Value);
+            jo.Add(nameof(ADBPhysicsSetting.vrmStiffnessForceValue), physicsSetting.vrmStiffnessForceValue);
             jo.Add(nameof(ADBPhysicsSetting.value3Value), physicsSetting.value3Value);
             jo.Add(nameof(ADBPhysicsSetting.value4Value), physicsSetting.value4Value);
             jo.Add(nameof(ADBPhysicsSetting.value5Value), physicsSetting.value5Value);
@@ -535,8 +536,8 @@ namespace GLTF.Schema.BVA
                         physicsSetting.elasticityVelocityCurve = AnimationCurveExtension.DeserializeAnimationCurve(root, reader);
                         break;
 
-                    case nameof(ADBPhysicsSetting.value2Curve):
-                        physicsSetting.value2Curve = AnimationCurveExtension.DeserializeAnimationCurve(root, reader);
+                    case nameof(ADBPhysicsSetting.vrmStiffnessForceCurve):
+                        physicsSetting.vrmStiffnessForceCurve = AnimationCurveExtension.DeserializeAnimationCurve(root, reader);
                         break;
                     case nameof(ADBPhysicsSetting.value3Curve):
                         physicsSetting.value3Curve = AnimationCurveExtension.DeserializeAnimationCurve(root, reader);
@@ -561,7 +562,7 @@ namespace GLTF.Schema.BVA
                         break;
 
                     case nameof(ADBPhysicsSetting.pointRadiuCurve):
-                        physicsSetting.stiffnessLocalCurve = AnimationCurveExtension.DeserializeAnimationCurve(root, reader);
+                        physicsSetting.pointRadiuCurve = AnimationCurveExtension.DeserializeAnimationCurve(root, reader);
                         break;
 
                     //OYM:12 cruves about constraint
@@ -635,8 +636,8 @@ namespace GLTF.Schema.BVA
                     case nameof(ADBPhysicsSetting.elasticityVelocityValue):
                         physicsSetting.elasticityVelocityValue = reader.ReadAsFloat();
                         break;
-                    case nameof(ADBPhysicsSetting.value2Value):
-                        physicsSetting.value2Value = reader.ReadAsFloat();
+                    case nameof(ADBPhysicsSetting.vrmStiffnessForceValue):
+                        physicsSetting.vrmStiffnessForceValue = reader.ReadAsFloat();
                         break;
                     case nameof(ADBPhysicsSetting.value3Value):
                         physicsSetting.value3Value = reader.ReadAsFloat();

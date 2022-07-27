@@ -10,30 +10,41 @@ namespace BVA
     {
         public List<Avatar> avatars;
         public HumanoidAvatarLoader(AssetCache cache) : base(cache)
-        { 
-            avatars = new List<Avatar>(); 
+        {
+            avatars = new List<Avatar>();
+        }
+        private List<SkeletonBone> GetTransforms(Transform t)
+        {
+            SkeletonBone skeletonBone = new SkeletonBone()
+            {
+                name = t.name,
+                position = t.localPosition,
+                rotation = t.localRotation,
+                scale = t.localScale
+            };
+
+            List<SkeletonBone> singleParentFamily = new List<SkeletonBone>() { skeletonBone };
+
+            foreach (Transform childT in t)
+            {
+                singleParentFamily.AddRange(GetTransforms(childT));
+            }
+
+            return singleParentFamily;
         }
         public HumanDescription GetHumanDescription(Transform root, GltfAvatar human)
         {
-            var transforms = root.GetComponentsInChildren<Transform>();
-            var skeletonBones = new SkeletonBone[transforms.Length];
-            var index = 0;
-            foreach (var t in transforms)
-            {
-                skeletonBones[index] = t.ToSkeletonBone();
-                index++;
-            }
-
+            var skeletonBones = GetTransforms(root);
             var boneCount = human.humanBones.Count;
             var humanBones = new HumanBone[boneCount];
             for (int i = 0; i < boneCount; i++)
             {
                 var bonelimit = human.humanBones[i];
-                if (bonelimit.node < 0) continue; 
+                if (bonelimit.node < 0) continue;
                 humanBones[i] = new HumanBone()
                 {
                     boneName = assetCache.NodeCache[bonelimit.node].name,
-                    humanName = bonelimit.bone.FirstUppercase(),
+                    humanName = bonelimit.bone,
                     limit = new HumanLimit()
                     {
                         useDefaultValues = bonelimit.useDefaultValues,
@@ -47,7 +58,7 @@ namespace BVA
 
             return new HumanDescription
             {
-                skeleton = skeletonBones,
+                skeleton = skeletonBones.ToArray(),
                 human = humanBones,
                 armStretch = human.armStretch,
                 legStretch = human.legStretch,
@@ -64,8 +75,10 @@ namespace BVA
         {
             var humanDescription = GetHumanDescription(root, human);
             Avatar avatar = AvatarBuilder.BuildHumanAvatar(root.gameObject, humanDescription);
-            if (!avatar.isValid)
-                Debug.LogError($"{avatar.name} is not valid");
+            if (!avatar.isValid || !avatar.isHuman)
+            {
+                Debug.LogError($"Error when building avatar");
+            }
             return avatar;
         }
 

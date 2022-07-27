@@ -1,14 +1,16 @@
-# Export Types
+# Export
 
 ## File Format
+
 - *GLTF*
 - *GLB*
 
 
-The GLB file locates all of the elements, including animations, materials, node hierarchy and cameras in one single file. In comparison, the GLTF file requires external files, such as for textures data. For more info about gltf, check this [link](https://www.khronos.org/registry/glTF/specs/2.0/glTF-2.0.html).
+The GLB file encapsulate all of the elements, including animations, materials, node hierarchy and cameras in one single file. In comparison, the GLTF file requires external files, such as for textures data. For more info about gltf, check this [link](https://www.khronos.org/registry/glTF/specs/2.0/glTF-2.0.html).
 
 
 ## Usage Scenarios
+
 - [*Avatar*](./Avatar.md)
 - [*Scene*](./Scene.md)
 

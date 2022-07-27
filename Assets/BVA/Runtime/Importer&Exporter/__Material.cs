@@ -216,9 +216,13 @@ namespace BVA
                 }
 
                 mrMapper.MetallicFactor = pbr.MetallicFactor;
+                mrMapper.RoughnessFactor = pbr.RoughnessFactor;
 
                 if (pbr.MetallicRoughnessTexture != null)
                 {
+                    if (mrMapper.RoughnessFactor == 1.0) // default value is 1.0f, but in Unity, 0.5 will gives you a better view
+                        mrMapper.RoughnessFactor = 0.5;
+
                     TextureId textureId = pbr.MetallicRoughnessTexture.Index;
                     await ConstructTexture(textureId.Value, textureId.Id, !KeepCPUCopyOfTexture, true);
                     mrMapper.MetallicRoughnessTexture = _assetCache.TextureCache[textureId.Id].Texture;
@@ -234,7 +238,6 @@ namespace BVA
                     }
                 }
 
-                mrMapper.RoughnessFactor = pbr.RoughnessFactor;
             }
 
             if (mapper is ISpecGlossUniformMap sgMapper)

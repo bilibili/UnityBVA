@@ -17,6 +17,7 @@ namespace ADBRuntime.Mono
             {
                 var colliderLists = GenerateCollider(nodes, secondaryAnimation);
                 GeneratePoint(root, nodes, secondaryAnimation, colliderLists);
+                root.gameObject.AddComponent<CharacterPhysicsContoller>().isClone=true;
             }
 
         }
@@ -41,20 +42,20 @@ namespace ADBRuntime.Mono
                 {
                     setting = ScriptableObject.CreateInstance<ADBPhysicsSetting>();
                     setting.name = "Group "+i;
-                    setting.elasticityValue =(0.2f+boneGroup.stiffiness * 0.2f);//0.1~1
-                    setting.elasticityVelocityValue = boneGroup.dragForce * 0.05f;//0~1
+                    //setting.elasticityValue = Mathf.Atan(Mathf.Sqrt(boneGroup.stiffiness +4) -2) / (Mathf.PI);
+                    setting.vrmStiffnessForceValue = boneGroup.stiffiness;
+                    setting.dampingValue = 1 - boneGroup.dragForce;
+                    setting.elasticityVelocityValue =(1 - boneGroup.dragForce) * (1 - boneGroup.dragForce);
 
-                    //setting.stiffnessWorldValue = boneGroup.stiffiness;
-                    setting.stiffnessLocalValue = (boneGroup.stiffiness * 0.25f);//0~1
-                    setting.dampingValue = boneGroup.dragForce*0.9f;//0~1
+
+
 
                     setting.gravity = boneGroup.gravityDir*9.8f;
-                    setting.gravityScaleValue = boneGroup.gravityPower;
+                    setting.gravityScaleValue = boneGroup.gravityPower*0.8f+0.2f;
                     setting.lengthLimitForceScaleValue = 1;
                     setting.isComputeStructuralVertical = false;
                     setting.structuralShrinkHorizontal = 0.5f;
                     setting.structuralStretchHorizontal = 1.5f;
-                    setting.frictionValue = 0.5f;
                     setting.isComputeVirtual = false;
 
                 }
@@ -93,8 +94,35 @@ namespace ADBRuntime.Mono
             {
                 createProcessors[i].Initialize();
             }
-             var controller = root.gameObject.AddComponent<ADBRuntimeController>();
+
+            for (int i = 0; i < createProcessors.Count; i++)
+            {
+                float lengthAvg=0;
+                int pointCount=0;
+                for (int ii = 0; ii < createProcessors[i].allPointList.Count; ii++)
+                {
+                    var pointData = createProcessors[i].allPointList[ii].pointRead;
+                    lengthAvg += pointData.initialLocalPositionLength;
+                    pointCount++;
+                }
+                lengthAvg /= pointCount;
+                lengthAvg = 0.14f/ lengthAvg;
+                var setting = createProcessors[i].GetADBSetting();
+
+                if (lengthAvg>1f)
+                {
+                    setting.vrmStiffnessForceValue = Mathf.Clamp01(setting.vrmStiffnessForceValue * lengthAvg * lengthAvg);
+                }
+            }
+            for (int i = 0; i < createProcessors.Count; i++)
+            {
+                createProcessors[i].Initialize();
+            }
+
+            var controller = root.gameObject.AddComponent<ADBRuntimeController>();
             controller.colliderCollisionType = ColliderCollisionType.Point;
+            controller.updateMode = UpdateMode.LateUpdate;
+            controller.iteration = 4;
         }
 
         private static ADBRuntimePoint CreateADBPoint(Transform target,string keyWord,int depth,int colliderMask,float hitRadius)

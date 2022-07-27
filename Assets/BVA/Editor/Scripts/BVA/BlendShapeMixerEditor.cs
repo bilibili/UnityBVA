@@ -29,6 +29,7 @@ namespace BVA.Component
             //"BlendShape List",
             "Material List"
         };
+
         private void refreshSMRComponent()
         {
             materialRenders = mixer.GetComponentsInChildren<SkinnedMeshRenderer>();
@@ -99,6 +100,7 @@ namespace BVA.Component
             var cache = blendShapeDic[rendererName];
             return (cache.BlendShapeNames, cache.BlendShapeIndexes);
         }
+
         private void OnEnable()
         {
             //presetNames = (System.Enum.GetValues(typeof(BlendShapeMixerPreset)) as BlendShapeMixerPreset[]).Select(x => x.ToString()).ToArray();
@@ -109,7 +111,6 @@ namespace BVA.Component
             }
             refreshSMRComponent();
             SelectedIndex = 0;
-
         }
         List<bool> m_meshFolds = new List<bool>();
 
@@ -398,29 +399,65 @@ namespace BVA.Component
 
         public override void OnInspectorGUI()
         {
-            //base.OnInspectorGUI();
-            presetNames = mixer.keys.Select(x => x.keyName).ToArray();
-            DrawBlendShapeMixerSelect();
-            EditorGUILayout.Space();
-            m_mode = GUILayout.Toolbar(m_mode, EDIT_MODES);
-            switch (m_mode)
+            base.OnInspectorGUI();
+            if (!Application.isPlaying)
             {
-                case 0:
-                    {
-                        AllBlendShapeBindsGUI(); ;
-                    }
-                    break;
-                case 1:
-                    {
-                        if (GUILayout.Button("Clear"))
+                presetNames = mixer.keys.Select(x => x.keyName).ToArray();
+                DrawBlendShapeMixerSelect();
+                EditorGUILayout.Space();
+                m_mode = GUILayout.Toolbar(m_mode, EDIT_MODES);
+                switch (m_mode)
+                {
+                    case 0:
                         {
-                            currentKey.materialFloatValues?.Clear();
-                            currentKey.materialColorValues?.Clear();
-                            currentKey.materialVector4Values?.Clear();
+                            AllBlendShapeBindsGUI(); ;
                         }
-                        DrawMaterialBindingGUI();
+                        break;
+                    case 1:
+                        {
+                            if (GUILayout.Button("Clear"))
+                            {
+                                currentKey.materialFloatValues?.Clear();
+                                currentKey.materialColorValues?.Clear();
+                                currentKey.materialVector4Values?.Clear();
+                            }
+                            DrawMaterialBindingGUI();
+                        }
+                        break;
+                }
+            }
+            else
+            {
+                foreach (var key in mixer.keys)
+                {
+                    var oValue = mixer.RuntimeWeight[key.keyName];
+                    var value = EditorGUILayout.Slider(key.keyName, mixer.RuntimeWeight[key.keyName], 0, 1);
+                    if (oValue != value)
+                    {
+                        mixer.RuntimeWeight[key.keyName] = value;
+
+                        foreach (var blendshapeValue in key.blendShapeValues)
+                        {
+                            blendshapeValue.node.SetBlendShapeWeight(blendshapeValue.index, blendshapeValue.weight * mixer.RuntimeWeight[key.keyName]);
+                        }
+
+                        foreach (var materialValue in key.materialVector4Values)
+                        {
+                            Vector4 targetValue = materialValue.baseValue + (materialValue.targetValue - materialValue.baseValue) * mixer.RuntimeWeight[key.keyName];
+                            materialValue.node.materials[materialValue.index].SetVector(materialValue.propertyName, targetValue);
+                        }
+                        foreach (var materialValue in key.materialColorValues)
+                        {
+                            Color targetValue = materialValue.baseValue + (materialValue.targetValue - materialValue.baseValue) * mixer.RuntimeWeight[key.keyName];
+                            materialValue.node.materials[materialValue.index].SetColor(materialValue.propertyName, targetValue);
+                        }
+                        foreach (var materialValue in key.materialFloatValues)
+                        {
+                            float targetValue = materialValue.baseValue + (materialValue.targetValue - materialValue.baseValue) * mixer.RuntimeWeight[key.keyName];
+                            materialValue.node.materials[materialValue.index].SetFloat(materialValue.propertyName, targetValue);
+                        }
                     }
-                    break;
+                }
             }
         }
     }

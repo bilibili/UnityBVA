@@ -63,15 +63,15 @@ namespace BVA
             for (int i = 0; i < newLightmaps.Length; i++)
             {
                 newLightmaps[i] = new LightmapData();
-                newLightmaps[i].lightmapColor = await GetLightmap(ext.lightmaps[i].lightmapColor);
+                newLightmaps[i].lightmapColor = (Texture2D)await GetTextureAsLinear(ext.lightmaps[i].lightmapColor);
 
                 if (ext.lightmapsMode != LightmapsMode.NonDirectional)
                 {
-                    newLightmaps[i].lightmapDir = await GetLightmap(ext.lightmaps[i].lightmapDir);
+                    newLightmaps[i].lightmapDir = (Texture2D)await GetLightmap(ext.lightmaps[i].lightmapDir);
                     if (newLightmaps[i].shadowMask != null)
                     {
                         // If the textuer existed and was set in the data file.
-                        newLightmaps[i].shadowMask = await GetLightmap(ext.lightmaps[i].shadowMask);
+                        newLightmaps[i].shadowMask = (Texture2D)await GetLightmap(ext.lightmaps[i].shadowMask);
                     }
                 }
             }

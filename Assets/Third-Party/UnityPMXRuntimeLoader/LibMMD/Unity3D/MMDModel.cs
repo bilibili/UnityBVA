@@ -262,7 +262,7 @@ namespace LibMMD.Unity3D
                 SkinnedMeshRenderer.materials = Materials;
 
                 MaterialMorphRemover.HideMaterialMorphs(this);
-                ADBRuntime.Mono.ADBPMXRuntimeGenerate.Generate(bones,this);
+                ADBRuntime.Mono.ADBPMXRuntimeGenerate.Generate(bones, this);
                 //AttachPhysicComponents(bones, this);
             }
             catch (Exception e)
@@ -289,7 +289,7 @@ namespace LibMMD.Unity3D
             var ret = new UnityEngine.Material[model.Parts.Length];
             for (var i = 0; i < model.Parts.Length; i++)
             {
-                UnityEngine.Material temp = null ;
+                UnityEngine.Material temp = null;
                 switch (MaterialLoader.UseMaterialType)
                 {
                     case MaterialLoader.MaterialType.Default:
@@ -297,7 +297,7 @@ namespace LibMMD.Unity3D
                         break;
                     case MaterialLoader.MaterialType.MToon:
 
-                        temp=materialLoader.LoadMToonMaterial(model.Parts[i].Material, config);
+                        temp = materialLoader.LoadMToonMaterial(model.Parts[i].Material, config);
                         break;
                     case MaterialLoader.MaterialType.Zelda:
                         temp = materialLoader.LoadZeldaMaterial(model.Parts[i].Material, config);
@@ -519,15 +519,15 @@ namespace LibMMD.Unity3D
                         normals[vertexIndex] = RawMMDModel.Vertices[vertexIndex].Normal;
                         isEmpty = false;
                     }
-                    if (!isEmpty )
+                    if (!isEmpty)
                     {
                         bool hasSameName = false;
-                        foreach(var v in blendShapes)
+                        foreach (var v in blendShapes)
                         {
-                            if(v.name== vertexMorphs[i].Name)
+                            if (v.name == vertexMorphs[i].Name)
                                 hasSameName = true;
                         }
-                        if(!hasSameName)
+                        if (!hasSameName)
                             blendShapes.Add((vertexMorphs[i].Name, offsets, normals));
                     }
                 }

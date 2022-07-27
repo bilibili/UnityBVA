@@ -136,11 +136,8 @@ namespace BVA
         /// If audio length > this value, export as ogg if ExportAudioFormat is DEFAULT
         /// </summary>
         public static float ExportOggAudioClipLength = 5.0f;
-        /// <summary>
-        /// Create a GLTFExporter that exports out a transform
-        /// </summary>
-        /// <param name="rootTransforms">Root transform of object to export</param>
 
+        public static bool ExportAnimationClips = false;
         public static void SetDefaultAvatarExportSetting()
         {
             GLTFSceneExporter.ExportFullPath = true;
@@ -516,7 +513,8 @@ namespace BVA
             ExportAvatar();
             ExportBlendShapeMixer();
 #if UNITY_EDITOR
-            ExportAnimation();
+            if (ExportAnimationClips)
+                ExportAnimation();
 #endif
             ExportVideoPlayer();
             //ExportTimeline();

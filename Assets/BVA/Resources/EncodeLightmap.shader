@@ -35,6 +35,15 @@ Shader "Hidden/EncodeLightmap" {
 				static const float gamma_max_brightness = 5;
 				static const float linear_max_brightness = pow(gamma_max_brightness, gamma_value);
 
+				inline half3 GammaToLinearSpace (half3 sRGB)
+				{
+					return sRGB * (sRGB * (sRGB * 0.305306011h + 0.682171111h) + 0.012522878h);
+				}
+				inline half3 LinearToGammaSpace (half3 linRGB)
+				{
+					linRGB = max(linRGB, half3(0.h, 0.h, 0.h));
+					return max(1.055h * pow(linRGB, 0.416666667h) - 0.055h, 0.h);
+				}
 				inline float4 EncodeDldr(float4 col)
 				{
 					// double LDR conversion
@@ -111,6 +120,12 @@ Shader "Hidden/EncodeLightmap" {
 					else if (_MODE == 3) {
 						//result.rgb = DecodeLightmap(result, float4(LIGHTMAP_HDR_MULTIPLIER, LIGHTMAP_HDR_EXPONENT, 0.0h, 0.0h));
 						result = DecodeDldr(result);
+					}
+					else if (_MODE == 4) {
+						result.rgb = GammaToLinearSpace(result.rgb);
+					}
+					else if (_MODE == 5) {
+						result.rgb = LinearToGammaSpace(result.rgb);
 					}
 					 //#endif
 					// ..

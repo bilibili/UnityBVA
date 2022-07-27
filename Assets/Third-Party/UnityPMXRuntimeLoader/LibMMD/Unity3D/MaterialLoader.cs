@@ -42,7 +42,7 @@ namespace LibMMD.Unity3D
 		}
 		public UnityEngine.Material LoadMToonMaterial(MMDMaterial mmdMaterial, MMDUnityConfig config) {
 			var mainTexture = _textureLoader.LoadTexture(mmdMaterial.Texture);
-			var material = new UnityEngine.Material(Shader.Find("Shader Graphs/MToon"));
+			var material = new UnityEngine.Material(Shader.Find("VRM/URP/MToon"));
 			ConfigMToonMaterial(mmdMaterial, config, material, mainTexture);
 			return material;
 		}
@@ -144,7 +144,7 @@ namespace LibMMD.Unity3D
 		private void ConfigMToonMaterial(MMDMaterial mmdMaterial, MMDUnityConfig config, UnityEngine.Material material, Texture mainTexture)
 		{
 			material.SetColor("_Color", mmdMaterial.DiffuseColor);
-			material.SetColor("_EmissionColor", mmdMaterial.AmbientColor);
+			material.SetColor("_EmissionColor", Color.black);
 			material.SetColor("_ShadeColor", mmdMaterial.DiffuseColor);
 			material.SetFloat("_ToonyLighting", mmdMaterial.Shiness);
 			material.SetFloat("_OutlineWidth", mmdMaterial.EdgeSize);

@@ -1,8 +1,8 @@
 # Supported Components
 
-Unity Components attach to GameObject, most of it export as extras under the `Node`. 
+Unity Components attach to `GameObject`, most of it export as extras under the `Node`. 
 
-Also there are some exceptions, like collider, light, for a large number of reusable components, it is best to export as extensions.
+There are some exceptions, like `Collider`, `Light`, for a large number of reusable components, it is best to export as extensions.
 
 Most Components can be exported by code generator, these have been officially adopted.
 

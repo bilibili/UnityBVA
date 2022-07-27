@@ -298,6 +298,10 @@ namespace ADBRuntime.Mono
         }
         private void ClacBounds()
         {
+            if (allChain.Length==0)
+            {
+                return;
+            }
             OverlapBox = allChain[0].GetCurrentRangeBounds();
             for (int i = 1; i < allChain.Length; i++)
             {
@@ -326,7 +330,7 @@ namespace ADBRuntime.Mono
 
         private void OnDrawGizmos()
         {
-            if (!isDrawGizmo && isActiveAndEnabled) return;
+            if (!isDrawGizmo || !isActiveAndEnabled) return;
 
             for (int i = 0; i < allChain?.Length; i++)
             {
@@ -337,10 +341,10 @@ namespace ADBRuntime.Mono
             Vector3 center = OverlapBox.center ;
             Vector3 halfExtent = OverlapBox.extents * scale;
             Gizmos.DrawWireCube(center, halfExtent*2);
-            if (Application.isPlaying)
+/*            if (Application.isPlaying)
             {
-                ADBkernel.DrawGizmos();
-            }
+                ADBkernel?.DrawGizmos();
+            }*/
         }
     }
     public enum ColliderCollisionType

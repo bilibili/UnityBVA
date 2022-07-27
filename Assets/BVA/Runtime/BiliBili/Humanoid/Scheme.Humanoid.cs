@@ -68,17 +68,6 @@ namespace GLTF.Schema.BVA
     public class GlTFHumanoidBone : GLTFProperty
     {
         public string bone;
-        public AvatarBone avatarBone
-        {
-            set
-            {
-                bone = value.ToString();
-            }
-            get
-            {
-                return (AvatarBone)System.Enum.Parse(typeof(AvatarBone), bone, true);
-            }
-        }
 
         public int node = -1;
 

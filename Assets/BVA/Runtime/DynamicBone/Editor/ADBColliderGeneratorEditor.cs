@@ -13,6 +13,7 @@ namespace ADBRuntime.UntiyEditor
     [CustomEditor(typeof(ADBColliderGenerateTool))]
     public class ADBColliderGeneratorEditor : Editor
     {
+        public const string MANUAL = "Add to Animator and Transform, then click GenerateCollider";
         private bool isDeleteCollider;
         private bool isGenerateColliderOpenTrigger;
         private ADBColliderGenerateTool controller;
@@ -26,13 +27,14 @@ namespace ADBRuntime.UntiyEditor
             serializedObject.Update();
 
             Titlebar("Human Avatar Collider Generate Tool", new Color(0.5F, 1, 1));
+            ShowManualOnFirstScript();
             if (controller.gameObject.GetComponent<Animator>() == null)
             {
                 Titlebar("Error: No Animator Component or animator is not human!", new Color(0.7f, 0.3f, 0.3f));
             }
-            if (controller.gameObject.GetComponentsInChildren<ADBChainProcessor>() == null)
+            if (controller.gameObject.GetComponentsInChildren<ADBChainProcessor>().Length==0)
             {
-                Titlebar("Tips:This tool will read physicsbone data to get fit size .", Color.grey);
+                Titlebar("Warning:Tool did not find the physics bone, will generate default range .", Color.yellow);
             }
             if (controller.gameObject.GetComponentsInChildren<ADBColliderReader>().Length != 0 && (controller.generateColliderList == null || controller.generateColliderList.Count == 0))
             {
@@ -147,6 +149,15 @@ namespace ADBRuntime.UntiyEditor
             GUI.backgroundColor = backgroundColor;
 
             GUILayout.Space(3);
+        }
+
+        private void ShowManualOnFirstScript()
+        {
+            EditorGUI.BeginDisabledGroup(true);
+
+            EditorGUILayout.TextArea(MANUAL);
+            EditorGUI.EndDisabledGroup();
+
         }
     }
 }

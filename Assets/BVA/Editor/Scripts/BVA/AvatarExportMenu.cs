@@ -203,9 +203,13 @@ namespace BVA
                 exportInfo = new ExportInfo(Root);
             }
             EditorGUILayout.EndHorizontal();
-            EditorGUILayout.Separator();
+            //EditorGUILayout.Separator();
             if (exportInfo != null)
                 ExportCommon.EditorGUICollectExportInfo(exportInfo);
+
+            GLTFSceneExporter.ExportAnimationClips = EditorGUILayout.Toggle("Export Animations", GLTFSceneExporter.ExportAnimationClips);
+            if(GLTFSceneExporter.ExportAnimationClips)
+                EditorGUILayout.HelpBox($"Export legacy animation on Animation, as well convert mecanim animation to legacy skin animation and export it", MessageType.Info);
 
             EditorGUILayout.Separator();
             CheckRootValidity();

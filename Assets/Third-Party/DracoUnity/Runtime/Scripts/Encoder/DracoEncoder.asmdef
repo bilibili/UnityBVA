@@ -1,0 +1,16 @@
+{
+    "name": "DracoEncoder",
+    "references": [
+        "GUID:1f1db07d22489445ab0fc8ed6ef2ed4f",
+        "GUID:d8b63aba1907145bea998dd612889d6b"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

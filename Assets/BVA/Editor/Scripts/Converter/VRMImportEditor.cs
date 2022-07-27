@@ -6,6 +6,10 @@ using System.Text.RegularExpressions;
 using VRMShaders;
 using System.Collections.Generic;
 using ADBRuntime.Mono;
+using System;
+using System.Linq;
+using BVA;
+using BVA.Component;
 
 namespace VRM
 {
@@ -24,6 +28,7 @@ namespace VRM
             {
                 Selection.activeGameObject = ImportRuntime(path);
                 SwitchToURPMToon(Selection.activeGameObject);
+                SwitchComponent(Selection.activeGameObject);
                 return;
             }
         }
@@ -46,7 +51,7 @@ namespace VRM
 
         static void SwitchToURPMToon(GameObject go)
         {
-            Shader replaceShader = Shader.Find("Shader Graphs/MToon");
+            Shader replaceShader = Shader.Find("VRM/URP/MToon");
             var skinnedMeshRenderers = go.GetComponentsInChildren<Renderer>();
             foreach (var skinnedMeshRenderer in skinnedMeshRenderers)
             {
@@ -55,6 +60,176 @@ namespace VRM
                     v.shader = replaceShader;
                 }
             }
+        }
+
+        static void SwitchComponent(GameObject go)
+        {
+            //Meta Info
+            VRMMetaObject meta = go.GetComponent<VRMMeta>().Meta;
+            BVAMetaInfoScriptableObject bvaMetaInfo = ScriptableObject.CreateInstance<BVA.Component.BVAMetaInfoScriptableObject>();
+            bvaMetaInfo.formatVersion = meta.ExporterVersion;
+            bvaMetaInfo.title = meta.Title;
+            bvaMetaInfo.version = meta.Version;
+            bvaMetaInfo.author = meta.Author;
+            bvaMetaInfo.contact = meta.ContactInformation;
+            bvaMetaInfo.reference = meta.Reference;
+            bvaMetaInfo.thumbnail = meta.Thumbnail;
+            bvaMetaInfo.contentType = ContentType.Avatar;
+            bvaMetaInfo.legalUser = (LegalUser)Enum.GetNames(typeof(AllowedUser)).ToList().IndexOf(meta.AllowedUser.ToString());
+            bvaMetaInfo.violentUsage = (UsageLicense)Enum.GetNames(typeof(UssageLicense)).ToList().IndexOf(meta.ViolentUssage.ToString());
+            bvaMetaInfo.sexualUsage = (UsageLicense)Enum.GetNames(typeof(UssageLicense)).ToList().IndexOf(meta.SexualUssage.ToString());
+            bvaMetaInfo.commercialUsage = (UsageLicense)Enum.GetNames(typeof(UssageLicense)).ToList().IndexOf(meta.CommercialUssage.ToString());
+            bvaMetaInfo.licenseType = (BVA.Component.LicenseType)Enum.GetNames(typeof(LicenseType)).ToList().IndexOf(meta.LicenseType.ToString());
+            bvaMetaInfo.customLicenseUrl = meta.OtherPermissionUrl;
+            go.AddComponent<BVAMetaInfo>().metaInfo = bvaMetaInfo;
+
+            //BlendshapeMixer
+            BlendShapeMixer mixer = go.AddComponent<BlendShapeMixer>();
+            mixer.CreateDefaultPreset();
+            BlendShapeAvatar bsa = go.GetComponent<VRMBlendShapeProxy>().BlendShapeAvatar;
+            foreach (BlendShapeClip clip in bsa.Clips)
+            {
+                switch (clip.Preset)
+                {
+                    case BlendShapePreset.Unknown:
+                        mixer.keys.Add(new BVA.BlendShapeKey()
+                        {
+                            keyName = clip.BlendShapeName,
+                            preset = BlendShapeMixerPreset.Custom
+                        });
+
+                        foreach (var value in clip.Values)
+                        {
+                            mixer.keys[mixer.keys.Count - 1].blendShapeValues.Add(new BlendShapeValueBinding()
+                            {
+                                node = go.transform.Find(value.RelativePath).GetComponent<SkinnedMeshRenderer>(),
+                                index = value.Index,
+                                weight = value.Weight
+                            });
+                        }
+                        break;
+                    case BlendShapePreset.Neutral:
+                        SetPresetValue(clip, mixer, (int)BlendShapeMixerPreset.Neutral, go);
+                        break;
+                    case BlendShapePreset.A:
+                        SetPresetValue(clip, mixer, (int)BlendShapeMixerPreset.A, go);
+                        break;
+                    case BlendShapePreset.I:
+                        SetPresetValue(clip, mixer, (int)BlendShapeMixerPreset.I, go);
+                        break;
+                    case BlendShapePreset.U:
+                        SetPresetValue(clip, mixer, (int)BlendShapeMixerPreset.U, go);
+                        break;
+                    case BlendShapePreset.E:
+                        SetPresetValue(clip, mixer, (int)BlendShapeMixerPreset.E, go);
+                        break;
+                    case BlendShapePreset.O:
+                        SetPresetValue(clip, mixer, (int)BlendShapeMixerPreset.O, go);
+                        break;
+                    case BlendShapePreset.Blink:
+                        SetPresetValue(clip, mixer, (int)BlendShapeMixerPreset.Blink, go);
+                        break;
+                    case BlendShapePreset.Joy:
+                        SetPresetValue(clip, mixer, (int)BlendShapeMixerPreset.Joy, go);
+                        break;
+                    case BlendShapePreset.Angry:
+                        SetPresetValue(clip, mixer, (int)BlendShapeMixerPreset.Angry, go);
+                        break;
+                    case BlendShapePreset.Sorrow:
+                        SetPresetValue(clip, mixer, (int)BlendShapeMixerPreset.Sorrow, go);
+                        break;
+                    case BlendShapePreset.Fun:
+                        SetPresetValue(clip, mixer, (int)BlendShapeMixerPreset.Fun, go);
+                        break;
+                    case BlendShapePreset.LookUp:
+                        SetPresetValue(clip, mixer, (int)BlendShapeMixerPreset.LookUp, go);
+                        break;
+                    case BlendShapePreset.LookDown:
+                        SetPresetValue(clip, mixer, (int)BlendShapeMixerPreset.LookDown, go);
+                        break;
+                    case BlendShapePreset.LookLeft:
+                        SetPresetValue(clip, mixer, (int)BlendShapeMixerPreset.LookLeft, go);
+                        break;
+                    case BlendShapePreset.LookRight:
+                        SetPresetValue(clip, mixer, (int)BlendShapeMixerPreset.LookRight, go);
+                        break;
+                    case BlendShapePreset.Blink_L:
+                        SetPresetValue(clip, mixer, (int)BlendShapeMixerPreset.Blink_L, go);
+                        break;
+                    case BlendShapePreset.Blink_R:
+                        SetPresetValue(clip, mixer, (int)BlendShapeMixerPreset.Blink_R, go);
+                        break;
+                }
+            }
+            // Don't destroy original VRM Component
+            //GameObject.DestroyImmediate(go.GetComponent<VRMMeta>());
+            //GameObject.DestroyImmediate(go.GetComponent<VRMHumanoidDescription>());
+            //GameObject.DestroyImmediate(go.GetComponent<VRMBlendShapeProxy>());
+            //GameObject.DestroyImmediate(go.GetComponent<VRMFirstPerson>());
+            //GameObject.DestroyImmediate(go.GetComponent<VRMLookAtHead>());
+            //GameObject.DestroyImmediate(go.GetComponent<VRMLookAtBoneApplyer>());
+        }
+
+        static void SetPresetValue(BlendShapeClip clip, BlendShapeMixer mixer, int preset, GameObject go)
+        {
+            foreach (var value in clip.Values)
+            {
+                mixer.keys[preset].blendShapeValues.Add(new BlendShapeValueBinding()
+                {
+                    node = go.transform.Find(value.RelativePath).GetComponent<SkinnedMeshRenderer>(),
+                    index = value.Index,
+                    weight = value.Weight
+                });
+            }
+
+            foreach (var value in clip.MaterialValues)
+            {
+                (SkinnedMeshRenderer targetNode, int targetIndex) = FindMaterial(go, value.MaterialName);
+
+                mixer.keys[preset].materialVector4Values.Add(new MaterialVector4ValueBinding()
+                {
+                    node = targetNode,
+                    index = targetIndex,
+                    propertyName = value.ValueName,
+                    targetValue = value.TargetValue,
+                    baseValue = value.BaseValue
+                });
+
+                // VRM only provide Vector4 parameter
+                //mixer.keys[preset].materialColorValues.Add(new MaterialColorValueBinding()
+                //{
+                //    node = targetNode,
+                //    index = targetIndex,
+                //    propertyName = value.ValueName,
+                //    targetValue = value.TargetValue,
+                //    baseValue = value.BaseValue
+                //});
+                //mixer.keys[preset].materialFloatValues.Add(new MaterialFloatValueBinding()
+                //{
+                //    node = targetNode,
+                //    index = targetIndex,
+                //    propertyName = value.ValueName,
+                //    targetValue = value.TargetValue,
+                //    baseValue = value.BaseValue
+                //});
+            }
+        }
+
+        static (SkinnedMeshRenderer, int) FindMaterial(GameObject go, string materialName)
+        {
+            SkinnedMeshRenderer[] renderers = go.GetComponentsInChildren<SkinnedMeshRenderer>();
+            foreach (SkinnedMeshRenderer renderer in renderers)
+            {
+                for (int i = 0; 1 < renderer.materials.Length; i++)
+                {
+                    if (renderer.materials[i].name == materialName)
+                    {
+                        return (renderer, i);
+                    }
+                }
+            }
+
+            return (null, -1);
         }
 
         const string AssetFolderName = "Assets";
@@ -88,6 +263,8 @@ namespace VRM
 
                     GameObject model = ImportRuntime(inputFileAbsolutePath);
                     SwitchToURPMToon(model);
+                    SwitchComponent(model);
+                    
                     if (model == null)
                     {
                         Debug.Log("Error on loading : " + inputFileAbsolutePath);
@@ -128,6 +305,9 @@ namespace VRM
                     {
                         Directory.CreateDirectory(physicsFolderPath);
                     }
+                    
+                    AssetDatabase.CreateAsset(model.GetComponent<BVAMetaInfo>().metaInfo, outputFolderRelativePath + "MetaInfo.asset");
+                    AssetDatabase.CreateAsset(model.GetComponent<BVAMetaInfo>().metaInfo.thumbnail, outputFolderRelativePath + "Thumbnail.asset");
 
                     var renderers = model.GetComponentsInChildren<SkinnedMeshRenderer>();
                     foreach (var renderer in renderers)

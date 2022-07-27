@@ -1,3 +1,4 @@
+#if UNITY_STANDALONE || UNITY_WEBGL
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,7 +15,6 @@ using System.Text;
 using UnityEngine.Networking;
 using VRM;
 using UniGLTF;
-
 public class WebGLModelIO : MonoBehaviour
 {
     #region ExternFunction
@@ -148,7 +148,7 @@ public class WebGLModelIO : MonoBehaviour
         Destroy(Model.GetComponent<VRMLookAtHead>());
         Destroy(Model.GetComponent<VRMLookAtBoneApplyer>());
 
-        Shader replaceShader = Shader.Find("Shader Graphs/MToon");
+        Shader replaceShader = Shader.Find("VRM/URP/MToon");
         var skinnedMeshRenderers = loaded.gameObject.GetComponentsInChildren<Renderer>();
         foreach (var skinnedMeshRenderer in skinnedMeshRenderers)
         {
@@ -201,3 +201,4 @@ public class WebGLModelIO : MonoBehaviour
     }
 #endregion
 }
+#endif

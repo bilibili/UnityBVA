@@ -2,9 +2,9 @@
 
 Unlit shader provide the best performance.
 it contains only two parameter:
-- `base color` - The base color of the material.
-- `base map` - The base texture of the material.
+- `baseColor` - The base color of the material.
+- `baseMap` - The base texture of the material.
 
 `FinalColor = BaseColor * BaseMap`
 
-In BVA, any materials that using custom shader will export Unlit Extension, this ensure that it can be open and view by other gltf tools. 
+In BVA, any materials that using custom shader will export `KHR_materials_unlitExtension`, this ensure previewing by other gltf tools. 

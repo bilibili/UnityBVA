@@ -1,6 +1,6 @@
 # Scene Export
 
-## Export inside editor supports all features. Three types exporting method :
+## Export inside editor supports all features. Three types exporting method
 
 1. Export Root GameObject with all its childs
 ![glb](pics/scene_import_0.png)

@@ -14,9 +14,9 @@ namespace BVA.Loader
 			_rootDirectoryPath = rootDirectoryPath;
 		}
 
-		public async Task<Stream> LoadStreamAsync(string relativeFilePath)
+		public Task<Stream> LoadStreamAsync(string relativeFilePath)
 		{
-			return LoadStream(relativeFilePath);
+			return Task.FromResult(LoadStream(relativeFilePath));
 		}
 
 		public Stream LoadStream(string relativeFilePath)

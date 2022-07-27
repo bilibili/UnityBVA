@@ -78,7 +78,30 @@ namespace BVA
             _assetCache.TextureCache[textureId.Id].Texture = exportTexture;
             return exportTexture;
         }
-        protected ImageMimeType TextureMimeType(GLTFImage image)
+        protected async Task<Texture2D> GetTextureLinear2Gamma(TextureId textureId)
+        {
+            await ConstructImageBuffer(textureId.Value, textureId.Id);
+            await ConstructTexture(textureId.Value, textureId.Id, true, false);
+            var texture = _assetCache.TextureCache[textureId.Id].Texture;
+            //if (lightmapEncoding == BVA_light_lightmapExtension.LightmapEncoding.None)
+            //    return texture as Texture2D;
+            var destRenderTexture = RenderTexture.GetTemporary(texture.width, texture.height, 0, RenderTextureFormat.DefaultHDR, RenderTextureReadWrite.Linear);
+
+            //GL.sRGBWrite = false;
+            var encodeLightmapShader = Resources.Load<Shader>("EncodeLightmap");
+            var _lightmapEncodeMaterial = new Material(encodeLightmapShader);
+            _lightmapEncodeMaterial.SetInt("_MODE", 5);
+            Graphics.Blit(texture, destRenderTexture, _lightmapEncodeMaterial);
+
+            var exportTexture = new Texture2D(texture.width, texture.height, TextureFormat.RGBAHalf, false, true);
+            exportTexture.ReadPixels(new Rect(0, 0, destRenderTexture.width, destRenderTexture.height), 0, 0);
+            exportTexture.Apply();
+
+            RenderTexture.ReleaseTemporary(destRenderTexture);
+            _assetCache.TextureCache[textureId.Id].Texture = exportTexture;
+            return exportTexture;
+        }
+        protected ImageMimeType GetImageMimeType(GLTFImage image)
         {
             if (!string.IsNullOrEmpty(image.Uri))
             {
@@ -100,7 +123,7 @@ namespace BVA
             if (_assetCache.ImageCache[imageCacheIndex] == null)
             {
                 Stream stream;
-                ImageMimeType mimeType = TextureMimeType(image);
+                ImageMimeType mimeType = GetImageMimeType(image);
                 if (image.Uri == null)
                 {
                     var bufferView = image.BufferView.Value;
@@ -865,6 +888,43 @@ namespace BVA
 
             return id;
         }
+        private string GetMimeTypeName(ImageMimeType mimeType)
+        {
+            switch (mimeType)
+            {
+                case ImageMimeType.COMMON:
+                    return "image/png";
+                case ImageMimeType.KTX:
+                    return "image/ktx";
+                case ImageMimeType.BASIS:
+                    return "image/basis";
+            }
+            return null;
+        }
+        private ImageId ExportImageInternalBuffer(byte[] bytes,ImageMimeType mimeType)
+        {
+            var image = new GLTFImage
+            {
+                MimeType = GetMimeTypeName(mimeType)
+            };
+
+            var byteOffset = _bufferWriter.BaseStream.Position;
+            {
+                _bufferWriter.Write(bytes);
+            }
+
+            var byteLength = _bufferWriter.BaseStream.Position - byteOffset;
+            byteLength = AppendToBufferMultiplyOf4(byteOffset, byteLength);
+            image.BufferView = ExportBufferView((uint)byteOffset, (uint)byteLength);
+            var id = new ImageId
+            {
+                Id = _root.Images.Count,
+                Root = _root
+            };
+            _root.Images.Add(image);
+
+            return id;
+        }
 
 #if UNITY_EDITOR
         private ImageId EditorExportImageInternalBuffer(Texture texture, TextureMapType textureMapType)
@@ -927,8 +987,9 @@ namespace BVA
 
             var byteOffset = _bufferWriter.BaseStream.Position;
             {
-                var destRenderTexture = RenderTexture.GetTemporary(texture.width, texture.height, 24, RenderTextureFormat.ARGB32, texturMapType == TextureMapType.LightMapDir || texturMapType == TextureMapType.LightMapColor ? RenderTextureReadWrite.Linear : RenderTextureReadWrite.sRGB);
-                GL.sRGBWrite = texturMapType != TextureMapType.LightMapDir;
+                bool isLinear = texturMapType == TextureMapType.LightMapDir || texturMapType == TextureMapType.LightMapColor;
+                var destRenderTexture = RenderTexture.GetTemporary(texture.width, texture.height, 24, RenderTextureFormat.ARGB32, isLinear ? RenderTextureReadWrite.Linear : RenderTextureReadWrite.sRGB);
+                GL.sRGBWrite = !isLinear;
                 switch (texturMapType)
                 {
                     case TextureMapType.MetallicGloss:
@@ -945,7 +1006,7 @@ namespace BVA
                         break;
                 }
 
-                var exportTexture = new Texture2D(texture.width, texture.height, TextureFormat.ARGB32, false);
+                var exportTexture = new Texture2D(texture.width, texture.height, TextureFormat.ARGB32, !isLinear);
                 exportTexture.ReadPixels(new Rect(0, 0, destRenderTexture.width, destRenderTexture.height), 0, 0);
                 exportTexture.Apply();
 

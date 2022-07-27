@@ -138,7 +138,7 @@ public class SampleScript : MonoBehaviour
         modelType = ModelType.VRM;
         logText.text += $"成功加载VRM模型 : {vrmPath}  Load Time :{CpuWatch.Ellapsed}s\n";
 
-        Shader replaceShader = Shader.Find("Shader Graphs/MToon");
+        Shader replaceShader = Shader.Find("VRM/URP/MToon");
         var skinnedMeshRenderers = loaded.gameObject.GetComponentsInChildren<Renderer>();
         foreach (var skinnedMeshRenderer in skinnedMeshRenderers)
         {

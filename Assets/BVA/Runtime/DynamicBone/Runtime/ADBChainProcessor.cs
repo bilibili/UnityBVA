@@ -48,7 +48,6 @@ namespace ADBRuntime.Mono
             chainProcessor.SetDepth(-1);
             chainProcessor.index = -1;
             chainProcessor.allowCreateAllConstraint = false;
-            chainProcessor.initialScale = rootTransform.lossyScale;
 
             chainProcessor.allPointList = new List<ADBRuntimePoint>();
             chainProcessor.maxPointDepth = 1;
@@ -64,7 +63,6 @@ namespace ADBRuntime.Mono
             chainProcessor.SetDepth(-1);
             chainProcessor.index = -1;
             chainProcessor.allowCreateAllConstraint = false;
-            chainProcessor.initialScale = rootPoint.transform.lossyScale;
 
             chainProcessor.allPointList = new List<ADBRuntimePoint>();
             chainProcessor.maxPointDepth = 1;
@@ -185,7 +183,8 @@ namespace ADBRuntime.Mono
 
                     childPointTrans.parent = point.transform;
 
-                    ADBRuntimePoint virtualPoint = ADBRuntimePoint.CreateRuntimePoint(childPointTrans, point.depth + 1, point.keyWord, aDBSetting.isAllowComputeOtherConstraint);
+                    ADBRuntimePoint virtualPoint = ADBRuntimePoint.CreateRuntimePoint(childPointTrans,0, point.keyWord, aDBSetting.isAllowComputeOtherConstraint);
+                    virtualPoint.depth = point.depth + 1;
                     point.AddChild(virtualPoint);
                 }
                 else
@@ -306,6 +305,11 @@ namespace ADBRuntime.Mono
                 //processed
                 point.pointRead.stiffnessLocal = 1 - Mathf.Clamp01(Mathf.Cos(point.pointRead.stiffnessLocal * Mathf.PI * 0.5f));
                 point.pointRead.damping = 0.5f + point.pointRead.damping * 0.5f;
+
+                //-------------------------------------------------------------------------Temp Code
+                point.pointRead.vrmstiffnessForce = aDBSetting.vrmStiffnessForceValue;
+                //-------------------------------------------------------------------------End
+
             }
         }
 

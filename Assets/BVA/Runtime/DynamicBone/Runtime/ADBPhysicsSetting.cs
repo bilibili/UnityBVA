@@ -158,8 +158,8 @@ namespace ADBRuntime
         public bool ispointRadiuCurve = false;
 
         
-        public AnimationCurve value2Curve = new AnimationCurve(new Keyframe[] { new Keyframe(0.0f, 0f), new Keyframe(1.0f, 0f) });
-        public float value2Value = 0;
+        public AnimationCurve vrmStiffnessForceCurve = new AnimationCurve(new Keyframe[] { new Keyframe(0.0f, 0f), new Keyframe(1.0f, 0f) });
+        public float vrmStiffnessForceValue = 0;
         public AnimationCurve value3Curve = new AnimationCurve(new Keyframe[] { new Keyframe(0.0f, 0f), new Keyframe(1.0f, 0f) });
         public float value3Value = 0;
         public AnimationCurve value4Curve = new AnimationCurve(new Keyframe[] { new Keyframe(0.0f, 0f), new Keyframe(1.0f, 0f) });

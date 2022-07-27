@@ -1,48 +1,59 @@
 # Get Started with BVA
 
-## Installing BVA
-
-### System Requirements 
+## System Requirements 
 
 - Unity 2020.3 or later, works best on 2021.3 LTS
 
-### Build Target
+## Build Target
 
-- Standalone(Windows10 testified, Mac or Linux should also be OK)
+- Standalone(Windows10 testified, support Draco)
 - Android(vulkan or gles3.0 and linear texture must be supported)
 - iOS 10 or later
 - WebGL(works fine on Unity 2021 later,not tested)
 
 ## Sample Build Requirements
-All examples are located in `Assets/BVA/Samples`
 
 - Windows10 or later
 - MacOS
 - Android or iOS(only scene `WebLoad` is currently available, OpenFileDialog support standalone platform only)
 
+All examples are located in `Assets/BVA/Samples`:
+- [AvatarConfig](../docs/examples/AvatarConfig.md)
+- [FileView](../docs/examples/FileViewer.md)
+- [MultipleScenePayload](../docs/examples/MultipleScenePayload.md)
+- [RuntimeExport](../docs/examples/RuntimeExport.md)
+- [RuntimeLoad](../docs/examples/RuntimeLoad.md)
+- [WebLoad (support mobile platform)](../docs/examples/WebLoad.md)
+
 ## Environment Settings
 
-Must Meet:
+Must Meet
 
-Disable assembly version validation
+Disable `Assembly Version Validation`
 
 ![glb](pics/assembly_version_validation.png)
 
-allow Unsafe Code
+Allow `Unsafe Code`
 
-set Managed Stripping Level to `Disabled`
+Set `Managed Stripping Level` to `Disabled`
 
 ![glb](pics/managed_stripping_level.png)
 
-Set `ColorSpace` to Linear 
+Set `ColorSpace` to `Linear`
 
 ![glb](pics/color_space_setting.png)
 
-Build Requirement:
+## Build Settings
 
-include shaders or shader variant collection 
+Include shaders or shader variant collection
+
+![glb](pics/graphics_setting.png)
+
+Config shader stripping
 
 ![glb](pics/shader_stripping.png)
+
+If your project already integrated `UniVRM`, you need to remove the `VRM` folder under `Third-Party` firstly, then some error might shown up, you need to fix it manually.
 
 
 # Manuals

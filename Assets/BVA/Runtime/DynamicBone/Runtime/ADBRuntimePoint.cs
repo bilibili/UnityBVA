@@ -20,8 +20,6 @@ namespace ADBRuntime.Mono
         [NonSerialized]
         public PointReadWrite pointReadWrite;
         [SerializeField]
-        public float3 initialScale;
-        [SerializeField]
         public PointRead pointRead;
         [SerializeField]
         private ADBRuntimePoint parent;
@@ -54,7 +52,6 @@ namespace ADBRuntime.Mono
             point.pointRead = new PointRead();
             point.pointReadWrite = new PointReadWrite();
             point.allowCreateAllConstraint = isAllowComputeOtherConstraint;
-            point.initialScale = trans.lossyScale;
             return point;
         }
 
@@ -67,7 +64,7 @@ namespace ADBRuntime.Mono
             if (pointRead.radius > 0.005f)
             {
                 Matrix4x4 temp = Gizmos.matrix;
-                Gizmos.matrix = Matrix4x4.TRS(transform.position, Quaternion.FromToRotation(Vector3.up, pointRead.initialLocalPosition) * transform.rotation, transform.lossyScale/ initialScale);
+                Gizmos.matrix = Matrix4x4.TRS(transform.position, Quaternion.FromToRotation(Vector3.up, pointRead.initialLocalPosition) * transform.rotation, transform.lossyScale);
                 Gizmos.DrawWireSphere(Vector3.zero, pointRead.radius);
                 Gizmos.matrix = temp;
 

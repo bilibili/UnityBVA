@@ -4,7 +4,7 @@
 
 The ability to export animations is supported natively by GLTF. But is is limited to `transform & blendshape` properties.
 
-For this reason, only transform or blendshape key frame will be exported, and it's confined to `Animation` only.
+For this reason, only transform or blendshape key frame will be exported, and only `Animation` component attach when loading a model with animations(only legacy animation can be constructed at runtime).
 
 ## Export
 
@@ -19,13 +19,10 @@ public int animation;
 public List<int> animations;
 ```
 
-**Critical Notice** : `Mecanim animation(non-legacy)` doesn't support exporting. (tested it work on Editor, failed to constructing at runtime, so these parts has be removed)
+> **Critical Notice** : Firstly, convert `Mecanim Animation` to skin animation(aka legacy in Unity), the result works perfectly on all gltf applications. This process can takes a lot of time.
 
-## Alternative Solution
 
-Convert Mecanim animation to traditional animatin(lagacy), the result works perfectly on all gltf applications.
-
-## Load
+## Source
 
 - GLTF Animation (Internal)
 - BVH (External)

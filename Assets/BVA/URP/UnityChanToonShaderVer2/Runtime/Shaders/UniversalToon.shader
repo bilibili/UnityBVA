@@ -238,7 +238,7 @@ Shader "Universal Render Pipeline/Toon" {
             #pragma fragment frag
 
 
-            #pragma target 2.0
+            #pragma target 3.0
             //V.2.0.4
             #pragma multi_compile _IS_OUTLINE_CLIPPING_NO _IS_OUTLINE_CLIPPING_YES
             #pragma multi_compile _OUTLINE_NML _OUTLINE_POS
@@ -271,7 +271,7 @@ Shader "Universal Render Pipeline/Toon" {
             HLSLPROGRAM
             #pragma prefer_hlslcc gles
             #pragma exclude_renderers d3d11_9x
-            #pragma target 2.0
+            #pragma target 3.0
 
             #pragma vertex vert
             #pragma fragment frag
@@ -285,14 +285,15 @@ Shader "Universal Render Pipeline/Toon" {
             #pragma shader_feature _ALPHAPREMULTIPLY_ON
             #pragma multi_compile _EMISSION
             #pragma multi_compile _METALLICSPECGLOSSMAP
-            #pragma multi_compile _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+            //#pragma multi_compile _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
             #pragma multi_compile _OCCLUSIONMAP
 
             //#pragma shader_feature _SPECULARHIGHLIGHTS_OFF
             //#pragma shader_feature _ENVIRONMENTREFLECTIONS_OFF
-            #pragma shader_feature _SPECULAR_SETUP
-            #pragma shader_feature _RECEIVE_SHADOWS_OFF
+            //#pragma shader_feature _SPECULAR_SETUP
+            //#pragma shader_feature _RECEIVE_SHADOWS_OFF
             #define _ENVIRONMENTREFLECTIONS_OFF
+            #define _SPECULARHIGHLIGHTS_OFF
     
             // -------------------------------------
             // Lightweight Pipeline keywords
@@ -302,7 +303,7 @@ Shader "Universal Render Pipeline/Toon" {
             #pragma multi_compile _ _ADDITIONAL_LIGHT_SHADOWS
             #pragma multi_compile _ _SHADOWS_SOFT
 
-            #pragma multi_compile _ _MIXED_LIGHTING_SUBTRACTIVE
+            //#pragma multi_compile _ _MIXED_LIGHTING_SUBTRACTIVE
             // -------------------------------------
             // Unity defined keywords
             //#pragma multi_compile _ DIRLIGHTMAP_COMBINED
@@ -310,7 +311,6 @@ Shader "Universal Render Pipeline/Toon" {
             //#pragma multi_compile_fog
 
             #pragma multi_compile _IS_PASS_FWDBASE
-            #define _ENVIRONMENTREFLECTIONS_OFF
             // DoubleShadeWithFeather and ShadingGradeMap use different fragment shader.  
             #pragma multi_compile _ _SHADINGGRADEMAP
 
@@ -350,7 +350,7 @@ Shader "Universal Render Pipeline/Toon" {
             // Required to compile gles 2.0 with standard srp library
             #pragma prefer_hlslcc gles
             #pragma exclude_renderers d3d11_9x
-            #pragma target 2.0
+            #pragma target 3.0
 
             // -------------------------------------
             // Material Keywords
@@ -382,7 +382,7 @@ Shader "Universal Render Pipeline/Toon" {
             // Required to compile gles 2.0 with standard srp library
             #pragma prefer_hlslcc gles
             #pragma exclude_renderers d3d11_9x
-            #pragma target 2.0
+            #pragma target 3.0
 
             #pragma vertex DepthOnlyVertex
             #pragma fragment DepthOnlyFragment

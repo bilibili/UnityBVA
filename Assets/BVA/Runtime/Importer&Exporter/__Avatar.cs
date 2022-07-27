@@ -37,6 +37,12 @@ namespace BVA
                 animator.avatar = avatar ?? throw new Exception($"create Avatar failed on {nodeObj.name}");
                 animator.avatar.name = animator.name;
                 animator.applyRootMotion = true;
+
+                var head = animator.GetBoneTransform(HumanBodyBones.Head);
+                foreach (var smr in animator.GetComponentsInChildren<SkinnedMeshRenderer>())
+                {
+                    smr.probeAnchor = head;
+                }
             }
             if (hasValidExtension(node, BVA_humanoid_dressExtensionFactory.EXTENSION_NAME))
             {
@@ -111,7 +117,7 @@ namespace BVA
                 bone.min = limit.min.ToGltfVector3Raw();
                 bone.max = limit.max.ToGltfVector3Raw();
                 bone.useDefaultValues = limit.useDefaultValues;
-                bone.bone = v.humanName.FirstLowercase().RemoveEmpty(); //convert first character to low case,gltf format require it 
+                bone.bone = v.humanName; //convert first character to low case,gltf format require it 
                 var transform = animator.transform.DeepFindChild(v.boneName);
                 if (transform != null)
                 {

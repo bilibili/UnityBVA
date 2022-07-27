@@ -9,7 +9,7 @@ namespace ADBRuntime.Mono.Tool
     public class ADBColliderGenerateTool : MonoBehaviour
     {
         [SerializeField]
-        public bool isGenerateColliderAutomaitc = false;
+        public bool isGenerateColliderAutomaitc = true;
         [SerializeField]
         public bool isGenerateByAllPoint = true;
         [SerializeField]

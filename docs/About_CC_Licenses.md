@@ -1,7 +1,9 @@
 # About CC Licenses
 
 Creative Commons licenses give everyone from individual creators to large institutions a standardized way to grant the public permission to use their creative work under copyright law. From the reuser’s perspective, the presence of a Creative Commons license on a copyrighted work answers the question, “What can I do with this work?” 
-The Creative Commons License Options
+
+## The Creative Commons License Options
+
 > There are six different license types, listed from most to least permissive here:
 - CC BY: This license allows reusers to distribute, remix, adapt, and build upon the material in any medium or format, so long as attribution is given to the creator. The license allows for commercial use.
 CC BY includes the following elements:
@@ -34,7 +36,6 @@ BY   – Credit must be given to the creator
 NC   – Only noncommercial uses of the work are permitted
 ND   – No derivatives or adaptations of the work are permitted
 
- 
 # The Creative Commons Public Domain Dedication 
  CC0 (aka CC Zero) is a public dedication tool, which allows creators to give up their copyright and put their works into the worldwide public domain. CC0 allows reusers to distribute, remix, adapt, and build upon the material in any medium or format, with no conditions.
 ________________________________________

@@ -52,6 +52,10 @@ namespace BVA
                     _alphaMode = AlphaMode.OPAQUE;
                     break;
             }
+            mat.SetFloat("_EnvironmentReflections", 1.0f);
+            mat.EnableKeyword("_ENVIRONMENTREFLECTIONS_OFF");
+            mat.SetFloat("_SpecularHighlights", 1.0f);
+            mat.EnableKeyword("_SPECULARHIGHLIGHTS_OFF");
         }
 
         public Material Material { get { return _material; } }
@@ -67,7 +71,7 @@ namespace BVA
                     _material.EnableKeyword("_NORMALMAP");
                 }else if (_material.HasProperty("_NormalMap"))
                 {
-                    _material.SetTexture("_BumpMap", value);
+                    _material.SetTexture("_NormalMap", value);
                     _material.EnableKeyword("_NORMALMAP");
                 }
                 else
@@ -142,9 +146,11 @@ namespace BVA
                 if (_material.HasProperty("_OcclusionMap"))
                 {
                     _material.SetTexture("_OcclusionMap", value);
+                    _material.EnableKeyword("_OCCLUSIONMAP");
                 }
                 else
                 {
+                    _material.DisableKeyword("_OCCLUSIONMAP");
                     Debug.LogWarning("Tried to set an occlusion map to a material that does not support it.");
                 }
             }
