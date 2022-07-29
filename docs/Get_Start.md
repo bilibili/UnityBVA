@@ -28,16 +28,20 @@ All examples are located in `Assets/BVA/Samples`:
 ## Environment Settings
 
 Must Meet
-
+***
 Disable `Assembly Version Validation`
 
 ![glb](pics/assembly_version_validation.png)
+
+***
 
 Allow `Unsafe Code`
 
 Set `Managed Stripping Level` to `Disabled`
 
 ![glb](pics/managed_stripping_level.png)
+
+***
 
 Set `ColorSpace` to `Linear`
 
@@ -48,6 +52,8 @@ Set `ColorSpace` to `Linear`
 Include shaders or shader variant collection
 
 ![glb](pics/graphics_setting.png)
+
+***
 
 Config shader stripping
 

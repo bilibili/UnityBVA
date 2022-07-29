@@ -1,6 +1,6 @@
 # Avatar Export
 
-In this Example, we will import widely used format PMX(MMD model), then export it as our Avatar.
+In this Example, we will import widely used format PMX(MMD model) into Editor, then export it as Avatar.
 
 > **Fundamentally, any kind of skinned mesh with a valid `Humanoid Avatar` can be exported as Avatar.**
 
@@ -28,7 +28,7 @@ In this Example, we will import widely used format PMX(MMD model), then export i
 
 ![glb](pics/avatar_export_4.png)
 
-1. Click the prefab, you will notice two component has Added to the GameObject, note that if you assign the Export root from Scene GameObject, these components should also added. Fill the contents as you wish.
+7. Click the prefab, you will notice two component has Added to the GameObject, note that if you assign the Export root from Scene GameObject, these components should also added. Fill the contents as you wish.
 
 ![glb](pics/avatar_export_5.png)
 

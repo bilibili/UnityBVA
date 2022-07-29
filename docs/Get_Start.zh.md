@@ -33,11 +33,15 @@
 
 ![glb](pics/assembly_version_validation.png)
 
+***
+
 允许 `Unsafe Code`
 
 设置 `Managed Stripping Level` 为 `Disabled`
 
 ![glb](pics/managed_stripping_level.png)
+
+***
 
 设置 `ColorSpace` 为 `Linear`
 
@@ -48,6 +52,8 @@
 包含 shaders 或者 shader variant collection
 
 ![glb](pics/graphics_setting.png)
+
+***
 
 设置 shader stripping
 

@@ -1,9 +1,7 @@
 ## Supported Import types
 
 - all types of BVA file also be regarded as the standard gltf format, so all glb file can be imported.(.glb)
-
 - VRM file(.vrm)
-
 - MMD model file(.pmx)
 
 As you can see above, except the standard gltf compatible file, we've also add the support of VRM & MMD file, large amounts of anime avatar resources are shared community due to the historical reason.

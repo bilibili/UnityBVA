@@ -1,3 +1,6 @@
+[中文文档请转至这里](README.zh.md)
+
+
 # Overview
 
 BVA is a GLTF-based, cross-platform format that store 3D data and far more than that. The format can be supported by many tools such as various game engines, Babylon.js, Maya, Blender. The 3D data is stored in standard gltf scheme, other infomation that BVA provides were totally extended by Extension & Extra ,thus it doesn't break the gltf-standard, and this will continue as tradition, to make it can be opened directly by Windows 3D Viewer, Babylon.js, mainstream modeling software etc. 
@@ -19,7 +22,7 @@ Furthermore, it might helps you create metaverse-like game like Roblox easily af
 - Standalone (Windows10 testified, Mac or Linux should also be OK)
 - Android(vulkan or gles3.0 and linear texture must be supported)
 - iOS 10 or later
-- WebGL (works fine on Unity 2021 later,not tested)
+- WebGL (works fine on Unity 2021 later, not tested)
 
 ## Sample Build Requirements
 
@@ -27,34 +30,42 @@ All examples are located in `Assets/BVA/Samples`
 
 - Windows10 or later
 - MacOS
-- Android or iOS(only scene `WebLoad` is currently available, OpenFileDialog support standalone platform only)
+- Android or iOS (only scene `WebLoad` is currently available, `OpenFileDialog` support standalone platform only)
 
-> Find more information [Get Start](docs/Get_Start.md)
+Find more information [Get Start](docs/Get_Start.md)
+
+> Important Notice : 
+- Except WebLoad sample, other samples are using FileDialog(SFB), on Windows , it use WinForm namespace, so it will build fail on IL2CPP compile, make sure using Mono to pass compile.
+- ManagerScriptStriping should disable, I18N.CKJ has no reference, but GetEncoding rely on it. 
+- Shader Stripping : you should not strip Post Processing Variants.
+- WebLoad could build success on Android & iOS.
 
 # Manuals
 
 - [Get Start](docs/Get_Start.md)
 - [Avatar Setup](docs/work/Avatar.md)
+- [Scene Setup](docs/work/Scene.md)
 - [Tools](docs/tools/Tools.md)
-
 
 # Samples
 
-- [Explor the files](docs/examples/FileViewer.md)
+- [View files](docs/examples/FileViewer.md)
 - [Load BVA,GLB,VRM,PMX at Runtime](docs/examples/RuntimeLoad.md)
 - [Load BVA file from an url](docs/examples/WebLoad.md)
 - [Export GameObject at Runtime](docs/examples/RuntimeExport.md)
 - [Load multiple scene in single file at Runtime](docs/examples/MultipleScenePayload.md)
 - [Show how to config an Avatar with Dress Up System](docs/examples/AvatarConfig.md)
+- [BVA Test](https://github.com/625673575/BVATest)
 
 
 # Working with UnityBVA SDK
 
-As a 3D gltf compatible file format, BVA capable of loading 3D GameObjects regardless of the Engine's version, build target platform, which ease you the pain of creating the Apps that involve user-creation-contents (also known as UGC) . After all, creating such a format is not a piece of cake. A complete toolchain takes even more efforts.
+As a 3D gltf compatible file format, BVA capable of constructing scene regardless of the Engine's version, build target platform, which ease your pain of creating the Apps that involve user-creation-contents (also known as UGC). After all, creating such a format is not a piece of cake. A complete toolchain takes even more efforts.
 
 - [Editor Export](docs/work/Export.md)
 - [Editor Import](docs/work/Import.md)
 - [Programming](docs/work/programing/Programing.md)
+- [Physics](docs/work/physics/Automatic-Dynamic-Bone-Tutorial.md)
 
 
 # Features
@@ -90,12 +101,19 @@ It comes with a very efficient dynamic bone system that supports parallel comput
 - RenderSetting
 
 
+# Third-Party Tools
+
+Welcome pull request, add your tools here.
+
+- [VRM2BVA](https://github.com/625673575/VRM2BVA/releases/tag/binary) - Convert VRM to BVA command line tool
+
+
 # Third-Party Cited
 
 Forked from another open source repository , but some modifications may have been made.
 thanks the following open source projects
 
-## Draco
+## DracoUnity
 https://github.com/atteneder/DracoUnity
 
 ### License
@@ -122,6 +140,9 @@ https://github.com/ousttrue/UniHumanoid
 
 ## KtxUnity
 https://github.com/atteneder/KtxUnity
+
+## UnityGLTF
+https://github.com/KhronosGroup/UnityGLTF
 
 ## NaughtyAttributes
 https://github.com/dbrizov/NaughtyAttributes
