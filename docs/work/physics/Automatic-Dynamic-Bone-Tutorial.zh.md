@@ -11,6 +11,10 @@ Automatic Dynamic Bone是一款基于Unity Job System的弹簧-质点物理系�
 
 ### 快速开始
 
+<div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;">
+    <iframe  src="//player.bilibili.com/player.html?aid=556553314&bvid=BV1Fe4y1D7nx&cid=790304945&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"></iframe>
+</div>
+
 <iframe src="//player.bilibili.com/player.html?aid=556553314&bvid=BV1Fe4y1D7nx&cid=790304945&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
 
 # Automatic Dynamic Bone 脚本介绍
