@@ -6,7 +6,7 @@ This scene demonstrates the runtime calls functions, such as loading the scene &
 
 ![glb](../pics/FileViewer_0.png)
 
-### Functions
+### Purposes
 
 - Load Scene
 - Load Avatar

@@ -241,12 +241,9 @@ namespace BVA
         /// </summary>
         /// <param name="path">File path for saving the binary file</param>
         /// <param name="fileName">The name of the GLTF file</param>
-        public void SaveGLB(string path, string fileName, string secondaryExt = null)
+        public void SaveGLB(string path, string fileName, string ext = "glb")
         {
             _shouldUseInternalBufferForImages = true;
-            string ext = "glb";
-            if (secondaryExt != null)
-                ext = string.Join(".", secondaryExt, ext);
             string fullPath = Path.Combine(path, Path.ChangeExtension(fileName, ext));
 
             using (FileStream glbFile = new FileStream(fullPath, FileMode.Create))

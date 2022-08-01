@@ -21,7 +21,7 @@ public class GLTFExportMenu : EditorWindow
     private static readonly string[] SupportedExtensions = new string[] { "KHR_draco_mesh_compression", "KHR_material_pbrSpecularGlossiness", "KHR_lights_punctual", "KHR_texture_transform", "KHR_materials_unlit", "KHR_materials_clearcoat" };
     public static void CommonExportGUI()
     {
-        var minWith = GUILayout.ExpandWidth(true); 
+        var minWith = GUILayout.ExpandWidth(true);
         EditorGUIUtility.labelWidth = 400;
         GLTFSceneExporter.RequireExtensions = EditorGUILayout.Toggle(new GUIContent("Require extensions"), GLTFSceneExporter.RequireExtensions, minWith);
 
@@ -118,7 +118,9 @@ public class GLTFExportMenu : EditorWindow
             exporter.SaveGLB(path, name);
         }
     }
-    [MenuItem("GLTF/Export GLB GLTF Selected")]
+
+
+    [MenuItem("GLTF/Export GLB&GLTF Selected")]
     static void ExportGLBAndGltfSelected()
     {
         string name;
@@ -154,7 +156,7 @@ public class GLTFExportMenu : EditorWindow
         var path = EditorUtility.OpenFolderPanel("glTF Export Path", "", "");
         if (path != "")
         {
-            exporter.SaveGLTFandBin(path, scene.name);
+            exporter.SaveGLB(path, scene.name);
         }
     }
 }

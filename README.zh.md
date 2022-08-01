@@ -3,11 +3,17 @@
 
 # 概览
 
+[![Watch the video](docs/pics/Cover_0.png)](https://www.bilibili.com/video/BV1fr4y1V7Rk)
+
+[![Watch the video](docs/pics/Cover_1.png)](https://www.bilibili.com/video/BV1fr4y1V7Rk)
+
+[![Watch the video](docs/pics/Cover_2.png)](https://www.bilibili.com/video/BV1fr4y1V7Rk)
+
 BVA是一个基于GLTF标准，跨平台的格式。这个格式可以被很多工具支持，比如游戏引擎，Babylon.js，Maya，Blender。3D数据以标准GLTF的形式存在，其他的信息以BVA扩展和额外的信息进行存储，所以它并没有破坏文件标准，并且这个将会一直作为一个设计更新的传统，以便其能够被Windows的3D查看器，Babylon.js，主流建模软件等直接打开使用。
 
 > 任何支持GLTF的工具同样支持查看或编辑BVA的3D数据部分。
 
-技术上，它可以存储任意类型的信息，比如多媒体，动画片段，自定义数据，甚至是脚本。
+技术上，它可以存储任意类型的信息，比如多媒体，动画片段，自定义数据，甚至是脚本。目前可以在直播开播中作为开播资源的文件，游戏或者社交应用的avatar，尤其是VR类应用，还有像虚拟会议等需要化身的场景，以及可以基于这个开发类似MMD的制作虚拟人视频的工具，虚拟偶像等，跟虚拟场景和用户内容生成相关的都可以集成到应用中使用。
 
 长远看，它也许能够帮助你去创建类似元宇宙的游戏比如Roblox，脚本系统已经在开发路线中。
 

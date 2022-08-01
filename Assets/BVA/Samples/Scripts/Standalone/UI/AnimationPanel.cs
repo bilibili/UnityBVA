@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.UI;
 
-namespace BVA.Sampler
+namespace BVA.Sample
 {
     public class AnimationPanel : MonoBehaviour
     {

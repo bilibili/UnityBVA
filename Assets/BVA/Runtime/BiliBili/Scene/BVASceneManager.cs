@@ -255,13 +255,16 @@ namespace BVA
 #else
         public async Task LoadAvatar(string glbPath)
         {
-            var importOptions = new ImportOptions
-            {
-                RuntimeImport = true,
-            };
+            var importOptions = new ImportOptions { RuntimeImport = true };
             string directoryPath = URIHelper.GetDirectoryName(glbPath);
-            importOptions.DataLoader = new FileLoader(directoryPath);
-
+            if (glbPath.IsUrl())
+            {
+                importOptions.DataLoader = new WebRequestLoader(glbPath);
+            }
+            else
+            {
+                importOptions.DataLoader = new FileLoader(directoryPath);
+            }
             var Factory = ScriptableObject.CreateInstance<DefaultImporterFactory>();
             var sceneImporter = Factory.CreateSceneImporter(glbPath, importOptions);
             bool isSuccess = true;
@@ -287,7 +290,7 @@ namespace BVA
             }
             else
             {
-                //Debug.LogError("Error occured!");
+                LogPool.RuntimeLogger.LogError(LogPart.Avatar, "Load avatar error occurred!");
             }
         }
 
@@ -451,9 +454,9 @@ namespace BVA
 
         public AssetType GetAssetType(string URL)
         {
-            if (URL.EndsWith(BVAConst.EXTENSION_BVA_AVATAR_GLB) || URL.EndsWith(BVAConst.EXTENSION_BVA_AVATAR_GLTF))
+            if (URL.EndsWith(BVAConst.EXTENSION_BVA_AVATAR))
                 return AssetType.Avatar;
-            else if (URL.EndsWith(BVAConst.EXTENSION_BVA_SCENE_GLB) || URL.EndsWith(BVAConst.EXTENSION_BVA_SCENE_GLTF))
+            else if (URL.EndsWith(BVAConst.EXTENSION_BVA_SCENE))
                 return AssetType.Scene;
             else if (URL.EndsWith(BVAConst.EXTENSION_GLB) || URL.EndsWith(BVAConst.EXTENSION_GLTF))
                 return AssetType.StandardGLTF;
@@ -486,24 +489,21 @@ namespace BVA
                 {
                     string directoryPath = URIHelper.GetDirectoryName(gltfURL);
                     importOptions.DataLoader = new WebRequestLoader(directoryPath);
-                    sceneImporter = Factory.CreateSceneImporter(URIHelper.GetFileFromUri(new System.Uri(gltfURL)), importOptions);
+                    sceneImporter = Factory.CreateSceneImporter(URIHelper.GetFileFromUri(new Uri(gltfURL)), importOptions);
                 }
                 else
                 {
                     var fileName = Path.GetFileName(gltfURL);
                     var ext = Path.GetExtension(gltfURL).ToLower();
-
-                    switch (ext)
+                    if(ext == ".zip")
                     {
-                        case ".gltf":
-                        case ".glb":
-                            string directoryPath = URIHelper.GetDirectoryName(gltfURL);
-                            importOptions.DataLoader = new FileLoader(directoryPath);
-                            break;
-                        case ".zip":
-                            importOptions.DataLoader = new ZipFileLoader(gltfURL);
-                            fileName = fileName.Replace("zip", "gltf");
-                            break;
+                        importOptions.DataLoader = new ZipFileLoader(gltfURL);
+                        fileName = fileName.Replace("zip", "gltf");
+                    }
+                    else
+                    {
+                        string directoryPath = URIHelper.GetDirectoryName(gltfURL);
+                        importOptions.DataLoader = new FileLoader(directoryPath);
                     }
                     sceneImporter = Factory.CreateSceneImporter(fileName, importOptions);
                 }

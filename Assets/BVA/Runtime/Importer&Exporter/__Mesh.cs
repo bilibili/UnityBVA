@@ -34,20 +34,19 @@ namespace BVA
 
                 if (_assetCache.MeshCache[meshIndex] == null)
                 {
-                    var def = _gltfRoot.Meshes[meshIndex];
-
+                    GLTFMesh def = _gltfRoot.Meshes[meshIndex];
                     await ConstructMeshAttributes(def, new MeshId() { Id = meshIndex, Root = _gltfRoot });
                     await ConstructMesh(def, meshIndex);
                 }
             });
             return _assetCache.MeshCache[meshIndex].LoadedMesh;
         }
-#if UNITY_STANDALONE
+
         private bool UseDracoMeshCompression(MeshPrimitive meshPrim)
         {
             return _gltfRoot.ExtensionsUsed != null && meshPrim.Extensions != null && meshPrim.Extensions.ContainsKey(KHR_draco_mesh_compression_ExtensionFactory.EXTENSION_NAME);
         }
-#endif
+
         /// <summary>
         /// Triggers loading, converting, and constructing of a UnityEngine.Mesh, and stores it in the asset cache
         /// </summary>
@@ -74,16 +73,38 @@ namespace BVA
 
             MeshPrimitive firstPrim = meshPrimitives[0];
             MeshCacheData meshCache = _assetCache.MeshCache[meshIndex];
-#if UNITY_STANDALONE
             if (UseDracoMeshCompression(firstPrim))
             {
+#if UNITY_STANDALONE
                 var extention = firstPrim.Extensions[KHR_draco_mesh_compression_ExtensionFactory.EXTENSION_NAME] as KHR_draco_mesh_compressionExtension;
                 BufferId bufferId = extention.bufferView.Value.Buffer;
                 BufferCacheData bufferData = await GetBufferData(bufferId);
                 GLTFHelpers.LoadBufferView(extention.bufferView.Value, bufferData, out byte[] dracoData);
 
                 DracoMeshLoader meshLoader = new DracoMeshLoader(true);
-                Mesh unityMesh = await meshLoader.ConvertDracoMeshToUnity(dracoData);
+
+                // it has some problem with attribute Id and blendshape
+                /*(int, int) GetBoneWeightAttributeId(Dictionary<string, AccessorId> Attributes)
+                {
+                    int jointId = -1;
+                    int weightId = -1;
+                    int id = 0;
+                    foreach (var v in Attributes)
+                    {
+                        if (v.Key == SemanticProperties.COLOR_0 || v.Key == SemanticProperties.TEXCOORD_0)
+                            continue;
+                        else if (v.Key == SemanticProperties.JOINTS_0)
+                            jointId = id;
+                        else if (v.Key == SemanticProperties.WEIGHTS_0)
+                            weightId = id;
+
+                        id++;
+
+                    }
+                    return (jointId, weightId);
+                }
+                var (weightId, jointId) = GetBoneWeightAttributeId(firstPrim.Attributes);*/
+                Mesh unityMesh = await meshLoader.ConvertDracoMeshToUnity(dracoData/*, false, false, weightId, jointId, true*/);
                 unityMesh.name = mesh.Name;
 
                 _assetCache.MeshCache[meshIndex].LoadedMesh = unityMesh;
@@ -104,9 +125,11 @@ namespace BVA
                 {
                     unityMesh.UploadMeshData(true);
                 }
+#else
+                throw new GLTFDracoException("Draco decoder only support Standalone platform!");
+#endif
             }
             else
-#endif
             {
                 if (firstPrimContainsAll)
                 {
@@ -247,7 +270,8 @@ namespace BVA
             for (int i = 0; i < mesh.Primitives.Count; ++i)
             {
                 MeshPrimitive primitive = mesh.Primitives[i];
-                await ConstructPrimitiveAttributes(primitive, meshIndex, i);
+                if (!UseDracoMeshCompression(primitive))
+                    await ConstructPrimitiveAttributes(primitive, meshIndex, i);
 
                 if (primitive.Material != null)
                 {
@@ -256,7 +280,7 @@ namespace BVA
                 //await ConstructMeshTargets(primitive, meshIndex, i); 
             }
             //each primitive shared the same targets,so just construct once and copy to others
-            if (mesh.Primitives[0].Targets != null)
+            if (!UseDracoMeshCompression(mesh.Primitives[0]) && mesh.Primitives[0].Targets != null)
             {
                 // read mesh primitive targets into assetcache
                 await ConstructMeshTargets(mesh.Primitives[0], meshIndex, 0);
@@ -583,10 +607,9 @@ namespace BVA
 
         protected async Task ConstructPrimitiveAttributes(MeshPrimitive primitive, int meshIndex, int primitiveIndex)
         {
-#if UNITY_STANDALONE
             if (UseDracoMeshCompression(primitive))
                 return;
-#endif
+
             var primData = new MeshCacheData.PrimitiveCacheData();
             _assetCache.MeshCache[meshIndex].Primitives.Add(primData);
 

@@ -101,10 +101,6 @@ public class PMXModelLoader
         {
             MaterialLoader.UseMaterialType = MaterialLoader.MaterialType.Toon;
         }
-        if (path.ToLower().Contains(MaterialLoader.MaterialType.Zelda.ToString().ToLower()))
-        {
-            MaterialLoader.UseMaterialType = MaterialLoader.MaterialType.Zelda;
-        }
         if (path.ToLower().Contains(MaterialLoader.MaterialType.URPToonLit.ToString().ToLower()))
         {
             MaterialLoader.UseMaterialType = MaterialLoader.MaterialType.URPToonLit;

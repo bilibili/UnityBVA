@@ -4,7 +4,7 @@ using UnityEngine.Playables;
 using UnityEngine.UI;
 using BVA.Component;
 
-namespace BVA.Sampler
+namespace BVA.Sample
 {
     public class TimelinePanel : MonoBehaviour
     {

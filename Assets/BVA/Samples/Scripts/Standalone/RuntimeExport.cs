@@ -2,7 +2,7 @@ using UnityEngine;
 using BVA;
 using System.IO;
 
-namespace BVA.Sampler
+namespace BVA.Sample
 {
     public class RuntimeExport : SceneViewer
     {
@@ -38,10 +38,10 @@ namespace BVA.Sampler
         {
             var exportOptions = new ExportOptions { TexturePathRetriever = null };
             var exporter = new GLTFSceneExporter(new Transform[] { root }, exportOptions);
-            var path = SFB.StandaloneFileBrowser.SaveFilePanel("Runtime Export", "", "RuntimeExport", "glb");
+            var path = SFB.StandaloneFileBrowser.SaveFilePanel("Runtime Export", "", "RuntimeExport", BVAConst.EXTENSION_BVA_AVATAR);
             if (!string.IsNullOrEmpty(path))
             {
-                exporter.SaveGLB(Path.GetDirectoryName(path),Path.GetFileNameWithoutExtension(path));
+                exporter.SaveGLB(Path.GetDirectoryName(path),Path.GetFileNameWithoutExtension(path), BVAConst.EXTENSION_BVA_AVATAR);
             }
         }
     }

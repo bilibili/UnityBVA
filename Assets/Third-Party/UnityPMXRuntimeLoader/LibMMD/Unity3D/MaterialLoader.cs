@@ -15,225 +15,251 @@ using UnityEngine;
 
 namespace LibMMD.Unity3D
 {
-	public class MaterialLoader : IDisposable
-	{
-		public enum MaterialType
+    public class MaterialLoader : IDisposable
+    {
+        public enum MaterialType
         {
-			Default,
-			MToon,
-			Zelda,
+            Default,
+            MToon,
             Toon,
-			URPToonLit,
+            URPToonLit,
         }
         public static MaterialType UseMaterialType = MaterialType.MToon;
 
         private readonly TextureLoader _textureLoader;
 
-		public MaterialLoader(TextureLoader textureLoader) {
-			_textureLoader = textureLoader;
-		}
-		public UnityEngine.Material LoadMaterial(MMDMaterial mmdMaterial, MMDUnityConfig config)
-		{
-			var mainTexture = _textureLoader.LoadTexture(mmdMaterial.Texture);
-			var isTransparent = mmdMaterial.DiffuseColor.a < 0.9999f || mmdMaterial.EdgeColor.a < 0.9999f || IsTextireTransparent(mainTexture);
-			var material = new UnityEngine.Material(GetShader(mmdMaterial, config,isTransparent));
-			ConfigMaterial(mmdMaterial, config, material, mainTexture);
-			return material;
-		}
-		public UnityEngine.Material LoadMToonMaterial(MMDMaterial mmdMaterial, MMDUnityConfig config) {
-			var mainTexture = _textureLoader.LoadTexture(mmdMaterial.Texture);
-			var material = new UnityEngine.Material(Shader.Find("VRM/URP/MToon"));
-			ConfigMToonMaterial(mmdMaterial, config, material, mainTexture);
-			return material;
-		}
+        public MaterialLoader(TextureLoader textureLoader)
+        {
+            _textureLoader = textureLoader;
+        }
 
-		public UnityEngine.Material LoadZeldaMaterial(MMDMaterial mmdMaterial, MMDUnityConfig config)
-		{
-			var mainTexture = _textureLoader.LoadTexture(mmdMaterial.Texture);
-			var material = new UnityEngine.Material(Shader.Find("Shader Graphs/ZeldaToon"));
-			material.SetColor("_BaseColor", mmdMaterial.DiffuseColor);
-			material.SetTexture("_BaseMap", mainTexture);
-			material.SetColor("_AmbientColor", mmdMaterial.AmbientColor);
-			material.SetColor("_SpecularColor", mmdMaterial.SpecularColor);
-			return material;
-		}
-		public UnityEngine.Material LoadToonMaterial(MMDMaterial mmdMaterial, MMDUnityConfig config)
-		{
-			var mainTexture = _textureLoader.LoadTexture(mmdMaterial.Texture);
-			var material = new UnityEngine.Material(Shader.Find("Shader Graphs/Toon"));
-			ConfigToonMaterial(mmdMaterial, config, material, mainTexture);
-			return material;
-		}
+        public UnityEngine.Material LoadMaterial(MMDMaterial mmdMaterial, MMDUnityConfig config)
+        {
+            var mainTexture = _textureLoader.LoadTexture(mmdMaterial.Texture);
+            var isTransparent = mmdMaterial.DiffuseColor.a < 0.9999f || mmdMaterial.EdgeColor.a < 0.9999f || IsTextureTransparent(mainTexture);
+            var material = new UnityEngine.Material(GetShader(mmdMaterial, config, isTransparent));
+            ConfigMaterial(mmdMaterial, config, material, mainTexture);
+            return material;
+        }
 
-		internal UnityEngine.Material LoadURPToonLitMaterial(MMDMaterial mmdMaterial, MMDUnityConfig config)
-		{
-			var mainTexture = _textureLoader.LoadTexture(mmdMaterial.Texture);
-			var isTransparent = mmdMaterial.DiffuseColor.a < 0.9999f || mmdMaterial.EdgeColor.a < 0.9999f || IsTextireTransparent(mainTexture);
-			var material = new UnityEngine.Material(Shader.Find("SimpleURPToonLitExample(With Outline)"));
-			material.SetTexture("_BaseMap", mainTexture);
-			material.SetColor("_Color", mmdMaterial.DiffuseColor);
-			material.SetFloat("_Opacity", mmdMaterial.DiffuseColor.a);
-			material.SetColor("_AmbColor", mmdMaterial.AmbientColor);
-			material.SetColor("_SpecularColor", mmdMaterial.SpecularColor);
-			material.SetFloat("_Shininess", mmdMaterial.Shiness);
-			material.SetFloat("_OutlineWidth", mmdMaterial.EdgeSize);
-			material.SetColor("_OutlineColor", mmdMaterial.EdgeColor);
+        public UnityEngine.Material LoadMToonMaterial(MMDMaterial mmdMaterial, MMDUnityConfig config)
+        {
+            var mainTexture = _textureLoader.LoadTexture(mmdMaterial.Texture);
+            var material = new UnityEngine.Material(Shader.Find("VRM/URP/MToon"));
+            var isTransparent = mmdMaterial.DiffuseColor.a < 0.9999f || mmdMaterial.EdgeColor.a < 0.9999f || IsTextureTransparent(mainTexture);
+            ConfigMToonMaterial(mmdMaterial, config, material, mainTexture, isTransparent);
+            return material;
+        }
 
-			return material;
-		}
-		public void RefreshMaterialConfig(MMDMaterial mmdMaterial,MMDUnityConfig config, UnityEngine.Material material)
-		{
-			var mainTexture = _textureLoader.LoadTexture(mmdMaterial.Texture);
-			var isTransparent = mmdMaterial.DiffuseColor.a < 0.9999f || mmdMaterial.EdgeColor.a < 0.9999f ||
-			                    IsTextireTransparent(mainTexture);
-			var shaderName = BuildShaderName(mmdMaterial, config, isTransparent);
-			if (!material.shader.name.Equals(shaderName))
-			{
-				material.shader = Shader.Find(shaderName);
-			}
-			ConfigMaterial(mmdMaterial, config, material,mainTexture);
-		}
-		
-		private void ConfigMaterial(MMDMaterial mmdMaterial, MMDUnityConfig config, UnityEngine.Material material, Texture mainTexture)
-		{
-			material.SetColor("_Color", mmdMaterial.DiffuseColor);
-			material.SetFloat("_Opacity", mmdMaterial.DiffuseColor.a);
-			material.SetColor("_AmbColor", mmdMaterial.AmbientColor);
-			material.SetColor("_SpecularColor", mmdMaterial.SpecularColor);
-			material.SetFloat("_Shininess", mmdMaterial.Shiness);
-			material.SetFloat("_OutlineWidth", mmdMaterial.EdgeSize);
-			material.SetColor("_OutlineColor", mmdMaterial.EdgeColor);
-			if (mainTexture != null)
-			{
-				material.mainTexture = mainTexture;
-				material.mainTextureScale = new Vector2(1, 1);
-			}
+        public UnityEngine.Material LoadToonMaterial(MMDMaterial mmdMaterial, MMDUnityConfig config)
+        {
+            var mainTexture = _textureLoader.LoadTexture(mmdMaterial.Texture);
+            var material = new UnityEngine.Material(Shader.Find("Shader Graphs/Toon"));
+            ConfigToonMaterial(mmdMaterial, config, material, mainTexture);
+            return material;
+        }
+
+        internal UnityEngine.Material LoadURPToonLitMaterial(MMDMaterial mmdMaterial, MMDUnityConfig config)
+        {
+            var mainTexture = _textureLoader.LoadTexture(mmdMaterial.Texture);
+            var isTransparent = mmdMaterial.DiffuseColor.a < 0.9999f || mmdMaterial.EdgeColor.a < 0.9999f || IsTextureTransparent(mainTexture);
+            var material = new UnityEngine.Material(Shader.Find("SimpleURPToonLitExample(With Outline)"));
+            material.SetTexture("_BaseMap", mainTexture);
+            material.SetColor("_Color", mmdMaterial.DiffuseColor);
+            material.SetFloat("_Opacity", mmdMaterial.DiffuseColor.a);
+            material.SetColor("_AmbColor", mmdMaterial.AmbientColor);
+            material.SetColor("_SpecularColor", mmdMaterial.SpecularColor);
+            material.SetFloat("_Shininess", mmdMaterial.Shiness);
+            material.SetFloat("_OutlineWidth", mmdMaterial.EdgeSize);
+            material.SetColor("_OutlineColor", mmdMaterial.EdgeColor);
+
+            return material;
+        }
+
+        public void RefreshMaterialConfig(MMDMaterial mmdMaterial, MMDUnityConfig config, UnityEngine.Material material)
+        {
+            var mainTexture = _textureLoader.LoadTexture(mmdMaterial.Texture);
+            var isTransparent = mmdMaterial.DiffuseColor.a < 0.9999f || mmdMaterial.EdgeColor.a < 0.9999f ||
+                                IsTextureTransparent(mainTexture);
+            var shaderName = BuildShaderName(mmdMaterial, config, isTransparent);
+            if (!material.shader.name.Equals(shaderName))
+            {
+                material.shader = Shader.Find(shaderName);
+            }
+            ConfigMaterial(mmdMaterial, config, material, mainTexture);
+        }
+
+        private void ConfigMaterial(MMDMaterial mmdMaterial, MMDUnityConfig config, UnityEngine.Material material, Texture mainTexture)
+        {
+            material.SetColor("_Color", mmdMaterial.DiffuseColor);
+            material.SetFloat("_Opacity", mmdMaterial.DiffuseColor.a);
+            material.SetColor("_AmbColor", mmdMaterial.AmbientColor);
+            material.SetColor("_SpecularColor", mmdMaterial.SpecularColor);
+            material.SetFloat("_Shininess", mmdMaterial.Shiness);
+            material.SetFloat("_OutlineWidth", mmdMaterial.EdgeSize);
+            material.SetColor("_OutlineColor", mmdMaterial.EdgeColor);
+            if (mainTexture != null)
+            {
+                material.mainTexture = mainTexture;
+                material.mainTextureScale = new Vector2(1, 1);
+            }
 
 
-			if (mmdMaterial.SubTextureType != MMDMaterial.SubTextureTypeEnum.MatSubTexOff)
-			{
-				var additionalTexture =
-					mmdMaterial.SubTexture == null ? null : _textureLoader.LoadTexture(mmdMaterial.SubTexture);
-				if (additionalTexture != null)
-				{
-					additionalTexture.wrapMode = TextureWrapMode.Clamp;
-					switch (mmdMaterial.SubTextureType)
-					{
-						case MMDMaterial.SubTextureTypeEnum.MatSubTexSpa:
-							material.SetTexture("_SphereAddTex", additionalTexture);
-							material.SetTextureScale("_SphereAddTex", new Vector2(1, 1));
-							break;
-						case MMDMaterial.SubTextureTypeEnum.MatSubTexSph:
-							material.SetTexture("_SphereMulTex", additionalTexture);
-							material.SetTextureScale("_SphereMulTex", new Vector2(1, 1));
-							break;
-					}
-				}
-			}
+            if (mmdMaterial.SubTextureType != MMDMaterial.SubTextureTypeEnum.MatSubTexOff)
+            {
+                var additionalTexture =
+                    mmdMaterial.SubTexture == null ? null : _textureLoader.LoadTexture(mmdMaterial.SubTexture);
+                if (additionalTexture != null)
+                {
+                    additionalTexture.wrapMode = TextureWrapMode.Clamp;
+                    switch (mmdMaterial.SubTextureType)
+                    {
+                        case MMDMaterial.SubTextureTypeEnum.MatSubTexSpa:
+                            material.SetTexture("_SphereAddTex", additionalTexture);
+                            material.SetTextureScale("_SphereAddTex", new Vector2(1, 1));
+                            break;
+                        case MMDMaterial.SubTextureTypeEnum.MatSubTexSph:
+                            material.SetTexture("_SphereMulTex", additionalTexture);
+                            material.SetTextureScale("_SphereMulTex", new Vector2(1, 1));
+                            break;
+                    }
+                }
+            }
 
-			RefreshShaderKeywords(mmdMaterial, config, material);
+            RefreshShaderKeywords(mmdMaterial, config, material);
 
-			var toonTexture = _textureLoader.LoadTexture(mmdMaterial.Toon);
-			if (toonTexture != null)
-			{
-				toonTexture.wrapMode = TextureWrapMode.Clamp;
-				material.SetTexture("_ToonTex", toonTexture);
-				material.SetTextureScale("_ToonTex", new Vector2(1, 1));
-			}
-		}
-		private void ConfigMToonMaterial(MMDMaterial mmdMaterial, MMDUnityConfig config, UnityEngine.Material material, Texture mainTexture)
-		{
-			material.SetColor("_Color", mmdMaterial.DiffuseColor);
-			material.SetColor("_EmissionColor", Color.black);
-			material.SetColor("_ShadeColor", mmdMaterial.DiffuseColor);
-			material.SetFloat("_ToonyLighting", mmdMaterial.Shiness);
-			material.SetFloat("_OutlineWidth", mmdMaterial.EdgeSize);
-			material.SetColor("_OutlineColor", mmdMaterial.EdgeColor);
+            var toonTexture = _textureLoader.LoadTexture(mmdMaterial.Toon);
+            if (toonTexture != null)
+            {
+                toonTexture.wrapMode = TextureWrapMode.Clamp;
+                material.SetTexture("_ToonTex", toonTexture);
+                material.SetTextureScale("_ToonTex", new Vector2(1, 1));
+            }
+        }
+        public const string TagRenderTypeKey = "RenderType";
+        public const string TagRenderTypeValueOpaque = "Opaque";
+        public const string TagRenderTypeValueTransparentCutout = "TransparentCutout";
+        public const string TagRenderTypeValueTransparent = "Transparent";
+        public const string PropSrcBlend = "_SrcBlend";
+        public const string PropDstBlend = "_DstBlend";
+        public const string PropZWrite = "_ZWrite";
+        private void ConfigMToonMaterial(MMDMaterial mmdMaterial, MMDUnityConfig config, UnityEngine.Material material, Texture mainTexture, bool isTransparent)
+        {
+            material.SetColor("_Color", mmdMaterial.DiffuseColor);
+            material.SetColor("_EmissionColor", Color.black);
+            material.SetColor("_ShadeColor", mmdMaterial.DiffuseColor);
+            material.SetFloat("_ToonyLighting", mmdMaterial.Shiness);
+            material.SetFloat("_OutlineWidth", mmdMaterial.EdgeSize);
+            material.SetColor("_OutlineColor", mmdMaterial.EdgeColor);
 
-			if (mainTexture != null)
-			{
-				material.SetTexture("_MainTex", mainTexture);
-				material.SetTexture("_ShadeTexture", mainTexture);
-			}
+            if (mainTexture != null)
+            {
+                material.SetTexture("_MainTex", mainTexture);
+                material.SetTexture("_ShadeTexture", mainTexture);
+            }
             if (mmdMaterial.Toon != null)
             {
-				var toonTexture = _textureLoader.LoadTexture(mmdMaterial.Toon);
-				if(toonTexture != null)
-					material.SetTexture("_RimTexture", toonTexture);
-			}
-			if (mmdMaterial.SubTextureType != MMDMaterial.SubTextureTypeEnum.MatSubTexOff)
-			{
-				var additionalTexture =
-					mmdMaterial.SubTexture == null ? null : _textureLoader.LoadTexture(mmdMaterial.SubTexture);
-				if (additionalTexture != null)
-				{
-					additionalTexture.wrapMode = TextureWrapMode.Clamp;
-					switch (mmdMaterial.SubTextureType)
-					{
-						case MMDMaterial.SubTextureTypeEnum.MatSubTexSpa:
-							material.SetTexture("_SphereAdd", additionalTexture);
-							material.SetTextureScale("_SphereAdd", new Vector2(1, 1));
-							break;
-						case MMDMaterial.SubTextureTypeEnum.MatSubTexSph:
-							material.SetTexture("_SphereAdd", additionalTexture);
-							material.SetTextureScale("_SphereAdd", new Vector2(1, 1));
-							break;
-					}
-				}
-			}
-		}
-		private void ConfigToonMaterial(MMDMaterial mmdMaterial, MMDUnityConfig config, UnityEngine.Material material, Texture mainTexture)
-		{
-			material.SetColor("_BaseColor", mmdMaterial.DiffuseColor);
-			//material.SetColor("_ShadeEnvironmentalColor", mmdMaterial.AmbientColor);
-			material.SetColor("_SSSColor", mmdMaterial.SpecularColor);
-			//material.SetFloat("_ToonyLighting", mmdMaterial.Shiness);
-			material.SetFloat("_OutlineWidth", mmdMaterial.EdgeSize*10);
-			material.SetColor("_OutlineColor", mmdMaterial.EdgeColor);
-			if (mainTexture != null)
-			{
-				material.SetTexture("_BaseMap", mainTexture);
-			}
-		}
-		private void RefreshShaderKeywords(MMDMaterial mmdMaterial, MMDUnityConfig config, UnityEngine.Material material)
-		{
-			RefreshDrawSelfShadowKeyword(MMDUnityConfig.DealSwitch(config.EnableDrawSelfShadow, mmdMaterial.DrawSelfShadow),
-				material);
-		}
+                var toonTexture = _textureLoader.LoadTexture(mmdMaterial.Toon);
+                if (toonTexture != null)
+                    material.SetTexture("_RimTexture", toonTexture);
+            }
+            if (mmdMaterial.SubTextureType != MMDMaterial.SubTextureTypeEnum.MatSubTexOff)
+            {
+                var additionalTexture =
+                    mmdMaterial.SubTexture == null ? null : _textureLoader.LoadTexture(mmdMaterial.SubTexture);
+                if (additionalTexture != null)
+                {
+                    additionalTexture.wrapMode = TextureWrapMode.Clamp;
+                    switch (mmdMaterial.SubTextureType)
+                    {
+                        case MMDMaterial.SubTextureTypeEnum.MatSubTexSpa:
+                            material.SetTexture("_SphereAdd", additionalTexture);
+                            material.SetTextureScale("_SphereAdd", new Vector2(1, 1));
+                            break;
+                        case MMDMaterial.SubTextureTypeEnum.MatSubTexSph:
+                            material.SetTexture("_SphereAdd", additionalTexture);
+                            material.SetTextureScale("_SphereAdd", new Vector2(1, 1));
+                            break;
+                    }
+                }
+            }
+            if (isTransparent)
+            {
+                material.SetFloat("_BlendMode", 2);
+                material.SetOverrideTag("RenderType", "Transparent");
+                material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+                material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+                material.SetInt("_ZWrite", 1);
+                material.SetInt("_AlphaToMask", 0);
+                material.renderQueue = 3000;
 
-		private void RefreshDrawSelfShadowKeyword(bool drawSelfshadow, UnityEngine.Material material)
-		{
-			if (drawSelfshadow)
-			{
-				material.EnableKeyword("SELFSHADOW_ON");
-				material.DisableKeyword("SELFSHADOW_OFF");
-			}
-			else
-			{
-				material.DisableKeyword("SELFSHADOW_ON");
-				material.EnableKeyword("SELFSHADOW_OFF");
-			}
-		}
-			
-		public void Dispose ()
-		{
-			if (_textureLoader != null) {
-				_textureLoader.Dispose ();
-			}
-		}
-			
-		private static Shader GetShader(MMDMaterial mmdMaterial, MMDUnityConfig config, bool isTransparent)
-		{
-			//"MMD/Transparent/PMDMaterial-with-Outline-CullBack-NoCastShadow"
-			var shaderName = BuildShaderName(mmdMaterial, config, isTransparent);
-			var ret = Shader.Find (shaderName);
-			if (ret == null) {
-				Debug.LogWarning("Can't find shader "+ shaderName);
-			}
-			return ret;
-		}
+                material.DisableKeyword("_ALPHATEST_ON");
+                material.EnableKeyword("_ALPHABLEND_ON");
+                material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+            }
+            else
+            {
+                material.EnableKeyword("MTOON_OUTLINE_WIDTH_WORLD");
 
-		private static string BuildShaderName(MMDMaterial mmdMaterial, MMDUnityConfig config, bool isTransparent)
+
+                material.SetFloat("_OutlineWidthMode", 1);
+                material.SetFloat("_OutlineColorMode", 0);
+            }
+        }
+        private void ConfigToonMaterial(MMDMaterial mmdMaterial, MMDUnityConfig config, UnityEngine.Material material, Texture mainTexture)
+        {
+            material.SetColor("_BaseColor", mmdMaterial.DiffuseColor);
+            //material.SetColor("_ShadeEnvironmentalColor", mmdMaterial.AmbientColor);
+            material.SetColor("_SSSColor", mmdMaterial.SpecularColor);
+            //material.SetFloat("_ToonyLighting", mmdMaterial.Shiness);
+            material.SetFloat("_OutlineWidth", mmdMaterial.EdgeSize * 10);
+            material.SetColor("_OutlineColor", mmdMaterial.EdgeColor);
+            if (mainTexture != null)
+            {
+                material.SetTexture("_BaseMap", mainTexture);
+            }
+        }
+        private void RefreshShaderKeywords(MMDMaterial mmdMaterial, MMDUnityConfig config, UnityEngine.Material material)
+        {
+            RefreshDrawSelfShadowKeyword(MMDUnityConfig.DealSwitch(config.EnableDrawSelfShadow, mmdMaterial.DrawSelfShadow),
+                material);
+        }
+
+        private void RefreshDrawSelfShadowKeyword(bool drawSelfshadow, UnityEngine.Material material)
+        {
+            if (drawSelfshadow)
+            {
+                material.EnableKeyword("SELFSHADOW_ON");
+                material.DisableKeyword("SELFSHADOW_OFF");
+            }
+            else
+            {
+                material.DisableKeyword("SELFSHADOW_ON");
+                material.EnableKeyword("SELFSHADOW_OFF");
+            }
+        }
+
+        public void Dispose()
+        {
+            if (_textureLoader != null)
+            {
+                _textureLoader.Dispose();
+            }
+        }
+
+        private static Shader GetShader(MMDMaterial mmdMaterial, MMDUnityConfig config, bool isTransparent)
+        {
+            //"MMD/Transparent/PMDMaterial-with-Outline-CullBack-NoCastShadow"
+            var shaderName = BuildShaderName(mmdMaterial, config, isTransparent);
+            var ret = Shader.Find(shaderName);
+            if (ret == null)
+            {
+                Debug.LogWarning("Can't find shader " + shaderName);
+            }
+            return ret;
+        }
+
+        private static string BuildShaderName(MMDMaterial mmdMaterial, MMDUnityConfig config, bool isTransparent)
         {
             var shaderNameBuilder = new StringBuilder();
             shaderNameBuilder.Append("VRM/");
@@ -250,26 +276,33 @@ namespace LibMMD.Unity3D
             return shaderName;
         }
 
-        private static bool IsTextireTransparent(Texture texture) {
-			try {
-				var tex2D = texture as Texture2D;
-				if (tex2D == null) {
-					return false;
-				}
-				var pixels = tex2D.GetPixels ();
-				foreach (var color in pixels) {
-					if (color.a < 0.99f) {
-						return true;
-					}
-				}
-			} catch {
-				
-			}
-			return false;
-		}
+        private static bool IsTextureTransparent(Texture texture)
+        {
+            try
+            {
+                var tex2D = texture as Texture2D;
+                if (tex2D == null)
+                {
+                    return false;
+                }
+                var pixels = tex2D.GetPixels();
+                foreach (var color in pixels)
+                {
+                    if (color.a < 0.99f)
+                    {
+                        return true;
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return false;
+        }
 
 
     }
-		
+
 }
 

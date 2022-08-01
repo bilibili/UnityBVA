@@ -63,6 +63,7 @@ namespace ADBRuntime.UntiyEditor
                     controller.isGenerateColliderOpenTrigger = EditorGUILayout.Toggle("  ©»©¥Collider isTrigger ", controller.isGenerateColliderOpenTrigger);
                     controller.isGenerateByAllPoint = EditorGUILayout.Toggle("  ©»©¥Use Fixed Transform to fitting collider size ", controller.isGenerateByAllPoint);
                     controller.isGenerateFinger = EditorGUILayout.Toggle("  ©»©¥Generate Finger ", controller.isGenerateFinger);
+                    controller.isColliderAllMask = EditorGUILayout.Toggle("  ©»©¥Collider Mask is All ", controller.isColliderAllMask);
                 }
             }
             else
@@ -87,14 +88,21 @@ namespace ADBRuntime.UntiyEditor
                                 }
                                 catch (Exception)
                                 {
-                                    Undo.DestroyObjectImmediate(overlapsColliderList[i].gameObject.GetComponent<ADBColliderReader>());
-                                    Undo.DestroyObjectImmediate(overlapsColliderList[i]);
+                                    if (overlapsColliderList[i].gameObject.TryGetComponent<ADBColliderReader>(out ADBColliderReader reader))
+                                    {
+                                        Undo.DestroyObjectImmediate(reader);
+                                        Undo.DestroyObjectImmediate(overlapsColliderList[i]);
+                                    }
                                     continue;
                                 }
                             }
                             else
                             {
-                                Undo.DestroyObjectImmediate(overlapsColliderList[i]);
+                                if (overlapsColliderList[i].gameObject.TryGetComponent<ADBColliderReader>(out ADBColliderReader reader))
+                                {
+                                    Undo.DestroyObjectImmediate(reader);
+                                    Undo.DestroyObjectImmediate(overlapsColliderList[i]);
+                                }
                             }
                         }
                     }

@@ -24,7 +24,7 @@ RenderSettings:
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 1
+  m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.6037736, g: 0.6037736, b: 0.6037736, a: 1}
   m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionBounces: 2
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 733760453}
+  m_Sun: {fileID: 0}
   m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: 6b09de38de290b6458e92aa322160aac, type: 2}
-  m_LightingSettings: {fileID: 4890085278179872738, guid: bc0e0196066511a4c8c083fff0d288b0, type: 2}
+  m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1984,7 +1984,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 430210869}
   m_HandleRect: {fileID: 430210868}
   m_Direction: 0
-  m_Value: 0.0000003849328
+  m_Value: 0.0000001924664
   m_Size: 0.8043623
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -3243,6 +3243,7 @@ MonoBehaviour:
   postprocessPanel: {fileID: 345477120}
   timelinePanel: {fileID: 1049671361}
   logText: {fileID: 52656536}
+  logView: {fileID: 372463924}
   mainLight: {fileID: 733760453}
   toggleLight: {fileID: 588880485}
 --- !u!1 &553580496
@@ -3518,10 +3519,10 @@ RectTransform:
   m_Father: {fileID: 500087036}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -203.16, y: 252.71}
-  m_SizeDelta: {x: 160, y: 20}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: -118.280655, y: -17.289993}
+  m_SizeDelta: {x: 329.7587, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &588880485
 MonoBehaviour:
@@ -3601,7 +3602,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 126
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!23 &676033719
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5484,7 +5485,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 367995209}
   m_HandleRect: {fileID: 367995208}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -6366,7 +6367,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1265487809}
   m_HandleRect: {fileID: 1265487808}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -7960,7 +7961,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Toggle
+  m_Text: Light(Disable it if has Light or use Lightmap)
 --- !u!222 &1513847446
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9369,7 +9370,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -24}
+  m_AnchoredPosition: {x: 158.4, y: -29.20398}
   m_SizeDelta: {x: 160, y: 24}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1845668938

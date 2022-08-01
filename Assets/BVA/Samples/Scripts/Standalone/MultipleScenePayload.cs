@@ -1,9 +1,9 @@
 using UnityEngine;
-using BVA;
 using System.Linq;
 using BVA.Extensions;
 using UnityEngine.UI;
-namespace BVA.Sampler
+
+namespace BVA.Sample
 {
     public class MultipleScenePayload : SceneViewer
     {

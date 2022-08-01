@@ -20,6 +20,12 @@ GLB文件包含了所有的元素，包括动画，材质，节点和相机到�
 
 这些材质被BVA支持。他们分别是 [Lit](material/Lit.md), [Complex Lit](material/ComplexLit.md), [Unlit](material/Unlit.md), [MToon(URP ver)](https://vrm.dev/univrm/shaders/shader_mtoon.html), [UTS2](https://github.com/unity3d-jp/UnityChanToonShaderVer2_Project), [LiliumToonGraph](https://github.com/you-ri/LiliumToonGraph), ToonLit
 
+![glb](pics/Material_1.png)
+
+![glb](pics/Material_2.png)
+
+![glb](pics/Material_3.png)
+
 对于自定义Shader，我们实现了一个代码生成工具，所以你可以选择你想要导出的Shader参数，然后生成代码来支持导出后导入使用。
 
 > 所有的自定义Shader都会添加一个 `KHR_materials_unlitExtension` 扩展到材质下。

@@ -4,7 +4,8 @@ This scene demonstrates how to export procedural generated models & loaded model
 
 ![glb](../pics/RuntimeExport_0.png)
 
-### Functions
+### Purposes
+
 - Procedural Content Generation
 - Load Model
 - Export Model

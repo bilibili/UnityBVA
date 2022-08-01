@@ -12,10 +12,12 @@
         "GUID:0f65aa97340947a43af1c76333c36e29",
         "GUID:da3e51d19d51a544fa14d43fee843098",
         "GUID:9530b821cc81cff439e7e0b1086b9319",
-        "GUID:6369f65a3f137eb448c3456fdbf498ff"
+        "GUID:6369f65a3f137eb448c3456fdbf498ff",
+        "GUID:7cb3dda558c37234380e31d7dfb231d6"
     ],
     "includePlatforms": [
         "Editor",
+        "LinuxStandalone64",
         "macOSStandalone",
         "WindowsStandalone64"
     ],

@@ -31,4 +31,13 @@ namespace GLTF
 			System.Runtime.Serialization.StreamingContext context)
 		{ }
 	}
+	public class GLTFDracoException : Exception
+	{
+		public GLTFDracoException() : base() { }
+		public GLTFDracoException(string message) : base(message) { }
+		public GLTFDracoException(string message, Exception inner) : base(message, inner) { }
+		protected GLTFDracoException(System.Runtime.Serialization.SerializationInfo info,
+			System.Runtime.Serialization.StreamingContext context)
+		{ }
+	}
 }

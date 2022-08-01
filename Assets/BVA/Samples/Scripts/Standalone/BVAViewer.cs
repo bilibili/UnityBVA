@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using BVA.Component;
 
-namespace BVA.Sampler
+namespace BVA.Sample
 {
     public class BVAViewer : SceneViewer
     {
@@ -14,6 +14,7 @@ namespace BVA.Sampler
         public PostProcessPanel postprocessPanel;
         public TimelinePanel timelinePanel;
         public Text logText;
+        public GameObject logView;
         public Light mainLight;
         public Toggle toggleLight;
         public void OpenAvatarFile() { OpenFile(AssetType.Avatar); }
@@ -51,6 +52,7 @@ namespace BVA.Sampler
             cameraPanel.gameObject.SetActive(active);
             postprocessPanel.gameObject.SetActive(active);
             timelinePanel.gameObject.SetActive(active);
+            logView.SetActive(active);
         }
 
         public void ToggleLight(bool enable)
@@ -64,6 +66,11 @@ namespace BVA.Sampler
             if (assetType == AssetType.Avatar)
             {
                 LoadAvatarPanel(LastLoadedScene.gameObject);
+            }
+            var cameras = scene.mainScene.GetComponentsInChildren<Camera>();
+            foreach(var cam in cameras)
+            {
+                cam.gameObject.AddComponent<OrbitCameraController>();
             }
         }
         public void LoadAvatarPanel(GameObject root)

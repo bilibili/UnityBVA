@@ -13,7 +13,8 @@ Automatic Dynamic Bone is a spring bone physics system plug-in based on the unit
 
 ## Quick Start
 
-`In preparing`
+[![Watch the video](../pics/ADB_Tutorial_Cover.png)](https://www.bilibili.com/video/BV1Fe4y1D7nx)
+
 # Automatic Dynamic Bone Introduction
 
 ## ADB Chain Generate Tool 

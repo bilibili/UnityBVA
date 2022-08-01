@@ -28,7 +28,7 @@ namespace VRM
             {
                 Selection.activeGameObject = ImportRuntime(path);
                 SwitchToURPMToon(Selection.activeGameObject);
-                SwitchComponent(Selection.activeGameObject);
+                SwitchComponent(Selection.activeGameObject, null);
                 return;
             }
         }
@@ -62,7 +62,7 @@ namespace VRM
             }
         }
 
-        static void SwitchComponent(GameObject go)
+        static void SwitchComponent(GameObject go, string thumbnailPath)
         {
             //Meta Info
             VRMMetaObject meta = go.GetComponent<VRMMeta>().Meta;
@@ -73,7 +73,20 @@ namespace VRM
             bvaMetaInfo.author = meta.Author;
             bvaMetaInfo.contact = meta.ContactInformation;
             bvaMetaInfo.reference = meta.Reference;
-            bvaMetaInfo.thumbnail = meta.Thumbnail;
+            if (thumbnailPath != null)
+            {
+                if (meta.Thumbnail != null)
+                {
+                    File.WriteAllBytes(thumbnailPath, meta.Thumbnail.EncodeToPNG());
+                    AssetDatabase.Refresh();
+                    var thumbnail = AssetDatabase.LoadAssetAtPath<Texture2D>(thumbnailPath);
+                    bvaMetaInfo.thumbnail = thumbnail;
+                }
+            }
+            else
+            {
+                bvaMetaInfo.thumbnail = meta.Thumbnail;
+            }
             bvaMetaInfo.contentType = ContentType.Avatar;
             bvaMetaInfo.legalUser = (LegalUser)Enum.GetNames(typeof(AllowedUser)).ToList().IndexOf(meta.AllowedUser.ToString());
             bvaMetaInfo.violentUsage = (UsageLicense)Enum.GetNames(typeof(UssageLicense)).ToList().IndexOf(meta.ViolentUssage.ToString());
@@ -262,9 +275,7 @@ namespace VRM
                     string outputFileAbsolutePath = outputFolderAbsolutePath + inputFileNameWithoutExtension + PrefabExtension;
 
                     GameObject model = ImportRuntime(inputFileAbsolutePath);
-                    SwitchToURPMToon(model);
-                    SwitchComponent(model);
-                    
+
                     if (model == null)
                     {
                         Debug.Log("Error on loading : " + inputFileAbsolutePath);
@@ -305,9 +316,8 @@ namespace VRM
                     {
                         Directory.CreateDirectory(physicsFolderPath);
                     }
-                    
-                    AssetDatabase.CreateAsset(model.GetComponent<BVAMetaInfo>().metaInfo, outputFolderRelativePath + "MetaInfo.asset");
-                    AssetDatabase.CreateAsset(model.GetComponent<BVAMetaInfo>().metaInfo.thumbnail, outputFolderRelativePath + "Thumbnail.asset");
+
+                    SwitchToURPMToon(model);
 
                     var renderers = model.GetComponentsInChildren<SkinnedMeshRenderer>();
                     foreach (var renderer in renderers)
@@ -367,7 +377,7 @@ namespace VRM
                             }
 
                             var materialPath = outputFolderRelativePath + MaterialsFolderName + material.name + MaterialExtension;
-                            if(!File.Exists(materialPath))
+                            if (!File.Exists(materialPath))
                                 AssetDatabase.CreateAsset(material, materialPath);
                         }
                     }
@@ -375,11 +385,11 @@ namespace VRM
                     for (int i = 0; i < dynamicBones.Length; i++)
                     {
                         var dynamicBone = dynamicBones[i];
-                        
+
                         ADBRuntime.ADBPhysicsSetting settingMeta = dynamicBone.GetADBSetting();
                         if (settingMeta != null)
                         {
-                            string path = outputFolderRelativePath + PhysicsFolderName +settingMeta.name + PhysicsExtension;
+                            string path = outputFolderRelativePath + PhysicsFolderName + settingMeta.name + PhysicsExtension;
                             if (!File.Exists(path))
                             {
                                 AssetDatabase.CreateAsset(settingMeta, path);
@@ -388,6 +398,15 @@ namespace VRM
                         }
                     }
 
+                    SwitchComponent(model, outputFolderRelativePath + "Thumbnail.png");
+
+                    if (model.TryGetComponent<BVAMetaInfo>(out BVAMetaInfo meta))
+                    {
+                        AssetDatabase.CreateAsset(meta.metaInfo, outputFolderRelativePath + "MetaInfo.asset");
+                        AssetDatabase.Refresh();
+                        BVAMetaInfoScriptableObject asset = AssetDatabase.LoadAssetAtPath<BVAMetaInfoScriptableObject>(outputFolderRelativePath + "MetaInfo.asset");
+                        asset.thumbnail = AssetDatabase.LoadAssetAtPath<Texture2D>(outputFolderRelativePath + "Thumbnail.png");
+                    }
                     PrefabUtility.SaveAsPrefabAsset(model, outputFolderRelativePath + model.name + PrefabExtension);
 #if UNITY_EDITOR
                     GameObject.DestroyImmediate(model);

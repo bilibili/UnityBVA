@@ -25,10 +25,5 @@ namespace LibMMD.Unity3D
         {
             await LoadPMX(MaterialLoader.MaterialType.Default);
         }
-        [MenuItem("BVA/Runtime Load/Load PMX (Zelda)")]
-        public static async void LoadPMXMZelda()
-        {
-            await LoadPMX(MaterialLoader.MaterialType.Zelda);
-        }
     }
 }

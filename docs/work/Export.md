@@ -20,6 +20,12 @@ Avatar export with extra information such as BlendShape, MetaInfo, and should ex
 
 These materials (shaders) supported by BVA. [Lit](material/Lit.md), [Complex Lit](material/ComplexLit.md), [Unlit](material/Unlit.md), [MToon(URP ver)](https://vrm.dev/univrm/shaders/shader_mtoon.html), [UTS2](https://github.com/unity3d-jp/UnityChanToonShaderVer2_Project), [LiliumToonGraph](https://github.com/you-ri/LiliumToonGraph), ToonLit
 
+![glb](pics/Material_1.png)
+
+![glb](pics/Material_2.png)
+
+![glb](pics/Material_3.png)
+
 For custom shader, we implement a code-gen tools, so you can select shader parameters that you want to Export & Import, then generate code to import and export material information. 
 
 > All custom material information stores in extras, and will export `KHR_materials_unlitExtension` under the material.

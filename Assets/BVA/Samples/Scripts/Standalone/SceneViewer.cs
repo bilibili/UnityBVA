@@ -1,8 +1,7 @@
 using UnityEngine;
 using System.IO;
-using BVA;
 
-namespace BVA.Sampler
+namespace BVA.Sample
 {
     public class SceneViewer : MonoBehaviour
     {
@@ -26,36 +25,17 @@ namespace BVA.Sampler
             }
 
             Debug.LogFormat("{0}", path);
-            var ext = Path.GetExtension(path).ToLower();
-            switch (ext)
-            {
-                case ".gltf":
-                case ".glb":
-                    BVASceneManager.Instance.onSceneLoaded = OnLoaded;
-                    await BVASceneManager.Instance.LoadSceneAsync(path);
-                    break;
-                default:
-                    Debug.LogWarningFormat("unknown file type: {0}", path);
-                    break;
-            }
+            BVASceneManager.Instance.onSceneLoaded = OnLoaded;
+            if (assetType == AssetType.Avatar)
+                await BVASceneManager.Instance.LoadAvatar(path);
+            else
+                await BVASceneManager.Instance.LoadSceneAsync(path);
         }
-        public void LoadMotion(string path)
-        {
 
-        }
         public void OpenFile(AssetType assetType)
         {
-            string extension = BVAConst.EXTENSION_GLB;
-            //if (assetType == AssetType.Scene)
-            //    extension = BVAConst.EXTENSION_BVA_SCENE_GLB;
-            //if (assetType == AssetType.Avatar)
-            //    extension = BVAConst.EXTENSION_BVA_AVATAR_GLB;
-
             string[] paths;
-            if (assetType == AssetType.Common || assetType == AssetType.StandardGLTF)
-                paths = SFB.StandaloneFileBrowser.OpenFilePanel("BVA", "", new SFB.ExtensionFilter[] { new SFB.ExtensionFilter("GLTF Files", "gltf", "glb") }, false);
-            else
-                paths = SFB.StandaloneFileBrowser.OpenFilePanel("BVA", "", extension, false);
+            paths = SFB.StandaloneFileBrowser.OpenFilePanel("BVA/GLTF/GLB", "", new SFB.ExtensionFilter[] { new SFB.ExtensionFilter("GLTF Files", BVAConst.EXTENSION_BVA, BVAConst.EXTENSION_GLTF, BVAConst.EXTENSION_GLB) }, false);
 
             if (paths.Length == 0)
                 return;
@@ -64,18 +44,7 @@ namespace BVA.Sampler
             UseStream = true;
             AppendStreamingAssets = false;
             GLTFUri = path;
-
-            var ext = Path.GetExtension(path).ToLower();
-            switch (ext)
-            {
-                case ".gltf":
-                case ".glb":
-                    LoadModel(path, assetType);
-                    break;
-                case ".bvh":
-                    LoadMotion(path);
-                    break;
-            }
+            LoadModel(path, assetType);
         }
     }
 }

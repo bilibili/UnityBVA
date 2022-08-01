@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-namespace BVA.Sampler
+namespace BVA.Sample
 {
     public class CameraPanel : MonoBehaviour
     {

@@ -27,17 +27,13 @@
 
 ## 环境设定
 
-必须要设置的
-
 关闭 `Assembly Version Validation`
 
 ![glb](pics/assembly_version_validation.png)
 
 ***
 
-允许 `Unsafe Code`
-
-设置 `Managed Stripping Level` 为 `Disabled`
+允许 `Unsafe Code`，设置 `Managed Stripping Level` 为 `Disabled`
 
 ![glb](pics/managed_stripping_level.png)
 
@@ -47,21 +43,29 @@
 
 ![glb](pics/color_space_setting.png)
 
+***
+
+> `Lightmap Encoding` 必须要手动设置
+
+设置 `Lightmap Encoding` 为 `Normal Quality`, 同时设置 `Normal Map Encoding` 为 `XYZ`
+
+![glb](pics/texture_encoding.png)
+
 ## 打包设置
 
-包含 shaders 或者 shader variant collection
+包含 `Shaders` 或者 `Shader Variant Collection`
 
 ![glb](pics/graphics_setting.png)
 
 ***
 
-设置 shader stripping
+设置 `Shader Stripping`, 根据需要选择保留下对应的Baked Mode
 
 ![glb](pics/shader_stripping.png)
 
 如果你的工程已经集成了 `UniVRM`,你需要先移除位于`Third-Party`下面的`VRM`文件夹，然后一些错误将会显示出来，你可能需要手动去修正这些错误。
 
-# 手册
+# 使用手册
 
 - [调整角色](work/Avatar.md)
 - [调整场景](work/Scene.md)

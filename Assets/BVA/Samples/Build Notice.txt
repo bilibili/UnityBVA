@@ -1,5 +1,5 @@
-Except WebLoad sample, other samples are using FileDialog(SFB), on Windows platform, it use WinForm namespace, so it will build fail on IL2CPP compile.
+Except WebLoad sample, other samples are using FileDialog(SFB), on Windows , it use WinForm namespace, so it will build fail on IL2CPP compile.
 make sure switch to Mono to pass compile.
 ManagerScript strip should disable, I18N.CKJ has no reference, but GetEncoding rely on it. 
 Shader Stripping : you should not strip Post Processing Variants.
-WebLoad could build success on Android or iOS.
+WebLoad could build success on Android & iOS.

@@ -29,6 +29,10 @@ Most Components can be exported by code generator, these have been officially ad
 - MetaInfo
 - SkyboxContainer
 - AudioClipContainer
+- AutoBlink
+- AvatarAccessoryConfig
+- AvatarDressUpConfig
+- LookAt
 - MirrorObject
 - MirrorPlain
 - CameraViewPoint
@@ -38,7 +42,3 @@ Most Components can be exported by code generator, these have been officially ad
 - CubemapVariableCollection
 - MaterialVariableCollection
 - AudioClipVariableCollection
-- AutoBlink
-- AvatarAccessoryConfig
-- AvatarDressUpConfig
-- LookAt

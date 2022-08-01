@@ -4,7 +4,7 @@ This scene demonstrates how to load models, character actions, lens actions, etc
 
 ![glb](../pics/RuntimeLoad_0.png)
 
-### Functions
+### Purposes
 
 - Load BVA,MMD and VRM files at runtime
 - Load VMD and BVH motions

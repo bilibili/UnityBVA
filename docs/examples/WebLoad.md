@@ -2,9 +2,10 @@
 
 This scene is mainly used to test the loading performance on mobile devices.
 
-![glb](../pics/WebLoad_0.png)
+[![Watch the video](../pics/WebLoad_0.png)](https://www.bilibili.com/video/BV1fr4y1V7Rk)
 
-## Functions
+## Purposes
+
 - Download File From Web
 - Load Model File
 

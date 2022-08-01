@@ -45,7 +45,11 @@ namespace ADBRuntime.UntiyEditor
 
         public void OnDisable()
         {
-            controller.SaveSelectData();
+            if (!Application.isPlaying)
+            {
+                controller.SaveSelectData();
+            }
+
         }
 
         public override void OnInspectorGUI()

@@ -299,9 +299,6 @@ namespace LibMMD.Unity3D
 
                         temp = materialLoader.LoadMToonMaterial(model.Parts[i].Material, config);
                         break;
-                    case MaterialLoader.MaterialType.Zelda:
-                        temp = materialLoader.LoadZeldaMaterial(model.Parts[i].Material, config);
-                        break;
                     case MaterialLoader.MaterialType.Toon:
                         temp = materialLoader.LoadToonMaterial(model.Parts[i].Material, config);
                         break;

@@ -155,7 +155,7 @@ namespace BVA
                 var morphTargets = mesh.Primitives[0].Targets;
                 var weights = node.Weights ?? mesh.Weights ?? (morphTargets != null ? new List<double>(morphTargets.Select(mt => 0.0)) : null);
 
-                if (node.Skin != null || weights != null)
+                if (unityMesh.boneWeights.Length > 0 || unityMesh.blendShapeCount > 0)
                 {
                     var skinnedMeshRenderer = nodeObj.GetOrAddComponent<SkinnedMeshRenderer>();
                     skinnedMeshRenderer.sharedMesh = unityMesh;
@@ -169,7 +169,7 @@ namespace BVA
                     //morph target weights
                     if (weights != null)
                     {
-                        for (int i = 0; i < weights.Count; ++i)
+                        for (int i = 0; i < unityMesh.blendShapeCount; ++i)
                         {
                             // GLTF weights are [0, 1] range but Unity weights are [0, 100] range
                             skinnedMeshRenderer.SetBlendShapeWeight(i, (float)(weights[i] * 100));
@@ -567,7 +567,7 @@ namespace BVA
                 node.AddExtension(_root, BVA_postprocess_volumeExtensionFactory.EXTENSION_NAME, new BVA_postprocess_volumeExtensionFactory(postProcessId, postprocess.isGlobal, postprocess.weight, postprocess.blendDistance, postprocess.priority), RequireExtensions);
             }
 
-#region Variable Collection
+            #region Variable Collection
             // material 
             if (nodeTransform.TryGetComponent<MaterialVariableCollection>(out var materialCollection) && materialCollection.variables.Count > 0)
             {
@@ -595,9 +595,9 @@ namespace BVA
                 var variableId = ExportVariableCollection(audioCollection);
                 node.AddExtension(_root, BVA_variable_collectionExtensionFactory.EXTENSION_NAME, new BVA_variable_collectionExtensionFactory(variableId), RequireExtensions);
             }
-#endregion
+            #endregion
 
-#region
+            #region
             // add UI Image
             if (nodeTransform.TryGetComponent<Image>(out var ui_image))
             {
@@ -624,7 +624,7 @@ namespace BVA
                 var extra = new BVA_UI_Button_Extra(ui_button);
                 node.AddExtra(BVA_UI_Button_Extra.PROPERTY, extra);
             }
-#endregion
+            #endregion
 
             node.SetUnityTransform(nodeTransform);
 

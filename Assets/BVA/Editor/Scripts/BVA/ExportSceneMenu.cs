@@ -24,7 +24,7 @@ namespace BVA
         List<SceneAsset> sceneAssets;
         int sceneCount = 0;
         string exportName;
-        private Scene ActiveScene { get { return UnityEngine.SceneManagement.SceneManager.GetActiveScene(); } }
+        private Scene ActiveScene { get { return SceneManager.GetActiveScene(); } }
         int exportMode;
         static string[] EDIT_MODES = new[]{
             "Export GameObject",
@@ -32,10 +32,11 @@ namespace BVA
             "Export Multiply Scenes",
         };
         bool foldCommonProperty = true;
+        ExportFileType exportType;
         //Collect material info which are not supported by exporter
         void CheckMaterialValidity()
         {
-
+            
         }
 
         private void OnEnable()
@@ -64,6 +65,8 @@ namespace BVA
             GLTFSceneExporter.ExportLightmap = EditorGUILayout.Toggle("Export Lightmap", GLTFSceneExporter.ExportLightmap);
             GLTFSceneExporter.ExportRenderSetting = EditorGUILayout.Toggle("Export RenderSetting", GLTFSceneExporter.ExportRenderSetting);
             GLTFSceneExporter.ExportSkybox = EditorGUILayout.Toggle("Export Skybox", GLTFSceneExporter.ExportSkybox);
+
+            exportType = (ExportFileType)EditorGUILayout.EnumPopup("Export Format", exportType);
 
             switch (exportMode)
             {
@@ -102,18 +105,26 @@ namespace BVA
             var gameObjects = scene.GetRootGameObjects();
             exportInfo = new ExportInfo(gameObjects);
         }
-        private void ExportToFile(GLTFSceneExporter exporter, string sceneName, string title = "BVA Scene Export Path", string pref = "avatar_export_path", string secondary_ext = BVAConst.EXTENSION_BVA_SCENE)
+        private void ExportScene(GLTFSceneExporter exporter, string sceneName, string ext = BVAConst.EXTENSION_BVA_SCENE, string title = "BVA Scene Export Path", string pref = "avatar_export_path")
         {
             var path = EditorUtility.OpenFolderPanel(title, EditorPrefs.GetString(pref), "");
-            if(string.IsNullOrEmpty(sceneName))
+
+            if (exportType == ExportFileType.GLTF) ext = BVAConst.EXTENSION_GLTF;
+            if (exportType == ExportFileType.GLB) ext = BVAConst.EXTENSION_GLB;
+
+            if (string.IsNullOrEmpty(sceneName))
             {
                 EditorUtility.DisplayDialog("Scene doesn't have a valid name", $"Please try save scene before exporting!", "OK");
                 return;
             }
+
             if (!string.IsNullOrEmpty(path))
             {
                 EditorPrefs.SetString(pref, path);
-                exporter.SaveGLB(path, sceneName, secondary_ext);
+                if (exportType == ExportFileType.GLTF)
+                    exporter.SaveGLTFandBin(path, sceneName);
+                else
+                    exporter.SaveGLB(path, sceneName, ext);
                 EditorUtility.DisplayDialog("export success", $"spend {exporter.ExportDuration.TotalSeconds}s finish export!", "OK");
             }
         }
@@ -148,7 +159,7 @@ namespace BVA
                 }
                 var exportOptions = new ExportOptions { TexturePathRetriever = AssetDatabase.GetAssetPath };
                 var exporter = new GLTFSceneExporter(new Transform[] { _rootGameObject.transform }, exportOptions);
-                ExportToFile(exporter, _rootGameObject.name);
+                ExportScene(exporter, _rootGameObject.name);
             }
         }
         private void ExportScene()
@@ -168,7 +179,7 @@ namespace BVA
                 var exportOptions = new ExportOptions { TexturePathRetriever = AssetDatabase.GetAssetPath };
                 var exporter = new GLTFSceneExporter(transforms, exportOptions);
 
-                ExportToFile(exporter, scene.name);
+                ExportScene(exporter, scene.name);
             }
             EditorGUILayout.EndHorizontal();
         }
@@ -233,7 +244,7 @@ namespace BVA
 
                     var exportOptions = new ExportOptions { TexturePathRetriever = AssetDatabase.GetAssetPath };
                     var exporter = new GLTFSceneExporter(transformsList, transforms, exportOptions);
-                    ExportToFile(exporter, string.IsNullOrEmpty(exportName) ? scene.name : exportName);
+                    ExportScene(exporter, string.IsNullOrEmpty(exportName) ? scene.name : exportName);
 
                     foreach (var v in loadedScene)
                         EditorSceneManager.UnloadSceneAsync(v);

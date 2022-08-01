@@ -111,9 +111,9 @@ namespace ADBRuntime.Mono
                 keyWord = "Other";
             }
             var result=  ADBRuntimePoint.CreateRuntimePoint(transform, 0, keyWord);
-            int mask = rigidBodyData.CollisionMask;
+            ColliderChoice mask =(ColliderChoice) rigidBodyData.CollisionMask;
 
-            result.pointRead.colliderMask = mask;
+            result.pointRead.colliderMask =(int) mask;
             result.pointRead.radius = rigidBodyData.Dimemsions.x/2;
             Action SetRigidBodyData = () =>
              {

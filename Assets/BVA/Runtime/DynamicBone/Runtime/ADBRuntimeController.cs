@@ -210,9 +210,9 @@ namespace ADBRuntime.Mono
             tempColliderReads.Clear();
             for (int i = 0; i < count; i++)
             {
-                if (ADBColliderReader.ColliderTokenDic.TryGetValue(colliders[i].GetInstanceID(),out ADBColliderReader colliderToken))
+                if (ADBColliderReader.ColliderTokenDic.TryGetValue(colliders[i].GetInstanceID(),out ADBColliderReader colliderToken)&& colliderToken.runtimeCollider!=null)
                 {
-                    tempColliderReads.Add( colliderToken.runtimeCollider.colliderRead);
+                    tempColliderReads.Add(colliderToken.runtimeCollider.colliderRead);
                     overlapsColliderList.Add(colliderToken);
                 }
             }

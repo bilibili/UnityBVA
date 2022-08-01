@@ -60,7 +60,7 @@ namespace ADBRuntime.UntiyEditor
                     controller.UpdatePriorities();
                 }
                 
-                Titlebar("ADB碰撞体标记", Color.Lerp(Color.white, Color.blue, 0.5f));
+                Titlebar("ADB Collider Reader", Color.Lerp(Color.white, Color.blue, 0.5f));
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("unityCollider"), new GUIContent("ColliderTarget"), true);
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("isReadOnly"), new GUIContent("┗━I Is Collider ReadOnly (highly performance)"), true);
                 if (controller.isReadOnly)

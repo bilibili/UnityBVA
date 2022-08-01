@@ -4,7 +4,8 @@
 
 ![glb](../pics/RuntimeLoad_0.png)
 
-### 功能如下：
+### 功能
+
 - 运行时加载BVA，MMD和VRM格式的模型
 - 加载VMD和BVH人物动作
 - 加载VMD镜头运镜

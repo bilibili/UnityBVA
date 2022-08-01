@@ -3,11 +3,17 @@
 
 # Overview
 
+[![Watch the video](docs/pics/Cover_0.png)](https://www.bilibili.com/video/BV1fr4y1V7Rk)
+
+[![Watch the video](docs/pics/Cover_1.png)](https://www.bilibili.com/video/BV1fr4y1V7Rk)
+
+[![Watch the video](docs/pics/Cover_2.png)](https://www.bilibili.com/video/BV1fr4y1V7Rk)
+
 BVA is a GLTF-based, cross-platform format that store 3D data and far more than that. The format can be supported by many tools such as various game engines, Babylon.js, Maya, Blender. The 3D data is stored in standard gltf scheme, other infomation that BVA provides were totally extended by Extension & Extra ,thus it doesn't break the gltf-standard, and this will continue as tradition, to make it can be opened directly by Windows 3D Viewer, Babylon.js, mainstream modeling software etc. 
 
 > Any tools that support gltf will also support viewing or editing the 3D part data of BVA.
 
-Technically, it can also store any kind of data, like Multi-Media, animation clips, Custom data, even scripting.
+Technically, it can also store any kind of data, like Multi-Media, animation clips, Custom data, even scripting. At present, it can be used as broadcast resources in the live broadcast, avatars for games or social applications, especially in VR, scenes that need avatars, such as virtual conferences, and tools that can develop virtual 3D video production similar to MMD, virtual idols, etc. Anything related to virtual world and UGC.
 
 Furthermore, it might helps you create metaverse-like game like Roblox easily after integretion of user scripting, which was already on our roadmap.
 

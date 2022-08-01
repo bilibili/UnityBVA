@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-namespace BVA.Sampler
+namespace BVA.Sample
 {
     public class SkyboxPanel : MonoBehaviour
     {

@@ -27,9 +27,10 @@ All examples are located in `Assets/BVA/Samples`:
 
 ## Environment Settings
 
-Must Meet
+> Must Meet
 ***
-Disable `Assembly Version Validation`
+
+Uncheck `Assembly Version Validation`
 
 ![glb](pics/assembly_version_validation.png)
 
@@ -37,19 +38,25 @@ Disable `Assembly Version Validation`
 
 Allow `Unsafe Code`
 
-Set `Managed Stripping Level` to `Disabled`
+Set `Managed Stripping Level` = `Disabled`
 
 ![glb](pics/managed_stripping_level.png)
 
 ***
 
-Set `ColorSpace` to `Linear`
+Set `ColorSpace` = `Linear`
 
 ![glb](pics/color_space_setting.png)
 
+***
+
+Set `Lightmap Encoding` = `Normal Quality`, Set `Normal Map Encoding` = `XYZ`
+
+![glb](pics/texture_encoding.png)
+
 ## Build Settings
 
-Include shaders or shader variant collection
+Include `Shaders` or `Shader Variant Collection`
 
 ![glb](pics/graphics_setting.png)
 

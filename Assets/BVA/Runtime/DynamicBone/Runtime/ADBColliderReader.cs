@@ -120,6 +120,11 @@ namespace ADBRuntime.Mono
         private void OnEnable()
         {
             CheckAndBuildADBRuntimeCollider();
+            if (runtimeCollider==null)
+            {
+                Debug.Log(name+ " radius==0 ,is been disabled");
+                enabled = false;
+            }
         }
 
         private void OnDisable()

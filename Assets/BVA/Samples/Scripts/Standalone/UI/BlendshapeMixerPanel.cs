@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using BVA.Component;
-namespace BVA.Sampler
+namespace BVA.Sample
 {
     public class BlendshapeMixerPanel : MonoBehaviour
     {
