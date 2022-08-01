@@ -10,7 +10,8 @@ Automatic Dynamic Bone是一款基于Unity Job System的弹簧-质点物理系�
 - 可视化 UI 和强大的自动生成功能。
 
 ### 快速开始
-`暂缺`
+
+<iframe src="//player.bilibili.com/player.html?aid=556553314&bvid=BV1Fe4y1D7nx&cid=790304945&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
 
 # Automatic Dynamic Bone 脚本介绍
 ## ADB Chain Generate Tool 
