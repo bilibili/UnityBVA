@@ -1,5 +1,7 @@
 [English Document](README.md)
 
+技术交流QQ群 476944298
+<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=ewgXKtDg9IetUfOmjKIg9qkFMTHKK0Ho&jump_from=webapi"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="UnityBVA技术交流群" title="UnityBVA技术交流群"></a>
 
 # 概览
 
@@ -56,12 +58,12 @@ BVA是一个基于GLTF标准，跨平台的格式。这个格式可以被很多�
 
 # 示例
 
-- [浏览文件](docs/examples/FileViewer.md)
-- [运行时加载 BVA,GLB,VRM,PMX](docs/examples/RuntimeLoad.md)
-- [从URL加载BVA文件](docs/examples/WebLoad.md)
-- [运行时导出](docs/examples/RuntimeExport.md)
-- [单个文件加载多个场景](docs/examples/MultipleScenePayload.md)
-- [配置角色换装方案](docs/examples/AvatarConfig.md)
+- [浏览文件](docs/examples/FileViewer.zh.md)
+- [运行时加载 BVA,GLB,VRM,PMX](docs/examples/RuntimeLoad.zh.md)
+- [从URL加载BVA文件](docs/examples/WebLoad.zh.md)
+- [运行时导出](docs/examples/RuntimeExport.zh.md)
+- [单个文件加载多个场景](docs/examples/MultipleScenePayload.zh.md)
+- [配置角色换装方案](docs/examples/AvatarConfig.zh.md)
 - [BVA能力测试](https://github.com/625673575/BVATest)
 
 
@@ -69,8 +71,8 @@ BVA是一个基于GLTF标准，跨平台的格式。这个格式可以被很多�
 
 作为一个兼容GLTF的文件格式，BVA可以在不同引擎版本，不同的打包平台下跨平台加载，这极大的方便了开发者创建UGC（用户内容生产）。毕竟，创建这样一个文件格式需要花费很大的精力，并且完善其工具链生态需要付出更多的努力。
 
-- [编辑器下导出](docs/work/Export.md)
-- [编辑器下导入](docs/work/Import.md)
+- [编辑器下导出](docs/work/Export.zh.md)
+- [编辑器下导入](docs/work/Import.zh.md)
 - [代码使用](docs/work/programing/Programing.md)
 - [物理配置](docs/work/physics/Automatic-Dynamic-Bone-Tutorial.zh.md)
 
@@ -161,6 +163,10 @@ https://github.com/needle-tools/shader-variant-explorer
 
 ## UnityIngameDebugConsole
 https://github.com/yasirkula/UnityIngameDebugConsole
+
+# 示例资源
+https://github.com/KhronosGroup/Vulkan-Samples-Assets
+https://github.com/KhronosGroup/glTF-Asset-Generator
 
 # 有用的商业资源
 - [Animation Converter](https://assetstore.unity.com/packages/tools/animation/animation-converter-107688) Convert animation clips (*.anim) between all 3 animation types (humanoid ⇆ generic ⇆ legacy).

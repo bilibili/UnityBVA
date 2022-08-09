@@ -1,6 +1,5 @@
 using UnityEditor;
 using UnityEngine;
-using BVA;
 using BVA.Component;
 
 namespace BVA
@@ -14,16 +13,18 @@ namespace BVA
 
         public static void FixMissingMetaInfo(GameObject Root)
         {
-            var metaComp = Root.AddComponent<Component.BVAMetaInfo>();
+            var metaComp = Root.AddComponent<BVAMetaInfo>();
             var meta = ScriptableObject.CreateInstance<BVAMetaInfoScriptableObject>();
             var savePath = $"{ASSET_DIR}{Root.name}_MetaInfo.asset";
             AssetDatabase.CreateAsset(meta, savePath);
             metaComp.metaInfo = AssetDatabase.LoadAssetAtPath<BVAMetaInfoScriptableObject>(savePath);
         }
+
         public static void FixMissingBlendshapeMixer(GameObject Root)
         {
-            var metaComp = Root.AddComponent<Component.BlendShapeMixer>();
+            var metaComp = Root.AddComponent<BlendShapeMixer>();
         }
+
         public static void EditorGUIExportLog()
         {
             _folderLog = EditorGUILayout.BeginToggleGroup("Show Logs", _folderLog);
@@ -33,6 +34,7 @@ namespace BVA
             }
             EditorGUILayout.EndToggleGroup();
         }
+
         public static void EditorGUICollectExportInfo(ExportInfo info)
         {
             _folderExoprtInfo = EditorGUILayout.BeginToggleGroup("Show Export Information", _folderExoprtInfo);
@@ -51,6 +53,14 @@ namespace BVA
                 //EditorGUILayout.EndFoldoutHeaderGroup();
             }
             EditorGUILayout.EndToggleGroup();
+        }
+
+        public static void EditorGUICheckBuildPlatform()
+        {
+            if (!EditorUserBuildSettings.activeBuildTarget.ToString().Contains("Standalone"))
+            {
+                EditorGUILayout.HelpBox("Please switch to Standalone(Windows,Mac,Linux) platform in Build Settings", MessageType.Error);
+            }
         }
 
         /// <summary>

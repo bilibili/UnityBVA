@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using BVA;
 using BVA.Extensions;
 using System.Threading.Tasks;
 using BVA.Loader;
@@ -54,7 +53,7 @@ namespace BVA
             if (importer == null) return 1;
             return importer.Root.Scenes.Count;
         }
-        public async void LoadSceneAsync(int index, bool showScene = true, System.IProgress<ImportProgress> progress = null)
+        public async void LoadSceneAsync(int index, bool showScene = true, IProgress<ImportProgress> progress = null)
         {
             if (importer == null) return;
             await importer.LoadSceneAsync(index, showScene, null, System.Threading.CancellationToken.None, progress);
@@ -104,12 +103,12 @@ namespace BVA
         /// <summary>
         /// All loaded scenes name
         /// </summary>
-        private Queue<System.Action> onSceneLoadedDelegates;
+        private Queue<Action> onSceneLoadedDelegates;
         public string[] loadedSceneNames => loadedScenes.Select(x => x.name).ToArray();
         public BVASceneManager()
         {
             loadedScenes = new List<BVAScene>();
-            onSceneLoadedDelegates = new Queue<System.Action>();
+            onSceneLoadedDelegates = new Queue<Action>();
             cachedSceneImporters = new List<GLTFSceneImporter>();
             loadedAvatars = new List<BVAScene>();
         }
@@ -295,7 +294,6 @@ namespace BVA
         }
 
 #endif
-
         public void LoadScene(string gltfUri)
         {
             Load(gltfUri).RunSynchronously();
@@ -310,7 +308,6 @@ namespace BVA
         {
             await Load(gltfUri);
         }
-
         public async Task LoadAllScenesAsync(string gltfUri)
         {
             await Load(gltfUri, true, false);
@@ -495,7 +492,7 @@ namespace BVA
                 {
                     var fileName = Path.GetFileName(gltfURL);
                     var ext = Path.GetExtension(gltfURL).ToLower();
-                    if(ext == ".zip")
+                    if (ext == ".zip")
                     {
                         importOptions.DataLoader = new ZipFileLoader(gltfURL);
                         fileName = fileName.Replace("zip", "gltf");
@@ -509,7 +506,7 @@ namespace BVA
                 }
                 sceneImporter.SceneParent = null;
                 sceneImporter.IsMultithreaded = multithreaded;
-                await sceneImporter.LoadSceneAsync();
+                await sceneImporter.LoadAsync();
 
                 LogPool.RuntimeLogger.Log(LogPart.Scene, "model loaded with vertices: " + sceneImporter.Statistics.VertexCount.ToString() + ", triangles: " + sceneImporter.Statistics.TriangleCount.ToString());
 

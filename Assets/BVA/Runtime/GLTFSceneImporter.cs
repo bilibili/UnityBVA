@@ -29,7 +29,7 @@ namespace BVA
         /// </summary>
         public IDataLoader DataLoader = null;
         public AsyncCoroutineHelper AsyncCoroutineHelper = null;
-        public bool ThrowOnLowMemory = true;
+        public bool ThrowOnLowMemory = false;
         public bool RuntimeImport = false;
     }
 
@@ -212,8 +212,19 @@ namespace BVA
         public bool GenerateMipMapsForTextures = true;
 
         /// <summary>
+        /// Specifies whether Environment Reflection should be enabled for materials 
+        /// </summary>
+        public bool EnableEnvironmentReflection = false;
+
+        /// <summary>
+        /// Specifies whether Specular Highlight should be enabled for materials 
+        /// </summary>
+        public bool EnableSpecularHighlight = true;
+
+        /// <summary>
         /// When screen coverage is above threashold and no LOD mesh cull the object
         /// </summary>
+
         public bool CullFarLOD = false;
 
         /// <summary>
@@ -277,6 +288,26 @@ namespace BVA
             Cleanup();
         }
 
+        /// <summary>
+        /// Auto detect whether the model is an avatar or a normal scene, and choose the best load method
+        /// </summary>
+        /// <returns></returns>
+        public async Task LoadAsync()
+        {
+            if (_gltfRoot == null)
+            {
+                await LoadJson(_gltfFileName);
+            }
+            SceneType sceneType = BVAConst.GetSceneType(_gltfRoot.Asset.Generator);
+            if (sceneType == SceneType.Avatar)
+            {
+                await LoadAvatar();
+            }
+            else
+            {
+                await LoadSceneAsync();
+            }
+        }
 
         /// <summary>
         /// Loads a glTF Scene into the LastLoadedScene field
@@ -572,8 +603,8 @@ namespace BVA
             _assetManager.Init(_assetCache);
 
             await LoadAudio(sceneObj);
-            await LoadSkybox(sceneObj);
             await LoadSceneLightmap(scene);
+            await LoadSkybox(sceneObj);
 
             try
             {
@@ -618,7 +649,7 @@ namespace BVA
 
                 if (ex is OutOfMemoryException)
                 {
-                   await Resources.UnloadUnusedAssets();
+                    await Resources.UnloadUnusedAssets();
                 }
 
                 throw ex;
@@ -725,52 +756,6 @@ namespace BVA
             {
                 _assetManager.Dispose();
                 _assetManager = null;
-            }
-        }
-
-        private async Task SetupLoad(Func<Task> callback)
-        {
-            try
-            {
-                lock (this)
-                {
-                    if (_isRunning)
-                    {
-                        throw new LoadException("Cannot start a load while GLTFSceneImporter is already running");
-                    }
-
-                    _isRunning = true;
-                }
-
-                Statistics = new ImportStatistics();
-                if (_options.ThrowOnLowMemory)
-                {
-                    _memoryChecker = new MemoryChecker();
-                }
-
-                if (_gltfRoot == null)
-                {
-                    await LoadJson(_gltfFileName);
-                }
-
-                if (_assetCache == null)
-                {
-                    _assetCache = new AssetCache(_gltfRoot);
-                }
-
-                await callback();
-            }
-            catch
-            {
-                Cleanup();
-                throw;
-            }
-            finally
-            {
-                lock (this)
-                {
-                    _isRunning = false;
-                }
             }
         }
     }

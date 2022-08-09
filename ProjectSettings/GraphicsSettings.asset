@@ -36,8 +36,7 @@ GraphicsSettings:
   - {fileID: 15106, guid: 0000000000000000f000000000000000, type: 0}
   - {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
   - {fileID: 10770, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: -6465566751694194690, guid: 088f8c847d9982a42a3fc80fea3f7a89, type: 3}
-  - {fileID: -6465566751694194690, guid: 5c51691c9b48d03468661dfc5ea2d23e, type: 3}
+  - {fileID: -6465566751694194690, guid: 9b4e681081e2b4c469111bb649e2f7ee, type: 3}
   - {fileID: -6465566751694194690, guid: 24c8e014abeba2e4881e2603b9488534, type: 3}
   - {fileID: -6465566751694194690, guid: 04119caf3bdaf68438ffc5c2155f1b77, type: 3}
   - {fileID: -6465566751694194690, guid: 216221e64900ae44bae80de2e3611589, type: 3}
@@ -50,9 +49,16 @@ GraphicsSettings:
   - {fileID: -6465566751694194690, guid: 53d3d326ceff7b940a6236e66d350622, type: 3}
   - {fileID: 4800000, guid: 8d9c5b9f9a341a64cbe9c8c567ca40b9, type: 3}
   - {fileID: 4800000, guid: 766736548846cdf459a9766614dcccab, type: 3}
+  - {fileID: 104, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 108, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 103, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 106, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: -6465566751694194690, guid: 6d9468670aa4c0d4da815d573259423d, type: 3}
   - {fileID: -6465566751694194690, guid: 81831ddd0e498914281981e3d9410f64, type: 3}
+  - {fileID: -6465566751694194690, guid: a7b706cb8bc626d4fb87a52419ddc817, type: 3}
   m_PreloadedShaders:
   - {fileID: 20000000, guid: 944b2f38282772d41b3886ed43425bb3, type: 2}
+  - {fileID: 20000000, guid: 049503beafccb3b489bf2840ff89d0f7, type: 2}
   m_PreloadShadersBatchTimeLimit: 0
   m_SpritesDefaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_CustomRenderPipeline: {fileID: 11400000, guid: fd1e71398c6dd2246825c9f84a83fe4a, type: 2}
@@ -69,7 +75,7 @@ GraphicsSettings:
   m_LightmapKeepDynamicPlain: 0
   m_LightmapKeepDynamicDirCombined: 0
   m_LightmapKeepShadowMask: 0
-  m_LightmapKeepSubtractive: 1
+  m_LightmapKeepSubtractive: 0
   m_FogKeepLinear: 0
   m_FogKeepExp: 0
   m_FogKeepExp2: 1

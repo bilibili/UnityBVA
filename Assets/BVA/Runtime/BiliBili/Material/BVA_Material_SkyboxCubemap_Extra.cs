@@ -11,7 +11,7 @@ using Vector4 = UnityEngine.Vector4;
 
 namespace GLTF.Schema.BVA
 {
-public class BVA_Material_SkyboxCubemap_Extra : MaterialDescriptor
+public class BVA_Material_SkyboxCubemap_Extra : MaterialExtra
 {
 public const string PROPERTY = "BVA_Material_SkyboxCubemap_Extra";
 public const string SHADER_NAME = "Skybox/Cubemap";

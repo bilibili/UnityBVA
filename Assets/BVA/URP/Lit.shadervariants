@@ -8,38 +8,75 @@ ShaderVariantCollection:
   m_PrefabAsset: {fileID: 0}
   m_Name: Lit
   m_Shaders:
-  - first: {fileID: 0}
+  - first: {fileID: 4800000, guid: 8d9c5b9f9a341a64cbe9c8c567ca40b9, type: 3}
     second:
       variants:
       - keywords: 
-        passType: 0
-  - first: {fileID: 0}
-    second:
-      variants:
-      - keywords: 
-        passType: 0
-  - first: {fileID: 0}
-    second:
-      variants:
-      - keywords: 
-        passType: 0
-  - first: {fileID: 0}
-    second:
-      variants:
-      - keywords: 
-        passType: 0
-  - first: {fileID: 0}
-    second:
-      variants:
-      - keywords: 
-        passType: 0
-  - first: {fileID: 0}
-    second:
-      variants:
-      - keywords: 
-        passType: 0
+        passType: 8
+      - keywords: INSTANCING_ON
+        passType: 8
       - keywords: 
         passType: 13
+      - keywords: FOG_EXP2 _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS
+        passType: 13
+      - keywords: FOG_EXP2 _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS
+          _NORMALMAP
+        passType: 13
+      - keywords: FOG_EXP2 _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS
+          _NORMALMAP _RECEIVE_SHADOWS_OFF
+        passType: 13
+      - keywords: FOG_EXP2 _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS
+          _RECEIVE_SHADOWS_OFF
+        passType: 13
+      - keywords: FOG_EXP2 _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE
+          _NORMALMAP _RECEIVE_SHADOWS_OFF _SHADOWS_SOFT
+        passType: 13
+      - keywords: FOG_EXP2 _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE
+          _NORMALMAP _SHADOWS_SOFT
+        passType: 13
+      - keywords: FOG_EXP2 _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE
+          _RECEIVE_SHADOWS_OFF _SHADOWS_SOFT
+        passType: 13
+      - keywords: FOG_EXP2 _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE
+          _SHADOWS_SOFT
+        passType: 13
+  - first: {fileID: 4800000, guid: 766736548846cdf459a9766614dcccab, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 8
+      - keywords: 
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _IS_ANGELRING_OFF
+          _IS_CLIPPING_MODE _MAIN_LIGHT_SHADOWS
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _IS_ANGELRING_OFF
+          _IS_CLIPPING_MODE _MAIN_LIGHT_SHADOWS_CASCADE _SHADOWS_SOFT
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _IS_ANGELRING_OFF
+          _IS_CLIPPING_OFF _MAIN_LIGHT_SHADOWS
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _IS_ANGELRING_OFF
+          _IS_CLIPPING_OFF _MAIN_LIGHT_SHADOWS_CASCADE _SHADOWS_SOFT
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _IS_ANGELRING_OFF
+          _IS_TRANSCLIPPING_OFF _MAIN_LIGHT_SHADOWS
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _IS_ANGELRING_OFF
+          _IS_TRANSCLIPPING_OFF _MAIN_LIGHT_SHADOWS _SHADINGGRADEMAP
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _IS_ANGELRING_OFF
+          _IS_TRANSCLIPPING_OFF _MAIN_LIGHT_SHADOWS_CASCADE _SHADINGGRADEMAP _SHADOWS_SOFT
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _IS_ANGELRING_OFF
+          _IS_TRANSCLIPPING_OFF _MAIN_LIGHT_SHADOWS_CASCADE _SHADOWS_SOFT
+        passType: 13
+      - keywords: _IS_OUTLINE_CLIPPING_NO _OUTLINE_NML
+        passType: 14
+      - keywords: _IS_OUTLINE_CLIPPING_YES _OUTLINE_NML
+        passType: 14
+      - keywords: _OUTLINE_NML
+        passType: 14
   - first: {fileID: 66, guid: 0000000000000000f000000000000000, type: 0}
     second:
       variants:
@@ -96,6 +133,31 @@ ShaderVariantCollection:
       - keywords: 
         passType: 0
   - first: {fileID: 9104, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: c17132b1f77d20942aa75f8429c0f8bc, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: d6dae50ee9e1bfa4db75f19f99355220, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: ec9fec698a3456d4fb18cf8bacb7a2bc, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: e7857e9d0c934dc4f83f270f8447b006, type: 3}
+    second:
+      variants:
+      - keywords: _HDR_GRADING _USE_FAST_SRGB_LINEAR_CONVERSION
+        passType: 0
+  - first: {fileID: 4800000, guid: e6e9a19c3678ded42a3bc431ebef7dbd, type: 3}
     second:
       variants:
       - keywords: 
@@ -348,40 +410,6 @@ ShaderVariantCollection:
         passType: 0
       - keywords: 
         passType: 13
-  - first: {fileID: 4800000, guid: c17132b1f77d20942aa75f8429c0f8bc, type: 3}
-    second:
-      variants:
-      - keywords: 
-        passType: 0
-  - first: {fileID: 4800000, guid: d6dae50ee9e1bfa4db75f19f99355220, type: 3}
-    second:
-      variants:
-      - keywords: 
-        passType: 0
-  - first: {fileID: 4800000, guid: ec9fec698a3456d4fb18cf8bacb7a2bc, type: 3}
-    second:
-      variants:
-      - keywords: 
-        passType: 0
-  - first: {fileID: 4800000, guid: e7857e9d0c934dc4f83f270f8447b006, type: 3}
-    second:
-      variants:
-      - keywords: _HDR_GRADING _USE_FAST_SRGB_LINEAR_CONVERSION
-        passType: 0
-  - first: {fileID: -6465566751694194690, guid: 5c51691c9b48d03468661dfc5ea2d23e, type: 3}
-    second:
-      variants:
-      - keywords: 
-        passType: 0
-      - keywords: 
-        passType: 8
-      - keywords: 
-        passType: 13
-  - first: {fileID: 4800000, guid: 1a97144e4ad27a04aafd70f7b915cedb, type: 3}
-    second:
-      variants:
-      - keywords: 
-        passType: 8
   - first: {fileID: -6465566751694194690, guid: a7b706cb8bc626d4fb87a52419ddc817, type: 3}
     second:
       variants:
@@ -393,48 +421,6 @@ ShaderVariantCollection:
         passType: 8
       - keywords: 
         passType: 13
-  - first: {fileID: 4800000, guid: e6e9a19c3678ded42a3bc431ebef7dbd, type: 3}
-    second:
-      variants:
-      - keywords: 
-        passType: 0
-  - first: {fileID: 4800000, guid: 766736548846cdf459a9766614dcccab, type: 3}
-    second:
-      variants:
-      - keywords: 
-        passType: 8
-      - keywords: 
-        passType: 13
-      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _IS_ANGELRING_OFF
-          _IS_CLIPPING_MODE _MAIN_LIGHT_SHADOWS
-        passType: 13
-      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _IS_ANGELRING_OFF
-          _IS_CLIPPING_MODE _MAIN_LIGHT_SHADOWS_CASCADE _SHADOWS_SOFT
-        passType: 13
-      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _IS_ANGELRING_OFF
-          _IS_CLIPPING_OFF _MAIN_LIGHT_SHADOWS
-        passType: 13
-      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _IS_ANGELRING_OFF
-          _IS_CLIPPING_OFF _MAIN_LIGHT_SHADOWS_CASCADE _SHADOWS_SOFT
-        passType: 13
-      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _IS_ANGELRING_OFF
-          _IS_TRANSCLIPPING_OFF _MAIN_LIGHT_SHADOWS
-        passType: 13
-      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _IS_ANGELRING_OFF
-          _IS_TRANSCLIPPING_OFF _MAIN_LIGHT_SHADOWS _SHADINGGRADEMAP
-        passType: 13
-      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _IS_ANGELRING_OFF
-          _IS_TRANSCLIPPING_OFF _MAIN_LIGHT_SHADOWS_CASCADE _SHADINGGRADEMAP _SHADOWS_SOFT
-        passType: 13
-      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _IS_ANGELRING_OFF
-          _IS_TRANSCLIPPING_OFF _MAIN_LIGHT_SHADOWS_CASCADE _SHADOWS_SOFT
-        passType: 13
-      - keywords: _IS_OUTLINE_CLIPPING_NO _OUTLINE_NML
-        passType: 14
-      - keywords: _IS_OUTLINE_CLIPPING_YES _OUTLINE_NML
-        passType: 14
-      - keywords: _OUTLINE_NML
-        passType: 14
   - first: {fileID: 4800000, guid: c842ee90ab0096b4ba15162920a3b44f, type: 3}
     second:
       variants:
@@ -503,61 +489,4 @@ ShaderVariantCollection:
         passType: 13
       - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _CLEARCOAT _MAIN_LIGHT_SHADOWS_CASCADE
           _SHADOWS_SOFT _SURFACE_TYPE_TRANSPARENT
-        passType: 13
-  - first: {fileID: 4800000, guid: 8d9c5b9f9a341a64cbe9c8c567ca40b9, type: 3}
-    second:
-      variants:
-      - keywords: 
-        passType: 8
-      - keywords: INSTANCING_ON
-        passType: 8
-      - keywords: 
-        passType: 13
-      - keywords: FOG_EXP2 _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS
-        passType: 13
-      - keywords: FOG_EXP2 _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS
-          _NORMALMAP
-        passType: 13
-      - keywords: FOG_EXP2 _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS
-          _NORMALMAP _RECEIVE_SHADOWS_OFF
-        passType: 13
-      - keywords: FOG_EXP2 _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS
-          _RECEIVE_SHADOWS_OFF
-        passType: 13
-      - keywords: FOG_EXP2 _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE
-          _NORMALMAP _RECEIVE_SHADOWS_OFF _SHADOWS_SOFT
-        passType: 13
-      - keywords: FOG_EXP2 _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE
-          _NORMALMAP _SHADOWS_SOFT
-        passType: 13
-      - keywords: FOG_EXP2 _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE
-          _RECEIVE_SHADOWS_OFF _SHADOWS_SOFT
-        passType: 13
-      - keywords: FOG_EXP2 _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE
-          _SHADOWS_SOFT
-        passType: 13
-  - first: {fileID: 4800000, guid: 5e5eca56e1993e741b41ac9c687d01a5, type: 3}
-    second:
-      variants:
-      - keywords: 
-        passType: 8
-      - keywords: _CASTING_PUNCTUAL_LIGHT_SHADOW
-        passType: 8
-      - keywords: 
-        passType: 13
-      - keywords: FOG_EXP2 _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS
-        passType: 13
-      - keywords: FOG_EXP2 _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE
-          _SHADOWS_SOFT
-        passType: 13
-  - first: {fileID: -6465566751694194690, guid: 81831ddd0e498914281981e3d9410f64, type: 3}
-    second:
-      variants:
-      - keywords: FOG_EXP2
-        passType: 0
-      - keywords: 
-        passType: 8
-      - keywords: _CASTING_PUNCTUAL_LIGHT_SHADOW
-        passType: 8
-      - keywords: 
         passType: 13

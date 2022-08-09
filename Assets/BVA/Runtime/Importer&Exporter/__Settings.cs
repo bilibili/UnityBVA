@@ -22,9 +22,9 @@ namespace BVA
         }
         public async Task ImportLightmap(BVA_setting_renderSettingExtension ext)
         {
-            ext.Deserialize(_gltfRoot);
+            ext = ext.Deserialize(_gltfRoot);
             if (ext.skybox != null) RenderSettings.skybox = await LoadMaterial(ext.skybox);
-            if (ext.sun != null) RenderSettings.sun = _assetCache.NodeCache[ext.sun.Id].GetComponent<Light>();
+            if (ext.sun != null && ext.sun.IsValid) RenderSettings.sun = _assetCache.NodeCache[ext.sun.Id].GetComponent<Light>();
             if (ext.customReflection != null) RenderSettings.customReflection = await LoadCubemap(ext.customReflection);
         }
     }

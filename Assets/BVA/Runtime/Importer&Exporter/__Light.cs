@@ -129,6 +129,7 @@ namespace BVA
                 lightmapTextureInfos.Add(new LightmapTextureInfo() { lightmapColor = colorInfo?.Index, lightmapDir = dirInfo?.Index, shadowMask = shadowInfo?.Index });
             }
 
+            Debug.Log(LightmapSettings.lightProbes.bakedProbes.Length);
             BVA_light_lightmapExtension ext = new BVA_light_lightmapExtension(LightmapSettings.lightmapsMode, lightmapTextureInfos.ToArray(), LightmapsEncoding.RGBM);
 
             var id = new LightmapId

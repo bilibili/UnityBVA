@@ -1,18 +1,15 @@
-using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
 using GLTF.Schema.BVA;
 using System.IO;
-using BVA;
 using BVA.Component;
 using OggVorbis;
 using NAudio.Wave;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
-/*
- MP3 doesn't support export at runtime, so we decide not provide ability to export audio at runtime 
- */
+
+// All audio clips export as ogg at runtime, others will export original format
 namespace BVA
 {
     public partial class GLTFSceneImporter
@@ -90,32 +87,27 @@ namespace BVA
     {
         public string GetExportPath(AudioClip clip)
         {
-            if (Application.isPlaying && !Application.isEditor)
+#if UNITY_EDITOR
+            //export to Asset/... the path in Project
+            var pathInProject = Path.ChangeExtension(AssetDatabase.GetAssetPath(clip), ".ogg");
+            return pathInProject;
+#else
+            //export to Audio/,if name is conflict,rename it with (num)
+            var exportWithoutExt = $"Audios/{clip.name}";
+            var exportPath = $"{exportWithoutExt}.ogg";
+            if (File.Exists(clip.name))
             {
-                //export to Audio/,if name is conflict,rename it with (num)
-                var exportWithoutExt = $"Audios/{clip.name}";
-                var exportPath = $"{exportWithoutExt}.ogg";
-                if (File.Exists(clip.name))
+                for (int i = 0; i < 1000; i++)
                 {
-                    for (int i = 0; i < 1000; i++)
+                    var validName = $"{exportWithoutExt}({i}).ogg";
+                    if (!File.Exists(exportWithoutExt))
                     {
-                        var validName = $"{exportWithoutExt}({i}).ogg";
-                        if (!File.Exists(exportWithoutExt))
-                        {
-                            return validName;
-                        }
+                        return validName;
                     }
                 }
             }
-            else
-            {
-#if UNITY_EDITOR
-                //export to Asset/... the path in Project
-                var pathInProject = Path.ChangeExtension(AssetDatabase.GetAssetPath(clip), ".ogg");
-                return pathInProject;
-#endif
-            }
             return null;
+#endif
         }
 
         private static string GetAudioMime(AudioFormat audioType)
@@ -143,7 +135,7 @@ namespace BVA
             return id;
         }
 
-        private AudioId ExportAudioInternalBuffer(AudioClip clip, AudioFormat audioFormat = AudioFormat.DEFAULT)
+        private AudioId ExportAudioInternalBuffer(AudioClip clip)
         {
             if (clip == null)
             {
@@ -158,20 +150,8 @@ namespace BVA
                     Root = _root
                 };
             }
-            audioFormat = GetAudioExportFormat(clip);
-            bool exportOrigialFile = false;
-#if UNITY_EDITOR
-            if (ExportOriginalAudioFile)
-            {
-                var audioPath = AssetDatabase.GetAssetPath(clip);
-                if (audioPath.EndsWith(".ogg") && clip.frequency == 44100)
-                    exportOrigialFile = true;
-                if (audioPath.EndsWith(".wav") || audioPath.EndsWith(".mp3"))
-                    exportOrigialFile = true;
-            }
-            if (!exportOrigialFile && !Application.isPlaying)
-                EditorImportAudioSetting(audioFormat, clip);
-#endif
+            AudioFormat audioFormat = GetAudioExportFormat(clip);
+            bool exportOrigialFile = audioFormat == AudioFormat.MP3;
 
             AudioAsset audio = new AudioAsset() { name = clip.name, mimeType = GetAudioMime(audioFormat), channels = clip.channels, frequency = clip.frequency, lengthSamples = clip.samples };
 
@@ -198,12 +178,12 @@ namespace BVA
                                     _bufferWriter.Write(v);
                                 break;
                             }
-                        case AudioFormat.MP3: //need fix compression
-                            {
-                                //WaveUtil.SaveToMP3File(clip,"E:\\output.mp3");
-                                
-                                break;
-                            }
+                        //case AudioFormat.MP3: //need fix runtime compression
+                        //    {
+                        //        WaveUtil.SaveToMP3File(clip, "E:\\output.mp3");
+
+                        //        break;
+                        //    }
                         case AudioFormat.OGG:
                             {
                                 var bytes = VorbisPlugin.GetOggVorbis(clip, ExportAudioQuality);
@@ -248,37 +228,22 @@ namespace BVA
 
         private AudioFormat GetAudioExportFormat(AudioClip clip)
         {
-            if (ExportAudioFormat == AudioFormat.DEFAULT)
-            {
 #if UNITY_EDITOR
-                var assetPath = AssetDatabase.GetAssetPath(clip);
-                var fileExtLower = assetPath.ToLower();
-                if (fileExtLower.EndsWith(".mp3"))
-                    return AudioFormat.MP3;
-                else if (fileExtLower.EndsWith(".ogg"))
-                    return AudioFormat.OGG;
-#endif
-                if (clip.length > ExportOggAudioClipLength)
-                    return AudioFormat.OGG;
-                else
-                    return AudioFormat.WAV;
-            }
+            var assetPath = AssetDatabase.GetAssetPath(clip);
+            var fileExtLower = assetPath.ToLower();
+            if (fileExtLower.EndsWith(".mp3"))
+                return AudioFormat.MP3;
+            else if (fileExtLower.EndsWith(".ogg"))
+                return AudioFormat.OGG;
+            if (clip.length > ExportOggAudioClipLength)
+                return AudioFormat.OGG;
             else
-                return ExportAudioFormat;
-        }
-#if UNITY_EDITOR
-        private void EditorImportAudioSetting(AudioFormat audioFormat, AudioClip clip)
-        {
-            if (audioFormat == AudioFormat.OGG)
-            {
-                AudioImporter importer = AudioImporter.GetAtPath(AssetDatabase.GetAssetPath(clip)) as AudioImporter;
-                //The options for the platform string are "WebPlayer", "Standalone", "iOS", "Android", "WebGL", "PS4", "XBoxOne".
-                AudioImporterSampleSettings audioImporterSampleSettings = importer.GetOverrideSampleSettings("Standalone");
-                audioImporterSampleSettings.sampleRateOverride = 44100;
-                importer.SetOverrideSampleSettings("Standalone", audioImporterSampleSettings);
-            }
-        }
+                return AudioFormat.WAV;
+#else
+                return AudioFormat.OGG;
 #endif
+        }
+
         /// <summary>
         /// export AudioSource
         /// </summary>

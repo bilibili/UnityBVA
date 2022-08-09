@@ -52,10 +52,6 @@ namespace BVA
                     _alphaMode = AlphaMode.OPAQUE;
                     break;
             }
-            mat.SetFloat("_EnvironmentReflections", 1.0f);
-            mat.EnableKeyword("_ENVIRONMENTREFLECTIONS_OFF");
-            mat.SetFloat("_SpecularHighlights", 1.0f);
-            mat.EnableKeyword("_SPECULARHIGHLIGHTS_OFF");
         }
 
         public Material Material { get { return _material; } }

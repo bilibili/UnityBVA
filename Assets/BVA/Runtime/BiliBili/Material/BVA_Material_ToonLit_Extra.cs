@@ -9,7 +9,7 @@ using Vector4 = UnityEngine.Vector4;
 
 namespace GLTF.Schema.BVA
 {
-public class BVA_Material_ToonLit_Extra : MaterialDescriptor
+public class BVA_Material_ToonLit_Extra : MaterialExtra
 {
 public const string PROPERTY = "BVA_Material_ToonLit_Extra";
 public const string SHADER_NAME = "Universal Render Pipeline/Toon Lit";

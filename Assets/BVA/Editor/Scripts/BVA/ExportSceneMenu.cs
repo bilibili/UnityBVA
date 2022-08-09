@@ -27,16 +27,16 @@ namespace BVA
         private Scene ActiveScene { get { return SceneManager.GetActiveScene(); } }
         int exportMode;
         static string[] EDIT_MODES = new[]{
-            "Export GameObject",
-            "Export Single Scene",
-            "Export Multiply Scenes",
+            "GameObjects",
+            "Single Scene",
+            "Multiply Scenes",
         };
         bool foldCommonProperty = true;
         ExportFileType exportType;
         //Collect material info which are not supported by exporter
         void CheckMaterialValidity()
         {
-            
+
         }
 
         private void OnEnable()
@@ -47,6 +47,8 @@ namespace BVA
 
         private void OnGUI()
         {
+            ExportCommon.EditorGUICheckBuildPlatform();
+
             exportMode = GUILayout.Toolbar(exportMode, EDIT_MODES);
             EditorGUILayout.HelpBox($"version {BVAConst.FORMAT_VERSION}", MessageType.Info);
             EditorGUILayout.Space();
@@ -61,11 +63,11 @@ namespace BVA
                 EditorGUILayout.EndHorizontal();
             }
 
-            GLTFSceneExporter.DracoMeshCompression = EditorGUILayout.Toggle("Use Draco Compression", GLTFSceneExporter.DracoMeshCompression);
+            GLTFSceneExporter.DracoMeshCompression = EditorGUILayout.Toggle("Use Draco Compression(Standalone Only)", GLTFSceneExporter.DracoMeshCompression);
             GLTFSceneExporter.ExportLightmap = EditorGUILayout.Toggle("Export Lightmap", GLTFSceneExporter.ExportLightmap);
             GLTFSceneExporter.ExportRenderSetting = EditorGUILayout.Toggle("Export RenderSetting", GLTFSceneExporter.ExportRenderSetting);
             GLTFSceneExporter.ExportSkybox = EditorGUILayout.Toggle("Export Skybox", GLTFSceneExporter.ExportSkybox);
-
+            EditorGUILayout.HelpBox("Environment Reflections is not work when Source = Skybox, please use custom cubemap", MessageType.Info);
             exportType = (ExportFileType)EditorGUILayout.EnumPopup("Export Format", exportType);
 
             switch (exportMode)
@@ -117,6 +119,7 @@ namespace BVA
                 EditorUtility.DisplayDialog("Scene doesn't have a valid name", $"Please try save scene before exporting!", "OK");
                 return;
             }
+            GLTFSceneExporter.ExportSceneType = SceneType.Scene;
 
             if (!string.IsNullOrEmpty(path))
             {

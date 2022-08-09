@@ -10,7 +10,7 @@ namespace BVA.Sample
     {
         public Transform content;
         List<Button> buttons;
-        public Animator animator;
+        new Animation animation;
         public List<AnimationClip> clips;
         PlayableGraph playableGraph;
 
@@ -18,16 +18,16 @@ namespace BVA.Sample
         {
             //SetAnimationClips(clips);
         }
-        public void Set(AssetManager manager,Animator _animator)
+        public void Set(AssetManager manager,Animation _animation)
         {
-            animator = _animator;
-            if (manager.assetCache.AnimatorClipCache.Length == 0)
+            animation = _animation;
+            if (manager.assetCache.AnimationCache.Length == 0)
             {
                 gameObject.SetActive(false);
                 return;
             }
             clips = new List<AnimationClip>();
-            foreach (var clip in manager.assetCache.AnimatorClipCache)
+            foreach (var clip in manager.assetCache.AnimationCache)
             {
                 if (clip != null)
                     clips.Add(clip.LoadedAnimationClip);
@@ -62,7 +62,7 @@ namespace BVA.Sample
                 var clip = clips[i];
                 buttons[i].onClick.AddListener(() =>
                 {
-                    AnimationPlayableUtilities.PlayClip(animator, clip, out playableGraph);
+                    animation.Play(clip.name);
                 });
             }
         }

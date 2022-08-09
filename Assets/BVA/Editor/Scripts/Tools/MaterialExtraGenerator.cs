@@ -123,7 +123,7 @@ namespace BVA
             {
                 EditorUtility.DisplayDialog("error", "need file name,and should start with BVA!", "OK");
             }
-            string classHeader = $"public class {className} : MaterialDescriptor";
+            string classHeader = $"public class {className} : MaterialExtra";
             string ParameterName(string desc) { return "parameter_" + desc.GetNumberAlphaUnderLine(); }
             StringWriter sw = new StringWriter();
             foreach (var f in namespaceField)

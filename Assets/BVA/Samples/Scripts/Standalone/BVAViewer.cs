@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using BVA.Component;
+using BVA.Extensions;
 
 namespace BVA.Sample
 {
@@ -13,27 +14,15 @@ namespace BVA.Sample
         public SkyboxPanel skyboxPanel;
         public PostProcessPanel postprocessPanel;
         public TimelinePanel timelinePanel;
-        public Text logText;
-        public GameObject logView;
         public Light mainLight;
         public Toggle toggleLight;
         public void OpenAvatarFile() { OpenFile(AssetType.Avatar); }
         public void OpenSceneFile() { OpenFile(AssetType.Scene); }
         public void OpenCommonFile() { OpenFile(AssetType.Common); }
         bool activeWindow = false;
-        public void LogCallback(string condition, string stackTrace, LogType type)
-        {
-            //if(type == LogType.Error)
-            {
-                logText.text += condition;
-                logText.text = stackTrace;
-            }
-        }
         private void Start()
         {
             SetActive(false);
-            logText.text = "";
-            Application.logMessageReceived += LogCallback;
         }
         public void Update()
         {
@@ -52,7 +41,6 @@ namespace BVA.Sample
             cameraPanel.gameObject.SetActive(active);
             postprocessPanel.gameObject.SetActive(active);
             timelinePanel.gameObject.SetActive(active);
-            logView.SetActive(active);
         }
 
         public void ToggleLight(bool enable)
@@ -67,8 +55,12 @@ namespace BVA.Sample
             {
                 LoadAvatarPanel(LastLoadedScene.gameObject);
             }
+            else
+            {
+                LoadScenePanel(LastLoadedScene.gameObject);
+            }
             var cameras = scene.mainScene.GetComponentsInChildren<Camera>();
-            foreach(var cam in cameras)
+            foreach (var cam in cameras)
             {
                 cam.gameObject.AddComponent<OrbitCameraController>();
             }
@@ -82,20 +74,30 @@ namespace BVA.Sample
                 audioPanel.gameObject.SetActive(true);
                 audioPanel.SetAudioContainer(audio);
             }
-            var blendshape = root.GetComponentInChildren<BlendShapeMixer>();
-            if (blendshape != null)
+            if (root.TryGetComponent<BlendShapeMixer> (out var blendshape))
             {
                 blendshapeMixerPanel.gameObject.SetActive(true);
                 blendshapeMixerPanel.SetBlendShapeMixer(blendshape);
             }
-            cameraPanel.gameObject.SetActive(true);
-            cameraPanel.SetCameras();
+           
+            cameraPanel.gameObject.SetActive(false);
             postprocessPanel.gameObject.SetActive(false);
 
-            timelinePanel.gameObject.SetActive(true);
-            timelinePanel.Set(root.GetComponentInChildren<PlayableController>());
-
-            animationPanel.Set(root.GetComponent<AssetManager>(), root.transform.GetChild(0).GetComponent<Animator>());
+            if (root.TryGetComponent<Animation>(out var animation))
+            {
+                animationPanel.gameObject.SetActive(true);
+                animationPanel.Set(root.GetComponent<AssetManager>(), animation);
+            }
+        }
+        public void LoadScenePanel(GameObject root)
+        {
+            var audio = root.GetComponent<AudioClipContainer>();
+            animationPanel.gameObject.SetActive(true);
+            if (audio != null)
+            {
+                audioPanel.gameObject.SetActive(true);
+                audioPanel.SetAudioContainer(audio);
+            }
 
             var skybox = root.GetComponent<SkyboxContainer>();
             if (skybox != null)
@@ -103,6 +105,16 @@ namespace BVA.Sample
                 skyboxPanel.gameObject.SetActive(true);
                 skyboxPanel.SetSkybox(skybox);
             }
+
+            if (root.TryGetComponent<Animation>(out var animation))
+            {
+                animationPanel.gameObject.SetActive(true);
+                animationPanel.Set(root.GetComponent<AssetManager>(), animation);
+            }
+            cameraPanel.gameObject.SetActive(true);
+            cameraPanel.SetCameras();
+            //timelinePanel.gameObject.SetActive(true);
+            //timelinePanel.Set(root.GetComponentInChildren<PlayableController>());
         }
     }
 }

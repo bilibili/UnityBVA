@@ -33,8 +33,14 @@ namespace BVA
             Matrix4x4[] bindPoses = new Matrix4x4[boneCount];
             for (int i = 0; i < boneCount; i++)
             {
-                var node = _assetCache.NodeCache[skin.Joints[i].Id];
-                if(node == null)
+                int jointId = skin.Joints[i].Id;
+                if (jointId < 0 || _assetCache.NodeCache.Length <= jointId)
+                {
+                    LogPool.ImportLogger.LogWarning(LogPart.Skin, "The skin node is not exist");
+                    continue;
+                }
+                var node = _assetCache.NodeCache[jointId];
+                if (node == null)
                 {
                     LogPool.ImportLogger.LogWarning(LogPart.Skin, "The skin node is null");
                     continue;
@@ -118,14 +124,14 @@ namespace BVA
             skin.Skeleton = new NodeId() { Root = _root, Id = _nodeCache.GetId(render.rootBone.gameObject) };
             if (skin.Skeleton.Id < 0)
             {
-                Debug.LogError("The Skin you try to export has some bone transform that are not exist. "+ render.rootBone.gameObject.name);
+                Debug.LogError("The Skin you try to export has some bone transform that are not exist. " + render.rootBone.gameObject.name);
             }
             // joints is point to a list of node
             List<NodeId> joints = new List<NodeId>();
             foreach (var bone in render.bones)
             {
                 int boneId = _nodeCache.GetId(bone.gameObject);
-                if (boneId<0)
+                if (boneId < 0)
                 {
                     Debug.LogError("The Skin you try to export has some bone transform that are not exist. " + bone.gameObject.name);
                 }

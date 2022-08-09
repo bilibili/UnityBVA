@@ -1,9 +1,6 @@
-using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
 using GLTF.Schema.BVA;
-using GLTF.Schema;
-using System.Linq;
 
 namespace BVA
 {
@@ -25,7 +22,6 @@ namespace BVA
                 AssetManager.skyboxContainer.Add(_assetCache.MaterialCache[materialIndex].UnityMaterial);
             }
             RenderSettings.skybox = AssetManager.skyboxContainer.Get(0);
-            DynamicGI.UpdateEnvironment();
         }
     }
 
@@ -33,7 +29,7 @@ namespace BVA
     {
         private bool IsValidSkyboxMaterial(Material material)
         {
-            return SkyboxContainer.IsValidMaterial(material);
+            return SkyboxContainer.IsValidSkyboxMaterial(material);
         }
         private bool ShouldExportSceneSkybox()
         {

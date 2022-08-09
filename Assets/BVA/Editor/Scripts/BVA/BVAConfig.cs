@@ -34,6 +34,9 @@ public static class BVAConfig
             LoadDefaultRenderPipelineAsset();
         Lightmapping.bakedGI = true;
         Lightmapping.realtimeGI = false;
+        PlayerSettings.SetNormalMapEncoding(BuildTargetGroup.Standalone, NormalMapEncoding.XYZ);
+        PlayerSettings.SetNormalMapEncoding(BuildTargetGroup.Android, NormalMapEncoding.XYZ);
+        PlayerSettings.SetNormalMapEncoding(BuildTargetGroup.iOS, NormalMapEncoding.XYZ);
         if (ColorSpace() != UnityEngine.ColorSpace.Linear)
             PlayerSettings.colorSpace = UnityEngine.ColorSpace.Linear;
         PlayerSettings.assemblyVersionValidation = false;

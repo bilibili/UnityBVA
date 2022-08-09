@@ -25,20 +25,17 @@ namespace BVA
         /// <returns></returns>
         public virtual async Task<Mesh> LoadMeshAsync(int meshIndex, System.Threading.CancellationToken cancellationToken)
         {
-            await SetupLoad(async () =>
+            if (meshIndex < 0 || meshIndex >= _gltfRoot.Meshes.Count)
             {
-                if (meshIndex < 0 || meshIndex >= _gltfRoot.Meshes.Count)
-                {
-                    throw new System.ArgumentException($"There is no mesh for index {meshIndex}");
-                }
+                throw new ArgumentException($"There is no mesh for index {meshIndex}");
+            }
 
-                if (_assetCache.MeshCache[meshIndex] == null)
-                {
-                    GLTFMesh def = _gltfRoot.Meshes[meshIndex];
-                    await ConstructMeshAttributes(def, new MeshId() { Id = meshIndex, Root = _gltfRoot });
-                    await ConstructMesh(def, meshIndex);
-                }
-            });
+            if (_assetCache.MeshCache[meshIndex] == null)
+            {
+                GLTFMesh def = _gltfRoot.Meshes[meshIndex];
+                await ConstructMeshAttributes(def, new MeshId() { Id = meshIndex, Root = _gltfRoot });
+                await ConstructMesh(def, meshIndex);
+            }
             return _assetCache.MeshCache[meshIndex].LoadedMesh;
         }
 
@@ -1104,7 +1101,20 @@ namespace BVA
 
         private static bool IsValidSkinnedMeshRenderer(SkinnedMeshRenderer smr)
         {
-            return smr != null && smr.rootBone != null && smr.bones.Length > 0;
+            if (smr == null || smr.sharedMesh == null) return false;
+            if (smr.rootBone == null)
+            {
+                Animator animator = smr.GetComponentInParent<Animator>();
+                if (animator != null)
+                {
+                    smr.rootBone = animator.GetBoneTransform(HumanBodyBones.Hips);
+                }
+                if (smr.rootBone == null)
+                {
+                    LogPool.ExportLogger.LogError(LogPart.Skin, "root bone is null, can't export skin");
+                }
+            }
+            return smr.bones.Length > 0;
         }
 
         /// <summary>

@@ -35,6 +35,7 @@ namespace BVA
             }
             return await ConstructCubemap(id, ext.texture, ext.mipmap);
         }
+
         protected async Task<Cubemap> ConstructCubemap(CubemapId cubemapId, TextureId textureId, bool mipmap)
         {
             await ConstructUnityCubemap(cubemapId, textureId, mipmap);
@@ -209,21 +210,23 @@ namespace BVA
 
                     var result = await basisTexture.LoadFromBytes(buffer, linearColor);
                     // NOTE: the second parameter of LoadImage() marks non-readable, but we can't mark it until after we call Apply()
-#if UNITY_EDITOR
-                    if (!Application.isPlaying)
-                        markGpuOnly = false;
-#endif
+
                     _assetCache.ImageCache[imageCacheIndex] = result.texture;
                 }
                 return;
             }
             //Texture2D texture = isLinear ? new Texture2D(0, 0, UnityEngine.Experimental.Rendering.DefaultFormat.LDR, UnityEngine.Experimental.Rendering.TextureCreationFlags.None) :
             //new Texture2D(0, 0, UnityEngine.Experimental.Rendering.DefaultFormat.LDR, UnityEngine.Experimental.Rendering.TextureCreationFlags.None);
-            Texture2D texture = new Texture2D(0, 0, TextureFormat.ARGB32, mipmap, isLinear);
+            Texture2D texture = new Texture2D(0, 0, TextureFormat.ARGB32, mipmap && GenerateMipMapsForTextures, isLinear);
             texture.name = image.Name ?? "No name";
             texture.filterMode = filterMode;
             texture.wrapMode = wrapMode;
 
+            //NOTE: the second parameter of LoadImage() marks non-readable, but we can't mark it until after we call Apply()
+#if UNITY_EDITOR
+            if (!Application.isPlaying && Application.isEditor)
+                markGpuOnly = false;
+#endif
             if (stream is MemoryStream)
             {
                 using (MemoryStream memoryStream = stream as MemoryStream)
@@ -240,11 +243,6 @@ namespace BVA
                 byte[] buffer = new byte[stream.Length];
                 stream.Read(buffer, 0, (int)stream.Length);
 
-                //	NOTE: the second parameter of LoadImage() marks non-readable, but we can't mark it until after we call Apply()
-#if UNITY_EDITOR
-                if (!Application.isPlaying)
-                    markGpuOnly = false;
-#endif
                 texture.LoadImage(buffer, markGpuOnly);
             }
 
@@ -470,8 +468,7 @@ namespace BVA
         private void ExportLightmapTexture(Texture texture, string outputPath)
         {
             var destRenderTexture = RenderTexture.GetTemporary(texture.width, texture.height, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.sRGB);
-            _lightmapEncodeMaterial.SetInt("_MODE", 0);
-            Graphics.Blit(texture, destRenderTexture, _lightmapEncodeMaterial);
+            Graphics.Blit(texture, destRenderTexture, UnityExtensions.GetLightmapEncodeMaterial(LightmapEncodingMode.EncodeRGBM));
 
             var exportTexture = new Texture2D(texture.width, texture.height, TextureFormat.ARGB32, false, false);
             exportTexture.ReadPixels(new Rect(0, 0, destRenderTexture.width, destRenderTexture.height), 0, 0);
@@ -501,7 +498,7 @@ namespace BVA
         {
             var destRenderTexture = RenderTexture.GetTemporary(texture.width, texture.height, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
 
-            Graphics.Blit(texture, destRenderTexture, _metalGlossChannelSwapMaterial);
+            Graphics.Blit(texture, destRenderTexture, UnityExtensions.MetalGlossChannelSwapMaterial);
 
             var exportTexture = new Texture2D(texture.width, texture.height);
             exportTexture.ReadPixels(new Rect(0, 0, destRenderTexture.width, destRenderTexture.height), 0, 0);
@@ -531,7 +528,7 @@ namespace BVA
         {
             var destRenderTexture = RenderTexture.GetTemporary(texture.width, texture.height, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
 
-            Graphics.Blit(texture, destRenderTexture, _normalChannelMaterial);
+            Graphics.Blit(texture, destRenderTexture, UnityExtensions.NormalChannelMaterial);
 
             var exportTexture = new Texture2D(texture.width, texture.height);
             exportTexture.ReadPixels(new Rect(0, 0, destRenderTexture.width, destRenderTexture.height), 0, 0);
@@ -772,7 +769,7 @@ namespace BVA
                 textureId = ExportTexture(flated, TextureMapType.Main);
             }
 #else
-                    Texture2D flated = cubemapImageType == CubemapImageType.Row ? textureObj.FlatTexture() : textureObj.FlatTexture(true);
+            Texture2D flated = cubemapImageType == CubemapImageType.Row ? textureObj.FlatTexture() : textureObj.FlatTexture(true);
             textureId = ExportTexture(flated, TextureMapType.Main);
 #endif
             BVA_texture_cubemapExtension ext = new BVA_texture_cubemapExtension(textureId, cubemapImageType, mipmap);
@@ -901,7 +898,7 @@ namespace BVA
             }
             return null;
         }
-        private ImageId ExportImageInternalBuffer(byte[] bytes,ImageMimeType mimeType)
+        private ImageId ExportImageInternalBuffer(byte[] bytes, ImageMimeType mimeType)
         {
             var image = new GLTFImage
             {
@@ -987,19 +984,19 @@ namespace BVA
 
             var byteOffset = _bufferWriter.BaseStream.Position;
             {
-                bool isLinear = texturMapType == TextureMapType.LightMapDir || texturMapType == TextureMapType.LightMapColor;
+                bool isLinear = texturMapType == TextureMapType.Bump || texturMapType == TextureMapType.LightMapDir || texturMapType == TextureMapType.LightMapColor;
                 var destRenderTexture = RenderTexture.GetTemporary(texture.width, texture.height, 24, RenderTextureFormat.ARGB32, isLinear ? RenderTextureReadWrite.Linear : RenderTextureReadWrite.sRGB);
                 GL.sRGBWrite = !isLinear;
                 switch (texturMapType)
                 {
                     case TextureMapType.MetallicGloss:
-                        Graphics.Blit(texture, destRenderTexture, _metalGlossChannelSwapMaterial);
+                        Graphics.Blit(texture, destRenderTexture, UnityExtensions.MetalGlossChannelSwapMaterial);
                         break;
                     case TextureMapType.Bump:
-                        Graphics.Blit(texture, destRenderTexture, _normalChannelMaterial);
+                        Graphics.Blit(texture, destRenderTexture, UnityExtensions.NormalChannelMaterial);
                         break;
                     case TextureMapType.LightMapDir:
-                        Graphics.Blit(texture, destRenderTexture, _lightmapEncodeMaterial);
+                        Graphics.Blit(texture, destRenderTexture, UnityExtensions.GetLightmapEncodeMaterial(LightmapEncodingMode.EncodeRGBM));
                         break;
                     default:
                         Graphics.Blit(texture, destRenderTexture);

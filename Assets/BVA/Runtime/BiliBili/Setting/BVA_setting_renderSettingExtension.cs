@@ -20,9 +20,20 @@ namespace GLTF.Schema.BVA
         {
             JObject propObj = new JObject();
 
-            if (skybox != null) propObj.Add(nameof(skybox), skybox.Id);
-            if (sun != null) propObj.Add(nameof(sun), sun.Id);
-            if (customReflection != null) propObj.Add(nameof(customReflection), customReflection.Id);
+            float[] sh = new float[27];
+            for (int rgb = 0; rgb < 3; rgb++)
+            {
+                for (int cofficient = 0; cofficient < 9; cofficient++)
+                {
+                    sh[rgb * 9 + cofficient] = RenderSettings.ambientProbe[rgb, cofficient];
+                }
+            }
+            JArray shArray = new JArray(sh);
+            propObj.Add(nameof(RenderSettings.ambientProbe), shArray);
+
+            if (skybox != null && skybox.IsValid) propObj.Add(nameof(skybox), skybox.Id);
+            if (sun != null && sun.IsValid) propObj.Add(nameof(sun), sun.Id);
+            if (customReflection != null && customReflection.IsValid) propObj.Add(nameof(customReflection), customReflection.Id);
 
             propObj.Add(nameof(RenderSettings.subtractiveShadowColor), RenderSettings.subtractiveShadowColor.ToNumericsColorRaw().ToJArray());
 
@@ -35,6 +46,7 @@ namespace GLTF.Schema.BVA
 
             propObj.Add(nameof(RenderSettings.reflectionIntensity), RenderSettings.reflectionIntensity);
             propObj.Add(nameof(RenderSettings.reflectionBounces), RenderSettings.reflectionBounces);
+            propObj.Add(nameof(RenderSettings.defaultReflectionMode), RenderSettings.defaultReflectionMode.ToString());
             propObj.Add(nameof(RenderSettings.defaultReflectionResolution), RenderSettings.defaultReflectionResolution);
 
             propObj.Add(nameof(RenderSettings.flareFadeSpeed), RenderSettings.flareFadeSpeed);
@@ -77,20 +89,40 @@ namespace GLTF.Schema.BVA
 
                 switch (curProp)
                 {
+                    case nameof(RenderSettings.subtractiveShadowColor):
+                        RenderSettings.subtractiveShadowColor = reader.ReadAsRGBAColor().ToUnityColorRaw();
+                        break;
                     case nameof(RenderSettings.skybox):
                         skybox = new MaterialId() { Id = reader.ReadAsInt32().Value, Root = root };
                         break;
                     case nameof(RenderSettings.sun):
                         sun = new NodeId() { Id = reader.ReadAsInt32().Value, Root = root };
                         break;
+                    case nameof(RenderSettings.defaultReflectionMode):
+                        RenderSettings.defaultReflectionMode = reader.ReadStringEnum<DefaultReflectionMode>();
+                        break;
+                    case nameof(RenderSettings.defaultReflectionResolution):
+                        RenderSettings.defaultReflectionResolution = reader.ReadAsInt32().Value;
+                        break;
                     case nameof(RenderSettings.customReflection):
                         customReflection = new CubemapId() { Id = reader.ReadAsInt32().Value, Root = root };
                         break;
-                    case nameof(RenderSettings.subtractiveShadowColor):
-                        RenderSettings.subtractiveShadowColor = reader.ReadAsRGBAColor().ToUnityColorRaw();
-                        break;
                     case nameof(RenderSettings.ambientMode):
                         RenderSettings.ambientMode = reader.ReadStringEnum<AmbientMode>();
+                        break;
+                    case nameof(RenderSettings.ambientProbe):
+                        {
+                            var shData = reader.ReadFloatList();
+                            var sh = new SphericalHarmonicsL2();
+                            for (int rgb = 0; rgb < 3; rgb++)
+                            {
+                                for (int cofficient = 0; cofficient < 9; cofficient++)
+                                {
+                                    sh[rgb, cofficient] = shData[rgb * 9 + cofficient];
+                                }
+                            }
+                            RenderSettings.ambientProbe = sh;
+                        }
                         break;
                     case nameof(RenderSettings.ambientIntensity):
                         RenderSettings.ambientIntensity = reader.ReadAsFloat();
@@ -108,13 +140,10 @@ namespace GLTF.Schema.BVA
                         RenderSettings.ambientGroundColor = reader.ReadAsRGBAColor().ToUnityColorRaw();
                         break;
                     case nameof(RenderSettings.reflectionIntensity):
-                        RenderSettings.ambientIntensity = reader.ReadAsFloat();
+                        RenderSettings.reflectionIntensity = reader.ReadAsFloat();
                         break;
                     case nameof(RenderSettings.reflectionBounces):
                         RenderSettings.reflectionBounces = reader.ReadAsInt32().Value;
-                        break;
-                    case nameof(RenderSettings.defaultReflectionResolution):
-                        RenderSettings.defaultReflectionResolution = reader.ReadAsInt32().Value;
                         break;
                     case nameof(RenderSettings.flareFadeSpeed):
                         RenderSettings.flareFadeSpeed = reader.ReadAsFloat();

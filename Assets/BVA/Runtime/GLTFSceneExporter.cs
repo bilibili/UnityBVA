@@ -18,7 +18,6 @@ namespace BVA
 
     public enum AudioFormat
     {
-        DEFAULT,
         WAV,
         MP3,
         OGG,
@@ -86,10 +85,6 @@ namespace BVA
 
         private ExportOptions _exportOptions;
 
-        private Material _metalGlossChannelSwapMaterial;
-        private Material _normalChannelMaterial;
-        private Material _lightmapEncodeMaterial;
-
         private const uint MagicGLTF = 0x46546C67;
         private const uint Version = 2;
         private const uint MagicJson = 0x4E4F534A;
@@ -120,6 +115,7 @@ namespace BVA
         public static bool ExportLightmap = false;
         public static bool ExportRenderSetting = false;
         public static bool ExportSkybox = false;
+        public static SceneType ExportSceneType;
         /// <summary>
         /// use draco compress mesh object, reflection probe has issue when using it
         /// </summary>
@@ -129,8 +125,6 @@ namespace BVA
         /// </summary>
         public static bool ExportUnlitWhenUsingCustomShader = true;
 
-        public static bool ExportOriginalAudioFile = true;
-        public static AudioFormat ExportAudioFormat = AudioFormat.DEFAULT;
         public static float ExportAudioQuality = 0.4f;
         /// <summary>
         /// If audio length > this value, export as ogg if ExportAudioFormat is DEFAULT
@@ -148,8 +142,6 @@ namespace BVA
             GLTFSceneExporter.RequireExtensions = false;
             GLTFSceneExporter.ExportUnlitWhenUsingCustomShader = true;
             GLTFSceneExporter.ExportInActiveGameObject = false;
-            GLTFSceneExporter.ExportOriginalAudioFile = Application.isEditor ? true : false;
-            GLTFSceneExporter.ExportAudioFormat = AudioFormat.DEFAULT;
             GLTFSceneExporter.ExportAudioQuality = 0.6f;
         }
         public GLTFSceneExporter(Transform[] rootTransforms, ExportOptions options)
@@ -174,21 +166,14 @@ namespace BVA
         private void Construct()
         {
             LogPool.ExportLogger.Clear();
-            var metalGlossChannelSwapShader = Resources.Load<Shader>("MetalGlossChannelSwap");
-            _metalGlossChannelSwapMaterial = new Material(metalGlossChannelSwapShader);
-
-            var normalChannelShader = Resources.Load<Shader>("NormalChannel");
-            _normalChannelMaterial = new Material(normalChannelShader);
-
-            var encodeLightmapShader = Resources.Load<Shader>("EncodeLightmap");
-            _lightmapEncodeMaterial = new Material(encodeLightmapShader);
 
             _root = new GLTFRoot
             {
                 Accessors = new List<Accessor>(),
                 Asset = new Asset
                 {
-                    Version = "2.0"
+                    Version = "2.0",
+                    Generator = BVAConst.GetGeneratorName(ExportSceneType)
                 },
                 Buffers = new List<GLTFBuffer>(),
                 BufferViews = new List<BufferView>(),

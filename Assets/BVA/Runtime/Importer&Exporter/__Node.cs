@@ -291,6 +291,10 @@ namespace BVA
                             comp = nodeObj.AddComponent<ReflectionProbe>();
                             await BVA_ReflectionProbe_Extra.Deserialize(_gltfRoot, reader, comp as ReflectionProbe, LoadCubemap);
                             break;
+                        case BVA_UI_InfoText_Extra.PROPERTY:
+                            comp = nodeObj.AddComponent<InfoText>();
+                            BVA_UI_InfoText_Extra.Deserialize(_gltfRoot, reader, comp as InfoText);
+                            break;
                         case BVA_UI_RectTransform_Extra.PROPERTY:
                             comp = nodeObj.AddComponent<RectTransform>();
                             BVA_UI_RectTransform_Extra.Deserialize(_gltfRoot, reader, comp as RectTransform);

@@ -16,7 +16,7 @@ namespace GLTF.Schema
         public int Id;
         public GLTFRoot Root;
         public abstract T Value { get; }
-
+        public bool IsValid => Id >= 0;
         protected GLTFId()
         {
         }

@@ -16,7 +16,19 @@ namespace BVA
         public const string EXTENSION_BVA = "bva";
         public const string EXTENSION_BVA_SCENE = "scene.bva";
         public const string EXTENSION_BVA_AVATAR = "avatar.bva";
-
+        public static string GetGeneratorName(SceneType sceneType)
+        {
+            return sceneType == SceneType.Avatar ? LAYER_AVATAR : LAYER_SCENE;
+        }
+        public static SceneType GetSceneType(string generator)
+        {
+            if (generator == LAYER_SCENE)
+                return SceneType.Scene;
+            else if (generator == LAYER_AVATAR)
+                return SceneType.Avatar;
+            else
+                return SceneType.Unknown;
+        }
     }
     public enum ExportFileType
     {
@@ -24,4 +36,11 @@ namespace BVA
         GLB,
         GLTF
     }
+    public enum SceneType
+    {
+        Avatar,
+        Scene,
+        Unknown
+    }
+
 }

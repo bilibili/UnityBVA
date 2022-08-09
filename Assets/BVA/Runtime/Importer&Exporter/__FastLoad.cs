@@ -10,7 +10,6 @@ using UnityEngine;
 using BVA.Cache;
 using BVA.Extensions;
 using BVA.Loader;
-using UnityEngine.Networking;
 using Unity.Collections;
 
 namespace BVA
@@ -26,20 +25,22 @@ namespace BVA
         /// <param name="fileName"></param>
         public async Task LoadAvatar()
         {
-            await PreloadStream();
-#if UNITY_WEBGL //&& !UNITY_EDITOR
-            GLTFHelpers.ClearStreamBuffer();
-            PreloadMeshPrimitives();
-#else
+            if (_gltfRoot == null)
+                await LoadJson(_gltfFileName);
+
+            _assetCache = new AssetCache(_gltfRoot);
+            _assetCache.BufferCache[0] = ConstructBufferFromGLB(0);
+
             Thread loadMesh = new Thread(PreloadMeshPrimitives);
             loadMesh.Start();
-#endif          
 
             await PreloadTextures();
             await PreloadNodes(_gltfRoot.GetDefaultScene());
             _lastLoadedScene = _assetCache.NodeCache[0];
             _assetManager = _lastLoadedScene.GetOrAddComponent<AssetManager>();
             _assetManager.Init(_assetCache);
+            await LoadAudio(_lastLoadedScene);
+            await LoadAnimation(_lastLoadedScene, CancellationToken.None);
             await PreloadMaterials();
 
 #if !UNITY_WEBGL
@@ -62,36 +63,7 @@ namespace BVA
             //    await LoadVariableCollection(node, nodeObj);
             //}
         }
-        /// <summary>
-        /// parse json and load bin into stream simultaneously
-        /// </summary>
-        public async Task PreloadStream()
-        {
-            if (_options.ThrowOnLowMemory)
-            {
-                _memoryChecker = new MemoryChecker();
-            }
-            progressStatus = new ImportProgress();
-            Statistics = new ImportStatistics();
 
-            progress?.Report(progressStatus);
-
-#if UNITY_WEBGL
-            UnityWebRequest uwr = UnityWebRequest.Get(_gltfFileName);
-            await uwr.SendWebRequest();
-
-            _gltfStream.Stream = new MemoryStream(uwr.downloadHandler.data);
-            Debug.Log("模型大小(字节):" + uwr.downloadHandler.data.Length);
-#else
-            _gltfStream.Stream = await _options.DataLoader.LoadStreamAsync(_gltfFileName);
-#endif
-
-            _gltfStream.StartPosition = 0;
-            progressStatus.IsDownloaded = true;
-            GLTFParser.ParseJson(_gltfStream.Stream, out _gltfRoot, _gltfStream.StartPosition);
-            _assetCache = new AssetCache(_gltfRoot);
-            _assetCache.BufferCache[0] = ConstructBufferFromGLB(0);
-        }
 
         /// <summary>
         /// load all textures

@@ -48,11 +48,13 @@ namespace BVA
             if (Root == null) return;
             #region Animator Human Check
             var animator = Root.GetComponent<Animator>();
-            if (animator == null || animator.avatar == null || !animator.isHuman)
+            if (animator == null)
+                EditorGUILayout.HelpBox($"not find Animator component", MessageType.Error);
+            if (animator.avatar == null || !animator.isHuman)
             {
                 EditorGUILayout.HelpBox($"Not a valid avatar gameObject, not find Animator component with human avatar", MessageType.Error);
 
-                if (animator.avatar!=null)
+                if (animator.avatar != null)
                 {
                     string avatarPath = AssetDatabase.GetAssetPath(animator.avatar);
                     ModelImporter importer = AssetImporter.GetAtPath(avatarPath) as ModelImporter;
@@ -75,9 +77,9 @@ namespace BVA
 
             #region Mesh isReadWrite Check
 
-            var meshs = Root.GetComponentsInChildren<SkinnedMeshRenderer>().Where(x=>!x.sharedMesh.isReadable).ToArray();
+            var meshs = Root.GetComponentsInChildren<SkinnedMeshRenderer>().Where(x => !x.sharedMesh.isReadable).ToArray();
 
-            if (meshs.Length!=0)
+            if (meshs.Length != 0)
             {
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.HelpBox($"Model containning invalid mesh, mesh's read/write should be enabled", MessageType.Error);
@@ -88,7 +90,7 @@ namespace BVA
                     {
                         string meshPath = AssetDatabase.GetAssetPath(animator.avatar);
                         ModelImporter importer = AssetImporter.GetAtPath(meshPath) as ModelImporter;
-                        if (importer.isReadable!=true)
+                        if (importer.isReadable != true)
                         {
                             importer.isReadable = true;
                             importer.SaveAndReimport();
@@ -176,6 +178,7 @@ namespace BVA
                 var exportOptions = new ExportOptions { TexturePathRetriever = AssetDatabase.GetAssetPath };
                 var exporter = new GLTFSceneExporter(new Transform[] { Root.transform }, exportOptions);
 
+                GLTFSceneExporter.ExportSceneType = SceneType.Avatar;
                 var path = EditorUtility.OpenFolderPanel("BVA Avatar Export Path", EditorPrefs.GetString("avatar_export_path"), "");
                 if (!string.IsNullOrEmpty(path))
                 {
@@ -190,6 +193,8 @@ namespace BVA
         void OnGUI()
         {
             EditorGUILayout.LabelField("Exporter", EditorStyles.boldLabel);
+
+            ExportCommon.EditorGUICheckBuildPlatform();
 
             EditorGUILayout.BeginHorizontal();
             Root = EditorGUILayout.ObjectField("Export root", Root, typeof(GameObject), true) as GameObject;
@@ -208,7 +213,7 @@ namespace BVA
                 ExportCommon.EditorGUICollectExportInfo(exportInfo);
 
             GLTFSceneExporter.ExportAnimationClips = EditorGUILayout.Toggle("Export Animations", GLTFSceneExporter.ExportAnimationClips);
-            if(GLTFSceneExporter.ExportAnimationClips)
+            if (GLTFSceneExporter.ExportAnimationClips)
                 EditorGUILayout.HelpBox($"Export legacy animation on Animation, as well convert mecanim animation to legacy skin animation and export it", MessageType.Info);
 
             EditorGUILayout.Separator();

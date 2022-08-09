@@ -17,7 +17,7 @@ using Object = UnityEngine.Object;
 
 namespace BVA
 {
-    [UnityEditor.AssetImporters.ScriptedImporter(1, new[] { "glb","bva","gltf" })]
+    [UnityEditor.AssetImporters.ScriptedImporter(1, new[] { "bva", "glb", "gltf" })]
     public class GLTFImporter : UnityEditor.AssetImporters.ScriptedImporter
     {
         [SerializeField] private bool _removeEmptyRootObjects = true;
@@ -57,6 +57,11 @@ namespace BVA
                 {
                     if (tex == null)
                         continue;
+                    if (tex.isReadable == false)
+                    {
+                        Debug.LogWarning($"Texture {tex.name} is not readable!");
+                        continue;
+                    }
                     var ext = ".png";
                     var texPath = string.Concat(texturesRoot, tex.name, ext);
                     File.WriteAllBytes(texPath, tex.EncodeToPNG());
@@ -826,7 +831,7 @@ namespace BVA
                         rend.sharedMaterials = defaultMat;
                     }
                 }
-#region DynamicBone
+                #region DynamicBone
 
                 var dynamicBones = gltfScene.GetComponentsInChildren<ADBChainProcessor>();
                 if (_importPuretsScript)
@@ -993,7 +998,7 @@ namespace BVA
                 }
 #endif
             }
-#endregion
+            #endregion
             catch
             {
                 if (gltfScene) DestroyImmediate(gltfScene);
@@ -1017,22 +1022,21 @@ namespace BVA
 
         private GLTFSceneImporter CreateGLTFScene(string projectFilePath)
         {
-            
+
             var importOptions = new ImportOptions
             {
-                DataLoader =(Application.isPlaying) ? new FileLoader(Path.GetDirectoryName(projectFilePath)): new EditorFileLoader(Path.GetDirectoryName(projectFilePath)),
+                DataLoader = (Application.isPlaying) ? new FileLoader(Path.GetDirectoryName(projectFilePath)) : new EditorFileLoader(Path.GetDirectoryName(projectFilePath)),
                 RuntimeImport = false
             };
             using (var stream = File.OpenRead(projectFilePath))
             {
-                GLTFRoot gLTFRoot;
-                GLTFParser.ParseJson(stream, out gLTFRoot);
+                GLTFParser.ParseJson(stream, out var gLTFRoot);
                 stream.Position = 0; // Make sure the read position is changed back to the beginning of the file
                 var loader = new GLTFSceneImporter(gLTFRoot, stream, importOptions);
                 loader.MaximumLod = _maximumLod;
                 loader.IsMultithreaded = true;
 
-                loader.LoadSceneAsync().Wait();
+                loader.LoadAsync().Wait();
                 return loader;
             }
         }

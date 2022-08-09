@@ -1,5 +1,9 @@
 # Export
 
+## Premise
+
+Make sure that `Platform` is set to `Windows,Mac,Linux` in `Build Settings`. Exporting `Cubemap` or `Lightmap` on other platforms may have Texture errors.
+
 ## File Format
 
 - GLTF
@@ -18,7 +22,18 @@ Avatar export with extra information such as BlendShape, MetaInfo, and should ex
 
 ## Supported Material
 
-These materials (shaders) supported by BVA. [Lit](material/Lit.md), [Complex Lit](material/ComplexLit.md), [Unlit](material/Unlit.md), [MToon(URP ver)](https://vrm.dev/univrm/shaders/shader_mtoon.html), [UTS2](https://github.com/unity3d-jp/UnityChanToonShaderVer2_Project), [LiliumToonGraph](https://github.com/you-ri/LiliumToonGraph), ToonLit
+These materials (shaders) supported by BVA
+
+- [Lit](material/Lit.md)
+- [Complex Lit](material/ComplexLit.md)
+- [Unlit](material/Unlit.md)
+- [Skybox](material/Skybox.md)
+- [UTS2](https://github.com/unity3d-jp/UnityChanToonShaderVer2_Project)
+- [LiliumToonGraph](https://github.com/you-ri/LiliumToonGraph)
+- [MToon(URP版本)](https://vrm.dev/univrm/shaders/shader_mtoon.html)
+- [ZeldaToon](https://github.com/ToughNutToCrack/ZeldaShaderURP2019.4.0f1)
+- ToonLit(Toony Lit shader)
+
 
 ![glb](pics/Material_1.png)
 

@@ -54,7 +54,7 @@ namespace BVA.Extensions
 
         public static bool IsUrl(this string url)
         {
-            if (url.Contains("localhost:") ||Regex.IsMatch(url, @"((http|ftp|https)://)(([a-zA-Z0-9\._-]+\.[a-zA-Z]{2,6})|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,4})*(/[a-zA-Z0-9\&%_\./-~-]*)?"))
+            if (url.Contains("localhost:") || Regex.IsMatch(url, @"((http|ftp|https)://)(([a-zA-Z0-9\._-]+\.[a-zA-Z]{2,6})|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,4})*(/[a-zA-Z0-9\&%_\./-~-]*)?"))
                 return true;
             else
                 return false;
@@ -193,8 +193,88 @@ namespace BVA.Extensions
             return name;
         }
     }
+    /*					
+     	if (_MODE == 0) {
+			//result.rgb = DecodeLightmap(result, float4(LIGHTMAP_HDR_MULTIPLIER, LIGHTMAP_HDR_EXPONENT, 0.0h, 0.0h));
+			result = EncodeRgbm(result);
+		}
+		else if (_MODE == 1) {
+			//result.rgb = DecodeLightmap(result, float4(LIGHTMAP_HDR_MULTIPLIER, LIGHTMAP_HDR_EXPONENT, 0.0h, 0.0h));
+			result = EncodeDldr(result);
+		}
+		else if (_MODE == 2) {
+			result = DecodeRgbm(result);
+		}
+		else if (_MODE == 3) {
+			//result.rgb = DecodeLightmap(result, float4(LIGHTMAP_HDR_MULTIPLIER, LIGHTMAP_HDR_EXPONENT, 0.0h, 0.0h));
+			result = DecodeDldr(result);
+		}
+		else if (_MODE == 4) {
+			result.rgb = GammaToLinearSpace(result.rgb);
+		}
+		else if (_MODE == 5) {
+			result.rgb = LinearToGammaSpace(result.rgb);
+		}
+    */
+    public enum LightmapEncodingMode : int
+    {
+        EncodeRGBM,
+        EncodeDLDR,
+        DecodeRGBM,
+        DecodeDLDR,
+        GammaToLinear,
+        LinearToGamma
+    }
     public static class UnityExtensions
     {
+        private static Material _flipYMaterial;
+        public static Material FlipYMaterial
+        {
+            get
+            {
+                if (_flipYMaterial == null)
+                    _flipYMaterial = new Material(Resources.Load<Shader>("FlipY"));
+                return _flipYMaterial;
+            }
+        }
+
+        private static Material _lightmapEncodeMaterial;
+        public static Material LightmapEncodeMaterial
+        {
+            get
+            {
+                if (_lightmapEncodeMaterial == null)
+                    _lightmapEncodeMaterial = new Material(Resources.Load<Shader>("EncodeLightmap"));
+                return _lightmapEncodeMaterial;
+            }
+        }
+        private static Material _metalGlossChannelSwapMaterial;
+        public static Material MetalGlossChannelSwapMaterial
+        {
+            get
+            {
+                if (_metalGlossChannelSwapMaterial == null)
+                    _metalGlossChannelSwapMaterial = new Material(Resources.Load<Shader>("MetalGlossChannelSwap"));
+                return _metalGlossChannelSwapMaterial;
+            }
+        }
+        private static Material _normalChannelMaterial;
+        public static Material NormalChannelMaterial
+        {
+            get
+            {
+                if (_normalChannelMaterial == null)
+                    _normalChannelMaterial = new Material(Resources.Load<Shader>("NormalChannel"));
+                return _normalChannelMaterial;
+            }
+        }
+
+        public static Material GetLightmapEncodeMaterial(LightmapEncodingMode mode)
+        {
+            LightmapEncodeMaterial.SetInt("_MODE", (int)mode);
+            return LightmapEncodeMaterial;
+        }
+
         public static void DestroyAllChild(this Transform transform)
         {
             int count = transform.childCount;

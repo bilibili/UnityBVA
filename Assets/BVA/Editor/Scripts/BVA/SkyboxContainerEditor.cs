@@ -23,7 +23,7 @@ public class SkyboxContainerEditor : Editor
 
         foreach (var v in _target.materials)
         {
-            if (SkyboxContainer.IsValidMaterial(v))
+            if (SkyboxContainer.IsValidSkyboxMaterial(v))
                 continue;
             incompatibleMaterials.Add(v);
         }

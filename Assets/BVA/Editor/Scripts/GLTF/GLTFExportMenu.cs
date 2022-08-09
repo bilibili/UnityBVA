@@ -33,9 +33,7 @@ public class GLTFExportMenu : EditorWindow
         GLTFSceneExporter.ExportOriginalTextureFile = EditorGUILayout.Toggle("Export original texture files", GLTFSceneExporter.ExportOriginalTextureFile, minWith);
         GLTFSceneExporter.ExportUnlitWhenUsingCustomShader = EditorGUILayout.Toggle("Export unlit extension always", GLTFSceneExporter.ExportUnlitWhenUsingCustomShader, minWith);
         GLTFSceneExporter.ExportInActiveGameObject = EditorGUILayout.Toggle("Export node even the node is not active", GLTFSceneExporter.ExportInActiveGameObject, minWith);
-        GLTFSceneExporter.ExportOriginalAudioFile = EditorGUILayout.Toggle("Export original audio files", GLTFSceneExporter.ExportOriginalAudioFile, minWith);
-        GLTFSceneExporter.ExportAudioFormat = (AudioFormat)EditorGUILayout.EnumPopup("Audio format", GLTFSceneExporter.ExportAudioFormat, minWith);
-        GLTFSceneExporter.ExportAudioQuality = EditorGUILayout.FloatField("Audio compression quality", GLTFSceneExporter.ExportAudioQuality, minWith);
+        GLTFSceneExporter.ExportAudioQuality = EditorGUILayout.FloatField("Audio compression quality(ogg)", GLTFSceneExporter.ExportAudioQuality, minWith);
     }
     void OnGUI()
     {
@@ -60,13 +58,37 @@ public class GLTFExportMenu : EditorWindow
         ExportSelected(true);
         Debug.Log("Done!");
     }
+    static bool IsAvatarModel(GameObject root)
+    {
+        if (root.TryGetComponent<Animator>(out var animator))
+        {
+            if (animator != null && animator.avatar != null && animator.avatar.isHuman)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    static void SetExportType(GameObject root)
+    {
+
+        GLTFSceneExporter.ExportSceneType = IsAvatarModel(root) ? SceneType.Avatar : SceneType.Scene;
+    }
+    static void SetExportType(SceneType type)
+    {
+        GLTFSceneExporter.ExportSceneType = type;
+    }
     static void ExportSelected(bool isCompressed)
     {
         string name;
         if (Selection.transforms.Length > 1)
             name = SceneManager.GetActiveScene().name;
         else if (Selection.transforms.Length == 1)
+        {
+            SetExportType(Selection.activeGameObject);
             name = Selection.activeGameObject.name;
+        }
         else
             throw new Exception("No objects selected, cannot export.");
 
@@ -105,7 +127,10 @@ public class GLTFExportMenu : EditorWindow
         if (Selection.transforms.Length > 1)
             name = SceneManager.GetActiveScene().name;
         else if (Selection.transforms.Length == 1)
+        {
+            SetExportType(Selection.activeGameObject);
             name = Selection.activeGameObject.name;
+        }
         else
             throw new Exception("No objects selected, cannot export.");
 
@@ -127,7 +152,10 @@ public class GLTFExportMenu : EditorWindow
         if (Selection.transforms.Length > 1)
             name = SceneManager.GetActiveScene().name;
         else if (Selection.transforms.Length == 1)
+        {
+            SetExportType(Selection.activeGameObject);
             name = Selection.activeGameObject.name;
+        }
         else
             throw new Exception("No objects selected, cannot export.");
 
@@ -150,7 +178,7 @@ public class GLTFExportMenu : EditorWindow
         var scene = SceneManager.GetActiveScene();
         var gameObjects = scene.GetRootGameObjects();
         var transforms = Array.ConvertAll(gameObjects, gameObject => gameObject.transform);
-
+        SetExportType(SceneType.Scene);
         var exportOptions = new ExportOptions { TexturePathRetriever = RetrieveTexturePath };
         var exporter = new GLTFSceneExporter(transforms, exportOptions);
         var path = EditorUtility.OpenFolderPanel("glTF Export Path", "", "");

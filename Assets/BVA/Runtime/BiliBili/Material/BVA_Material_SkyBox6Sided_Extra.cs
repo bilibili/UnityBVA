@@ -11,7 +11,7 @@ using Vector4 = UnityEngine.Vector4;
 
 namespace GLTF.Schema.BVA
 {
-public class BVA_Material_SkyBox6Sided_Extra : MaterialDescriptor
+public class BVA_Material_SkyBox6Sided_Extra : MaterialExtra
 {
 public const string PROPERTY = "BVA_Material_SkyBox6Sided_Extra";
 public const string SHADER_NAME = "Skybox/6 Sided";

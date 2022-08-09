@@ -11,7 +11,6 @@ namespace BVA
 {
     public partial class GLTFSceneImporter
     {
-
         /// <summary>
         /// Load a Material from the glTF by index
         /// </summary>
@@ -19,10 +18,7 @@ namespace BVA
         /// <returns>Material at index</returns>
         public async Task<Material> LoadMaterialAsync(int materialIndex)
         {
-            await SetupLoad(async () =>
-            {
-                await ConstructMaterialAsync(materialIndex);
-            });
+            await ConstructMaterialAsync(materialIndex);
             return _assetCache.MaterialCache[materialIndex].UnityMaterialWithVertexColor;
         }
         public async Task ConstructMaterialAsync(int materialIndex)
@@ -149,7 +145,7 @@ namespace BVA
             var (shaderName, reader) = GetExtraProperty(def.Extras[0]);
 
             // Currently, we don't preprocess NormalMap as it won't affect the actual render.
-            Material matCache = await MaterialFactory.ImportMaterial(shaderName, def, _gltfRoot, reader, loadTexture, loadTexture, LoadCubemap);
+            Material matCache = await MaterialImporter.ImportMaterial(shaderName, def, _gltfRoot, reader, loadTexture, loadTexture, LoadCubemap);
             if (matCache == null) return;
             MaterialCacheData materialWrapper = new MaterialCacheData
             {
@@ -220,9 +216,6 @@ namespace BVA
 
                 if (pbr.MetallicRoughnessTexture != null)
                 {
-                    if (mrMapper.RoughnessFactor == 1.0) // default value is 1.0f, but in Unity, 0.5 will gives you a better view
-                        mrMapper.RoughnessFactor = 0.5;
-
                     TextureId textureId = pbr.MetallicRoughnessTexture.Index;
                     await ConstructTexture(textureId.Value, textureId.Id, !KeepCPUCopyOfTexture, true);
                     mrMapper.MetallicRoughnessTexture = _assetCache.TextureCache[textureId.Id].Texture;
@@ -345,8 +338,20 @@ namespace BVA
 
             mapper.EmissiveFactor = def.EmissiveFactor.ToUnityColorRaw();
 
+            // Environment Reflection
+            if (!EnableEnvironmentReflection)
+            {
+                mapper.Material.SetInt("_EnvironmentReflections", 0);
+                CoreUtils.SetKeyword(mapper.Material, "_ENVIRONMENTREFLECTIONS_OFF", true);
+            }
+            // Specular Highlight
+            if (!EnableSpecularHighlight)
+            {
+                mapper.Material.SetInt("_SpecularHighlights", 0);
+                CoreUtils.SetKeyword(mapper.Material, "_SPECULARHIGHLIGHTS_OFF", true);
+            }
 
-            if(_gltfRoot.ExtensionsUsed != null && _gltfRoot.ExtensionsUsed.Contains(KHR_materials_emissive_strengthExtensionFactory.EXTENSION_NAME) && def.Extensions != null && def.Extensions.ContainsKey(KHR_materials_emissive_strengthExtensionFactory.EXTENSION_NAME))
+            if (_gltfRoot.ExtensionsUsed != null && _gltfRoot.ExtensionsUsed.Contains(KHR_materials_emissive_strengthExtensionFactory.EXTENSION_NAME) && def.Extensions != null && def.Extensions.ContainsKey(KHR_materials_emissive_strengthExtensionFactory.EXTENSION_NAME))
             {
                 var emissiveStrength = def.Extensions[KHR_materials_emissive_strengthExtensionFactory.EXTENSION_NAME] as KHR_materials_emissive_strengthExtension;
                 mapper.EmissiveFactor *= emissiveStrength.emissiveStrength;
@@ -444,7 +449,7 @@ namespace BVA
             }
 
             // Export Custom Shader Material
-            useCustomShader = MaterialFactory.ExportMaterialExtra(materialObj, material, ExportTextureInfo, ExportNormalTextureInfo, ExportCubemap);
+            useCustomShader = MaterialImporter.ExportMaterialExtra(materialObj, material, ExportTextureInfo, ExportNormalTextureInfo, ExportCubemap);
 
             //Export PBR Material
             if (ExportNames)
@@ -660,12 +665,11 @@ namespace BVA
 
             if (GetOneMaterialProperty(material, MATERIAL_PROPERTY_Smoothness, out string smoothnessProperty))
             {
-                pbr.RoughnessFactor = hasMetallicGlossMap ? 1.0 : 1.0 - material.GetFloat(smoothnessProperty);
+                pbr.RoughnessFactor = /*hasMetallicGlossMap ? 1.0 : */1.0 - material.GetFloat(smoothnessProperty);
             }
-
-            if (GetOneMaterialProperty(material, MATERIAL_PROPERTY_Roughness, out string roughnessProperty))
+            else if (GetOneMaterialProperty(material, MATERIAL_PROPERTY_Roughness, out string roughnessProperty))
             {
-                pbr.RoughnessFactor = hasMetallicGlossMap ? 1.0 : material.GetFloat(roughnessProperty);
+                pbr.RoughnessFactor = /*hasMetallicGlossMap ? 1.0 : */material.GetFloat(roughnessProperty);
             }
             return pbr;
         }

@@ -18,12 +18,12 @@
 - Android或iOS (只有`WebLoad`场景是当前可以被打包通过的, 因为文件选择框不支持移动端)
 
 所有的示例场景位于 `Assets/BVA/Samples`:
-- [AvatarConfig](../docs/examples/AvatarConfig.md)
-- [FileView](../docs/examples/FileViewer.md)
-- [MultipleScenePayload](../docs/examples/MultipleScenePayload.md)
-- [RuntimeExport](../docs/examples/RuntimeExport.md)
-- [RuntimeLoad](../docs/examples/RuntimeLoad.md)
-- [WebLoad (support mobile platform)](../docs/examples/WebLoad.md)
+- [AvatarConfig](../docs/examples/AvatarConfig.zh.md)
+- [FileView](../docs/examples/FileViewer.zh.md)
+- [MultipleScenePayload](../docs/examples/MultipleScenePayload.zh.md)
+- [RuntimeExport](../docs/examples/RuntimeExport.zh.md)
+- [RuntimeLoad](../docs/examples/RuntimeLoad.zh.md)
+- [WebLoad (support mobile platform)](../docs/examples/WebLoad.zh.md)
 
 ## 环境设定
 
@@ -67,8 +67,8 @@
 
 # 使用手册
 
-- [调整角色](work/Avatar.md)
-- [调整场景](work/Scene.md)
-- [导出](work/Export.md)
-- [导入](work/Import.md)
-- [工具](tools/Tools.md)
+- [调整角色](work/Avatar.zh.md)
+- [调整场景](work/Scene.zh.md)
+- [导出](work/Export.zh.md)
+- [导入](work/Import.zh.md)
+- [工具](tools/Tools.zh.md)

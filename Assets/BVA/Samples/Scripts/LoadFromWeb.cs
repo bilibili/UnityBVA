@@ -13,7 +13,7 @@ namespace BVA.Sample
         public InputField url;
         public Text textLog;
         public Text textError;
-        public Light light;
+        public new Light light;
         public RuntimeAnimatorController controller;
         public Transform content;
         public GameObject fileButton;
@@ -31,6 +31,7 @@ namespace BVA.Sample
         {
             light.enabled = isOn;
         }
+
         void OnUseMainCamera(bool isOn)
         {
             if (cameras == null) return;
@@ -65,7 +66,7 @@ namespace BVA.Sample
             };
 
             string[] files = Directory.GetFiles(Application.persistentDataPath);
-            var glbs = files.Where(f => f.EndsWith(".glb"));
+            var glbs = files.Where(f => f.EndsWith(".glb") || f.EndsWith(".bva"));
             foreach (string glb in glbs)
             {
                 var button = GameObject.Instantiate(fileButton, content, false);
@@ -90,6 +91,7 @@ namespace BVA.Sample
         {
             StartCoroutine(DownloadFile());
         }
+
         IEnumerator DownloadFile()
         {
             var uwr = new UnityWebRequest(url.text, UnityWebRequest.kHttpVerbGET);
@@ -109,6 +111,7 @@ namespace BVA.Sample
             else
                 Debug.Log("没有下载文件");
         }
+
         public void DestroyScene()
         {
             BVASceneManager.Instance.UnloadAllScenes();

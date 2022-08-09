@@ -2,7 +2,7 @@
 
 ## Overview
 
-Export BVA at runtime has some limitation, such like animation clip won't be able to export(can't access frame data with runtime API). Most of the features are available even though.
+Export BVA at runtime has some limitation, such like animation clip won't be able to export(can't access frame data with runtime API). But still, most of the features are available.
 
 ## *Export as GLB*
 
@@ -36,4 +36,6 @@ When export an avatar, a `Enforce T-Pose` will be applyed. Only in this way can 
 
 Animation will not be export at Runtime.
 
+## Editor Entry
 
+Check `ExportSceneMenu.cs` file dive into the details.

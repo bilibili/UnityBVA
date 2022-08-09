@@ -1,5 +1,6 @@
 using GLTF.Schema.BVA;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering;
 
 namespace BVA.Extensions
 {
@@ -16,21 +17,28 @@ namespace BVA.Extensions
                 cubemapImageType = CubemapImageType.Equirect;
             return cubemapImageType;
         }
-
+        /// <summary>
+        /// Work on Standalone, but loaded failed on Mobile devices
+        /// </summary>
+        /// <param name="texture"></param>
+        /// <param name="mipmap"></param>
+        /// <returns></returns>
         public static Cubemap CreateCubemapFromTexture(Texture2D texture, bool mipmap)
         {
             Texture2D exportTexture = null;
             CubemapImageType imageType = GetCubemapImageType(texture.width, texture.height);
-            
+
             //sometimes it requires use Non-HDR creation, 
-            //var destRenderTexture = RenderTexture.GetTemporary(texture.width, texture.height, 0, RenderTextureFormat.Default, RenderTextureReadWrite.sRGB);
             var destRenderTexture = RenderTexture.GetTemporary(texture.width, texture.height, 0, RenderTextureFormat.DefaultHDR, RenderTextureReadWrite.Linear);
 
-            var flipY = new Material(Shader.Find("Hidden/FlipY"));
-            Graphics.Blit(texture, destRenderTexture, flipY);
+            //var flipY = new Material(Shader.Find("Hidden/FlipY"));
+            Graphics.Blit(texture, destRenderTexture);
 
+#if UNITY_ANDROID || UNITY_IOS
+            exportTexture = new Texture2D(texture.width, texture.height, TextureFormat.RGBA32, mipCount: 0, linear: true);
+#else
             exportTexture = new Texture2D(texture.width, texture.height, TextureFormat.RGBAHalf, mipCount: 0, linear: true);
-            var tmpActive = RenderTexture.active;
+#endif
             RenderTexture.active = destRenderTexture;
             exportTexture.ReadPixels(new Rect(0, 0, destRenderTexture.width, destRenderTexture.height), 0, 0);
             exportTexture.Apply(updateMipmaps: false, makeNoLongerReadable: false);
@@ -41,7 +49,11 @@ namespace BVA.Extensions
             {
                 Texture2D[] cubemapFaces = new Texture2D[6];
                 int srcWidth = exportTexture.height / 2;
+#if UNITY_ANDROID || UNITY_IOS
+                Cubemap cubemap = new Cubemap(srcWidth, TextureFormat.ARGB32, false);
+#else
                 Cubemap cubemap = new Cubemap(srcWidth, UnityEngine.Experimental.Rendering.DefaultFormat.HDR, 0);
+#endif
                 for (int i = 0; i < 6; ++i)
                 {
                     cubemapFaces[i] = EquirectToCubemapTexture(exportTexture, srcWidth, (CubemapFace)i);
@@ -53,7 +65,11 @@ namespace BVA.Extensions
             else
             {
                 int srcWidth = Mathf.Min(exportTexture.width, exportTexture.height);
+#if UNITY_ANDROID || UNITY_IOS
+                Cubemap cubemap = new Cubemap(srcWidth, TextureFormat.ARGB32, false);
+#else
                 Cubemap cubemap = new Cubemap(srcWidth, UnityEngine.Experimental.Rendering.DefaultFormat.HDR, 0);
+#endif
                 bool isColumn = imageType == CubemapImageType.Column;
                 for (int i = 0; i < 6; ++i)
                 {
@@ -80,13 +96,14 @@ namespace BVA.Extensions
             }
             return textures;
         }
+
         public static Texture2D FlatTexture(this Cubemap src, bool isColumn = false)
         {
             int srcWidth = src.width;
 
             int newWidth = isColumn ? srcWidth : srcWidth * 6;
             int newHeight = isColumn ? srcWidth * 6 : srcWidth;
-            var flatCubemap = new Texture2D(newWidth, newHeight, src.format, false);
+            var flatCubemap = new Texture2D(newWidth, newHeight, src.format, false, false);
             for (int i = 0; i < 6; ++i)
             {
                 int dstX = isColumn ? 0 : srcWidth * i;
@@ -94,10 +111,10 @@ namespace BVA.Extensions
                 Graphics.CopyTexture(src, i, 0, 0, 0, srcWidth, srcWidth, flatCubemap, 0, 0, dstX, dstY);
             }
 
-            var destRenderTexture = RenderTexture.GetTemporary(newWidth, newHeight, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.sRGB);
+            var destRenderTexture = RenderTexture.GetTemporary(newWidth, newHeight, 0, RenderTextureFormat.DefaultHDR, RenderTextureReadWrite.Linear);
 
-            var flipY = new Material(Shader.Find("Hidden/FlipY"));
-            Graphics.Blit(flatCubemap, destRenderTexture, flipY);
+            Graphics.Blit(flatCubemap, destRenderTexture, UnityExtensions.FlipYMaterial);
+            Graphics.Blit(flatCubemap, destRenderTexture, UnityExtensions.GetLightmapEncodeMaterial(LightmapEncodingMode.LinearToGamma));
 
             var exportTexture = new Texture2D(newWidth, newHeight);
             exportTexture.ReadPixels(new Rect(0, 0, destRenderTexture.width, destRenderTexture.height), 0, 0);
@@ -109,6 +126,7 @@ namespace BVA.Extensions
             exportTexture.name = src.name;
             return exportTexture;
         }
+
         public static byte[] ConvertToEquirectangular(Texture2D[] sourceTextures, int outputWidth, int outputHeight)
         {
             Texture2D equiTexture = new Texture2D(outputWidth, outputHeight, TextureFormat.RGB24, false);

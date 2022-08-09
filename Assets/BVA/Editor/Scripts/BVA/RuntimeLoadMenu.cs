@@ -1,15 +1,28 @@
 using UnityEditor;
 using UnityEngine;
 using System.IO;
-using BVA;
 using BVA.Loader;
-using System;
 
 namespace BVA
 {
     public class RuntimeLoadMenu
     {
-        [MenuItem("BVA/Runtime Load/Load Avatar")]
+        [MenuItem("BVA/Runtime Load/Load Scene", priority = 90)]
+        static void Init()
+        {
+            if (!EditorApplication.isPlaying)
+            {
+                EditorApplication.EnterPlaymode();
+            }
+            else
+            {
+                var glbPath = EditorUtility.OpenFilePanel("bva/glb/gltf/zip file", "", "bva,glb,gltf,zip");
+
+                Load(glbPath);
+            }
+        }
+
+        [MenuItem("BVA/Runtime Load/Load Avatar", priority = 91)]
         static async void Init3()
         {
             if (!EditorApplication.isPlaying)
@@ -18,7 +31,7 @@ namespace BVA
             }
             else
             {
-                var glbPath = EditorUtility.OpenFilePanel("glb or gltf file", "", "glb,gltf");
+                var glbPath = EditorUtility.OpenFilePanel("bva/glb/gltf file", "", "bva,glb,gltf");
 
                 var importOptions = new ImportOptions
                 {
@@ -33,10 +46,8 @@ namespace BVA
                 await sceneImporter.LoadAvatar();
             }
         }
-
-
-        [MenuItem("BVA/Runtime Load/Load (GLB&GLTF)")]
-        static void Init()
+        [MenuItem("BVA/Runtime Load/Load(Auto Detect)",priority = 92)]
+        static async void Init4()
         {
             if (!EditorApplication.isPlaying)
             {
@@ -44,24 +55,19 @@ namespace BVA
             }
             else
             {
-                var glbPath = EditorUtility.OpenFilePanel("glb or gltf file", "", "glb,gltf");
+                var glbPath = EditorUtility.OpenFilePanel("bva/glb/gltf file", "", "bva,glb,gltf");
 
-                Load(glbPath);
-            }
-        }
+                var importOptions = new ImportOptions
+                {
+                    RuntimeImport = true,
+                };
 
-        [MenuItem("BVA/Runtime Load/Load (Zip Archived)")]
+                string directoryPath = URIHelper.GetDirectoryName(glbPath);
+                importOptions.DataLoader = new FileLoader(directoryPath);
 
-        static void Init2()
-        {
-            if (!EditorApplication.isPlaying)
-            {
-                EditorApplication.EnterPlaymode();
-            }
-            else
-            {
-                var glbPath = EditorUtility.OpenFilePanel("zip file", "", "zip");
-                Load(glbPath);
+                var Factory = ScriptableObject.CreateInstance<DefaultImporterFactory>();
+                var sceneImporter = Factory.CreateSceneImporter(glbPath, importOptions);
+                await sceneImporter.LoadAsync();
             }
         }
         static async void Load(string path)
@@ -75,6 +81,7 @@ namespace BVA
             var ext = Path.GetExtension(path).ToLower();
             switch (ext)
             {
+                case ".bva":
                 case ".gltf":
                 case ".glb":
                 case ".zip":

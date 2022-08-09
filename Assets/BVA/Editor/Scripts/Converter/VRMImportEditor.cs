@@ -10,6 +10,7 @@ using System;
 using System.Linq;
 using BVA;
 using BVA.Component;
+using GLTF.Schema.BVA;
 
 namespace VRM
 {
@@ -58,6 +59,7 @@ namespace VRM
                 foreach (var v in skinnedMeshRenderer.sharedMaterials)
                 {
                     v.shader = replaceShader;
+                    GLTF.Schema.BVA.MaterialImporter.MToon.ValidateProperties(v);
                 }
             }
         }

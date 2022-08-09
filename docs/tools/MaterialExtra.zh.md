@@ -251,27 +251,12 @@ namespace GLTF.Schema.BVA
 }
 ```
 
-然后找到`MaterialDescriptor.cs`这个文件打开，往下属列表中添加
+然后找到 `MaterialDescriptor.cs` 这个文件打开，往下属列表中添加
 
 ```csharp
 private static readonly Dictionary<string, AsyncDeserializeCustomMaterial> CUSTOM_SHADER_LIST = new Dictionary<string, AsyncDeserializeCustomMaterial>
 ```
 
 ```csharp
-{ BVA_Material_ClothLED_Extra.SHADER_NAME,BVA_Material_ClothLED_Extra.Deserialize }
-```
-
-并添加到导出函数里，判断Shader名称，然后创建这个Extra的实例添加到材质中
-
-```csharp
-public static bool ExportMaterialExtra(Material materialObj, GLTFMaterial material, ExportTextureInfo exportTextureInfo, ExportTextureInfo exportNormalMapInfo, ExportCubemapInfo exportCubemapInfo)
-```
-
-```csharp
-    if (shader == BVA_Material_ClothLED_Extra.SHADER_NAME)
-    {
-        var extra = new BVA_Material_ClothLED_Extra(materialObj, exportTextureInfo, exportNormalMapInfo, exportCubemapInfo);
-        material.AddExtra(BVA_Material_ClothLED_Extra.PROPERTY, extra);
-        return true;
-    }
+{ BVA_Material_ClothLED_Extra.SHADER_NAME,new(typeof(BVA_Material_ClothLED_Extra), BVA_Material_ClothLED_Extra.Deserialize) },
 ```

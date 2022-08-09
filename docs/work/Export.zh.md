@@ -1,5 +1,9 @@
 # 导出
 
+## 前提条件
+
+请确保`Build Settings`里`Platform`设置为 `Windows,Mac,Linux`，其余平台导出`Cubemap`或者`Lightmap`有可能会出现贴图错误
+
 ## 文件格式
 
 - *GLTF*
@@ -18,7 +22,18 @@ GLB文件包含了所有的元素，包括动画，材质，节点和相机到�
 
 ## 受支持的材质
 
-这些材质被BVA支持。他们分别是 [Lit](material/Lit.md), [Complex Lit](material/ComplexLit.md), [Unlit](material/Unlit.md), [MToon(URP ver)](https://vrm.dev/univrm/shaders/shader_mtoon.html), [UTS2](https://github.com/unity3d-jp/UnityChanToonShaderVer2_Project), [LiliumToonGraph](https://github.com/you-ri/LiliumToonGraph), ToonLit
+这些材质被BVA支持
+
+- [Lit](material/Lit.md)
+- [Complex Lit](material/ComplexLit.md)
+- [Unlit](material/Unlit.md)
+- [Skybox](material/Skybox.md)
+- [UTS2](https://github.com/unity3d-jp/UnityChanToonShaderVer2_Project)
+- [LiliumToonGraph](https://github.com/you-ri/LiliumToonGraph)
+- [MToon(URP版本)](https://vrm.dev/univrm/shaders/shader_mtoon.html)
+- [ZeldaToon](https://github.com/ToughNutToCrack/ZeldaShaderURP2019.4.0f1)
+- ToonLit(带卡通效果的Lit)
+
 
 ![glb](pics/Material_1.png)
 

@@ -7,10 +7,10 @@ namespace BVA.Sample
     public class OrbitCameraController : MonoBehaviour
     {
         [SerializeField]
-        private float _scrollWheelSpeed = 10;
+        private float _scrollWheelSpeed = 10.0f;
 
         [SerializeField]
-        private float _rotationSpeed = 2;
+        private float _rotationSpeed = 2.0f;
 
         private Transform _target;
         private Vector3 _oriPosition;
@@ -22,7 +22,7 @@ namespace BVA.Sample
         private float distance = 10.0f;
         public float minDistance = 1.0f;
         public float maxDistance = 30.0f;
-        public float move_speed = 0.01f;
+        public float move_speed = 2.0f;
         [HideInInspector]
         public bool Enable = true;
 
@@ -37,7 +37,6 @@ namespace BVA.Sample
         {
             float x = Input.GetAxis("Mouse X") * _rotationSpeed;
             float y = Input.GetAxis("Mouse Y") * _rotationSpeed;
-
             if (Enable)
             {
 #if UNITY_EDITOR || UNITY_STANDALONE

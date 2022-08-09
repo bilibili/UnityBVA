@@ -91,7 +91,6 @@ namespace GLTF.Schema.BVA
 
 
             }
-            //OYM:ฒโสิด๚ย๋
             chainProcessor.Initialize();
         }
     }

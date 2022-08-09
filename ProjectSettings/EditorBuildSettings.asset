@@ -5,12 +5,9 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/BVA/Samples/dynamicBone Example/2-HumanoidShow.unity
-    guid: eee7641c779e72d48ae035e344430ec8
-  - enabled: 0
-    path: Assets/BVA/Samples/RuntimeLoad.unity
-    guid: 9a182491b93132647893a5b458d7dd70
+  - enabled: 1
+    path: Assets/BVA/Samples/WebLoad.unity
+    guid: f707c5c52f8c4da40bfe2885a61b223c
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 7e06b7ed59532fe4cafadb92157b9a6f, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 4c9068c9e131b4b4d911bcde295379c2, type: 2}

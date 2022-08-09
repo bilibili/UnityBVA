@@ -258,6 +258,11 @@ namespace GLTF.Schema
         public bool IsGLB;
 
         /// <summary>
+        /// Whether this object is an Avatar Model
+        /// </summary>
+        public bool IsAvatar;
+
+        /// <summary>
         /// Return the default scene. When scene is null, scene of index 0 will be returned.
         /// When scenes list is null or empty, returns null.
         /// </summary>

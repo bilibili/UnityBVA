@@ -134,7 +134,7 @@ namespace BVA
             bool hasMaterial = monoFields.Any(monoField => monoField.IsMaterial);
             bool hasTexture = monoFields.Any(monoField => monoField.IsTexture);
             bool hasSprite = monoFields.Any(monoField => monoField.IsSprite);
-            string[] namespaceField = new string[] { "Newtonsoft.Json.Linq", "GLTF.Math", "GLTF.Schema", "Newtonsoft.Json", "GLTF.Extensions", "BVA.Extensions", "System.Threading.Tasks", "UnityEngine", "Color = UnityEngine.Color", "Vector4 = UnityEngine.Vector4" };
+            string[] namespaceField = new string[] { "Newtonsoft.Json.Linq", "GLTF.Math", "GLTF.Schema", "Newtonsoft.Json", "GLTF.Extensions", "BVA.Extensions", "BVA.Component", "System.Threading.Tasks", "UnityEngine", "Color = UnityEngine.Color", "Vector4 = UnityEngine.Vector4" };
             const string namespaceHeader = "namespace GLTF.Schema.BVA";
             const string startScope = "{", endScope = "}";
             string className = Path.GetFileNameWithoutExtension(exportPath);

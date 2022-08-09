@@ -5,8 +5,14 @@ using BVA;
 
 public class SkyboxContainer : MonoSingleton<SkyboxContainer>, IContainer<Material>
 {
-    public readonly static string[] COMPATIBLE_SHADERS = new string[] {"Skybox/6 Sided","Skybox/Cubemap" };
-    public static bool IsValidMaterial(Material material) { return material != null && COMPATIBLE_SHADERS.Contains(material.shader.name); }
+    public readonly static string[] COMPATIBLE_SHADERS = new string[] {"Skybox/6 Sided","Skybox/Cubemap", "Skybox/Panoramic", "Skybox/Procedural" };
+    public static bool IsValidSkyboxMaterial(Material material) 
+    { 
+        bool isValid = material != null && COMPATIBLE_SHADERS.Contains(material.shader.name);
+        if (!isValid)
+            LogPool.ExportLogger.LogWarning(LogPart.Material, $"The material {material.name} is not a valid Skybox material, you are supposed to use these skybox shader [{COMPATIBLE_SHADERS[0]},{COMPATIBLE_SHADERS[1]},{COMPATIBLE_SHADERS[2]},{COMPATIBLE_SHADERS[3]}]");
+        return isValid;
+    }
     public List<Material> materials;
     public Material Get(int index)
     {

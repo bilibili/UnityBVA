@@ -1,5 +1,8 @@
 [中文文档请转至这里](README.zh.md)
 
+技术交流QQ群 476944298
+<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=ewgXKtDg9IetUfOmjKIg9qkFMTHKK0Ho&jump_from=webapi"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="UnityBVA技术交流群" title="UnityBVA技术交流群"></a>
+
 
 # Overview
 
@@ -164,6 +167,10 @@ https://github.com/needle-tools/shader-variant-explorer
 
 ## UnityIngameDebugConsole
 https://github.com/yasirkula/UnityIngameDebugConsole
+
+# Samples Assets
+https://github.com/KhronosGroup/Vulkan-Samples-Assets
+https://github.com/KhronosGroup/glTF-Asset-Generator
 
 # Useful commercial resources
 - [Animation Converter](https://assetstore.unity.com/packages/tools/animation/animation-converter-107688) Convert animation clips (*.anim) between all 3 animation types (humanoid ⇆ generic ⇆ legacy).
