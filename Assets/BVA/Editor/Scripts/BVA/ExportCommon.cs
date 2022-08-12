@@ -1,15 +1,49 @@
 using UnityEditor;
 using UnityEngine;
 using BVA.Component;
+using GLTF.Schema.BVA;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine.SceneManagement;
+using UnityEditor.SceneManagement;
 
 namespace BVA
 {
+    public enum EditorLanguage
+    {
+        Zh,
+        En
+    }
     public static class ExportCommon
     {
+        const string PREFS_KEY = "BVA_LANG";
         const string ASSET_DIR = "Assets/";
         static bool _folderLog;
         static bool _folderExoprtInfo = true;
         static bool _folderExoprtInfo_Mesh = true;
+        public static readonly HashSet<string> DEFAULT_SHADER_NAME = new HashSet<string>() { "Universal Render Pipeline/Lit", "Universal Render Pipeline/Complex Lit", "Universal Render Pipeline/Unlit" };
+        public static EditorLanguage EditorLanguage
+        {
+            get { return (EditorLanguage)EditorPrefs.GetInt(PREFS_KEY); }
+            set { EditorPrefs.SetInt(PREFS_KEY, (int)value); }
+        }
+        public static string Localization(string zh, string en) => EditorLanguage == EditorLanguage.Zh ? zh : en;
+
+        public static void ShowLanguageSwitchButton(float positionLerp=0.8f,float width=60)
+        {
+            EditorGUILayout.Space(10);
+            EditorGUILayout.BeginHorizontal();
+           Rect rect= EditorGUILayout.GetControlRect();
+            Rect resultRect =new Rect(
+                Mathf.Lerp(rect.xMin, rect.xMax, positionLerp),
+                rect.yMin,
+                width,
+                rect.height
+                );
+
+            EditorLanguage = (EditorLanguage)GUI.Toolbar(resultRect, (int)EditorLanguage,new string[] {"CN", "EN"});
+            EditorGUILayout.EndHorizontal();
+        }
 
         public static void FixMissingMetaInfo(GameObject Root)
         {
@@ -23,11 +57,12 @@ namespace BVA
         public static void FixMissingBlendshapeMixer(GameObject Root)
         {
             var metaComp = Root.AddComponent<BlendShapeMixer>();
+            Selection.activeGameObject = Root;
         }
 
         public static void EditorGUIExportLog()
         {
-            _folderLog = EditorGUILayout.BeginToggleGroup("Show Logs", _folderLog);
+            _folderLog = EditorGUILayout.BeginToggleGroup(Localization("显示Log", "Show Logs"), _folderLog);
             if (_folderLog)
             {
                 LogPool.ExportLogger.OnGUI();
@@ -37,7 +72,7 @@ namespace BVA
 
         public static void EditorGUICollectExportInfo(ExportInfo info)
         {
-            _folderExoprtInfo = EditorGUILayout.BeginToggleGroup("Show Export Information", _folderExoprtInfo);
+            _folderExoprtInfo = EditorGUILayout.BeginToggleGroup(Localization("显示导出信息", "Show Export Information"), _folderExoprtInfo);
             if (_folderExoprtInfo)
             {
                 //_folderExoprtInfo_Mesh = EditorGUILayout.BeginFoldoutHeaderGroup(_folderExoprtInfo_Mesh, "Mesh Information");
@@ -59,7 +94,7 @@ namespace BVA
         {
             if (!EditorUserBuildSettings.activeBuildTarget.ToString().Contains("Standalone"))
             {
-                EditorGUILayout.HelpBox("Please switch to Standalone(Windows,Mac,Linux) platform in Build Settings", MessageType.Error);
+                EditorGUILayout.HelpBox(Localization("请在Build Settings里切换到Standalone(Windows,Mac,Linux)平台", "Please switch to Standalone(Windows,Mac,Linux) platform in Build Settings"), MessageType.Error);
             }
         }
 
@@ -77,7 +112,71 @@ namespace BVA
                     container.audioClips.Add(source.clip);
                 }
             }
+        }
+       
+        public static List<Material> CheckModelShaderIsVaild(List<SceneAsset> sceneAssets)
+        {
+            var scenes = sceneAssets.Select(x => EditorSceneManager.GetSceneByPath(AssetDatabase.GetAssetPath(x))).ToArray();
+            return CheckModelShaderIsVaild(scenes);
+        }
+        public static List<Material> CheckModelShaderIsVaild(params Scene[] scenes)
+        {
+            List<Material> result = new List<Material>();
+            if (scenes==null|| scenes.Length==0)
+            {
+                return result;
+            }
 
+            for (int i = 0; i < scenes.Length ; i++)
+            {
+                var scene = scenes[i];
+                if (!scene.IsValid()||scene.rootCount==0)
+                {
+                    continue;
+                }
+                var gameObjects = scene.GetRootGameObjects();
+                foreach (var gameObject in gameObjects)
+                {
+                    var tempResult = CheckModelShaderIsVaild(gameObject);
+                    result.AddRange(tempResult);
+                }
+            }
+
+
+            return result;
+        }
+        public static List<Material> CheckModelShaderIsVaild(GameObject model)
+        {
+            List<Material> errorList = new List<Material>();
+            if (model==null)
+            {
+                return errorList;
+             }
+            HashSet<Material> materials = new HashSet<Material>(model.GetComponentsInChildren<Renderer>().SelectMany(x => x.sharedMaterials));
+
+
+            foreach (var material in materials)
+            {
+                if (material==null)
+                {
+                    continue;
+                }
+                Shader shader = material.shader;
+                if (!(MaterialImporter.CUSTOM_SHADER_LIST.ContainsKey(shader.name)|| DEFAULT_SHADER_NAME.Contains(shader.name)))
+                {
+                    errorList.Add(material);
+                    string data = ExportCommon.Localization($"{shader.name} 不是支持的shader,但是在 {material.name}被使用!", $"{shader.name} is not vaild shader for exporter ,but is is been used by {material.name} !");
+
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.HelpBox(data, MessageType.Warning);
+                    if (GUILayout.Button(ExportCommon.Localization("选择","Select")))
+                    {
+                        Selection.activeObject = material;
+                    }
+                    EditorGUILayout.EndHorizontal();
+                }
+            }
+            return errorList;
         }
     }
 }

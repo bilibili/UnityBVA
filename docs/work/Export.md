@@ -69,3 +69,8 @@ To compatible with standard gltf parameter, material with these parameters will 
 Since the MMD model's body and head and all the vertices are on a mesh, the blendshape on head will take effect on all vertices, this can result in very large output files, which can seriously affect the efficiency of exporting and loading. 
 
 Therefore, before exporting MMD, the vertices affected by BlendShape will be separated to form a Submesh.This significantly reduces the size of the exported file, comparable to the size of the MMD file itself.
+
+## GameObject Layer
+Layers on Render are exported, ensuring that Layer can be correctly distinguished by cameras, lights, and other components.
+
+![glb](pics/gameobject_layer.png)

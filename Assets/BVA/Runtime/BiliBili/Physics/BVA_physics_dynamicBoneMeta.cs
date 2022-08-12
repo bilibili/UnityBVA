@@ -404,19 +404,19 @@ namespace GLTF.Schema.BVA
                 var curProp = reader.Value.ToString();
                 switch (curProp)
                 {
-                   case nameof(ADBChainProcessorMeta.keyWord): //OYM:whiteList
+                   case nameof(ADBChainProcessorMeta.keyWord):
                         keyWord = reader.ReadAsString();
                         break;
-                    case nameof(ADBChainProcessorMeta.transformIndex): //OYM:whiteList
+                    case nameof(ADBChainProcessorMeta.transformIndex):
                         transformIndex = reader.ReadInt32List().ToArray();
                         break;
-                    case nameof(ADBChainProcessorMeta.pointParentIndex): //OYM:whiteList
+                    case nameof(ADBChainProcessorMeta.pointParentIndex):
                         pointParentIndex = reader.ReadInt32List().ToArray();
                         break;
-                    case nameof(ADBChainProcessorMeta.pointColliderMasks): //OYM:whiteList
+                    case nameof(ADBChainProcessorMeta.pointColliderMasks):
                         pointColliderMasks = reader.ReadInt32List().ToArray();
                         break;
-                    case nameof(ADBChainProcessorMeta.pointHitRadiuss): //OYM:whiteList
+                    case nameof(ADBChainProcessorMeta.pointHitRadiuss):
                         pointHitRadiuss = reader.ReadFloatList().ToArray();
                         break;
                     /*
@@ -424,80 +424,80 @@ namespace GLTF.Schema.BVA
                     m_blackKeyWord = reader.ReadStringList();
                     break;*/
 
-                    case nameof(ADBPhysicsSetting.name)://OYM:useCurve
+                    case nameof(ADBPhysicsSetting.name):
                         physicsSetting.name = reader.ReadAsString();
                         break;
                     //OYM:10
-                    case nameof(ADBPhysicsSetting.isfrictionCurve)://OYM:useCurve
+                    case nameof(ADBPhysicsSetting.isfrictionCurve):
                         physicsSetting.isfrictionCurve = reader.ReadAsBoolean().Value;
                         break;
-                    case nameof(ADBPhysicsSetting.isaddForceScaleCurve)://OYM:useCurve
+                    case nameof(ADBPhysicsSetting.isaddForceScaleCurve):
                         physicsSetting.isaddForceScaleCurve = reader.ReadAsBoolean().Value;
                         break;
-                    case nameof(ADBPhysicsSetting.isgravityScaleCurve)://OYM:useCurve
+                    case nameof(ADBPhysicsSetting.isgravityScaleCurve):
                         physicsSetting.isgravityScaleCurve = reader.ReadAsBoolean().Value;
                         break;
-                    case nameof(ADBPhysicsSetting.ismoveInertCurve)://OYM:useCurve
+                    case nameof(ADBPhysicsSetting.ismoveInertCurve):
                         physicsSetting.ismoveInertCurve = reader.ReadAsBoolean().Value;
                         break;
-                    case nameof(ADBPhysicsSetting.isdampingCurve)://OYM:useCurve
+                    case nameof(ADBPhysicsSetting.isdampingCurve):
                         physicsSetting.isdampingCurve = reader.ReadAsBoolean().Value;
                         break;
-                    case nameof(ADBPhysicsSetting.iselasticityCurve)://OYM:useCurve
+                    case nameof(ADBPhysicsSetting.iselasticityCurve):
                         physicsSetting.iselasticityCurve = reader.ReadAsBoolean().Value;
                         break;
-                    case nameof(ADBPhysicsSetting.isvelocityIncreaseCurve)://OYM:useCurve
+                    case nameof(ADBPhysicsSetting.isvelocityIncreaseCurve):
                         physicsSetting.isvelocityIncreaseCurve = reader.ReadAsBoolean().Value;
                         break;
-                    case nameof(ADBPhysicsSetting.isstiffnessLocalCurve)://OYM:useCurve
+                    case nameof(ADBPhysicsSetting.isstiffnessLocalCurve):
                         physicsSetting.isstiffnessLocalCurve = reader.ReadAsBoolean().Value;
                         break;
-                    case nameof(ADBPhysicsSetting.isstiffnessWorldCurve)://OYM:useCurve
+                    case nameof(ADBPhysicsSetting.isstiffnessWorldCurve):
                         physicsSetting.isstiffnessWorldCurve = reader.ReadAsBoolean().Value;
                         break;
-                    case nameof(ADBPhysicsSetting.islengthLimitForceScaleCurve)://OYM:useCurve
+                    case nameof(ADBPhysicsSetting.islengthLimitForceScaleCurve):
                         physicsSetting.islengthLimitForceScaleCurve = reader.ReadAsBoolean().Value;
                         break;
-                    case nameof(ADBPhysicsSetting.iselasticityVelocityCurve)://OYM:useCurve
+                    case nameof(ADBPhysicsSetting.iselasticityVelocityCurve):
                         physicsSetting.iselasticityVelocityCurve = reader.ReadAsBoolean().Value;
                         break;
-                    case nameof(ADBPhysicsSetting.isstructuralShrinkVerticalScaleCurve)://OYM:useCurve
+                    case nameof(ADBPhysicsSetting.isstructuralShrinkVerticalScaleCurve):
                         physicsSetting.isstructuralShrinkVerticalScaleCurve = reader.ReadAsBoolean().Value;
                         break;
-                    case nameof(ADBPhysicsSetting.isstructuralStretchVerticalScaleCurve)://OYM:useCurve
+                    case nameof(ADBPhysicsSetting.isstructuralStretchVerticalScaleCurve):
                         physicsSetting.isstructuralStretchVerticalScaleCurve = reader.ReadAsBoolean().Value;
                         break;
-                    case nameof(ADBPhysicsSetting.isstructuralShrinkHorizontalScaleCurve)://OYM:useCurve
+                    case nameof(ADBPhysicsSetting.isstructuralShrinkHorizontalScaleCurve):
                         physicsSetting.isstructuralShrinkHorizontalScaleCurve = reader.ReadAsBoolean().Value;
                         break;
-                    case nameof(ADBPhysicsSetting.isstructuralStretchHorizontalScaleCurve)://OYM:useCurve
+                    case nameof(ADBPhysicsSetting.isstructuralStretchHorizontalScaleCurve):
                         physicsSetting.isstructuralStretchHorizontalScaleCurve = reader.ReadAsBoolean().Value;
                         break;
-                    case nameof(ADBPhysicsSetting.isshearShrinkScaleCurve)://OYM:useCurve
+                    case nameof(ADBPhysicsSetting.isshearShrinkScaleCurve):
                         physicsSetting.isshearShrinkScaleCurve = reader.ReadAsBoolean().Value;
                         break;
-                    case nameof(ADBPhysicsSetting.isshearStretchScaleCurve)://OYM:useCurve
+                    case nameof(ADBPhysicsSetting.isshearStretchScaleCurve):
                         physicsSetting.isshearStretchScaleCurve = reader.ReadAsBoolean().Value;
                         break;
-                    case nameof(ADBPhysicsSetting.isbendingShrinkVerticalScaleCurve)://OYM:useCurve
+                    case nameof(ADBPhysicsSetting.isbendingShrinkVerticalScaleCurve):
                         physicsSetting.isbendingShrinkVerticalScaleCurve = reader.ReadAsBoolean().Value;
                         break;
-                    case nameof(ADBPhysicsSetting.isbendingStretchVerticalScaleCurve)://OYM:useCurve
+                    case nameof(ADBPhysicsSetting.isbendingStretchVerticalScaleCurve):
                         physicsSetting.isbendingStretchVerticalScaleCurve = reader.ReadAsBoolean().Value;
                         break;
-                    case nameof(ADBPhysicsSetting.isbendingShrinkHorizontalScaleCurve)://OYM:useCurve
+                    case nameof(ADBPhysicsSetting.isbendingShrinkHorizontalScaleCurve):
                         physicsSetting.isbendingShrinkHorizontalScaleCurve = reader.ReadAsBoolean().Value;
                         break;
-                    case nameof(ADBPhysicsSetting.isbendingStretchHorizontalScaleCurve)://OYM:useCurve
+                    case nameof(ADBPhysicsSetting.isbendingStretchHorizontalScaleCurve):
                         physicsSetting.isbendingStretchHorizontalScaleCurve = reader.ReadAsBoolean().Value;
                         break;
-                    case nameof(ADBPhysicsSetting.iscircumferenceShrinkScaleCurve)://OYM:useCurve
+                    case nameof(ADBPhysicsSetting.iscircumferenceShrinkScaleCurve):
                         physicsSetting.iscircumferenceShrinkScaleCurve = reader.ReadAsBoolean().Value;
                         break;
-                    case nameof(ADBPhysicsSetting.iscircumferenceStretchScaleCurve)://OYM:useCurve
+                    case nameof(ADBPhysicsSetting.iscircumferenceStretchScaleCurve):
                         physicsSetting.iscircumferenceStretchScaleCurve = reader.ReadAsBoolean().Value;
                         break;
-                    case nameof(ADBPhysicsSetting.ispointRadiuCurve)://OYM:useCurve
+                    case nameof(ADBPhysicsSetting.ispointRadiuCurve):
                         physicsSetting.ispointRadiuCurve = reader.ReadAsBoolean().Value;
                         break;
                     //OYM:10 cruves about process

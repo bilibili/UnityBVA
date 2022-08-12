@@ -1,0 +1,12 @@
+{
+  "name": "com.bilibili.bvavrmhotfix",
+  "displayName": "Bva_Vrm Hotfix",
+  "version": "0.0.1",
+  "unity": "2019.3",
+  "dependencies": {
+  },
+  "description": "BVA hotfix In vrm",
+  "keywords": [
+  ]
+  
+}

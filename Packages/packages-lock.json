@@ -1,5 +1,11 @@
 {
   "dependencies": {
+    "com.bilibili.bvavrmhotfix": {
+      "version": "file:com.BVA.vrmHotfix",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.unity.animation.rigging": {
       "version": "1.1.1",
       "depth": 0,
@@ -199,6 +205,32 @@
         "com.unity.modules.ui": "1.0.0",
         "com.unity.modules.imgui": "1.0.0"
       }
+    },
+    "com.vrmc.gltf": {
+      "version": "https://github.com/vrm-c/UniVRM.git?path=/Assets/UniGLTF#v0.102.0",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.vrmc.vrmshaders": "0.102.0"
+      },
+      "hash": "abb3d384d2ef060ca0d04bc4f6b329a620c0c58f"
+    },
+    "com.vrmc.univrm": {
+      "version": "https://github.com/vrm-c/UniVRM.git?path=/Assets/VRM#v0.102.0",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.vrmc.vrmshaders": "0.102.0",
+        "com.vrmc.gltf": "0.102.0"
+      },
+      "hash": "abb3d384d2ef060ca0d04bc4f6b329a620c0c58f"
+    },
+    "com.vrmc.vrmshaders": {
+      "version": "https://github.com/vrm-c/UniVRM.git?path=/Assets/VRMShaders#v0.102.0",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "abb3d384d2ef060ca0d04bc4f6b329a620c0c58f"
     },
     "jp.lilium.toongraph": {
       "version": "file:jp.lilium.toongraph",

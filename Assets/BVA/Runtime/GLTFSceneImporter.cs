@@ -147,16 +147,11 @@ namespace BVA
         /// </summary>
         public int MaximumLod = 300;
 
-        /// <summary>
-        /// Timeout for certain threading operations
-        /// </summary>
-        public int Timeout = 8;
-
         private bool _isMultithreaded = true;
 
         /// <summary>
         /// Use Multithreading or not.
-        /// In editor, this is always false. This is to prevent a freeze in editor (noticed in Unity versions 2017.x and 2018.x)
+        /// In editor, this is always false. This is to prevent a freeze in editor
         /// </summary>
         public bool IsMultithreaded
         {
@@ -184,11 +179,6 @@ namespace BVA
         /// Adds colliders to primitive objects when created
         /// </summary>
         public ColliderType Collider { get; set; }
-
-        /// <summary>
-        /// Override for the shader to use on created materials
-        /// </summary>
-        public string CustomShaderName { get; set; }
 
         /// <summary>
         /// Whether to keep a CPU-side copy of the mesh after upload to GPU (for example, in case normals/tangents need recalculation)

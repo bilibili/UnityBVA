@@ -8,15 +8,14 @@ namespace LibMMD.Unity3D
     {
         public static async Task LoadPMX(MaterialLoader.MaterialType materialType)
         {
-            string[] path = SFB.StandaloneFileBrowser.OpenFilePanel("PMX", "", new SFB.ExtensionFilter[] { new SFB.ExtensionFilter("MMD Files", "pmx") }, false);
-            if (path.Length == 0) return;
-            string humanPath = path[0];
+            string path = EditorUtility.OpenFilePanelWithFilters("PMX", "", new string[] { "MMD Files", "pmx" });
+            if (string.IsNullOrEmpty(path)) return;
             MaterialLoader.UseMaterialType = materialType;
-            Transform alicia = await PMXModelLoader.LoadPMXModel(humanPath, null);
+            Transform alicia = await PMXModelLoader.LoadPMXModel(path, null);
         }
 
         [MenuItem("BVA/Runtime Load/Load PMX (MToon)")]
-      public static async void LoadPMXMToon()
+        public static async void LoadPMXMToon()
         {
             await LoadPMX(MaterialLoader.MaterialType.MToon);
         }

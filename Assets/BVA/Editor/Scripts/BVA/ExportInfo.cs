@@ -79,25 +79,21 @@ namespace BVA
         private void CollectInfo(Transform transform)
         {
             ++nodeCount;
-            var mr = transform.GetComponent<MeshRenderer>();
-            if (mr != null)
+            if (transform.TryGetComponent<MeshRenderer>(out var mr))
             {
-                var mf = transform.GetComponent<MeshFilter>();
-                if (mf != null)
+                if (transform.TryGetComponent<MeshFilter>(out var mf))
                 {
                     meshes.Add(mf.sharedMesh);
                     materials.AddRange(mr.sharedMaterials);
                 }
             }
-            var smr = transform.GetComponent<SkinnedMeshRenderer>();
-            if (smr != null)
+            if (transform.TryGetComponent<SkinnedMeshRenderer>(out var smr))
             {
                 meshes.Add(smr.sharedMesh);
                 materials.AddRange(smr.sharedMaterials);
             }
 
-            var playable = transform.GetComponent<PlayableController>();
-            if (playable != null)
+            if (transform.TryGetComponent<PlayableController>(out var playable))
             {
                 foreach (var v in playable.trackAsset.animationTrackGroup.tracks)
                 {
@@ -113,12 +109,10 @@ namespace BVA
                 }
             }
 
-            var audio = transform.GetComponent<AudioClipContainer>();
-            if (audio != null)
+            if (transform.TryGetComponent<AudioClipContainer>(out var audio))
                 audioClips.AddRange(audio.audioClips);
 
-            var anim = transform.GetComponent<Animator>();
-            if (anim != null)
+            if (transform.TryGetComponent<Animator>(out var anim))
                 avatars.Add(anim.avatar);
         }
 

@@ -17,11 +17,12 @@ namespace BVA
         private const float Default_Window_Height = 800.0f;
         private const float Default_Window_Width = 600.0f;
         public static ProjectConfigurationWindow Instance { get; private set; }
-
+        private static readonly EditorSettingsValidator Validator = new EditorSettingsValidator();
         public static bool IsOpen => Instance != null;
 
         public int callbackOrder => 0;
         public static List<string> logConfigurationWarnings;
+
         private void OnEnable()
         {
             Instance = this;
@@ -35,6 +36,9 @@ namespace BVA
 
             // Subscribe to editor application update which will call us once the editor is initialized and running
             EditorApplication.update += OnInit;
+
+
+
         }
 
         private static void OnInit()
@@ -104,24 +108,79 @@ namespace BVA
         }
         private void OnGUI()
         {
-            EditorGUILayout.BeginHorizontal();
+            ExportCommon.ShowLanguageSwitchButton(); ;
+            if (Validator.IsValid())
             {
-                if (GUILayout.Button("Validate Settings"))
+                GUILayout.FlexibleSpace();
+                GUILayout.Label(ExportCommon.Localization("所有问题已经被修复了\n谢谢", "All setting is vaild\n Thankyou!"), new GUIStyle(EditorStyles.boldLabel)
                 {
-                    LogConfigurationWarnings();
-                }
-                if (GUILayout.Button("Fix Settings"))
+                    alignment = TextAnchor.MiddleCenter,
+                    fontSize = 20,
+                });
+
+                GUILayout.FlexibleSpace();
+
+                GUILayout.BeginVertical(GUI.skin.box);
+                GUILayout.Label(ExportCommon.Localization("可以关闭该窗口", "You Can Close This Window"));
+                if (GUILayout.Button(ExportCommon.Localization("关闭", "Close")))
                 {
-                    UnityTools.FixDefaultProjectSetttings();
+                    Close();
                 }
+
+                GUILayout.EndVertical();
             }
-            EditorGUILayout.EndHorizontal();
-            if (logConfigurationWarnings != null)
+            else
             {
-                foreach (var log in logConfigurationWarnings)
+                GUILayout.BeginVertical(GUI.skin.box);
+                GUILayout.Space(5);
+                GUILayout.Label(ExportCommon.Localization("设置BVA必备选项", "Recommended ProjectSettings For BVA"));
+                GUILayout.Space(5);
+                GUILayout.EndVertical();
+
+                GUILayout.Space(10);
+
+                foreach (var validator in Validator.Validators)
                 {
-                    EditorGUILayout.HelpBox(log, MessageType.Warning);
+                    if (validator.CanFix)
+                    {
+
+                        GUILayout.BeginHorizontal();
+                        GUILayout.Label(validator.HeaderDescription);
+                        var oldEnabled = GUI.enabled;
+                        GUI.enabled = !validator.IsValid;
+
+
+                        if (GUILayout.Button(validator.RecommendedValueDescription))
+                        {
+                            validator.Validate();
+                        }
+
+                        GUI.enabled = oldEnabled;
+                        GUILayout.EndHorizontal();
+
+                        GUILayout.Space(5);
+                    }
+                    else
+                    {
+                        EditorGUILayout.HelpBox(validator.HeaderDescription, MessageType.Warning); 
+                    }
                 }
+
+                GUILayout.FlexibleSpace();
+
+                GUILayout.BeginVertical(GUI.skin.box);
+                if (GUILayout.Button(ExportCommon.Localization("修复全部", "Fix All")))
+                {
+                    foreach (var validator in Validator.Validators)
+                    {
+                        if (!validator.IsValid)
+                        {
+                            validator.Validate();
+                        }
+                    }
+                }
+
+                GUILayout.EndVertical();
             }
         }
     }

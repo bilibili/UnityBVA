@@ -1,0 +1,24 @@
+{
+  "name": "com.bilibili.bva",
+  "version": "0.1.1",
+  "displayName": "BVA",
+  "description": "BVA SDK",
+  "unity": "2020.3",
+  "keywords": [
+    "BVA",
+    "importer",
+    "avatar",
+    "vr"
+  ],
+  "author": {
+    "name": "Bilibili"
+  },
+  "dependencies": {
+    "com.unity.jobs": "0.51.0-preview.32",
+    "com.unity.render-pipelines.universal": "12.1.3",
+    "com.unity.nuget.newtonsoft-json": "2.0.0",
+    "com.vrmc.vrmshaders": "0.95.1",
+    "com.vrmc.gltf": "0.95.1",
+    "com.vrmc.univrm": "0.95.1"
+  }
+}

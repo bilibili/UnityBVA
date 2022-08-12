@@ -1,0 +1,10 @@
+Except WebLoad sample, other samples are using FileDialog(SFB), on Windows , it use WinForm namespace, so it will build fail on IL2CPP compile.
+make sure switch to Mono to pass compile.
+ManagerScriptStriping should disable, I18N.CKJ has no reference, but GetEncoding rely on it. 
+Shader Stripping : you should not strip Post Processing Variants.
+WebLoad could build success on Android & iOS.
+
+除了WebLoad这个示例，其余的使用了SFB作为文件选择框，这个只能在Windows下使用，请确保切换到Mono，因为IL2CPP不支持
+ManagerScriptStriping 应该被关闭，I18N.CKJ没有被任何地方引用，但是GetEncoding这个函数依赖于它。
+Shader Stripping不能裁剪后处理的变体。
+Webload这个可以在移动端正确打包使用。

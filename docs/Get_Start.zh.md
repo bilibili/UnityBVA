@@ -17,9 +17,9 @@
 - MacOS
 - Android或iOS (只有`WebLoad`场景是当前可以被打包通过的, 因为文件选择框不支持移动端)
 
-所有的示例场景位于 `Assets/BVA/Samples`:
+所有的示例场景位于 `Assets/BVA/Samples`
 - [AvatarConfig](../docs/examples/AvatarConfig.zh.md)
-- [FileView](../docs/examples/FileViewer.zh.md)
+- [FileView](../docs/examples/FileViewer.zh.md456)
 - [MultipleScenePayload](../docs/examples/MultipleScenePayload.zh.md)
 - [RuntimeExport](../docs/examples/RuntimeExport.zh.md)
 - [RuntimeLoad](../docs/examples/RuntimeLoad.zh.md)

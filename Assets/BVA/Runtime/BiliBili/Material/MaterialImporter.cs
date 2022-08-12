@@ -28,7 +28,7 @@ namespace GLTF.Schema.BVA
     }
     public static class MaterialImporter
     {
-        private static readonly Dictionary<string, Tuple<Type, AsyncDeserializeCustomMaterial>> CUSTOM_SHADER_LIST = new Dictionary<string, Tuple<Type, AsyncDeserializeCustomMaterial>>
+        public static readonly Dictionary<string, Tuple<Type, AsyncDeserializeCustomMaterial>> CUSTOM_SHADER_LIST = new Dictionary<string, Tuple<Type, AsyncDeserializeCustomMaterial>>
         {
             { BVA_Material_ClothLED_Extra.SHADER_NAME,new(typeof(BVA_Material_ClothLED_Extra), BVA_Material_ClothLED_Extra.Deserialize) },
             { BVA_Material_BackLED_Extra.SHADER_NAME,new(typeof(BVA_Material_BackLED_Extra), BVA_Material_BackLED_Extra.Deserialize) },

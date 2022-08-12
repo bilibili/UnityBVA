@@ -1,1 +1,0 @@
-CS.UnityEngine.Debug.Log(CS.UnityEngine.Time.time);

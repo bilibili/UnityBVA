@@ -14,6 +14,7 @@ namespace BVA
     {
         public GLTFSceneExporter.RetrieveTexturePathDelegate TexturePathRetriever = (texture) => texture.name;
         public bool ExportInactivePrimitives = true;
+        public bool ExportAvatar = false;
     }
 
     public enum AudioFormat
@@ -115,7 +116,6 @@ namespace BVA
         public static bool ExportLightmap = false;
         public static bool ExportRenderSetting = false;
         public static bool ExportSkybox = false;
-        public static SceneType ExportSceneType;
         /// <summary>
         /// use draco compress mesh object, reflection probe has issue when using it
         /// </summary>
@@ -173,7 +173,7 @@ namespace BVA
                 Asset = new Asset
                 {
                     Version = "2.0",
-                    Generator = BVAConst.GetGeneratorName(ExportSceneType)
+                    Generator = BVAConst.GetGeneratorName(_exportOptions.ExportAvatar ? SceneType.Avatar : SceneType.Scene)
                 },
                 Buffers = new List<GLTFBuffer>(),
                 BufferViews = new List<BufferView>(),

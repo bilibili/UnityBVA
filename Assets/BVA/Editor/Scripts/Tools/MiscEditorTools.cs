@@ -2,6 +2,7 @@ using UnityEditor;
 using UnityEngine;
 using BVA;
 using System.Linq;
+using UnityEngine.Rendering;
 
 public class MiscEditorTools
 {
@@ -16,6 +17,7 @@ public class MiscEditorTools
             }
         }
     }
+
     [MenuItem("GameObject/Remove Missing Component")]
     public static void DestoryMissScript()
     {
@@ -27,6 +29,7 @@ public class MiscEditorTools
         RecursiveDeleteChildWithMissingScript(Selection.activeGameObject);
         AssetDatabase.Refresh();
     }
+
     public static void RecursiveResetTRS(Transform transform)
     {
         transform.localScale = Vector3.one;
@@ -40,6 +43,7 @@ public class MiscEditorTools
             }
         }
     }
+
     [MenuItem("GameObject/Reset Transform")]
     public static void ResetTRS()
     {
@@ -66,11 +70,13 @@ public class MiscEditorTools
         Humanoid.EnforceTPose2(animator);
         Debug.Log("set T-Pose success!");
     }
+
     [MenuItem("BVA/Manual", priority = 99)]
     public static void OpenManual()
     {
-        Application.OpenURL("https://www.bilibili.com");
+        Application.OpenURL("https://github.com/bilibili/UnityBVA");
     }
+
     [MenuItem("BVA/Developer Tools/Set Material GlobalIllumination-Baked(Static GameObject Only)", priority = 100)]
     public static void SetMaterialGlobalIllumination()
     {
@@ -85,6 +91,29 @@ public class MiscEditorTools
                 {
                     var _material = AssetDatabase.LoadAssetAtPath<Material>(AssetDatabase.GetAssetPath(material));
                     _material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.BakedEmissive;
+                }
+            }
+        }
+        AssetDatabase.Refresh();
+    }
+
+    [MenuItem("BVA/Developer Tools/Disable Material Environment Reflection", priority = 100)]
+    public static void DisableMaterialEnvironmentReflection()
+    {
+        GameObject[] gameObjects = UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects();
+        foreach (var obj in gameObjects)
+        {
+            var renders = obj.GetComponentsInChildren<Renderer>();
+            foreach (var render in renders)
+            {
+                foreach (var material in render.sharedMaterials)
+                {
+                    var _material = AssetDatabase.LoadAssetAtPath<Material>(AssetDatabase.GetAssetPath(material));
+                    if (_material.HasFloat("_EnvironmentReflections"))
+                    {
+                        _material.SetFloat("_EnvironmentReflections", 0.0f);
+                        CoreUtils.SetKeyword(_material, "_ENVIRONMENTREFLECTIONS_OFF", true);
+                    }
                 }
             }
         }

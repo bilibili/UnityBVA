@@ -207,13 +207,13 @@ namespace BVA
 
                 // For cubic spline interpolation, the inTangents and outTangents are already explicitly defined.
                 // For the rest, set them appropriately.
-                if (mode != InterpolationType.CUBICSPLINE)
-                {
-                    for (var i = 0; i < keyframes[ci].Length; i++)
-                    {
-                        SetTangentMode(curve, keyframes[ci], i, mode);
-                    }
-                }
+                //if (mode != InterpolationType.CUBICSPLINE)
+                //{
+                //    for (var i = 0; i < keyframes[ci].Length; i++)
+                //    {
+                //        SetTangentMode(curve, keyframes[ci], i, mode);
+                //    }
+                //}
                 clip.SetCurve(relativePath, curveType, propertyNames[ci], curve);
             }
         }

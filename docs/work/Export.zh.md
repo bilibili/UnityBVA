@@ -63,9 +63,20 @@ GLB文件包含了所有的元素，包括动画，材质，节点和相机到�
 
 > 为了减少Shader的变体，强烈推荐你只使用 `Exponential Squared` 作为唯一的雾模式。
 
+## GameObject Layer
+Render上的Layer都会被导出，保证了在相机，灯光等组件上能够正确使用Layer进行区分。
+
+![glb](pics/gameobject_layer.png)
+
+## 场景导出限制
+Environment Reflection 目前只有在使用`Custom Cubemap`的时候可以正确显示。所以在导出场景的时候通常将所有`Lit/Complex Lit`材质的Environment Reflection取消勾选。
+
+Environment Reflection在使用`Skybox`作为反射源的时候，使用的是加载前的场景所带的环境光反射，如果需要使用环境光反射，请在GLTFSceneImporter中将`EnableEnvironmentReflection`设为true，默认该选项是false。
+
 
 ## MMD 模型导出处理
 
 由于MMD模型的主体和头部以及所有顶点都在网格上，因此头部的Blendshape将影响所有顶点，这可能会导致输出文件的体积变得非常的大，会严重影响导出和加载的效率。
 
 因此，在导出MMD之前，将分离受混合形状影响的顶点以形成子网格。这大大减少了导出文件的大小，以达到与MMD文件本身的大小相当。
+
