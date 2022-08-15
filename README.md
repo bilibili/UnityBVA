@@ -1,6 +1,6 @@
 [中文文档请转至这里](README.zh.md)
 
-技术交流QQ群 476944298
+技术交流QQ群 903424097
 <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=ewgXKtDg9IetUfOmjKIg9qkFMTHKK0Ho&jump_from=webapi"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="UnityBVA技术交流群" title="UnityBVA技术交流群"></a>
 
 
