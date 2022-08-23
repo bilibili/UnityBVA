@@ -9,20 +9,23 @@ using Vector4 = UnityEngine.Vector4;
 
 namespace GLTF.Schema.BVA
 {
-public class BVA_Material_UnlitTexture_Extra : MaterialExtra
-    {
+[MaterialExtra]
+public class BVA_Material_UnlitTexture_Extra : IMaterialExtra
+{
 public const string PROPERTY = "BVA_Material_UnlitTexture_Extra";
 public const string SHADER_NAME = "VRM/UnlitTexture";
 public const string MAINTEX = "_MainTex";
 public MaterialTextureParam parameter__MainTex = new MaterialTextureParam(MAINTEX);
 public string[] keywords;
-public BVA_Material_UnlitTexture_Extra(Material material, ExportTextureInfo exportTextureInfo, ExportTextureInfo exportNormalTextureInfo, ExportCubemapInfo exportCubemapInfo)
+public string ShaderName => SHADER_NAME;
+public string ExtraName => GetType().Name;
+public void SetData(Material material, ExportTextureInfo exportTextureInfo, ExportTextureInfo exportNormalTextureInfo, ExportCubemap exportCubemapInfo)
 {
 keywords = material.shaderKeywords;
 var parameter__maintex_temp = material.GetTexture(parameter__MainTex.ParamName);
 if (parameter__maintex_temp != null) parameter__MainTex.Value = exportTextureInfo(parameter__maintex_temp);
 }
-public static async Task Deserialize(GLTFRoot root, JsonReader reader, Material matCache,AsyncLoadTexture loadTexture, AsyncLoadTexture loadNormalMap, AsyncLoadCubemap loadCubemap)
+public async Task Deserialize(GLTFRoot root, JsonReader reader, Material matCache,AsyncLoadTexture loadTexture, AsyncLoadTexture loadNormalMap, AsyncLoadCubemap loadCubemap)
 {
 while (reader.Read())
 {
@@ -49,7 +52,7 @@ break;
 }
 }
 }
-public override JProperty Serialize()
+public JProperty Serialize()
 {
 JObject jo = new JObject();
 if (parameter__MainTex != null && parameter__MainTex.Value != null) jo.Add(parameter__MainTex.ParamName, parameter__MainTex.Serialize());
@@ -62,5 +65,10 @@ jo.Add(nameof(keywords), jKeywords);
 }
 return new JProperty(BVA_Material_UnlitTexture_Extra.SHADER_NAME, jo);
 }
-}
+
+        public object Clone()
+        {
+            return new BVA_Material_UnlitTexture_Extra();
+        }
+    }
 }

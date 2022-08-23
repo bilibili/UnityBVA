@@ -10,6 +10,7 @@
 ![glb](pics/material_code_gen.png)
 
 > 请保证NormalMap的被正确识别出来了，因为导出NormalMap的时候需要一个特殊的颜色变换
+> 使用Attribute利用反射自动处理必要的导入导出入口，不需要再额外添加任何的代码，如果有特殊的关键字处理需求，可以在MaterialImporter里添加实现
 
 [查看本文，了解如何使用生成的代码](MaterialExtra.md)
 
@@ -26,6 +27,7 @@
 > 可序列化的类或结构体
 > 基本导出类型的数组或者List
 > 可序列化的类或结构体的数组或者List，但是目前只支持一层嵌套
+> 使用Attribute利用反射自动处理必要的导入导出入口，不需要再额外添加任何的代码，如有报错可以手动修改，组件会自动在加载Node（即GameObject）的时候进行添加
 
 [Check this out to know how to use the generated code.](ComponentExtra.md)
 

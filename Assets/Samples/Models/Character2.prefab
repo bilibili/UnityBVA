@@ -173,16 +173,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000007
-    y: 1.0000002
-    z: 1.0000008
   pointRead:
     fixedIndex: 7
     parentIndex: 30
     childFirstIndex: -1
     childLastIndex: -1
-    mass: 0.8184352
+    mass: 0.81843567
     constraintCount: 0
     colliderMask: 1
     isFixedPointFreezeRotation: 0
@@ -211,13 +207,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: -0.4414028
-      y: -0.8948145
-      z: 0.06686315
+      x: -0.44140452
+      y: -0.89481366
+      z: 0.066863455
+    initialLocalPositionLength: 0.039724085
     initialPosition:
-      x: -0.082235545
-      y: 0.062427536
-      z: -0.05337167
+      x: -0.08223552
+      y: 0.062427532
+      z: -0.0533717
+    initialLocalRotation:
+      value:
+        x: 0.614678
+        y: 0.483654
+        z: 0.26339966
+        w: 0.5646861
+    initialRotation:
+      value:
+        x: -0.084365554
+        y: 0.1305185
+        z: -0.16706951
+        w: -0.97361976
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494960153584158}
@@ -339,10 +348,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1
-    y: 1
-    z: 1.0000001
   pointRead:
     fixedIndex: 7
     parentIndex: 7
@@ -377,13 +382,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: -0.9527055
+      x: -0.95270544
       y: 0.20217465
-      z: -0.22688667
+      z: -0.22688712
+    initialLocalPositionLength: 0.04818884
     initialPosition:
-      x: -0.04590978
-      y: 0.009742564
-      z: -0.010933408
+      x: -0.04590977
+      y: 0.009742562
+      z: -0.010933427
+    initialLocalRotation:
+      value:
+        x: 0.4491868
+        y: -0.22271118
+        z: -0.032119654
+        w: 0.86463827
+    initialRotation:
+      value:
+        x: 0.31740436
+        y: 0.3274495
+        z: 0.47619846
+        w: 0.7518419
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494959417847341}
@@ -438,16 +456,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000007
-    y: 1.0000004
-    z: 1.0000011
   pointRead:
     fixedIndex: 4
     parentIndex: 23
     childFirstIndex: -1
     childLastIndex: -1
-    mass: 1.1258634
+    mass: 1.1258643
     constraintCount: 0
     colliderMask: 1
     isFixedPointFreezeRotation: 0
@@ -477,12 +491,25 @@ MonoBehaviour:
     radius: 0.01
     initialLocalPosition:
       x: -0.88679266
-      y: -0.45164707
-      z: 0.09805053
+      y: -0.45164666
+      z: 0.09805195
+    initialLocalPositionLength: 0.054645624
     initialPosition:
-      x: -0.0027419003
-      y: 0.05664561
+      x: -0.0027418865
+      y: 0.056645613
       z: 0.08461803
+    initialLocalRotation:
+      value:
+        x: 0.9094858
+        y: 0.26295617
+        z: 0.065669365
+        w: 0.31524146
+    initialRotation:
+      value:
+        x: 0.048061635
+        y: 0.25290045
+        z: -0.49566153
+        w: -0.8294886
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494959451080416}
@@ -570,16 +597,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000005
-    y: 1.0000008
-    z: 1.0000006
   pointRead:
     fixedIndex: 1
     parentIndex: 5
     childFirstIndex: 7
     childLastIndex: 8
-    mass: 1.3391609
+    mass: 1.339161
     constraintCount: 0
     colliderMask: 3
     isFixedPointFreezeRotation: 0
@@ -608,13 +631,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.044917356
     initialLocalPosition:
-      x: 0.61959696
-      y: -0.5786354
+      x: 0.61959714
+      y: -0.5786352
       z: 0.53035975
+    initialLocalPositionLength: 0.07422719
     initialPosition:
       x: -0.044238687
-      y: 0.0966797
-      z: -0.0625677
+      y: 0.096679695
+      z: -0.062567696
+    initialLocalRotation:
+      value:
+        x: 0.3008736
+        y: 0.041439045
+        z: 0.7800812
+        w: 0.5470203
+    initialRotation:
+      value:
+        x: 0.95919037
+        y: -0.06804007
+        z: -0.020032488
+        w: 0.27372128
     lengthLimitForceScale: 1
     elasticityVelocity: 0.025
   parent: {fileID: 3518494960608764065}
@@ -669,16 +705,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000007
-    y: 1.0000008
-    z: 1.000001
   pointRead:
     fixedIndex: 4
     parentIndex: 4
     childFirstIndex: -1
     childLastIndex: -1
-    mass: 1.933554
+    mass: 1.9335536
     constraintCount: 0
     colliderMask: 8
     isFixedPointFreezeRotation: 0
@@ -707,13 +739,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0
     initialLocalPosition:
-      x: -0.95984995
-      y: -0.010931672
-      z: -0.28030235
+      x: -0.9598499
+      y: -0.010931534
+      z: -0.2803024
+    initialLocalPositionLength: 0.112126455
     initialPosition:
-      x: -0.107624575
-      y: -0.0012257296
-      z: -0.03142931
+      x: -0.10762457
+      y: -0.0012257141
+      z: -0.031429313
+    initialLocalRotation:
+      value:
+        x: -0.26536715
+        y: 0.65601957
+        z: 0.6578525
+        w: 0.25777653
+    initialRotation:
+      value:
+        x: -0.00000018253922
+        y: 0.00000009685755
+        z: 0.7071069
+        w: -0.70710695
     lengthLimitForceScale: 1
     elasticityVelocity: 0.1
   parent: {fileID: 1616530141}
@@ -767,16 +812,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000002
-    y: 1.0000006
-    z: 1.0000007
   pointRead:
     fixedIndex: 8
     parentIndex: 8
     childFirstIndex: -1
     childLastIndex: -1
-    mass: 0.66429865
+    mass: 0.6642981
     constraintCount: 0
     colliderMask: 1
     isFixedPointFreezeRotation: 0
@@ -805,13 +846,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: -0.06869489
-      y: 0.9808459
-      z: -0.18227349
+      x: -0.06869353
+      y: 0.980846
+      z: -0.18227331
+    initialLocalPositionLength: 0.032242775
     initialPosition:
-      x: -0.0022149156
-      y: 0.03162522
-      z: -0.005877008
+      x: -0.0022148697
+      y: 0.031625196
+      z: -0.005876998
+    initialLocalRotation:
+      value:
+        x: -0.5588023
+        y: 0.65302026
+        z: 0.24215333
+        w: -0.45018473
+    initialRotation:
+      value:
+        x: -0.1602562
+        y: 0.28707927
+        z: 0.9083135
+        w: 0.25859264
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494960302147439}
@@ -898,10 +952,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000004
-    y: 1.0000001
-    z: 1.0000004
   pointRead:
     fixedIndex: 0
     parentIndex: 0
@@ -936,13 +986,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.05
     initialLocalPosition:
-      x: -0.31095862
-      y: -0.03760343
-      z: -0.94967926
+      x: -0.31095847
+      y: -0.037603855
+      z: -0.9496793
+    initialLocalPositionLength: 0.068849266
     initialPosition:
-      x: -0.021409273
-      y: -0.002588968
-      z: -0.065384716
+      x: -0.021409262
+      y: -0.0025889976
+      z: -0.06538472
+    initialLocalRotation:
+      value:
+        x: -0.43031293
+        y: -0.5263562
+        z: -0.24437355
+        w: 0.6914199
+    initialRotation:
+      value:
+        x: 0.04590279
+        y: -0.1841553
+        z: 0.20880872
+        w: 0.9593637
     lengthLimitForceScale: 1
     elasticityVelocity: 0.025
   parent: {fileID: 3518494959744753654}
@@ -996,16 +1059,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000006
-    y: 1.0000007
-    z: 1.0000007
   pointRead:
     fixedIndex: 0
     parentIndex: 0
     childFirstIndex: -1
     childLastIndex: -1
-    mass: 2.0984097
+    mass: 2.0984094
     constraintCount: 0
     colliderMask: 8
     isFixedPointFreezeRotation: 0
@@ -1034,13 +1093,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0
     initialLocalPosition:
-      x: -0.84470206
-      y: -0.122461274
-      z: -0.5210397
+      x: -0.8447019
+      y: -0.122461356
+      z: -0.5210399
+    initialLocalPositionLength: 0.13780877
     initialPosition:
-      x: -0.11640735
-      y: -0.016876237
-      z: -0.071803845
+      x: -0.11640733
+      y: -0.016876249
+      z: -0.07180387
+    initialLocalRotation:
+      value:
+        x: 0.90970135
+        y: 0.017532278
+        z: 0.35236263
+        w: 0.21903574
+    initialRotation:
+      value:
+        x: -0.000000029802322
+        y: -0.000000007450581
+        z: 0.7071069
+        w: 0.7071069
     lengthLimitForceScale: 1
     elasticityVelocity: 0.1
   parent: {fileID: 806554268}
@@ -1095,10 +1167,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000002
-    y: 1.0000004
-    z: 1.0000002
   pointRead:
     fixedIndex: 15
     parentIndex: -1
@@ -1133,13 +1201,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: 0.53924406
-      y: -0.71330667
-      z: 0.44767106
+      x: 0.5392441
+      y: -0.7133067
+      z: 0.447671
+    initialLocalPositionLength: 0.12813468
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: -0.34319213
+        y: -0.30717418
+        z: 0.7649752
+        w: 0.4501957
+    initialRotation:
+      value:
+        x: -0.3431749
+        y: -0.3071934
+        z: 0.7650005
+        w: 0.4501527
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494959578237467}
@@ -1195,10 +1276,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000002
-    y: 1.0000005
-    z: 1.0000005
   pointRead:
     fixedIndex: 0
     parentIndex: -1
@@ -1233,13 +1310,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.030395508
     initialLocalPosition:
-      x: -0.002720039
+      x: -0.002720002
       y: 0.98898685
       z: -0.14798
+    initialLocalPositionLength: 0.30354333
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: 0.39623907
+        y: -0.2951975
+        z: 0.4235846
+        w: 0.7592293
+    initialRotation:
+      value:
+        x: 0.32410833
+        y: -0.5975122
+        z: -0.7334264
+        w: -0.004329253
     lengthLimitForceScale: 1
     elasticityVelocity: 0.025
   parent: {fileID: 3518494959019954894}
@@ -1294,16 +1384,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 0.9999998
-    y: 1
-    z: 1.0000001
   pointRead:
     fixedIndex: 14
     parentIndex: 14
     childFirstIndex: -1
     childLastIndex: -1
-    mass: 1.2572333
+    mass: 1.2572335
     constraintCount: 0
     colliderMask: 1
     isFixedPointFreezeRotation: 0
@@ -1332,13 +1418,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: -0.89353824
-      y: 0.3254556
-      z: 0.3093024
+      x: -0.89353853
+      y: 0.3254554
+      z: 0.30930185
+    initialLocalPositionLength: 0.061021842
     initialPosition:
-      x: -0.05452534
-      y: 0.019859897
-      z: 0.018874198
+      x: -0.054525368
+      y: 0.019859888
+      z: 0.018874168
+    initialLocalRotation:
+      value:
+        x: 0.26478395
+        y: 0.069910474
+        z: -0.26035857
+        w: 0.9258593
+    initialRotation:
+      value:
+        x: 0.46033072
+        y: 0.22660515
+        z: 0.6129696
+        w: 0.6008443
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494959407922188}
@@ -1393,16 +1492,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000007
-    y: 1.0000008
-    z: 1.0000002
   pointRead:
     fixedIndex: 6
     parentIndex: 6
     childFirstIndex: 28
     childLastIndex: 29
-    mass: 1.756439
+    mass: 1.7564383
     constraintCount: 0
     colliderMask: 1
     isFixedPointFreezeRotation: 0
@@ -1431,13 +1526,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: -0.93540335
-      y: 0.34584358
-      z: -0.07357269
+      x: -0.9354033
+      y: 0.34584364
+      z: -0.07357296
+    initialLocalPositionLength: 0.024660194
     initialPosition:
-      x: -0.02306723
-      y: 0.00852857
-      z: -0.0018143166
+      x: -0.023067227
+      y: 0.0085285725
+      z: -0.001814323
+    initialLocalRotation:
+      value:
+        x: 0.8797279
+        y: -0.06992056
+        z: 0.41620037
+        w: 0.21901432
+    initialRotation:
+      value:
+        x: 0.68578047
+        y: 0.58521914
+        z: 0.40443388
+        w: 0.15380928
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494959436872002}
@@ -1556,10 +1664,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000004
-    y: 1.0000005
-    z: 1.0000006
   pointRead:
     fixedIndex: 1
     parentIndex: -1
@@ -1595,12 +1699,25 @@ MonoBehaviour:
     radius: 0
     initialLocalPosition:
       x: -0.9545933
-      y: 0.0027244221
+      y: 0.0027245933
       z: -0.2978996
+    initialLocalPositionLength: 0.11362714
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: -0.004711647
+        y: 0.9185079
+        z: -0.0028785886
+        w: 0.39536417
+    initialRotation:
+      value:
+        x: -0.28289625
+        y: 0.64744765
+        z: -0.6515187
+        w: 0.2762331
     lengthLimitForceScale: 1
     elasticityVelocity: 0.1
   parent: {fileID: 1364500392}
@@ -1655,16 +1772,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000005
-    y: 1.0000007
-    z: 1.0000002
   pointRead:
     fixedIndex: 0
     parentIndex: 18
     childFirstIndex: -1
     childLastIndex: -1
-    mass: 0.6851786
+    mass: 0.68517834
     constraintCount: 0
     colliderMask: 1
     isFixedPointFreezeRotation: 0
@@ -1693,13 +1806,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: 0.8333238
-      y: -0.3961362
-      z: 0.38554847
+      x: 0.83332413
+      y: -0.39613527
+      z: 0.38554865
+    initialLocalPositionLength: 0.03325623
     initialPosition:
-      x: 0.11952841
-      y: -0.0006766862
-      z: 0.010135617
+      x: 0.11952839
+      y: -0.00067661837
+      z: 0.010135598
+    initialLocalRotation:
+      value:
+        x: 0.009084154
+        y: -0.17937605
+        z: -0.16118659
+        w: 0.97044355
+    initialRotation:
+      value:
+        x: -0.61392117
+        y: 0.38239473
+        z: -0.4773835
+        w: 0.49897924
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494960095102262}
@@ -1820,16 +1946,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000008
-    y: 1
-    z: 1.000001
   pointRead:
     fixedIndex: 1
     parentIndex: 8
     childFirstIndex: 10
     childLastIndex: 11
-    mass: 1.7240775
+    mass: 1.7240776
     constraintCount: 0
     colliderMask: -1
     isFixedPointFreezeRotation: 0
@@ -1859,14 +1981,27 @@ MonoBehaviour:
     radius: 0.01
     initialLocalPosition:
       x: 0.86603135
-      y: -0.49998376
-      z: 0.0024597824
+      y: -0.4999838
+      z: 0.002459754
+    initialLocalPositionLength: 0.063249744
     initialPosition:
-      x: 0.110679165
-      y: 0.005210521
-      z: -0.04308947
+      x: 0.11067914
+      y: 0.005210516
+      z: -0.043089464
+    initialLocalRotation:
+      value:
+        x: 0.015003259
+        y: -0.042348463
+        z: -0.0867886
+        w: 0.9952132
+    initialRotation:
+      value:
+        x: -0.057272688
+        y: -0.69910616
+        z: 0.12449363
+        w: 0.7017634
     lengthLimitForceScale: 1
-    elasticityVelocity: 0.3
+    elasticityVelocity: 0.144
   parent: {fileID: 3518494959061560170}
   childPoints:
   - {fileID: 3518494959535722976}
@@ -1957,10 +2092,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5187ca8754a3e0c4a8c9734f3e8164dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000001
-    y: 1.0000004
-    z: 1.0000005
   pointRead:
     fixedIndex: 0
     parentIndex: 0
@@ -1998,10 +2129,23 @@ MonoBehaviour:
       x: 0
       y: 0
       z: 0
+    initialLocalPositionLength: 0
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: 0
+        y: 0
+        z: 0
+        w: 0
+    initialRotation:
+      value:
+        x: 0
+        y: 0
+        z: 0
+        w: 0
     lengthLimitForceScale: 0
     elasticityVelocity: 0
   parent: {fileID: 0}
@@ -2102,10 +2246,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000006
-    y: 1.0000007
-    z: 1.0000008
   pointRead:
     fixedIndex: 4
     parentIndex: -1
@@ -2141,12 +2281,25 @@ MonoBehaviour:
     radius: 0
     initialLocalPosition:
       x: 0.9545933
-      y: 0.0027248147
+      y: 0.0027249826
       z: -0.2978996
+    initialLocalPositionLength: 0.11362714
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: 0.39536417
+        y: 0.0028787735
+        z: 0.9185079
+        w: 0.004711856
+    initialRotation:
+      value:
+        x: 0.27623287
+        y: 0.6515188
+        z: 0.64744765
+        w: 0.28289655
     lengthLimitForceScale: 1
     elasticityVelocity: 0.1
   parent: {fileID: 1364500392}
@@ -2202,10 +2355,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000002
-    y: 1.0000006
-    z: 1.0000004
   pointRead:
     fixedIndex: 12
     parentIndex: -1
@@ -2243,10 +2392,23 @@ MonoBehaviour:
       x: 0.6117741
       y: 0.1685517
       z: 0.77286655
+    initialLocalPositionLength: 0.1183931
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: -0.36397296
+        y: 0.08625569
+        z: 0.92730874
+        w: -0.013497915
+    initialRotation:
+      value:
+        x: -0.3639778
+        y: 0.08623523
+        z: 0.927308
+        w: -0.0135500245
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494959578237467}
@@ -2301,16 +2463,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000005
-    y: 1.0000001
-    z: 1.0000002
   pointRead:
     fixedIndex: 0
     parentIndex: 6
     childFirstIndex: -1
     childLastIndex: -1
-    mass: 0.22702946
+    mass: 0.22702955
     constraintCount: 0
     colliderMask: -1
     isFixedPointFreezeRotation: 0
@@ -2340,14 +2498,27 @@ MonoBehaviour:
     radius: 0.01
     initialLocalPosition:
       x: -0.9870226
-      y: -0.0014684749
-      z: 0.16057676
+      y: -0.0014684808
+      z: 0.16057679
+    initialLocalPositionLength: 0.085655704
     initialPosition:
       x: -0.37128732
-      y: 0.063342385
-      z: -0.16484179
+      y: 0.06334239
+      z: -0.1648418
+    initialLocalRotation:
+      value:
+        x: 0.080489404
+        y: 0.080351874
+        z: -0.0058323788
+        w: 0.9934944
+    initialRotation:
+      value:
+        x: 0.00857551
+        y: 0.66178876
+        z: -0.007245157
+        w: 0.7496067
     lengthLimitForceScale: 1
-    elasticityVelocity: 0.3
+    elasticityVelocity: 0.144
   parent: {fileID: 3518494961054846827}
   childPoints: []
   keyWord: 
@@ -2496,16 +2667,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000006
-    y: 1.0000006
-    z: 1.0000005
   pointRead:
     fixedIndex: 9
     parentIndex: 34
     childFirstIndex: -1
     childLastIndex: -1
-    mass: 0.8958443
+    mass: 0.8958447
     constraintCount: 0
     colliderMask: 1
     isFixedPointFreezeRotation: 0
@@ -2534,13 +2701,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: -0.90806484
-      y: 0.41799918
-      z: 0.026393954
+      x: -0.9080652
+      y: 0.41799828
+      z: 0.026394833
+    initialLocalPositionLength: 0.043481257
     initialPosition:
       x: -0.0720015
-      y: -0.020586278
-      z: -0.018928276
+      y: -0.020586282
+      z: -0.018928299
+    initialLocalRotation:
+      value:
+        x: 0.85801494
+        y: -0.17155069
+        z: 0.03970878
+        w: -0.4824976
+    initialRotation:
+      value:
+        x: -0.21238385
+        y: 0.042664833
+        z: -0.86295867
+        w: -0.4564815
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494960732491876}
@@ -2628,16 +2808,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000011
-    y: 1.0000001
-    z: 1.000001
   pointRead:
     fixedIndex: 1
     parentIndex: 10
     childFirstIndex: 12
     childLastIndex: 13
-    mass: 1.0016317
+    mass: 1.0016321
     constraintCount: 0
     colliderMask: -1
     isFixedPointFreezeRotation: 0
@@ -2667,14 +2843,27 @@ MonoBehaviour:
     radius: 0.01
     initialLocalPosition:
       x: 0.99676305
-      y: -0.0022614917
-      z: -0.080369756
+      y: -0.0022614854
+      z: -0.080369696
+    initialLocalPositionLength: 0.068429075
     initialPosition:
       x: 0.23499365
       y: 0.03426132
       z: -0.09772217
+    initialLocalRotation:
+      value:
+        x: -0.087487236
+        y: 0.103211455
+        z: -0.0003005808
+        w: 0.9908044
+    initialRotation:
+      value:
+        x: -0.02644398
+        y: -0.6458257
+        z: -0.024708807
+        w: 0.7626269
     lengthLimitForceScale: 1
-    elasticityVelocity: 0.3
+    elasticityVelocity: 0.144
   parent: {fileID: 3518494959535722976}
   childPoints:
   - {fileID: 3518494959421118195}
@@ -2728,10 +2917,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000001
-    y: 1.0000008
-    z: 1.0000008
   pointRead:
     fixedIndex: 4
     parentIndex: -1
@@ -2766,13 +2951,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: -0.4318232
-      y: 0.20245679
+      x: -0.43182328
+      y: 0.20245685
       z: 0.8789425
+    initialLocalPositionLength: 0.11325946
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: 0.69943506
+        y: 0.34504527
+        z: -0.6212023
+        w: 0.07643363
+    initialRotation:
+      value:
+        x: 0.6994157
+        y: 0.3450846
+        z: -0.621198
+        w: 0.07646854
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494959578237467}
@@ -2828,10 +3026,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000004
-    y: 1.0000005
-    z: 1.0000004
   pointRead:
     fixedIndex: 1
     parentIndex: 1
@@ -2866,13 +3060,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.035478152
     initialLocalPosition:
-      x: -0.61269635
-      y: 0.7868347
-      z: 0.074124105
+      x: -0.61269647
+      y: 0.7868346
+      z: 0.07412449
+    initialLocalPositionLength: 0.09935951
     initialPosition:
-      x: -0.060877226
-      y: 0.07817954
-      z: 0.0073649352
+      x: -0.06087722
+      y: 0.0781795
+      z: 0.007364976
+    initialLocalRotation:
+      value:
+        x: 0.105763905
+        y: 0.77637464
+        z: 0.4080917
+        w: 0.46852702
+    initialRotation:
+      value:
+        x: 0.49458772
+        y: 0.70571166
+        z: -0.2847023
+        w: 0.4198796
     lengthLimitForceScale: 1
     elasticityVelocity: 0.025
   parent: {fileID: 3518494959917391105}
@@ -2992,16 +3199,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000004
-    y: 1.0000002
-    z: 1.0000002
   pointRead:
     fixedIndex: 0
     parentIndex: 0
     childFirstIndex: -1
     childLastIndex: -1
-    mass: 1.9471699
+    mass: 1.9471701
     constraintCount: 0
     colliderMask: 3
     isFixedPointFreezeRotation: 0
@@ -3030,13 +3233,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.05
     initialLocalPosition:
-      x: -0.47929084
-      y: -0.22512448
-      z: -0.84829205
+      x: -0.47929105
+      y: -0.22512414
+      z: -0.848292
+    initialLocalPositionLength: 0.06530559
     initialPosition:
-      x: -0.031300366
-      y: -0.014701884
+      x: -0.031300385
+      y: -0.014701865
       z: -0.055398207
+    initialLocalRotation:
+      value:
+        x: -0.43054917
+        y: 0.54942745
+        z: 0.6645081
+        w: 0.26680678
+    initialRotation:
+      value:
+        x: 0.0942511
+        y: -0.06139545
+        z: -0.27774435
+        w: 0.9540469
     lengthLimitForceScale: 1
     elasticityVelocity: 0.025
   parent: {fileID: 3518494960866970544}
@@ -3160,10 +3376,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5187ca8754a3e0c4a8c9734f3e8164dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000004
-    y: 1.0000005
-    z: 1.0000004
   pointRead:
     fixedIndex: 0
     parentIndex: 0
@@ -3201,10 +3413,23 @@ MonoBehaviour:
       x: 0
       y: 0
       z: 0
+    initialLocalPositionLength: 0
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: 0
+        y: 0
+        z: 0
+        w: 0
+    initialRotation:
+      value:
+        x: 0
+        y: 0
+        z: 0
+        w: 0
     lengthLimitForceScale: 0
     elasticityVelocity: 0
   parent: {fileID: 0}
@@ -3574,16 +3799,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000001
-    y: 1.0000004
-    z: 1.0000002
   pointRead:
     fixedIndex: 0
     parentIndex: 17
     childFirstIndex: 19
     childLastIndex: 20
-    mass: 2.050392
+    mass: 2.0503917
     constraintCount: 0
     colliderMask: 1
     isFixedPointFreezeRotation: 0
@@ -3613,12 +3834,25 @@ MonoBehaviour:
     radius: 0.01
     initialLocalPosition:
       x: 0.998471
-      y: 0.016022554
-      z: -0.052910507
+      y: 0.016021898
+      z: -0.052910447
+    initialLocalPositionLength: 0.03300659
     initialPosition:
-      x: 0.08628608
-      y: -0.0016362328
-      z: 0.010067321
+      x: 0.08628607
+      y: -0.0016361972
+      z: 0.010067311
+    initialLocalRotation:
+      value:
+        x: -0.12052106
+        y: 0.32106104
+        z: 0.24739724
+        w: 0.90619487
+    initialRotation:
+      value:
+        x: -0.45304063
+        y: 0.56388974
+        z: -0.48949376
+        w: 0.48700967
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494960121307091}
@@ -3674,16 +3908,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000005
-    y: 1.0000001
-    z: 1.0000002
   pointRead:
     fixedIndex: 0
     parentIndex: 0
     childFirstIndex: 3
     childLastIndex: 4
-    mass: 2.0403814
+    mass: 2.040382
     constraintCount: 0
     colliderMask: -1
     isFixedPointFreezeRotation: 0
@@ -3713,14 +3943,27 @@ MonoBehaviour:
     radius: 0.01
     initialLocalPosition:
       x: -0.94449687
-      y: -0.04012141
-      z: -0.32606226
+      y: -0.04012096
+      z: -0.32606232
+    initialLocalPositionLength: 0.056088135
     initialPosition:
-      x: -0.052974984
-      y: -0.0022503308
-      z: -0.018288195
+      x: -0.05297507
+      y: -0.0022503093
+      z: -0.018288227
+    initialLocalRotation:
+      value:
+        x: -0.13877022
+        y: -0.22953725
+        z: -0.34319338
+        w: 0.9001521
+    initialRotation:
+      value:
+        x: -0.13347629
+        y: 0.6629378
+        z: -0.1718916
+        w: 0.71634555
     lengthLimitForceScale: 1
-    elasticityVelocity: 0.3
+    elasticityVelocity: 0.144
   parent: {fileID: 3518494959500527356}
   childPoints:
   - {fileID: 3518494960147020423}
@@ -3774,10 +4017,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000006
-    y: 1.0000005
-    z: 1.0000007
   pointRead:
     fixedIndex: 1
     parentIndex: -1
@@ -3812,13 +4051,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.030395508
     initialLocalPosition:
-      x: -0.04590605
+      x: -0.04590611
       y: 0.9595714
-      z: -0.27769747
+      z: -0.27769744
+    initialLocalPositionLength: 0.21148776
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: -0.19268723
+        y: -0.121514484
+        z: 0.80384046
+        w: 0.5494966
+    initialRotation:
+      value:
+        x: 0.28965583
+        y: -0.45628053
+        z: -0.48223075
+        w: 0.68946445
     lengthLimitForceScale: 1
     elasticityVelocity: 0.025
   parent: {fileID: 3518494959019954894}
@@ -3874,16 +4126,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000001
-    y: 1.0000004
-    z: 1.0000007
   pointRead:
     fixedIndex: 9
     parentIndex: 9
     childFirstIndex: 35
     childLastIndex: 36
-    mass: 1.4719025
+    mass: 1.4719031
     constraintCount: 0
     colliderMask: 1
     isFixedPointFreezeRotation: 0
@@ -3912,13 +4160,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: -0.96933573
-      y: 0.14593863
-      z: -0.19771346
+      x: -0.96933556
+      y: 0.1459385
+      z: -0.19771457
+    initialLocalPositionLength: 0.02623254
     initialPosition:
-      x: -0.025428139
-      y: 0.0038283411
-      z: -0.005186526
+      x: -0.025428135
+      y: 0.0038283376
+      z: -0.0051865554
+    initialLocalRotation:
+      value:
+        x: 0.8515841
+        y: -0.15325528
+        z: 0.17939158
+        w: -0.46811962
+    initialRotation:
+      value:
+        x: 0.6430274
+        y: 0.53675866
+        z: -0.3502996
+        w: -0.41916126
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494960613917589}
@@ -4006,10 +4267,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000007
-    y: 1.0000005
-    z: 1.0000005
   pointRead:
     fixedIndex: 0
     parentIndex: 2
@@ -4044,13 +4301,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.044917356
     initialLocalPosition:
-      x: -0.6195917
-      y: -0.5786376
-      z: 0.5303632
+      x: -0.6195919
+      y: -0.5786373
+      z: 0.53036326
+    initialLocalPositionLength: 0.074227154
     initialPosition:
-      x: 0.04411661
-      y: 0.09679046
-      z: -0.06248283
+      x: 0.044116605
+      y: 0.09679045
+      z: -0.062482815
+    initialLocalRotation:
+      value:
+        x: 0.30086917
+        y: -0.04144209
+        z: -0.7800779
+        w: 0.5470273
+    initialRotation:
+      value:
+        x: -0.9591912
+        y: -0.06803382
+        z: -0.020029718
+        w: -0.27371994
     lengthLimitForceScale: 1
     elasticityVelocity: 0.025
   parent: {fileID: 3518494960847946809}
@@ -4171,16 +4441,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000004
-    y: 1.0000002
-    z: 1.0000004
   pointRead:
     fixedIndex: 0
     parentIndex: -1
     childFirstIndex: 1
     childLastIndex: 2
-    mass: 7.277184e+11
+    mass: 7.277185e+11
     constraintCount: 0
     colliderMask: 3
     isFixedPointFreezeRotation: 0
@@ -4210,12 +4476,25 @@ MonoBehaviour:
     radius: 0.030395508
     initialLocalPosition:
       x: 0.9920915
-      y: 0.10301051
-      z: -0.07171772
+      y: 0.1030105
+      z: -0.07171766
+    initialLocalPositionLength: 0.18996546
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: 0.21733682
+        y: 0.64351493
+        z: 0.048906505
+        w: 0.7322988
+    initialRotation:
+      value:
+        x: -0.22487198
+        y: -0.61693513
+        z: -0.04071854
+        w: -0.75310415
     lengthLimitForceScale: 1
     elasticityVelocity: 0.025
   parent: {fileID: 3518494959355451533}
@@ -4270,16 +4549,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000005
-    y: 1.0000005
-    z: 1.0000005
   pointRead:
     fixedIndex: 13
     parentIndex: 13
     childFirstIndex: -1
     childLastIndex: -1
-    mass: 0.7551919
+    mass: 0.7551921
     constraintCount: 0
     colliderMask: 1
     isFixedPointFreezeRotation: 0
@@ -4308,13 +4583,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: -0.51611763
-      y: 0.25894216
-      z: -0.81643844
+      x: -0.51611733
+      y: 0.25894174
+      z: -0.81643873
+    initialLocalPositionLength: 0.036654457
     initialPosition:
-      x: -0.018918008
-      y: 0.009491381
-      z: -0.029926103
+      x: -0.018918
+      y: 0.00949137
+      z: -0.02992612
+    initialLocalRotation:
+      value:
+        x: 0.031400528
+        y: -0.43312487
+        z: -0.13754016
+        w: 0.89022446
+    initialRotation:
+      value:
+        x: 0.31404543
+        y: 0.07657729
+        z: 0.58791935
+        w: 0.74152714
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494960860838335}
@@ -4746,16 +5034,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000005
-    y: 1.0000002
-    z: 1.0000006
   pointRead:
     fixedIndex: 1
     parentIndex: 1
     childFirstIndex: -1
     childLastIndex: -1
-    mass: 2.05283
+    mass: 2.0528297
     constraintCount: 0
     colliderMask: 3
     isFixedPointFreezeRotation: 0
@@ -4785,12 +5069,25 @@ MonoBehaviour:
     radius: 0.05
     initialLocalPosition:
       x: 0.31093934
-      y: -0.037604693
-      z: -0.9496856
+      y: -0.03760471
+      z: -0.94968563
+    initialLocalPositionLength: 0.06884928
     initialPosition:
-      x: 0.02140795
-      y: -0.0025890577
+      x: 0.021407953
+      y: -0.002589056
       z: -0.06538517
+    initialLocalRotation:
+      value:
+        x: -0.4303168
+        y: 0.5263609
+        z: 0.24438214
+        w: 0.6914109
+    initialRotation:
+      value:
+        x: 0.045903664
+        y: 0.1841551
+        z: -0.20880848
+        w: 0.9593639
     lengthLimitForceScale: 1
     elasticityVelocity: 0.025
   parent: {fileID: 3518494959948649265}
@@ -4851,10 +5148,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5187ca8754a3e0c4a8c9734f3e8164dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000002
-    y: 1
-    z: 1.0000004
   pointRead:
     fixedIndex: 0
     parentIndex: 0
@@ -4892,10 +5185,23 @@ MonoBehaviour:
       x: 0
       y: 0
       z: 0
+    initialLocalPositionLength: 0
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: 0
+        y: 0
+        z: 0
+        w: 0
+    initialRotation:
+      value:
+        x: 0
+        y: 0
+        z: 0
+        w: 0
     lengthLimitForceScale: 0
     elasticityVelocity: 0
   parent: {fileID: 0}
@@ -5221,10 +5527,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000007
-    y: 1.0000004
-    z: 1.0000002
   pointRead:
     fixedIndex: 2
     parentIndex: -1
@@ -5259,13 +5561,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: -0.8164987
-      y: -0.2094151
-      z: 0.538029
+      x: -0.81649864
+      y: -0.20941508
+      z: 0.5380292
+    initialLocalPositionLength: 0.1170324
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: 0.47446674
+        y: -0.26020965
+        z: 0.34244615
+        w: 0.7680514
+    initialRotation:
+      value:
+        x: 0.4744814
+        y: -0.26018298
+        z: 0.34248933
+        w: 0.7680321
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494959578237467}
@@ -8525,10 +8840,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000001
-    y: 1.0000002
-    z: 1.0000001
   pointRead:
     fixedIndex: 0
     parentIndex: -1
@@ -8566,10 +8877,23 @@ MonoBehaviour:
       x: 0.04590705
       y: 0.95957136
       z: -0.27769718
+    initialLocalPositionLength: 0.2114878
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: -0.19269878
+        y: 0.12150953
+        z: -0.80384284
+        w: 0.54949003
+    initialRotation:
+      value:
+        x: 0.28965428
+        y: 0.4562741
+        z: 0.48222327
+        w: 0.6894745
     lengthLimitForceScale: 1
     elasticityVelocity: 0.025
   parent: {fileID: 3518494961039586880}
@@ -8625,16 +8949,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.000001
-    y: 1.0000002
-    z: 1.0000007
   pointRead:
     fixedIndex: 0
     parentIndex: 2
     childFirstIndex: 4
     childLastIndex: 5
-    mass: 0.8858976
+    mass: 0.8858977
     constraintCount: 0
     colliderMask: 0
     isFixedPointFreezeRotation: 0
@@ -8664,12 +8984,25 @@ MonoBehaviour:
     radius: 0.0469368
     initialLocalPosition:
       x: -1.0000002
-      y: -0.0000029753155
-      z: 0.0000003307134
+      y: -0.000002960471
+      z: 0.00000032608634
+    initialLocalPositionLength: 0.16354288
     initialPosition:
-      x: 0.13498256
-      y: 0.5189289
-      z: 0.0008831753
+      x: 0.13498254
+      y: 0.5189288
+      z: 0.0008831746
+    initialLocalRotation:
+      value:
+        x: 0.00000040109677
+        y: 0.00000036753804
+        z: 0.0000039301813
+        w: 1
+    initialRotation:
+      value:
+        x: 0.030844372
+        y: 0.7064333
+        z: -0.030845314
+        w: -0.70643425
     lengthLimitForceScale: 1
     elasticityVelocity: 0.06
   parent: {fileID: 3518494960333650444}
@@ -8725,10 +9058,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000002
-    y: 1.0000005
-    z: 1.0000001
   pointRead:
     fixedIndex: 0
     parentIndex: -1
@@ -8765,11 +9094,24 @@ MonoBehaviour:
     initialLocalPosition:
       x: -0.6549626
       y: -0.7460397
-      z: 0.1202031
+      z: 0.12020332
+    initialLocalPositionLength: 0.12551855
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: -0.5516504
+        y: 0.24576937
+        z: -0.5436591
+        w: 0.58285
+    initialRotation:
+      value:
+        x: -0.5516643
+        y: 0.24573834
+        z: -0.54362625
+        w: 0.5828806
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494959578237467}
@@ -8824,16 +9166,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000007
-    y: 1.0000006
-    z: 1.0000007
   pointRead:
     fixedIndex: 2
     parentIndex: 2
     childFirstIndex: -1
     childLastIndex: -1
-    mass: 1.9680369
+    mass: 1.9680372
     constraintCount: 0
     colliderMask: 8
     isFixedPointFreezeRotation: 0
@@ -8862,13 +9200,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0
     initialLocalPosition:
-      x: -0.9208786
-      y: 0.073581
-      z: -0.38284308
+      x: -0.9208789
+      y: 0.07358076
+      z: -0.38284248
+    initialLocalPositionLength: 0.13737665
     initialPosition:
-      x: -0.12650721
-      y: 0.010108311
-      z: -0.052593693
+      x: -0.12650725
+      y: 0.010108278
+      z: -0.05259362
+    initialLocalRotation:
+      value:
+        x: 0.18452345
+        y: -0.2651895
+        z: -0.012833007
+        w: 0.946288
+    initialRotation:
+      value:
+        x: -0
+        y: -0.000000037252903
+        z: 0.7071069
+        w: 0.7071069
     lengthLimitForceScale: 1
     elasticityVelocity: 0.1
   parent: {fileID: 1991744386}
@@ -8960,16 +9311,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000005
-    y: 1.0000001
-    z: 1.0000004
   pointRead:
     fixedIndex: 0
     parentIndex: -1
     childFirstIndex: 2
     childLastIndex: 3
-    mass: 5.300979e+10
+    mass: 5.3009793e+10
     constraintCount: 0
     colliderMask: -1
     isFixedPointFreezeRotation: 0
@@ -8998,15 +9345,28 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: -0.5721375
-      y: -0.8100758
-      z: 0.12820202
+      x: -0.57213753
+      y: -0.81007594
+      z: 0.12820168
+    initialLocalPositionLength: 0.14831924
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: 0.24627388
+        y: 0.78311384
+        z: -0.03154941
+        w: 0.5701637
+    initialRotation:
+      value:
+        x: 0.24622987
+        y: 0.7831277
+        z: -0.031517435
+        w: 0.5701656
     lengthLimitForceScale: 1
-    elasticityVelocity: 0.3
+    elasticityVelocity: 0.144
   parent: {fileID: 3518494959578237464}
   childPoints:
   - {fileID: 3518494959992272031}
@@ -9091,16 +9451,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000008
-    y: 1.0000008
-    z: 1.000001
   pointRead:
     fixedIndex: 1
     parentIndex: 1
     childFirstIndex: -1
     childLastIndex: -1
-    mass: 1.9335537
+    mass: 1.9335539
     constraintCount: 0
     colliderMask: 8
     isFixedPointFreezeRotation: 0
@@ -9130,12 +9486,25 @@ MonoBehaviour:
     radius: 0
     initialLocalPosition:
       x: 0.95984966
-      y: 0.0109312935
-      z: 0.2803024
+      y: 0.010931153
+      z: 0.28030235
+    initialLocalPositionLength: 0.112126455
     initialPosition:
-      x: 0.10762453
-      y: 0.001225687
-      z: 0.031429313
+      x: 0.10762454
+      y: 0.0012256714
+      z: 0.031429306
+    initialLocalRotation:
+      value:
+        x: -0.26536694
+        y: 0.65601957
+        z: 0.6578525
+        w: 0.25777674
+    initialRotation:
+      value:
+        x: 0.70710695
+        y: 0.70710695
+        z: 0.000000033527613
+        w: -0.000000052154064
     lengthLimitForceScale: 1
     elasticityVelocity: 0.1
   parent: {fileID: 809445056}
@@ -9190,10 +9559,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000002
-    y: 1.0000005
-    z: 1.0000002
   pointRead:
     fixedIndex: 13
     parentIndex: -1
@@ -9228,13 +9593,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: 0.6341121
-      y: -0.21183814
-      z: 0.74365747
+      x: 0.634112
+      y: -0.21183811
+      z: 0.74365765
+    initialLocalPositionLength: 0.1189893
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: 0.012195
+        y: 0.32768926
+        z: 0.7637641
+        w: 0.5559996
+    initialRotation:
+      value:
+        x: 0.012176583
+        y: 0.32768998
+        z: 0.7637954
+        w: 0.5559566
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494959578237467}
@@ -9290,10 +9668,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000001
-    y: 1.0000004
-    z: 1.0000002
   pointRead:
     fixedIndex: 1
     parentIndex: -1
@@ -9330,11 +9704,24 @@ MonoBehaviour:
     initialLocalPosition:
       x: 0.4281258
       y: 0.8928598
-      z: 0.13967723
+      z: 0.13967714
+    initialLocalPositionLength: 0.20373756
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: -0.3616898
+        y: 0.19960995
+        z: -0.62709033
+        w: 0.6603742
+    initialRotation:
+      value:
+        x: -0.32171097
+        y: 0.23660935
+        z: -0.6140866
+        w: 0.68074644
     lengthLimitForceScale: 1
     elasticityVelocity: 0.025
   parent: {fileID: 3518494960409891941}
@@ -9674,10 +10061,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5187ca8754a3e0c4a8c9734f3e8164dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000005
-    y: 1.0000001
-    z: 1.0000004
   pointRead:
     fixedIndex: 0
     parentIndex: 0
@@ -9715,10 +10098,23 @@ MonoBehaviour:
       x: 0
       y: 0
       z: 0
+    initialLocalPositionLength: 0
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: 0
+        y: 0
+        z: 0
+        w: 0
+    initialRotation:
+      value:
+        x: 0
+        y: 0
+        z: 0
+        w: 0
     lengthLimitForceScale: 0
     elasticityVelocity: 0
   parent: {fileID: 0}
@@ -9783,10 +10179,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000001
-    y: 1.0000004
-    z: 1.0000002
   pointRead:
     fixedIndex: 0
     parentIndex: -1
@@ -9822,12 +10214,25 @@ MonoBehaviour:
     radius: 0.030395508
     initialLocalPosition:
       x: -0.4287549
-      y: 0.8925651
-      z: 0.13963112
+      y: 0.892565
+      z: 0.13963103
+    initialLocalPositionLength: 0.20380484
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: -0.36178264
+        y: -0.20037027
+        z: 0.6268372
+        w: 0.66033345
+    initialRotation:
+      value:
+        x: -0.32180616
+        y: -0.23735322
+        z: 0.6137886
+        w: 0.68071127
     lengthLimitForceScale: 1
     elasticityVelocity: 0.025
   parent: {fileID: 3518494960409891941}
@@ -9914,10 +10319,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000001
-    y: 1.0000002
-    z: 1.0000004
   pointRead:
     fixedIndex: 12
     parentIndex: 12
@@ -9952,13 +10353,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: -0.36177313
+      x: -0.36177298
       y: 0.86614054
-      z: -0.3448496
+      z: -0.34484974
+    initialLocalPositionLength: 0.06705243
     initialPosition:
-      x: -0.024257768
-      y: 0.058076832
-      z: -0.023123002
+      x: -0.024257757
+      y: 0.05807683
+      z: -0.023123013
+    initialLocalRotation:
+      value:
+        x: 0.3096911
+        y: -0.4523185
+        z: -0.43950978
+        w: 0.7115691
+    initialRotation:
+      value:
+        x: 0.11834563
+        y: 0.19469845
+        z: 0.80372655
+        w: 0.5496457
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494959160846793}
@@ -10013,16 +10427,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000007
-    y: 1.0000004
-    z: 1.0000002
   pointRead:
     fixedIndex: 7
     parentIndex: 29
     childFirstIndex: 31
     childLastIndex: 32
-    mass: 2.4454525
+    mass: 2.445453
     constraintCount: 0
     colliderMask: 1
     isFixedPointFreezeRotation: 0
@@ -10051,13 +10461,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: -0.9164814
-      y: 0.043318715
-      z: -0.3977253
+      x: -0.9164817
+      y: 0.043320064
+      z: -0.39772433
+    initialLocalPositionLength: 0.039245814
     initialPosition:
-      x: -0.07201938
-      y: 0.031848595
-      z: -0.030164786
+      x: -0.072019406
+      y: 0.0318486
+      z: -0.030164747
+    initialLocalRotation:
+      value:
+        x: 0.71737224
+        y: 0.54312015
+        z: 0.4345255
+        w: 0.03981485
+    initialRotation:
+      value:
+        x: 0.43564016
+        y: 0.6250692
+        z: 0.2831398
+        w: -0.58252734
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494959224256262}
@@ -10113,16 +10536,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000004
-    y: 1
-    z: 1.0000001
   pointRead:
     fixedIndex: 0
     parentIndex: 5
     childFirstIndex: 7
     childLastIndex: 8
-    mass: 0.6371605
+    mass: 0.6371604
     constraintCount: 0
     colliderMask: -1
     isFixedPointFreezeRotation: 0
@@ -10152,14 +10571,27 @@ MonoBehaviour:
     radius: 0.01
     initialLocalPosition:
       x: -0.9954961
-      y: -0.0026481298
-      z: 0.09476979
+      y: -0.00264812
+      z: 0.09476968
+    initialLocalPositionLength: 0.06908206
     initialPosition:
       x: -0.29647425
       y: 0.04819575
       z: -0.12597683
+    initialLocalRotation:
+      value:
+        x: -0.033259477
+        y: -0.06001027
+        z: 0.0026448101
+        w: 0.99764
+    initialRotation:
+      value:
+        x: -0.04853803
+        y: 0.5977843
+        z: 0.049751915
+        w: 0.79863834
     lengthLimitForceScale: 1
-    elasticityVelocity: 0.3
+    elasticityVelocity: 0.144
   parent: {fileID: 3518494961106840285}
   childPoints:
   - {fileID: 3518494960714095431}
@@ -10530,16 +10962,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000004
-    y: 1.0000002
-    z: 1.0000007
   pointRead:
     fixedIndex: 5
     parentIndex: 5
     childFirstIndex: 26
     childLastIndex: 27
-    mass: 2.7921638
+    mass: 2.792164
     constraintCount: 0
     colliderMask: 1
     isFixedPointFreezeRotation: 0
@@ -10568,13 +10996,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: -0.09501348
-      y: 0.43965688
-      z: 0.89312613
+      x: -0.095012605
+      y: 0.43965742
+      z: 0.89312595
+    initialLocalPositionLength: 0.043601446
     initialPosition:
-      x: -0.0041427244
-      y: 0.019169675
-      z: 0.038941592
+      x: -0.0041426867
+      y: 0.019169698
+      z: 0.038941585
+    initialLocalRotation:
+      value:
+        x: 0.3228496
+        y: 0.26534534
+        z: -0.70430344
+        w: 0.5738612
+    initialRotation:
+      value:
+        x: -0.22864443
+        y: -0.38325518
+        z: 0.51471317
+        w: 0.73205715
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494959438448899}
@@ -10629,16 +11070,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000002
-    y: 1.0000002
-    z: 1.0000002
   pointRead:
     fixedIndex: 1
     parentIndex: 6
     childFirstIndex: -1
     childLastIndex: -1
-    mass: 0.49224398
+    mass: 0.49224392
     constraintCount: 0
     colliderMask: 3
     isFixedPointFreezeRotation: 0
@@ -10667,13 +11104,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.05
     initialLocalPosition:
-      x: -0.18846454
+      x: -0.18846455
       y: -0.67099
-      z: 0.71711534
+      z: 0.7171153
+    initialLocalPositionLength: 0.103018455
     initialPosition:
       x: -0.075714804
-      y: 0.15851381
-      z: -0.13871625
+      y: 0.1585138
+      z: -0.13871624
+    initialLocalRotation:
+      value:
+        x: 0.543748
+        y: -0.022796554
+        z: 0.7443179
+        w: -0.38705212
+    initialRotation:
+      value:
+        x: -0.2735213
+        y: -0.70474005
+        z: 0.22661956
+        w: -0.6141427
     lengthLimitForceScale: 1
     elasticityVelocity: 0.025
   parent: {fileID: 3518494960862884919}
@@ -10763,10 +11213,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5187ca8754a3e0c4a8c9734f3e8164dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000004
-    y: 1.0000001
-    z: 1.0000005
   pointRead:
     fixedIndex: 0
     parentIndex: 0
@@ -10804,10 +11250,23 @@ MonoBehaviour:
       x: 0
       y: 0
       z: 0
+    initialLocalPositionLength: 0
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: 0
+        y: 0
+        z: 0
+        w: 0
+    initialRotation:
+      value:
+        x: 0
+        y: 0
+        z: 0
+        w: 0
     lengthLimitForceScale: 0
     elasticityVelocity: 0
   parent: {fileID: 0}
@@ -10872,10 +11331,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000007
-    y: 1.0000005
-    z: 1.0000011
   pointRead:
     fixedIndex: 1
     parentIndex: -1
@@ -10912,11 +11367,24 @@ MonoBehaviour:
     initialLocalPosition:
       x: -0.53940445
       y: -0.7131854
-      z: 0.44767106
+      z: 0.44767112
+    initialLocalPositionLength: 0.1281347
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: -0.45010397
+        y: 0.7650255
+        z: 0.3072176
+        w: -0.34316146
+    initialRotation:
+      value:
+        x: -0.45014703
+        y: 0.7650003
+        z: 0.30719838
+        w: -0.34317875
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494959578237467}
@@ -10971,16 +11439,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000007
-    y: 1.0000004
-    z: 1.0000008
   pointRead:
     fixedIndex: 2
     parentIndex: 2
     childFirstIndex: -1
     childLastIndex: -1
-    mass: 1.4435722
+    mass: 1.4435724
     constraintCount: 0
     colliderMask: 1
     isFixedPointFreezeRotation: 0
@@ -11009,13 +11473,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: -0.52528954
-      y: -0.4832135
-      z: 0.7004109
+      x: -0.5252899
+      y: -0.48321378
+      z: 0.7004105
+    initialLocalPositionLength: 0.0700661
     initialPosition:
-      x: -0.03680498
-      y: -0.03385688
-      z: 0.049075052
+      x: -0.036805015
+      y: -0.033856906
+      z: 0.049075034
+    initialLocalRotation:
+      value:
+        x: -0.44257176
+        y: 0.14603646
+        z: 0.43146497
+        w: 0.7724258
+    initialRotation:
+      value:
+        x: -0.13568348
+        y: -0.44510964
+        z: 0.55006856
+        w: 0.6934639
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494960498790233}
@@ -11112,6 +11589,7 @@ MonoBehaviour:
   - {fileID: 3518494959578237464}
   isGenerateOnStart: 0
   generatorMode: 0
+  isOpenMonitor: 0
 --- !u!114 &3518494961066700738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11211,6 +11689,7 @@ MonoBehaviour:
   isGenerateByAllPoint: 1
   isGenerateFinger: 1
   isGenerateColliderOpenTrigger: 1
+  isColliderAllMask: 0
   generateColliderList:
   - {fileID: 3518494959289757563}
   - {fileID: 3518494959669245606}
@@ -11299,6 +11778,7 @@ MonoBehaviour:
   - {fileID: 3518494959578237467}
   isGenerateOnStart: 0
   generatorMode: 0
+  isOpenMonitor: 0
 --- !u!114 &3518494961066700743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11334,6 +11814,7 @@ MonoBehaviour:
   - {fileID: 3518494959355451533}
   isGenerateOnStart: 0
   generatorMode: 0
+  isOpenMonitor: 0
 --- !u!114 &3518494961066700742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11359,6 +11840,7 @@ MonoBehaviour:
   - {fileID: 3518494960193769603}
   isGenerateOnStart: 0
   generatorMode: 0
+  isOpenMonitor: 0
 --- !u!114 &1161978310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11389,6 +11871,7 @@ MonoBehaviour:
   - {fileID: 1364500392}
   isGenerateOnStart: 0
   generatorMode: 0
+  isOpenMonitor: 0
 --- !u!1 &4922931211265815164
 GameObject:
   m_ObjectHideFlags: 0
@@ -11434,10 +11917,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000002
-    y: 1.0000002
-    z: 1.0000002
   pointRead:
     fixedIndex: 5
     parentIndex: -1
@@ -11472,13 +11951,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: -0.06713516
-      y: 0.15553534
-      z: 0.98554635
+      x: -0.06713514
+      y: 0.1555353
+      z: 0.9855464
+    initialLocalPositionLength: 0.10989821
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: -0.5009293
+        y: -0.41929495
+        z: 0.74790674
+        w: -0.117885806
+    initialRotation:
+      value:
+        x: -0.50090575
+        y: -0.4193231
+        z: 0.7479001
+        w: -0.117927834
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494959578237467}
@@ -11597,10 +12089,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000006
-    y: 1.0000001
-    z: 1.0000006
   pointRead:
     fixedIndex: 0
     parentIndex: 3
@@ -11638,10 +12126,23 @@ MonoBehaviour:
       x: 0.18846393
       y: -0.6709895
       z: 0.71711576
+    initialLocalPositionLength: 0.10301853
     initialPosition:
       x: 0.07548859
-      y: 0.15874147
-      z: -0.13857941
+      y: 0.15874146
+      z: -0.1385794
+    initialLocalRotation:
+      value:
+        x: -0.5437456
+        y: -0.022790998
+        z: 0.74431807
+        w: 0.3870555
+    initialRotation:
+      value:
+        x: -0.27352154
+        y: 0.70473987
+        z: -0.22661951
+        w: -0.6141429
     lengthLimitForceScale: 1
     elasticityVelocity: 0.025
   parent: {fileID: 3518494960786003010}
@@ -11696,16 +12197,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000002
-    y: 1.0000006
-    z: 1.0000004
   pointRead:
     fixedIndex: 16
     parentIndex: 16
     childFirstIndex: 44
     childLastIndex: 45
-    mass: 3.8433738
+    mass: 3.8433743
     constraintCount: 0
     colliderMask: 1
     isFixedPointFreezeRotation: 0
@@ -11735,12 +12232,25 @@ MonoBehaviour:
     radius: 0.01
     initialLocalPosition:
       x: -0.99690187
-      y: -0.0042559784
-      z: -0.07854148
+      y: -0.0042568017
+      z: -0.07854128
+    initialLocalPositionLength: 0.05401841
     initialPosition:
-      x: -0.05385107
-      y: -0.00022990094
-      z: -0.004242688
+      x: -0.053851053
+      y: -0.00022994501
+      z: -0.004242675
+    initialLocalRotation:
+      value:
+        x: -0.051568132
+        y: -0.113725565
+        z: -0.039523944
+        w: 0.99138546
+    initialRotation:
+      value:
+        x: 0.5558712
+        y: 0.48657003
+        z: 0.18356334
+        w: 0.6485071
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494959742409301}
@@ -11796,16 +12306,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.000001
-    y: 1.000001
-    z: 1.0000005
   pointRead:
     fixedIndex: 9
     parentIndex: 9
     childFirstIndex: 36
     childLastIndex: 37
-    mass: 2.5017307
+    mass: 2.5017314
     constraintCount: 0
     colliderMask: 1
     isFixedPointFreezeRotation: 0
@@ -11834,13 +12340,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: -0.97519475
-      y: -0.17944904
-      z: -0.12959085
+      x: -0.9751949
+      y: -0.17944883
+      z: -0.12958981
+    initialLocalPositionLength: 0.03446302
     initialPosition:
-      x: -0.033608157
-      y: -0.0061843563
-      z: -0.004466092
+      x: -0.03360816
+      y: -0.006184348
+      z: -0.004466056
+    initialLocalRotation:
+      value:
+        x: 0.8440486
+        y: -0.123884656
+        z: 0.31750306
+        w: 0.41403663
+    initialRotation:
+      value:
+        x: 0.64048976
+        y: 0.6331026
+        z: 0.43467426
+        w: -0.0035635047
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494960613917589}
@@ -11927,10 +12446,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000015
-    y: 1.0000002
-    z: 1.0000014
   pointRead:
     fixedIndex: 0
     parentIndex: 3
@@ -11967,11 +12482,24 @@ MonoBehaviour:
     initialLocalPosition:
       x: -1.0000002
       y: 0.0000036997285
-      z: 0.00000023978492
+      z: 0.00000024536752
+    initialLocalPositionLength: 0.14597435
     initialPosition:
-      x: 0.16725555
-      y: 0.6612908
-      z: 0.0011243633
+      x: 0.16725554
+      y: 0.66129076
+      z: 0.0011243634
+    initialLocalRotation:
+      value:
+        x: -0.0000007530054
+        y: -0.0000006637688
+        z: -0.000001765788
+        w: 1
+    initialRotation:
+      value:
+        x: 0.030843642
+        y: 0.70643395
+        z: -0.03084359
+        w: -0.70643395
     lengthLimitForceScale: 1
     elasticityVelocity: 0.06
   parent: {fileID: 3518494960539804457}
@@ -12025,16 +12553,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000018
-    y: 1
-    z: 1.0000017
   pointRead:
     fixedIndex: 1
     parentIndex: 12
     childFirstIndex: -1
     childLastIndex: -1
-    mass: 0.22702916
+    mass: 0.22702934
     constraintCount: 0
     colliderMask: -1
     isFixedPointFreezeRotation: 0
@@ -12063,15 +12587,28 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: 0.9568254
-      y: -0.028844945
-      z: 0.28922927
+      x: 0.95682544
+      y: -0.028844958
+      z: 0.28922933
+    initialLocalPositionLength: 0.08565562
     initialPosition:
       x: 0.369806
       y: 0.061873123
       z: -0.16807464
+    initialLocalRotation:
+      value:
+        x: 0.1464577
+        y: -0.14674525
+        z: 0.0072006783
+        w: 0.97824544
+    initialRotation:
+      value:
+        x: 0.007654719
+        y: -0.64481485
+        z: 0.008293044
+        w: 0.7642558
     lengthLimitForceScale: 1
-    elasticityVelocity: 0.3
+    elasticityVelocity: 0.144
   parent: {fileID: 3518494959421118195}
   childPoints: []
   keyWord: 
@@ -12124,10 +12661,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.000001
-    y: 1.0000006
-    z: 1.0000005
   pointRead:
     fixedIndex: 2
     parentIndex: -1
@@ -12162,13 +12695,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0
     initialLocalPosition:
-      x: -0.64612305
-      y: -0.76301265
-      z: -0.018353513
+      x: -0.6461233
+      y: -0.76301247
+      z: -0.018353518
+    initialLocalPositionLength: 0.100071646
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: 0.24187106
+        y: -0.43922743
+        z: 0.5198936
+        w: 0.69158393
+    initialRotation:
+      value:
+        x: -0.31799513
+        y: 0.05703949
+        z: 0.678201
+        w: 0.6600524
     lengthLimitForceScale: 1
     elasticityVelocity: 0.1
   parent: {fileID: 1364500392}
@@ -12223,16 +12769,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000006
-    y: 1.0000006
-    z: 1.0000007
   pointRead:
     fixedIndex: 3
     parentIndex: 3
     childFirstIndex: -1
     childLastIndex: -1
-    mass: 1.968037
+    mass: 1.9680369
     constraintCount: 0
     colliderMask: 8
     isFixedPointFreezeRotation: 0
@@ -12261,13 +12803,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0
     initialLocalPosition:
-      x: 0.92087835
-      y: -0.07358028
-      z: 0.38284382
+      x: 0.9208786
+      y: -0.073580146
+      z: 0.38284352
+    initialLocalPositionLength: 0.13737664
     initialPosition:
-      x: 0.12650718
-      y: -0.010108211
-      z: 0.052593797
+      x: 0.12650721
+      y: -0.010108193
+      z: 0.052593756
+    initialLocalRotation:
+      value:
+        x: 0.18452345
+        y: -0.2651899
+        z: -0.012832799
+        w: 0.94628793
+    initialRotation:
+      value:
+        x: 0.7071069
+        y: -0.7071069
+        z: -0.00000014901161
+        w: 0.00000010803342
     lengthLimitForceScale: 1
     elasticityVelocity: 0.1
   parent: {fileID: 1234858465}
@@ -12321,16 +12876,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000006
-    y: 1.0000007
-    z: 1.0000002
   pointRead:
     fixedIndex: 16
     parentIndex: 44
     childFirstIndex: -1
     childLastIndex: -1
-    mass: 0.68518096
+    mass: 0.68518126
     constraintCount: 0
     colliderMask: 1
     isFixedPointFreezeRotation: 0
@@ -12359,13 +12910,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: -0.83332634
-      y: 0.39612755
-      z: -0.38555226
+      x: -0.8333258
+      y: 0.39612886
+      z: -0.38555202
+    initialLocalPositionLength: 0.03325637
     initialPosition:
-      x: -0.11952844
-      y: 0.0006767183
-      z: -0.010135722
+      x: -0.119528435
+      y: 0.00067671493
+      z: -0.010135721
+    initialLocalRotation:
+      value:
+        x: 0.0090748165
+        y: -0.1793753
+        z: -0.16118431
+        w: 0.97044414
+    initialRotation:
+      value:
+        x: 0.49897945
+        y: 0.47738335
+        z: 0.38239503
+        w: 0.61392105
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494959885292434}
@@ -12452,16 +13016,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000011
-    y: 1.0000002
-    z: 1.0000015
   pointRead:
     fixedIndex: 6
     parentIndex: 27
     childFirstIndex: -1
     childLastIndex: -1
-    mass: 0.62418234
+    mass: 0.62418205
     constraintCount: 0
     colliderMask: 1
     isFixedPointFreezeRotation: 0
@@ -12490,13 +13050,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: -0.5177465
-      y: -0.6073287
-      z: -0.60257
+      x: -0.51774603
+      y: -0.60732764
+      z: -0.60257155
+    initialLocalPositionLength: 0.030295676
     initialPosition:
-      x: -0.040356264
-      y: 0.032150127
-      z: -0.009620745
+      x: -0.040356286
+      y: 0.032150112
+      z: -0.0096207
+    initialLocalRotation:
+      value:
+        x: 0.83687603
+        y: 0.4327341
+        z: 0.33520883
+        w: 0.0038542673
+    initialRotation:
+      value:
+        x: 0.15252072
+        y: 0.17739551
+        z: -0.13987823
+        w: -0.96213454
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494960922575165}
@@ -12550,10 +13123,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000004
-    y: 1.0000001
-    z: 1.0000002
   pointRead:
     fixedIndex: 0
     parentIndex: 0
@@ -12589,12 +13158,25 @@ MonoBehaviour:
     radius: 0.05
     initialLocalPosition:
       x: 0.9492416
-      y: -0.24311648
-      z: -0.1995875
+      y: -0.24311647
+      z: -0.19958751
+    initialLocalPositionLength: 0.05496631
     initialPosition:
-      x: 0.052176315
-      y: -0.013363218
-      z: -0.01097059
+      x: 0.052176308
+      y: -0.013363215
+      z: -0.010970589
+    initialLocalRotation:
+      value:
+        x: -0.09979215
+        y: 0.11301593
+        z: -0.11228506
+        w: 0.9821716
+    initialRotation:
+      value:
+        x: -0.071834534
+        y: -0.7122353
+        z: -0.042409603
+        w: -0.69696665
     lengthLimitForceScale: 1
     elasticityVelocity: 0.025
   parent: {fileID: 3518494959473247437}
@@ -12668,10 +13250,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5187ca8754a3e0c4a8c9734f3e8164dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000005
-    y: 0.9999999
-    z: 1.0000006
   pointRead:
     fixedIndex: 0
     parentIndex: 0
@@ -12709,10 +13287,23 @@ MonoBehaviour:
       x: 0
       y: 0
       z: 0
+    initialLocalPositionLength: 0
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: 0
+        y: 0
+        z: 0
+        w: 0
+    initialRotation:
+      value:
+        x: 0
+        y: 0
+        z: 0
+        w: 0
     lengthLimitForceScale: 0
     elasticityVelocity: 0
   parent: {fileID: 0}
@@ -12769,10 +13360,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5187ca8754a3e0c4a8c9734f3e8164dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000005
-    y: 0.9999999
-    z: 1.0000006
   pointRead:
     fixedIndex: 0
     parentIndex: 0
@@ -12810,10 +13397,23 @@ MonoBehaviour:
       x: 0
       y: 0
       z: 0
+    initialLocalPositionLength: 0
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: 0
+        y: 0
+        z: 0
+        w: 0
+    initialRotation:
+      value:
+        x: 0
+        y: 0
+        z: 0
+        w: 0
     lengthLimitForceScale: 0
     elasticityVelocity: 0
   parent: {fileID: 0}
@@ -12982,16 +13582,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000014
-    y: 1.0000004
-    z: 1.0000014
   pointRead:
     fixedIndex: 0
     parentIndex: 1
     childFirstIndex: 3
     childLastIndex: 4
-    mass: 1.5522445
+    mass: 1.5522447
     constraintCount: 0
     colliderMask: 0
     isFixedPointFreezeRotation: 0
@@ -13022,11 +13618,24 @@ MonoBehaviour:
     initialLocalPosition:
       x: -0.96592563
       y: 0.25882113
-      z: 0.00000051720514
+      z: 0.0000005189931
+    initialLocalPositionLength: 0.1790649
     initialPosition:
-      x: 0.098825224
-      y: 0.3594333
-      z: 0.0006130789
+      x: 0.09882521
+      y: 0.35943323
+      z: 0.00061307894
+    initialLocalRotation:
+      value:
+        x: 0.000000031134917
+        y: 0.000000021800663
+        z: -0.13052924
+        w: 0.99144447
+    initialRotation:
+      value:
+        x: 0.030841835
+        y: 0.7064337
+        z: -0.030842308
+        w: -0.7064342
     lengthLimitForceScale: 1
     elasticityVelocity: 0.06
   parent: {fileID: 3518494959408882032}
@@ -13149,10 +13758,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000002
-    y: 1.0000005
-    z: 1.0000005
   pointRead:
     fixedIndex: 9
     parentIndex: -1
@@ -13187,13 +13792,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: 0.2782284
-      y: 0.14491172
-      z: 0.94952065
+      x: 0.27822837
+      y: 0.1449117
+      z: 0.9495207
+    initialLocalPositionLength: 0.111428834
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: 0.0133380685
+        y: 0.0981566
+        z: 0.7947849
+        w: 0.5987523
+    initialRotation:
+      value:
+        x: 0.013332559
+        y: 0.09815741
+        z: 0.79481864
+        w: 0.5987077
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494959578237467}
@@ -13250,16 +13868,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000006
-    y: 1
-    z: 1.0000004
   pointRead:
     fixedIndex: 1
     parentIndex: -1
     childFirstIndex: 8
     childLastIndex: 9
-    mass: 5.300979e+10
+    mass: 5.3009793e+10
     constraintCount: 0
     colliderMask: -1
     isFixedPointFreezeRotation: 0
@@ -13290,13 +13904,26 @@ MonoBehaviour:
     initialLocalPosition:
       x: 0.57195616
       y: -0.810204
-      z: 0.1282014
+      z: 0.1282018
+    initialLocalPositionLength: 0.14831905
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: 0.24618495
+        y: -0.7831408
+        z: 0.03148467
+        w: 0.5701686
+    initialRotation:
+      value:
+        x: 0.24622896
+        y: -0.7831269
+        z: 0.03151675
+        w: 0.57016677
     lengthLimitForceScale: 1
-    elasticityVelocity: 0.3
+    elasticityVelocity: 0.144
   parent: {fileID: 3518494959578237464}
   childPoints:
   - {fileID: 3518494959061560170}
@@ -13350,10 +13977,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1
-    y: 1.0000002
-    z: 1.0000004
   pointRead:
     fixedIndex: 7
     parentIndex: -1
@@ -13388,13 +14011,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: 0.13919722
-      y: 0.4996449
+      x: 0.1391972
+      y: 0.49964485
       z: 0.85497314
+    initialLocalPositionLength: 0.11965602
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: -0.15880187
+        y: 0.22648093
+        z: 0.6536242
+        w: 0.7044599
+    initialRotation:
+      value:
+        x: -0.15881462
+        y: 0.22647205
+        z: 0.65366375
+        w: 0.7044232
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494959578237467}
@@ -13450,16 +14086,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000007
-    y: 0.9999999
-    z: 1.0000005
   pointRead:
     fixedIndex: 1
     parentIndex: 1
     childFirstIndex: 9
     childLastIndex: 10
-    mass: 2.0403812
+    mass: 2.0403814
     constraintCount: 0
     colliderMask: -1
     isFixedPointFreezeRotation: 0
@@ -13491,12 +14123,25 @@ MonoBehaviour:
       x: 0.94449687
       y: -0.04011663
       z: -0.3260615
+    initialLocalPositionLength: 0.056088097
     initialPosition:
       x: 0.052975032
       y: -0.0022500658
       z: -0.018288167
+    initialLocalRotation:
+      value:
+        x: -0.13877067
+        y: 0.22953528
+        z: 0.34318972
+        w: 0.90015393
+    initialRotation:
+      value:
+        x: -0.13347381
+        y: -0.66293836
+        z: 0.17188844
+        w: 0.71634626
     lengthLimitForceScale: 1
-    elasticityVelocity: 0.3
+    elasticityVelocity: 0.144
   parent: {fileID: 3518494959456326004}
   childPoints:
   - {fileID: 3518494959287962378}
@@ -13891,10 +14536,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000006
-    y: 1.0000006
-    z: 1.0000005
   pointRead:
     fixedIndex: 11
     parentIndex: -1
@@ -13929,13 +14570,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: 0.42822185
-      y: 0.39067376
+      x: 0.4282218
+      y: 0.39067373
       z: 0.81486195
+    initialLocalPositionLength: 0.13151585
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: 0.67693675
+        y: 0.06440187
+        z: 0.13295569
+        w: 0.7210631
+    initialRotation:
+      value:
+        x: 0.67693317
+        y: 0.06443991
+        z: 0.13299619
+        w: 0.7210556
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494959578237467}
@@ -13996,10 +14650,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5187ca8754a3e0c4a8c9734f3e8164dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000002
-    y: 1
-    z: 1.0000002
   pointRead:
     fixedIndex: 0
     parentIndex: 0
@@ -14037,10 +14687,23 @@ MonoBehaviour:
       x: 0
       y: 0
       z: 0
+    initialLocalPositionLength: 0
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: 0
+        y: 0
+        z: 0
+        w: 0
+    initialRotation:
+      value:
+        x: 0
+        y: 0
+        z: 0
+        w: 0
     lengthLimitForceScale: 0
     elasticityVelocity: 0
   parent: {fileID: 0}
@@ -14110,16 +14773,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000007
-    y: 1.0000006
-    z: 1.0000007
   pointRead:
     fixedIndex: 5
     parentIndex: 25
     childFirstIndex: -1
     childLastIndex: -1
-    mass: 0.9469214
+    mass: 0.94692165
     constraintCount: 0
     colliderMask: 1
     isFixedPointFreezeRotation: 0
@@ -14149,12 +14808,25 @@ MonoBehaviour:
     radius: 0.01
     initialLocalPosition:
       x: -0.9954164
-      y: 0.04268985
-      z: -0.085579716
+      y: 0.04269032
+      z: -0.08558011
+    initialLocalPositionLength: 0.04596036
     initialPosition:
-      x: 0.0044505824
-      y: 0.050846834
-      z: 0.07111403
+      x: 0.0044506458
+      y: 0.05084687
+      z: 0.071114026
+    initialLocalRotation:
+      value:
+        x: 0.36887783
+        y: -0.024934055
+        z: 0.08861702
+        w: 0.9249078
+    initialRotation:
+      value:
+        x: 0.037435543
+        y: -0.16260092
+        z: 0.68801045
+        w: 0.70625883
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494961080007684}
@@ -14209,16 +14881,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000012
-    y: 0.9999998
-    z: 1.0000013
   pointRead:
     fixedIndex: 1
     parentIndex: 11
     childFirstIndex: 13
     childLastIndex: 14
-    mass: 0.6371599
+    mass: 0.6371601
     constraintCount: 0
     colliderMask: -1
     isFixedPointFreezeRotation: 0
@@ -14248,14 +14916,27 @@ MonoBehaviour:
     radius: 0.01
     initialLocalPosition:
       x: 0.99549586
-      y: -0.0026955656
-      z: 0.09476995
+      y: -0.0026955607
+      z: 0.09476989
+    initialLocalPositionLength: 0.06908212
     initialPosition:
-      x: 0.2964745
-      y: 0.048196238
-      z: -0.12597588
+      x: 0.29647443
+      y: 0.048196223
+      z: -0.12597586
+    initialLocalRotation:
+      value:
+        x: -0.100470565
+        y: 0.14820366
+        z: 0.0031596976
+        w: 0.98383504
+    initialRotation:
+      value:
+        x: -0.10101673
+        y: -0.5197958
+        z: -0.09070534
+        w: 0.843434
     lengthLimitForceScale: 1
-    elasticityVelocity: 0.3
+    elasticityVelocity: 0.144
   parent: {fileID: 3518494960278533618}
   childPoints:
   - {fileID: 3518494960049144868}
@@ -14341,16 +15022,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000007
-    y: 1.0000006
-    z: 1.0000004
   pointRead:
     fixedIndex: 1
     parentIndex: 1
     childFirstIndex: -1
     childLastIndex: -1
-    mass: 0.59688395
+    mass: 0.5968834
     constraintCount: 0
     colliderMask: 1
     isFixedPointFreezeRotation: 0
@@ -14379,13 +15056,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: 0.4755443
-      y: -0.043706845
-      z: -0.8786057
+      x: 0.47554436
+      y: -0.043708082
+      z: -0.8786056
+    initialLocalPositionLength: 0.028970692
     initialPosition:
-      x: 0.01377686
-      y: -0.0012662186
-      z: -0.02545384
+      x: 0.013776849
+      y: -0.0012662534
+      z: -0.025453813
+    initialLocalRotation:
+      value:
+        x: 0.75366765
+        y: 0.24635975
+        z: -0.5491391
+        w: 0.26407996
+    initialRotation:
+      value:
+        x: -0.87329036
+        y: 0.10180796
+        z: -0.41787618
+        w: 0.22886388
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494959701108938}
@@ -15000,10 +15690,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000002
-    y: 1.0000011
-    z: 1.000001
   pointRead:
     fixedIndex: 8
     parentIndex: -1
@@ -15038,13 +15724,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: 0.2905914
-      y: 0.34703085
+      x: 0.29059127
+      y: 0.34703073
       z: 0.89169854
+    initialLocalPositionLength: 0.12829109
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: 0.7402866
+        y: 0.17061457
+        z: -0.52731925
+        w: 0.38052708
+    initialRotation:
+      value:
+        x: 0.7402771
+        y: 0.17065614
+        z: -0.527298
+        w: 0.38055682
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494959578237467}
@@ -15100,16 +15799,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.000001
-    y: 1.0000008
-    z: 1.0000004
   pointRead:
     fixedIndex: 0
     parentIndex: 0
     childFirstIndex: 18
     childLastIndex: 19
-    mass: 3.8433707
+    mass: 3.84337
     constraintCount: 0
     colliderMask: 1
     isFixedPointFreezeRotation: 0
@@ -15138,13 +15833,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: 0.996902
-      y: 0.0042565176
-      z: 0.07853932
+      x: 0.99690205
+      y: 0.0042575924
+      z: 0.078539036
+    initialLocalPositionLength: 0.054018486
     initialPosition:
-      x: 0.053851157
-      y: 0.00022993148
-      z: 0.0042425776
+      x: 0.05385114
+      y: 0.00022998912
+      z: 0.0042425604
+    initialLocalRotation:
+      value:
+        x: -0.051569324
+        y: -0.113730446
+        z: -0.039526634
+        w: 0.99138474
+    initialRotation:
+      value:
+        x: -0.6485104
+        y: 0.18355907
+        z: -0.48656866
+        w: 0.55587023
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494959400776391}
@@ -15228,8 +15936,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7059598902081382198}
-  - component: {fileID: 843112828332541734}
-  - component: {fileID: 6105941227317768625}
   m_Layer: 0
   m_Name: MeshRoot
   m_TagString: Untagged
@@ -15268,56 +15974,6 @@ Transform:
   m_Father: {fileID: 8479856197995889305}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &843112828332541734
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7192091819372757069}
-  m_Mesh: {fileID: -4695318368510319242, guid: f2c836f3e5c029140a0cc913d7df766a, type: 3}
---- !u!23 &6105941227317768625
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7192091819372757069}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &7192379624984474729
 GameObject:
   m_ObjectHideFlags: 0
@@ -15363,16 +16019,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000005
-    y: 1.0000007
-    z: 1.0000001
   pointRead:
     fixedIndex: 16
     parentIndex: 43
     childFirstIndex: 45
     childLastIndex: 46
-    mass: 2.050397
+    mass: 2.0503974
     constraintCount: 0
     colliderMask: 1
     isFixedPointFreezeRotation: 0
@@ -15401,13 +16053,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: -0.99847144
-      y: -0.016015979
-      z: 0.05290073
+      x: -0.9984714
+      y: -0.01601614
+      z: 0.052900746
+    initialLocalPositionLength: 0.033006582
     initialPosition:
-      x: -0.08628599
-      y: 0.001636284
-      z: -0.01006744
+      x: -0.08628598
+      y: 0.0016362348
+      z: -0.010067425
+    initialLocalRotation:
+      value:
+        x: -0.1205129
+        y: 0.32105753
+        z: 0.24739054
+        w: 0.906199
+    initialRotation:
+      value:
+        x: 0.48701486
+        y: 0.48949823
+        z: 0.563884
+        w: 0.45303747
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494960995501859}
@@ -15495,16 +16160,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000002
-    y: 1.0000005
-    z: 1.0000007
   pointRead:
     fixedIndex: 3
     parentIndex: 3
     childFirstIndex: -1
     childLastIndex: -1
-    mass: 0.9070552
+    mass: 0.9070556
     constraintCount: 0
     colliderMask: 1
     isFixedPointFreezeRotation: 0
@@ -15533,13 +16194,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: 0.90747887
-      y: -0.41244376
-      z: -0.0798292
+      x: 0.9074781
+      y: -0.4124455
+      z: -0.07982971
+    initialLocalPositionLength: 0.0440254
     initialPosition:
-      x: 0.0399521
-      y: -0.01815799
-      z: -0.0035145113
+      x: 0.039952084
+      y: -0.018158076
+      z: -0.0035145339
+    initialLocalRotation:
+      value:
+        x: 0.22328122
+        y: 0.9527397
+        z: -0.15067598
+        w: -0.1404611
+    initialRotation:
+      value:
+        x: 0.49837992
+        y: 0.05339048
+        z: -0.4409353
+        w: -0.74454224
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494959865835396}
@@ -15594,10 +16268,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000005
-    y: 1.0000007
-    z: 1.0000005
   pointRead:
     fixedIndex: 0
     parentIndex: -1
@@ -15632,13 +16302,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0
     initialLocalPosition:
-      x: -0.59416205
+      x: -0.594162
       y: 0.8040921
-      z: 0.02019025
+      z: 0.020190246
+    initialLocalPositionLength: 0.120194435
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: -0.16038534
+        y: -0.3969534
+        z: -0.53028023
+        w: 0.7317838
+    initialRotation:
+      value:
+        x: -0.6308589
+        y: -0.65565336
+        z: -0.09427638
+        w: 0.40403974
     lengthLimitForceScale: 1
     elasticityVelocity: 0.1
   parent: {fileID: 1364500392}
@@ -15693,10 +16376,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000011
-    y: 1.0000001
-    z: 1.000001
   pointRead:
     fixedIndex: 0
     parentIndex: 0
@@ -15731,13 +16410,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.05
     initialLocalPosition:
-      x: -0.949242
-      y: -0.24311526
-      z: -0.19958729
+      x: -0.94924206
+      y: -0.24311514
+      z: -0.19958733
+    initialLocalPositionLength: 0.054966353
     initialPosition:
-      x: -0.052176416
-      y: -0.013363171
-      z: -0.010970594
+      x: -0.05217637
+      y: -0.013363153
+      z: -0.010970588
+    initialLocalRotation:
+      value:
+        x: -0.0997895
+        y: -0.11301316
+        z: 0.11228205
+        w: 0.9821725
+    initialRotation:
+      value:
+        x: 0.07183342
+        y: -0.7122355
+        z: -0.042410836
+        w: 0.69696635
     lengthLimitForceScale: 1
     elasticityVelocity: 0.025
   parent: {fileID: 3518494959196055389}
@@ -15794,10 +16486,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5187ca8754a3e0c4a8c9734f3e8164dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000005
-    y: 1.0000005
-    z: 1.0000001
   pointRead:
     fixedIndex: 0
     parentIndex: 0
@@ -15835,10 +16523,23 @@ MonoBehaviour:
       x: 0
       y: 0
       z: 0
+    initialLocalPositionLength: 0
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: 0
+        y: 0
+        z: 0
+        w: 0
+    initialRotation:
+      value:
+        x: 0
+        y: 0
+        z: 0
+        w: 0
     lengthLimitForceScale: 0
     elasticityVelocity: 0
   parent: {fileID: 0}
@@ -15902,16 +16603,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000006
-    y: 1.0000007
-    z: 1.0000006
   pointRead:
     fixedIndex: 9
     parentIndex: 33
     childFirstIndex: -1
     childLastIndex: -1
-    mass: 0.46571663
+    mass: 0.4657169
     constraintCount: 0
     colliderMask: 1
     isFixedPointFreezeRotation: 0
@@ -15940,13 +16637,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: -0.9320496
-      y: 0.34204337
-      z: -0.11954161
+      x: -0.93204904
+      y: 0.34204498
+      z: -0.11954075
+    initialLocalPositionLength: 0.022604316
     initialPosition:
-      x: -0.046083655
-      y: 0.006880382
-      z: -0.013846169
+      x: -0.046083648
+      y: 0.006880371
+      z: -0.013846243
+    initialLocalRotation:
+      value:
+        x: 0.8837273
+        y: -0.14354126
+        z: -0.06890081
+        w: 0.44008484
+    initialRotation:
+      value:
+        x: -0.17470312
+        y: 0.031122085
+        z: -0.6919303
+        w: -0.69981647
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494959176054218}
@@ -16001,10 +16711,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000004
-    y: 1.000001
-    z: 1.0000007
   pointRead:
     fixedIndex: 10
     parentIndex: -1
@@ -16039,13 +16745,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: 0.44713065
-      y: 0.21090016
-      z: 0.8692498
+      x: 0.44713047
+      y: 0.21090007
+      z: 0.86924994
+    initialLocalPositionLength: 0.123149
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: -0.52495205
+        y: -0.3566803
+        z: 0.71817625
+        w: -0.28535482
+    initialRotation:
+      value:
+        x: -0.52493215
+        y: -0.35670978
+        z: 0.71816033
+        w: -0.28539523
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494959578237467}
@@ -16101,10 +16820,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000006
-    y: 1.0000002
-    z: 1.0000004
   pointRead:
     fixedIndex: 0
     parentIndex: 0
@@ -16139,13 +16854,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.035478152
     initialLocalPosition:
-      x: 0.6121231
-      y: 0.7872328
-      z: 0.07463175
+      x: 0.6121233
+      y: 0.78723264
+      z: 0.07463207
+    initialLocalPositionLength: 0.09935938
     initialPosition:
-      x: 0.060820192
-      y: 0.07821899
-      z: 0.0074153678
+      x: 0.06082019
+      y: 0.078218944
+      z: 0.007415398
+    initialLocalRotation:
+      value:
+        x: -0.10621111
+        y: 0.7759179
+        z: 0.4084134
+        w: -0.46890196
+    initialRotation:
+      value:
+        x: -0.4945915
+        y: 0.7057103
+        z: -0.28469986
+        w: -0.419879
     lengthLimitForceScale: 1
     elasticityVelocity: 0.025
   parent: {fileID: 3518494959925747844}
@@ -16201,10 +16929,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000005
-    y: 1.0000005
-    z: 1.0000006
   pointRead:
     fixedIndex: 3
     parentIndex: -1
@@ -16239,13 +16963,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0
     initialLocalPosition:
-      x: 0.6461234
-      y: -0.76301235
-      z: -0.018353513
+      x: 0.64612365
+      y: -0.7630122
+      z: -0.018353518
+    initialLocalPositionLength: 0.100071646
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: 0.69158435
+        y: -0.51989335
+        z: -0.43922722
+        w: -0.24187075
+    initialRotation:
+      value:
+        x: 0.6600525
+        y: -0.67820084
+        z: 0.057039645
+        w: 0.31799552
     lengthLimitForceScale: 1
     elasticityVelocity: 0.1
   parent: {fileID: 1364500392}
@@ -16301,10 +17038,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000004
-    y: 1.0000007
-    z: 1.0000008
   pointRead:
     fixedIndex: 0
     parentIndex: -1
@@ -16339,13 +17072,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.030395508
     initialLocalPosition:
-      x: -0.00056315504
-      y: 0.48916048
-      z: -0.8721936
+      x: -0.00056315475
+      y: 0.48916036
+      z: -0.8721937
+    initialLocalPositionLength: 0.13982864
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: 0.5947984
+        y: 0.38342133
+        z: -0.5940207
+        w: -0.38254732
+    initialRotation:
+      value:
+        x: 0.57164985
+        y: 0.41717365
+        z: -0.5708229
+        w: -0.41634613
     lengthLimitForceScale: 1
     elasticityVelocity: 0.06
   parent: {fileID: 3518494960193769603}
@@ -16401,16 +17147,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000007
-    y: 0.99999994
-    z: 1.0000004
   pointRead:
     fixedIndex: 0
     parentIndex: 4
     childFirstIndex: 6
     childLastIndex: 7
-    mass: 1.0016327
+    mass: 1.0016323
     constraintCount: 0
     colliderMask: -1
     isFixedPointFreezeRotation: 0
@@ -16440,14 +17182,27 @@ MonoBehaviour:
     radius: 0.01
     initialLocalPosition:
       x: -0.9967631
-      y: -0.002297809
-      z: -0.08036885
+      y: -0.0022978073
+      z: -0.08036883
+    initialLocalPositionLength: 0.06842912
     initialPosition:
-      x: -0.23499341
-      y: 0.034261
-      z: -0.09772292
+      x: -0.23499353
+      y: 0.034261025
+      z: -0.097722955
+    initialLocalRotation:
+      value:
+        x: -0.08748726
+        y: -0.10321044
+        z: 0.00034395844
+        w: 0.99080443
+    initialRotation:
+      value:
+        x: -0.026427835
+        y: 0.64582634
+        z: 0.024727434
+        w: 0.76262635
     lengthLimitForceScale: 1
-    elasticityVelocity: 0.3
+    elasticityVelocity: 0.144
   parent: {fileID: 3518494959585910134}
   childPoints:
   - {fileID: 3518494961054846827}
@@ -16749,10 +17504,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000001
-    y: 1.0000004
-    z: 1.0000002
   pointRead:
     fixedIndex: 3
     parentIndex: -1
@@ -16787,13 +17538,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: -0.81026983
-      y: 0.0893601
-      z: 0.57920426
+      x: -0.81027
+      y: 0.08936012
+      z: 0.579204
+    initialLocalPositionLength: 0.12267184
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: -0.31577176
+        y: 0.72523206
+        z: -0.5131743
+        w: 0.33313483
+    initialRotation:
+      value:
+        x: -0.31581256
+        y: 0.7252145
+        z: -0.5131555
+        w: 0.33316365
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494959578237467}
@@ -17195,10 +17959,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000002
-    y: 1.0000006
-    z: 1.0000004
   pointRead:
     fixedIndex: 16
     parentIndex: -1
@@ -17235,11 +17995,24 @@ MonoBehaviour:
     initialLocalPosition:
       x: 0.65479493
       y: -0.7461869
-      z: 0.1202031
+      z: 0.120203204
+    initialLocalPositionLength: 0.12551855
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: 0.58291084
+        y: 0.5435932
+        z: 0.24570788
+        w: 0.5516785
+    initialRotation:
+      value:
+        x: 0.58288026
+        y: 0.543626
+        z: 0.24573885
+        w: 0.5516647
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494959578237467}
@@ -17327,16 +18100,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000004
-    y: 1.0000004
-    z: 1.0000005
   pointRead:
     fixedIndex: 4
     parentIndex: 4
     childFirstIndex: 24
     childLastIndex: 25
-    mass: 3.2403858
+    mass: 3.2403872
     constraintCount: 0
     colliderMask: 1
     isFixedPointFreezeRotation: 0
@@ -17365,13 +18134,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: -0.14711174
-      y: 0.50849223
+      x: -0.14711323
+      y: 0.50849193
       z: 0.84840673
+    initialLocalPositionLength: 0.047986135
     initialPosition:
-      x: -0.0070593273
-      y: 0.024400588
-      z: 0.040711775
+      x: -0.007059396
+      y: 0.024400564
+      z: 0.04071176
+    initialLocalRotation:
+      value:
+        x: -0.3307223
+        y: 0.5885363
+        z: -0.41631746
+        w: 0.6090383
+    initialRotation:
+      value:
+        x: 0.62261385
+        y: 0.75179726
+        z: 0.115590125
+        w: -0.18382573
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494960871924280}
@@ -17708,16 +18490,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000012
-    y: 1.0000002
-    z: 1.0000013
   pointRead:
     fixedIndex: 0
     parentIndex: -1
     childFirstIndex: 1
     childLastIndex: 2
-    mass: 7.2771725e+11
+    mass: 7.277179e+11
     constraintCount: 0
     colliderMask: 3
     isFixedPointFreezeRotation: 0
@@ -17747,12 +18525,25 @@ MonoBehaviour:
     radius: 0.030395508
     initialLocalPosition:
       x: -0.99209183
-      y: 0.103005864
-      z: -0.071718454
+      y: 0.10300588
+      z: -0.07171857
+    initialLocalPositionLength: 0.18996546
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: 0.2173346
+        y: -0.6435172
+        z: -0.04890464
+        w: 0.73229754
+    initialRotation:
+      value:
+        x: 0.22486702
+        y: -0.6169384
+        z: -0.040719774
+        w: 0.7531029
     lengthLimitForceScale: 1
     elasticityVelocity: 0.025
   parent: {fileID: 3518494960389520770}
@@ -18055,16 +18846,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000001
-    y: 0.99999976
-    z: 0.9999999
   pointRead:
     fixedIndex: 10
     parentIndex: 10
     childFirstIndex: -1
     childLastIndex: -1
-    mass: 0.9321174
+    mass: 0.93211687
     constraintCount: 0
     colliderMask: 1
     isFixedPointFreezeRotation: 0
@@ -18093,13 +18880,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: -0.4383552
-      y: 0.8948436
-      z: 0.0842671
+      x: -0.43835327
+      y: 0.8948446
+      z: 0.08426666
+    initialLocalPositionLength: 0.045241784
     initialPosition:
-      x: -0.019831983
-      y: 0.040484343
-      z: 0.003812396
+      x: -0.019831885
+      y: 0.040484365
+      z: 0.0038123757
+    initialLocalRotation:
+      value:
+        x: 0.550126
+        y: -0.36440134
+        z: -0.44041976
+        w: 0.60877204
+    initialRotation:
+      value:
+        x: -0.057766676
+        y: 0.050731655
+        z: 0.9504107
+        w: 0.30134457
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494959133506546}
@@ -18154,10 +18954,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000005
-    y: 1
-    z: 1.0000004
   pointRead:
     fixedIndex: 0
     parentIndex: 2
@@ -18193,14 +18989,27 @@ MonoBehaviour:
     radius: 0.01
     initialLocalPosition:
       x: -0.86602724
-      y: -0.49999088
-      z: 0.0024599493
+      y: -0.4999909
+      z: 0.0024599354
+    initialLocalPositionLength: 0.06324975
     initialPosition:
-      x: -0.11067907
-      y: 0.005210205
-      z: -0.043089706
+      x: -0.110679135
+      y: 0.005210222
+      z: -0.043089733
+    initialLocalRotation:
+      value:
+        x: 0.015002946
+        y: 0.042348355
+        z: 0.08679264
+        w: 0.99521285
+    initialRotation:
+      value:
+        x: -0.057272643
+        y: 0.6991062
+        z: -0.1244937
+        w: 0.7017633
     lengthLimitForceScale: 1
-    elasticityVelocity: 0.3
+    elasticityVelocity: 0.144
   parent: {fileID: 3518494959992272031}
   childPoints:
   - {fileID: 3518494959585910134}
@@ -18286,16 +19095,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000014
-    y: 1
-    z: 1.0000014
   pointRead:
     fixedIndex: 1
     parentIndex: 9
     childFirstIndex: 11
     childLastIndex: 12
-    mass: 1.3697183
+    mass: 1.3697188
     constraintCount: 0
     colliderMask: -1
     isFixedPointFreezeRotation: 0
@@ -18326,13 +19131,26 @@ MonoBehaviour:
     initialLocalPosition:
       x: 0.9644476
       y: -0.25960472
-      z: -0.049462
+      z: -0.04946207
+    initialLocalPositionLength: 0.07044589
     initialPosition:
-      x: 0.17347512
-      y: 0.019561924
-      z: -0.07160856
+      x: 0.17347501
+      y: 0.0195619
+      z: -0.07160852
+    initialLocalRotation:
+      value:
+        x: 0.0008249725
+        y: -0.029226705
+        z: -0.12920125
+        w: 0.9911873
+    initialRotation:
+      value:
+        x: 0.037774924
+        y: -0.7207525
+        z: 0.034978416
+        w: 0.69127846
     lengthLimitForceScale: 1
-    elasticityVelocity: 0.3
+    elasticityVelocity: 0.144
   parent: {fileID: 3518494959287962378}
   childPoints:
   - {fileID: 3518494960278533618}
@@ -18699,10 +19517,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 0.99999994
-    y: 1.0000001
-    z: 1
   pointRead:
     fixedIndex: 14
     parentIndex: -1
@@ -18737,13 +19551,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: 0.7925457
-      y: -0.29085472
-      z: 0.5359803
+      x: 0.79254556
+      y: -0.2908547
+      z: 0.5359806
+    initialLocalPositionLength: 0.11353569
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: 0.36895263
+        y: -0.114377156
+        z: 0.7517481
+        w: 0.5344779
+    initialRotation:
+      value:
+        x: 0.36895907
+        y: -0.1143564
+        z: 0.7517781
+        w: 0.53443563
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494959578237467}
@@ -18798,16 +19625,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000002
-    y: 1.0000007
-    z: 1.0000006
   pointRead:
     fixedIndex: 11
     parentIndex: 11
     childFirstIndex: -1
     childLastIndex: -1
-    mass: 0.9754761
+    mass: 0.97547543
     constraintCount: 0
     colliderMask: 1
     isFixedPointFreezeRotation: 0
@@ -18836,13 +19659,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: 0.64082295
-      y: 0.5735319
-      z: 0.510301
+      x: 0.6408233
+      y: 0.5735314
+      z: 0.5103013
+    initialLocalPositionLength: 0.047346264
     initialPosition:
       x: 0.03034059
-      y: 0.027154613
-      z: 0.024160862
+      y: 0.027154569
+      z: 0.02416086
+    initialLocalRotation:
+      value:
+        x: -0.37861896
+        y: 0.90832853
+        z: 0.15218304
+        w: 0.091800146
+    initialRotation:
+      value:
+        x: -0.32186034
+        y: 0.5074984
+        z: 0.76121736
+        w: 0.24372038
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494960175838672}
@@ -18897,10 +19733,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000013
-    y: 1.0000002
-    z: 1.0000012
   pointRead:
     fixedIndex: 0
     parentIndex: 0
@@ -18937,11 +19769,24 @@ MonoBehaviour:
     initialLocalPosition:
       x: 0.30524495
       y: 0.9522728
-      z: 0.0016353475
+      z: 0.0016353468
+    initialLocalPositionLength: 0.19406167
     initialPosition:
-      x: 0.05923635
-      y: 0.18479967
-      z: 0.00031735832
+      x: 0.05923634
+      y: 0.18479964
+      z: 0.00031735812
+    initialLocalRotation:
+      value:
+        x: 0.0006778655
+        y: 0.000474601
+        z: -0.69323033
+        w: 0.7207157
+    initialRotation:
+      value:
+        x: 0.12278829
+        y: 0.6963641
+        z: -0.12278873
+        w: -0.6963644
     lengthLimitForceScale: 1
     elasticityVelocity: 0.06
   parent: {fileID: 3518494959431270437}
@@ -18996,16 +19841,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000005
-    y: 1.0000005
-    z: 1.0000006
   pointRead:
     fixedIndex: 5
     parentIndex: 5
     childFirstIndex: -1
     childLastIndex: -1
-    mass: 2.0984097
+    mass: 2.0984094
     constraintCount: 0
     colliderMask: 8
     isFixedPointFreezeRotation: 0
@@ -19034,13 +19875,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0
     initialLocalPosition:
-      x: 0.8447023
-      y: 0.12246163
-      z: 0.5210392
+      x: 0.8447022
+      y: 0.12246169
+      z: 0.5210393
+    initialLocalPositionLength: 0.13780877
     initialPosition:
-      x: 0.11640739
-      y: 0.016876286
-      z: 0.07180377
+      x: 0.11640737
+      y: 0.016876295
+      z: 0.071803786
+    initialLocalRotation:
+      value:
+        x: 0.90970147
+        y: 0.017532274
+        z: 0.3523623
+        w: 0.21903585
+    initialRotation:
+      value:
+        x: 0.7071069
+        y: -0.7071068
+        z: -0.000000115484
+        w: 0.00000013783574
     lengthLimitForceScale: 1
     elasticityVelocity: 0.1
   parent: {fileID: 1729886854}
@@ -19095,10 +19949,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000006
-    y: 1.0000005
-    z: 1.0000002
   pointRead:
     fixedIndex: 5
     parentIndex: -1
@@ -19134,12 +19984,25 @@ MonoBehaviour:
     radius: 0
     initialLocalPosition:
       x: 0.5941617
-      y: 0.8040923
-      z: 0.020190248
+      y: 0.80409235
+      z: 0.020190246
+    initialLocalPositionLength: 0.120194435
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: 0.7317835
+        y: 0.5302803
+        z: -0.39695358
+        w: 0.16038565
+    initialRotation:
+      value:
+        x: 0.4040394
+        y: 0.09427616
+        z: -0.65565336
+        w: 0.630859
     lengthLimitForceScale: 1
     elasticityVelocity: 0.1
   parent: {fileID: 1364500392}
@@ -19194,10 +20057,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000005
-    y: 1.0000002
-    z: 1.0000005
   pointRead:
     fixedIndex: 15
     parentIndex: 15
@@ -19232,13 +20091,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: -0.47554567
-      y: 0.04371392
-      z: 0.87860423
+      x: -0.4755456
+      y: 0.043713953
+      z: 0.87860435
+    initialLocalPositionLength: 0.028970804
     initialPosition:
-      x: -0.013776939
-      y: 0.0012664265
-      z: 0.025453871
+      x: -0.0137769375
+      y: 0.0012664283
+      z: 0.025453873
+    initialLocalRotation:
+      value:
+        x: 0.7536651
+        y: 0.24635863
+        z: -0.5491392
+        w: 0.2640883
+    initialRotation:
+      value:
+        x: 0.22886337
+        y: 0.4178762
+        z: 0.101808086
+        w: 0.87329066
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494960623837400}
@@ -19574,10 +20446,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000005
-    y: 0.99999994
-    z: 1.0000002
   pointRead:
     fixedIndex: 0
     parentIndex: 3
@@ -19614,13 +20482,26 @@ MonoBehaviour:
     initialLocalPosition:
       x: -0.9644475
       y: -0.25960478
-      z: -0.049462274
+      z: -0.04946226
+    initialLocalPositionLength: 0.07044586
     initialPosition:
-      x: -0.17347486
-      y: 0.01956152
-      z: -0.07160899
+      x: -0.17347494
+      y: 0.019561542
+      z: -0.07160903
+    initialLocalRotation:
+      value:
+        x: 0.0008241164
+        y: 0.029226044
+        z: 0.12918235
+        w: 0.9911898
+    initialRotation:
+      value:
+        x: 0.037760932
+        y: 0.7207529
+        z: -0.034991447
+        w: 0.69127816
     lengthLimitForceScale: 1
-    elasticityVelocity: 0.3
+    elasticityVelocity: 0.144
   parent: {fileID: 3518494960147020423}
   childPoints:
   - {fileID: 3518494961106840285}
@@ -19954,10 +20835,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d0d7e4f716e4442b0c16f5b4a1b025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialScale:
-    x: 1.0000002
-    y: 1.0000005
-    z: 1.0000006
   pointRead:
     fixedIndex: 6
     parentIndex: -1
@@ -19992,13 +20869,26 @@ MonoBehaviour:
     circumferenceStretch: 0.5
     radius: 0.01
     initialLocalPosition:
-      x: -0.028566787
-      y: 0.41760218
+      x: -0.028566783
+      y: 0.41760215
       z: 0.9081808
+    initialLocalPositionLength: 0.12311187
     initialPosition:
       x: 0
       y: 0
       z: 0
+    initialLocalRotation:
+      value:
+        x: -0.2569573
+        y: 0.06857047
+        z: 0.58730197
+        w: 0.76442623
+    initialRotation:
+      value:
+        x: -0.2569612
+        y: 0.068556026
+        z: 0.58734494
+        w: 0.7643932
     lengthLimitForceScale: 1
     elasticityVelocity: 0.118
   parent: {fileID: 3518494959578237467}

@@ -120,11 +120,13 @@ namespace BVA
         public SkinId ExportSkin(SkinnedMeshRenderer render)
         {
             // skeleton is the root bone transform in Unity,and in gltf,it point to a node ,get it from _nodeCache
+            bool isValidSkin = true;
             Skin skin = new Skin();
             skin.Skeleton = new NodeId() { Root = _root, Id = _nodeCache.GetId(render.rootBone.gameObject) };
             if (skin.Skeleton.Id < 0)
             {
                 Debug.LogError("The Skin you try to export has some bone transform that are not exist. " + render.rootBone.gameObject.name);
+                isValidSkin = false;
             }
             // joints is point to a list of node
             List<NodeId> joints = new List<NodeId>();
@@ -134,9 +136,14 @@ namespace BVA
                 if (boneId < 0)
                 {
                     Debug.LogError("The Skin you try to export has some bone transform that are not exist. " + bone.gameObject.name);
+                    isValidSkin = false;
                 }
                 joints.Add(new NodeId() { Root = _root, Id = boneId });
             }
+
+            if (!isValidSkin) 
+                return null;
+
             skin.Joints = joints;
 
             //mesh bindpose 
@@ -147,7 +154,6 @@ namespace BVA
             for (int i = 0; i < bindPoses.Length; i++)
                 bindPoses[i] = bindPoses[i].ReverseX();
             skin.InverseBindMatrices = ExportAccessor(bindPoses);
-
             var id = new SkinId
             {
                 Id = _root.Skins.Count,

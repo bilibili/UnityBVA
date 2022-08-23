@@ -56,7 +56,7 @@ namespace BVA.Component
             t.position = headPosition + Head.WorldMatrix.ExtractRotation() * new Vector3(0, 0, 0.7f);
             t.LookAt(headPosition);
         }
-        void Awake()
+        void Start()
         {
             if (!TryGetComponent<Animator>(out var animator))
             {
@@ -87,7 +87,7 @@ namespace BVA.Component
         {
             // If no target has been assigned, look at the MainCamera
             if (Target == null)
-                Target = Camera.main.transform;
+                Target = Camera.current?.transform;
 
             if (TryGetComponent<Animator>(out var animator))
             {

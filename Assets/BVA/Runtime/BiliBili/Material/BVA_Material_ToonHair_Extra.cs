@@ -9,7 +9,8 @@ using Vector4 = UnityEngine.Vector4;
 
 namespace GLTF.Schema.BVA
 {
-public class BVA_Material_ToonHair_Extra : MaterialExtra
+[MaterialExtra]
+public class BVA_Material_ToonHair_Extra : IMaterialExtra
 {
 public const string PROPERTY = "BVA_Material_ToonHair_Extra";
 public const string SHADER_NAME = "Shader Graphs/Toon (Stylized Hair)";
@@ -31,50 +32,54 @@ public const string SECONDLAYERSHIFTPOWER = "_SecondLayerShiftPower";
 public const string SECONDLAYERSHIFT = "_SecondLayerShift";
 public const string TONNYLIGHTING = "_TonnyLighting";
 public const string SPECULARHIGHLIGHTS = "_SPECULARHIGHLIGHTS";
-public MaterialParam<Color> parameter_BaseColor = new MaterialParam<Color>(BASECOLOR, Color.white);
-public MaterialTextureParam parameter_BaseMap = new MaterialTextureParam(BASEMAP);
-public MaterialParam<Color> parameter_ShadeColor = new MaterialParam<Color>(SHADECOLOR, Color.white);
-public MaterialParam<float> parameter_Smoothness = new MaterialParam<float>(SMOOTHNESS, 1.0f);
-public MaterialTextureParam parameter_NormalMap = new MaterialTextureParam(NORMALMAP);
-public MaterialTextureParam parameter_HighlightColorMap = new MaterialTextureParam(HIGHTLIGHT);
-public MaterialTextureParam parameter_StripShiftMap = new MaterialTextureParam(STRIPSHIFTMAP);
-public MaterialParam<Vector4> parameter_StripShiftTiling = new MaterialParam<Vector4>(STRIPSHIFTTILING, Vector4.one);
-public MaterialParam<Color> parameter_1stLayerHighlightColor = new MaterialParam<Color>(FIRSTLAYERHIGHLIGHTCOLOR, Color.white);
-public MaterialParam<Vector4> parameter_1stLayerExponent = new MaterialParam<Vector4>(FIRSTLAYEREXPONENT, Vector4.one);
-public MaterialParam<float> parameter_1stLayerShiftPower = new MaterialParam<float>(FIRSTLAYERSHIFTPOWER, 1.0f);
-public MaterialParam<float> parameter_1stLayerShift = new MaterialParam<float>(FIRSTLAYERSHIFT, 1.0f);
-public MaterialParam<Color> parameter_LayerHighlightColor = new MaterialParam<Color>(SECONDLAYERHIGHLIGHTCOLOR, Color.white);
-public MaterialParam<Vector4> parameter_2ndLayerExponent = new MaterialParam<Vector4>(SECONDLAYEREXPONENT, Vector4.one);
-public MaterialParam<float> parameter_2ndLayerShiftPower = new MaterialParam<float>(SECONDLAYERSHIFTPOWER, 1.0f);
-public MaterialParam<float> parameter_2ndLayerShift = new MaterialParam<float>(SECONDLAYERSHIFT, 1.0f);
-public MaterialParam<float> parameter_ToonyLighting = new MaterialParam<float>(TONNYLIGHTING, 1.0f);
-public MaterialParam<float> parameter_SpecularHighlights = new MaterialParam<float>(SPECULARHIGHLIGHTS, 1.0f);
-public BVA_Material_ToonHair_Extra(Material material, ExportTextureInfo exportTextureInfo, ExportTextureInfo exportNormalTextureInfo, ExportCubemapInfo exportCubemapInfo)
+public MaterialParam<Color> parameter__BaseColor = new MaterialParam<Color>(BASECOLOR, Color.white);
+public MaterialTextureParam parameter__BaseMap = new MaterialTextureParam(BASEMAP);
+public MaterialParam<Color> parameter__ShadeColor = new MaterialParam<Color>(SHADECOLOR, Color.white);
+public MaterialParam<float> parameter__Smoothness = new MaterialParam<float>(SMOOTHNESS, 1.0f);
+public MaterialTextureParam parameter__NormalMap = new MaterialTextureParam(NORMALMAP);
+public MaterialTextureParam parameter__Hightlight = new MaterialTextureParam(HIGHTLIGHT);
+public MaterialTextureParam parameter__StripShiftMap = new MaterialTextureParam(STRIPSHIFTMAP);
+public MaterialParam<Vector4> parameter__StripShiftTiling = new MaterialParam<Vector4>(STRIPSHIFTTILING, Vector4.one);
+public MaterialParam<Color> parameter__FirstLayerHighlightColor = new MaterialParam<Color>(FIRSTLAYERHIGHLIGHTCOLOR, Color.white);
+public MaterialParam<Vector4> parameter__FirstLayerExponent = new MaterialParam<Vector4>(FIRSTLAYEREXPONENT, Vector4.one);
+public MaterialParam<float> parameter__FirstLayerShiftPower = new MaterialParam<float>(FIRSTLAYERSHIFTPOWER, 1.0f);
+public MaterialParam<float> parameter__FirstLayerShift = new MaterialParam<float>(FIRSTLAYERSHIFT, 1.0f);
+public MaterialParam<Color> parameter__SecondLayerHighlightColor = new MaterialParam<Color>(SECONDLAYERHIGHLIGHTCOLOR, Color.white);
+public MaterialParam<Vector4> parameter__SecondLayerExponent = new MaterialParam<Vector4>(SECONDLAYEREXPONENT, Vector4.one);
+public MaterialParam<float> parameter__SecondLayerShiftPower = new MaterialParam<float>(SECONDLAYERSHIFTPOWER, 1.0f);
+public MaterialParam<float> parameter__SecondLayerShift = new MaterialParam<float>(SECONDLAYERSHIFT, 1.0f);
+public MaterialParam<float> parameter__TonnyLighting = new MaterialParam<float>(TONNYLIGHTING, 1.0f);
+public MaterialParam<float> parameter__SPECULARHIGHLIGHTS = new MaterialParam<float>(SPECULARHIGHLIGHTS, 1.0f);
+public string[] keywords;
+public string ShaderName => SHADER_NAME;
+public string ExtraName => GetType().Name;
+public void SetData(Material material, ExportTextureInfo exportTextureInfo, ExportTextureInfo exportNormalTextureInfo, ExportCubemap exportCubemapInfo)
 {
-parameter_BaseColor.Value = material.GetColor(parameter_BaseColor.ParamName);
-var parameter_basemap_temp = material.GetTexture(parameter_BaseMap.ParamName);
-if (parameter_basemap_temp != null) parameter_BaseMap.Value = exportTextureInfo(parameter_basemap_temp);
-parameter_ShadeColor.Value = material.GetColor(parameter_ShadeColor.ParamName);
-parameter_Smoothness.Value = material.GetFloat(parameter_Smoothness.ParamName);
-var parameter_normalmap_temp = material.GetTexture(parameter_NormalMap.ParamName);
-if (parameter_normalmap_temp != null) parameter_NormalMap.Value = exportNormalTextureInfo(parameter_normalmap_temp);
-var parameter_highlightcolormap_temp = material.GetTexture(parameter_HighlightColorMap.ParamName);
-if (parameter_highlightcolormap_temp != null) parameter_HighlightColorMap.Value = exportTextureInfo(parameter_highlightcolormap_temp);
-var parameter_stripshiftmap_temp = material.GetTexture(parameter_StripShiftMap.ParamName);
-if (parameter_stripshiftmap_temp != null) parameter_StripShiftMap.Value = exportTextureInfo(parameter_stripshiftmap_temp);
-parameter_StripShiftTiling.Value = material.GetVector(parameter_StripShiftTiling.ParamName);
-parameter_1stLayerHighlightColor.Value = material.GetColor(parameter_1stLayerHighlightColor.ParamName);
-parameter_1stLayerExponent.Value = material.GetVector(parameter_1stLayerExponent.ParamName);
-parameter_1stLayerShiftPower.Value = material.GetFloat(parameter_1stLayerShiftPower.ParamName);
-parameter_1stLayerShift.Value = material.GetFloat(parameter_1stLayerShift.ParamName);
-parameter_LayerHighlightColor.Value = material.GetColor(parameter_LayerHighlightColor.ParamName);
-parameter_2ndLayerExponent.Value = material.GetVector(parameter_2ndLayerExponent.ParamName);
-parameter_2ndLayerShiftPower.Value = material.GetFloat(parameter_2ndLayerShiftPower.ParamName);
-parameter_2ndLayerShift.Value = material.GetFloat(parameter_2ndLayerShift.ParamName);
-parameter_ToonyLighting.Value = material.GetFloat(parameter_ToonyLighting.ParamName);
-parameter_SpecularHighlights.Value = material.GetFloat(parameter_SpecularHighlights.ParamName);
+keywords = material.shaderKeywords;
+parameter__BaseColor.Value = material.GetColor(parameter__BaseColor.ParamName);
+var parameter__basemap_temp = material.GetTexture(parameter__BaseMap.ParamName);
+if (parameter__basemap_temp != null) parameter__BaseMap.Value = exportTextureInfo(parameter__basemap_temp);
+parameter__ShadeColor.Value = material.GetColor(parameter__ShadeColor.ParamName);
+parameter__Smoothness.Value = material.GetFloat(parameter__Smoothness.ParamName);
+var parameter__normalmap_temp = material.GetTexture(parameter__NormalMap.ParamName);
+if (parameter__normalmap_temp != null) parameter__NormalMap.Value = exportNormalTextureInfo(parameter__normalmap_temp);
+var parameter__hightlight_temp = material.GetTexture(parameter__Hightlight.ParamName);
+if (parameter__hightlight_temp != null) parameter__Hightlight.Value = exportTextureInfo(parameter__hightlight_temp);
+var parameter__stripshiftmap_temp = material.GetTexture(parameter__StripShiftMap.ParamName);
+if (parameter__stripshiftmap_temp != null) parameter__StripShiftMap.Value = exportTextureInfo(parameter__stripshiftmap_temp);
+parameter__StripShiftTiling.Value = material.GetVector(parameter__StripShiftTiling.ParamName);
+parameter__FirstLayerHighlightColor.Value = material.GetColor(parameter__FirstLayerHighlightColor.ParamName);
+parameter__FirstLayerExponent.Value = material.GetVector(parameter__FirstLayerExponent.ParamName);
+parameter__FirstLayerShiftPower.Value = material.GetFloat(parameter__FirstLayerShiftPower.ParamName);
+parameter__FirstLayerShift.Value = material.GetFloat(parameter__FirstLayerShift.ParamName);
+parameter__SecondLayerHighlightColor.Value = material.GetColor(parameter__SecondLayerHighlightColor.ParamName);
+parameter__SecondLayerExponent.Value = material.GetVector(parameter__SecondLayerExponent.ParamName);
+parameter__SecondLayerShiftPower.Value = material.GetFloat(parameter__SecondLayerShiftPower.ParamName);
+parameter__SecondLayerShift.Value = material.GetFloat(parameter__SecondLayerShift.ParamName);
+parameter__TonnyLighting.Value = material.GetFloat(parameter__TonnyLighting.ParamName);
+parameter__SPECULARHIGHLIGHTS.Value = material.GetFloat(parameter__SPECULARHIGHLIGHTS.ParamName);
 }
-public static async Task Deserialize(GLTFRoot root, JsonReader reader, Material matCache,AsyncLoadTexture loadTexture, AsyncLoadTexture loadNormalMap, AsyncLoadCubemap loadCubemap)
+public async Task Deserialize(GLTFRoot root, JsonReader reader, Material matCache,AsyncLoadTexture loadTexture, AsyncLoadTexture loadNormalMap, AsyncLoadCubemap loadCubemap)
 {
 while (reader.Read())
 {
@@ -153,32 +158,51 @@ break;
 case BVA_Material_ToonHair_Extra.SPECULARHIGHLIGHTS:
 matCache.SetFloat(BVA_Material_ToonHair_Extra.SPECULARHIGHLIGHTS, reader.ReadAsFloat());
 break;
+case nameof(keywords):
+{
+var keywords = reader.ReadStringList();
+foreach (var keyword in keywords)
+matCache.EnableKeyword(keyword);
+}
+break;
 }
 }
 }
 }
-public override JProperty Serialize()
+public JProperty Serialize()
 {
 JObject jo = new JObject();
-jo.Add(parameter_BaseColor.ParamName, parameter_BaseColor.Value.ToNumericsColorRaw().ToJArray());
-if (parameter_BaseMap != null && parameter_BaseMap.Value != null) jo.Add(parameter_BaseMap.ParamName, parameter_BaseMap.Serialize());
-jo.Add(parameter_ShadeColor.ParamName, parameter_ShadeColor.Value.ToNumericsColorRaw().ToJArray());
-jo.Add(parameter_Smoothness.ParamName, parameter_Smoothness.Value);
-if (parameter_NormalMap != null && parameter_NormalMap.Value != null) jo.Add(parameter_NormalMap.ParamName, parameter_NormalMap.Serialize());
-if (parameter_HighlightColorMap != null && parameter_HighlightColorMap.Value != null) jo.Add(parameter_HighlightColorMap.ParamName, parameter_HighlightColorMap.Serialize());
-if (parameter_StripShiftMap != null && parameter_StripShiftMap.Value != null) jo.Add(parameter_StripShiftMap.ParamName, parameter_StripShiftMap.Serialize());
-jo.Add(parameter_StripShiftTiling.ParamName, parameter_StripShiftTiling.Value.ToGltfVector4Raw().ToJArray());
-jo.Add(parameter_1stLayerHighlightColor.ParamName, parameter_1stLayerHighlightColor.Value.ToNumericsColorRaw().ToJArray());
-jo.Add(parameter_1stLayerExponent.ParamName, parameter_1stLayerExponent.Value.ToGltfVector4Raw().ToJArray());
-jo.Add(parameter_1stLayerShiftPower.ParamName, parameter_1stLayerShiftPower.Value);
-jo.Add(parameter_1stLayerShift.ParamName, parameter_1stLayerShift.Value);
-jo.Add(parameter_LayerHighlightColor.ParamName, parameter_LayerHighlightColor.Value.ToNumericsColorRaw().ToJArray());
-jo.Add(parameter_2ndLayerExponent.ParamName, parameter_2ndLayerExponent.Value.ToGltfVector4Raw().ToJArray());
-jo.Add(parameter_2ndLayerShiftPower.ParamName, parameter_2ndLayerShiftPower.Value);
-jo.Add(parameter_2ndLayerShift.ParamName, parameter_2ndLayerShift.Value);
-jo.Add(parameter_ToonyLighting.ParamName, parameter_ToonyLighting.Value);
-jo.Add(parameter_SpecularHighlights.ParamName, parameter_SpecularHighlights.Value);
+jo.Add(parameter__BaseColor.ParamName, parameter__BaseColor.Value.ToNumericsColorRaw().ToJArray());
+if (parameter__BaseMap != null && parameter__BaseMap.Value != null) jo.Add(parameter__BaseMap.ParamName, parameter__BaseMap.Serialize());
+jo.Add(parameter__ShadeColor.ParamName, parameter__ShadeColor.Value.ToNumericsColorRaw().ToJArray());
+jo.Add(parameter__Smoothness.ParamName, parameter__Smoothness.Value);
+if (parameter__NormalMap != null && parameter__NormalMap.Value != null) jo.Add(parameter__NormalMap.ParamName, parameter__NormalMap.Serialize());
+if (parameter__Hightlight != null && parameter__Hightlight.Value != null) jo.Add(parameter__Hightlight.ParamName, parameter__Hightlight.Serialize());
+if (parameter__StripShiftMap != null && parameter__StripShiftMap.Value != null) jo.Add(parameter__StripShiftMap.ParamName, parameter__StripShiftMap.Serialize());
+jo.Add(parameter__StripShiftTiling.ParamName, parameter__StripShiftTiling.Value.ToGltfVector4Raw().ToJArray());
+jo.Add(parameter__FirstLayerHighlightColor.ParamName, parameter__FirstLayerHighlightColor.Value.ToNumericsColorRaw().ToJArray());
+jo.Add(parameter__FirstLayerExponent.ParamName, parameter__FirstLayerExponent.Value.ToGltfVector4Raw().ToJArray());
+jo.Add(parameter__FirstLayerShiftPower.ParamName, parameter__FirstLayerShiftPower.Value);
+jo.Add(parameter__FirstLayerShift.ParamName, parameter__FirstLayerShift.Value);
+jo.Add(parameter__SecondLayerHighlightColor.ParamName, parameter__SecondLayerHighlightColor.Value.ToNumericsColorRaw().ToJArray());
+jo.Add(parameter__SecondLayerExponent.ParamName, parameter__SecondLayerExponent.Value.ToGltfVector4Raw().ToJArray());
+jo.Add(parameter__SecondLayerShiftPower.ParamName, parameter__SecondLayerShiftPower.Value);
+jo.Add(parameter__SecondLayerShift.ParamName, parameter__SecondLayerShift.Value);
+jo.Add(parameter__TonnyLighting.ParamName, parameter__TonnyLighting.Value);
+jo.Add(parameter__SPECULARHIGHLIGHTS.ParamName, parameter__SPECULARHIGHLIGHTS.Value);
+if(keywords != null && keywords.Length > 0)
+{
+JArray jKeywords = new JArray();
+foreach (var keyword in jKeywords)
+jKeywords.Add(keyword);
+jo.Add(nameof(keywords), jKeywords);
+}
 return new JProperty(BVA_Material_ToonHair_Extra.SHADER_NAME, jo);
 }
-}
+
+        public object Clone()
+        {
+            return new BVA_Material_ToonHair_Extra();
+        }
+    }
 }

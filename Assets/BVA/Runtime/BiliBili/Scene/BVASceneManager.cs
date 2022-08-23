@@ -200,8 +200,7 @@ namespace BVA
         internal void AddLoadedScene(BVAScene scene)
         {
             scene.name = GetUniqueSceneName(scene.name);
-            var metaInfo = scene.mainScene.GetComponent<Component.BVAMetaInfo>();
-            if (metaInfo != null)
+            if (scene.type == AssetType.Avatar)
             {
                 loadedAvatars.Add(scene);
             }
@@ -375,38 +374,16 @@ namespace BVA
             }
         }
 
-        IEnumerator UnloadSceneCoroutine(IEnumerable<string> sceneNames)
+        public void UnloadScene(IEnumerable<BVAScene> scenes, float t = 0.0f)
         {
-            foreach (var sceneName in sceneNames)
-            {
-                UnloadScene(sceneName);
-                yield return null;
-            }
-        }
-
-        IEnumerator UnloadSceneCoroutine(IEnumerable<BVAScene> scenes)
-        {
-            foreach (var scene in scenes)
-            {
-                UnloadScene(scene);
-                yield return null;
-            }
-        }
-
-        public void UnloadSceneAsync(IEnumerable<string> sceneNames)
-        {
-            StartCoroutine(UnloadSceneCoroutine(sceneNames));
-        }
-
-        public void UnloadSceneAsync(IEnumerable<BVAScene> scenes)
-        {
-            StartCoroutine(UnloadSceneCoroutine(scenes));
+            while (scenes.Count() > 0)
+                UnloadScene(scenes.First(), t);
         }
 
         public void UnloadAllScenes()
         {
-            StartCoroutine(UnloadSceneCoroutine(loadedAvatars));
-            StartCoroutine(UnloadSceneCoroutine(loadedScenes));
+            UnloadScene(loadedAvatars);
+            UnloadScene(loadedScenes);
         }
 
         public void RemoveInvalidScene()
@@ -453,7 +430,7 @@ namespace BVA
         {
             if (URL.EndsWith(BVAConst.EXTENSION_BVA_AVATAR))
                 return AssetType.Avatar;
-            else if (URL.EndsWith(BVAConst.EXTENSION_BVA_SCENE))
+            else if (URL.EndsWith(BVAConst.EXTENSION_BVA))
                 return AssetType.Scene;
             else if (URL.EndsWith(BVAConst.EXTENSION_GLB) || URL.EndsWith(BVAConst.EXTENSION_GLTF))
                 return AssetType.StandardGLTF;

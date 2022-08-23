@@ -5,16 +5,15 @@ using System.Collections.Generic;
 using System.IO;
 using System;
 using System.Linq;
-using Object = UnityEngine.Object;
 using GLTF.Schema.BVA;
-using System.Reflection;
+using Object = UnityEngine.Object;
 
 namespace BVA
 {
     public partial class MonoScriptExtraGenerator : EditorWindow
     {
 
-        [MenuItem("BVA/Developer Tools/Generate Script From GameObject")]
+        [MenuItem("BVA/Developer Tools/Generate Component Extra")]
         static void Init()
         {
             MonoScriptExtraGenerator window = (MonoScriptExtraGenerator)EditorWindow.GetWindow(typeof(MonoScriptExtraGenerator), false, "Export Component as Extra");
@@ -134,12 +133,14 @@ namespace BVA
             bool hasMaterial = monoFields.Any(monoField => monoField.IsMaterial);
             bool hasTexture = monoFields.Any(monoField => monoField.IsTexture);
             bool hasSprite = monoFields.Any(monoField => monoField.IsSprite);
+            bool hasCubemap = monoFields.Any(monoField => monoField.IsCubemap);
+            bool isTaskMethod = hasMaterial || hasTexture || hasCubemap;
             string[] namespaceField = new string[] { "Newtonsoft.Json.Linq", "GLTF.Math", "GLTF.Schema", "Newtonsoft.Json", "GLTF.Extensions", "BVA.Extensions", "BVA.Component", "System.Threading.Tasks", "UnityEngine", "Color = UnityEngine.Color", "Vector4 = UnityEngine.Vector4" };
             const string namespaceHeader = "namespace GLTF.Schema.BVA";
             const string startScope = "{", endScope = "}";
             string className = Path.GetFileNameWithoutExtension(exportPath);
-            string classHeader = $"public class {className} : IExtra";
-            string scriptType = monoClass.FullName;
+            string classHeader = $"public class {className} :  {(isTaskMethod ? typeof(IAsyncComponentExtra).Name : typeof(IComponentExtra).Name)}";
+            string scriptType = monoClass.Name;
             List<MemberInfoExtra> innerSerializableClass = new List<MemberInfoExtra>();
             if (string.IsNullOrWhiteSpace(className))
             {
@@ -210,15 +211,19 @@ namespace BVA
                 sw.WriteLine($"case nameof(target.{fieldInfo.MemberName}):");
                 if (fieldInfo.IsMaterial)
                 {
-                    sw.WriteLine($"int materialIndex = reader.ReadAsInt32().Value;\n\ttarget.{fieldInfo.MemberName} = await {FUNCTOIN_LOAD_MATERIAL}(new MaterialId() {{ Id = materialIndex, Root = root }});");
+                    sw.WriteLine($"int {fieldInfo.MemberName}Index = reader.ReadAsInt32().Value;\n\ttarget.{fieldInfo.MemberName} = await {FUNCTOIN_LOAD_MATERIAL}(new MaterialId() {{ Id = {fieldInfo.MemberName}Index, Root = root }});");
                 }
                 else if (fieldInfo.IsTexture)
                 {
-                    sw.WriteLine($"int textureIndex = reader.ReadAsInt32().Value;\n\ttarget.{fieldInfo.MemberName} = await {FUNCTION_LOAD_TEXTURE}(new TextureId() {{ Id = textureIndex, Root = root }});");
+                    sw.WriteLine($"int {fieldInfo.MemberName}Index = reader.ReadAsInt32().Value;\n\ttarget.{fieldInfo.MemberName} = await {FUNCTION_LOAD_TEXTURE}(new TextureId() {{ Id = {fieldInfo.MemberName}Index, Root = root }});");
                 }
                 else if (fieldInfo.IsSprite)
                 {
-                    sw.WriteLine($"int spriteIndex = reader.ReadAsInt32().Value;\n\ttarget.{fieldInfo.MemberName} = await {FUNCTION_LOAD_SPRITE}(new SpriteId() {{ Id = spriteIndex, Root = root }});");
+                    sw.WriteLine($"int {fieldInfo.MemberName}Index = reader.ReadAsInt32().Value;\n\ttarget.{fieldInfo.MemberName} = await {FUNCTION_LOAD_SPRITE}(new SpriteId() {{ Id = {fieldInfo.MemberName}Index, Root = root }});");
+                }
+                else if (fieldInfo.IsCubemap)
+                {
+                    sw.WriteLine($"int {fieldInfo.MemberName}Index = reader.ReadAsInt32().Value;\n\ttarget.{fieldInfo.MemberName} = await {FUNCTION_LOAD_CUBEMAP}(new CubemapId() {{ Id = {fieldInfo.MemberName}Index, Root = root }});");
                 }
                 else if (JsonReaderDeSerializeFuncDic.TryGetValue(fieldInfo.MemberClassType, out var Func))
                 {
@@ -282,10 +287,10 @@ namespace BVA
             sw.WriteLine(namespaceHeader);
             sw.WriteLine(startScope);
             {
+                sw.WriteLine(isTaskMethod ? "[AsyncComponentExtra]" : "[ComponentExtra]");
                 sw.WriteLine(classHeader);
                 sw.WriteLine(startScope);
                 {
-                    sw.WriteLine($"public const string PROPERTY = \"{className}\";");
                     #region FieldName 
                     //write parameter declaration
                     foreach (var fieldInfo in monoFields)
@@ -311,46 +316,83 @@ namespace BVA
                             sw.WriteLine($"public TextureId {fieldInfo.MemberName};");
                         else if (fieldInfo.IsSprite)
                             sw.WriteLine($"public SpriteId {fieldInfo.MemberName};");
+                        else if (fieldInfo.IsCubemap)
+                            sw.WriteLine($"public CubemapId {fieldInfo.MemberName};");
                         else
                             sw.WriteLine($"public {classType} {fieldInfo.MemberName};");
                     }
                     #endregion
 
+                    #region Interface GET
+                    sw.WriteLine($"public string ComponentName => ComponentType.Name;");
+                    sw.WriteLine($"public string ExtraName => GetType().Name;");
+                    sw.WriteLine($"public System.Type ComponentType => typeof({scriptType});");
+                    #endregion
+
                     #region Construct
                     //write construction function
-                    sw.WriteLine($"public {className}(){{}}");
-                    sw.WriteLine();
-                    sw.Write($"public {className}({scriptType} target");
-                    if (hasMaterial) sw.Write($",MaterialId materialId=null");
-                    if (hasTexture) sw.Write($",TextureId textureId=null");
-                    if (hasSprite) sw.Write($",SpriteId spriteId=null");
-                    sw.Write(")");
-                    sw.WriteLine(startScope);
+                    //if (isTaskMethod)
+                    //{
+                    //    sw.WriteLine($"public {className}(){{}}");
+                    //    sw.WriteLine();
+                    //    sw.Write($"public {className}({scriptType} target");
+                    //    if (hasMaterial) sw.Write($",MaterialId materialId=null");
+                    //    if (hasTexture) sw.Write($",TextureId textureId=null");
+                    //    if (hasSprite) sw.Write($",SpriteId spriteId=null");
+                    //    sw.Write(")");
+                    //    sw.WriteLine(startScope);
+                    //    {
+                    //        foreach (var fieldInfo in monoFields)
+                    //        {
+                    //            if (fieldInfo.IsMaterial)
+                    //                sw.WriteLine($"this.{fieldInfo.MemberName} = materialId;");
+                    //            else if (fieldInfo.IsTexture)
+                    //                sw.WriteLine($"this.{fieldInfo.MemberName} = textureId;");
+                    //            else if (fieldInfo.IsSprite)
+                    //                sw.WriteLine($"this.{fieldInfo.MemberName} = spriteId;");
+                    //            else if (fieldInfo.IsCubemap)
+                    //                sw.WriteLine($"this.{fieldInfo.MemberName} = cubemapId;");
+                    //            else
+                    //                sw.WriteLine($"this.{fieldInfo.MemberName} = target.{fieldInfo.MemberName};");
+                    //        }
+                    //    }
+                    //    sw.WriteLine(endScope);
+                    //}
+                    //else
                     {
-                        foreach (var fieldInfo in monoFields)
+                        sw.WriteLine(isTaskMethod ?
+                            "public void SetData(Component component, ExportTexture exportTexture, ExportMaterial exportMaterial, ExportSprite exportSprite, ExportCubemap exportCubemap)" :
+                            "public void SetData(Component component)");
+                        sw.WriteLine(startScope);
                         {
-                            if (fieldInfo.IsMaterial)
-                                sw.WriteLine($"this.{fieldInfo.MemberName} = materialId;");
-                            else if (fieldInfo.IsTexture)
-                                sw.WriteLine($"this.{fieldInfo.MemberName} = textureId;");
-                            else if (fieldInfo.IsSprite)
-                                sw.WriteLine($"this.{fieldInfo.MemberName} = spriteId;");
-                            else
-                                sw.WriteLine($"this.{fieldInfo.MemberName} = target.{fieldInfo.MemberName};");
+                            sw.WriteLine($"var target = component as {scriptType};");
+                            foreach (var fieldInfo in monoFields)
+                            {
+                                if (fieldInfo.IsMaterial)
+                                    sw.WriteLine($"if(target.{fieldInfo.MemberName}!=null)this.{fieldInfo.MemberName} = exportMaterial(target.{fieldInfo.MemberName});");
+                                else if (fieldInfo.IsTexture)
+                                    sw.WriteLine($"if(target.{fieldInfo.MemberName}!=null)this.{fieldInfo.MemberName} = exportTexture(target.{fieldInfo.MemberName});");
+                                else if (fieldInfo.IsSprite)
+                                    sw.WriteLine($"if(target.{fieldInfo.MemberName}!=null)this.{fieldInfo.MemberName} = exportSprite(target.{fieldInfo.MemberName});");
+                                else if (fieldInfo.IsCubemap)
+                                    sw.WriteLine($"if(target.{fieldInfo.MemberName}!=null)this.{fieldInfo.MemberName} = exportCubemap(target.{fieldInfo.MemberName});");
+                                else
+                                    sw.WriteLine($"this.{fieldInfo.MemberName} = target.{fieldInfo.MemberName};");
+                            }
                         }
+                        sw.WriteLine(endScope);
                     }
-                    sw.WriteLine(endScope);
                     #endregion
-                    bool isTaskMethod = hasMaterial || hasTexture || hasSprite;
 
                     #region Deserialize
                     //write Deserialize function
                     if (isTaskMethod)
-                        sw.WriteLine($"public static async Task Deserialize(GLTFRoot root, JsonReader reader, {scriptType}  target, {nameof(AsyncLoadTexture)} {FUNCTION_LOAD_TEXTURE}=null,{nameof(AsyncLoadMaterial)} {FUNCTOIN_LOAD_MATERIAL}=null, {nameof(AsyncLoadSprite)} {FUNCTION_LOAD_SPRITE}=null)");
+                        sw.WriteLine($"public async Task Deserialize(GLTFRoot root, JsonReader reader, Component component, {nameof(AsyncLoadTexture)} {FUNCTION_LOAD_TEXTURE},{nameof(AsyncLoadMaterial)} {FUNCTOIN_LOAD_MATERIAL}, {nameof(AsyncLoadSprite)} {FUNCTION_LOAD_SPRITE},{nameof(AsyncLoadCubemap)} {FUNCTION_LOAD_CUBEMAP})");
                     else
-                        sw.WriteLine($"public static void Deserialize(GLTFRoot root, JsonReader reader, {scriptType}  target)");
+                        sw.WriteLine($"public void Deserialize(GLTFRoot root, JsonReader reader, Component component)");
                     sw.WriteLine(startScope);
                     {
+                        sw.WriteLine($"var target = component as {scriptType};");
                         sw.WriteLine("while (reader.Read())");
                         sw.WriteLine(startScope);
                         {
@@ -389,9 +431,9 @@ namespace BVA
                         sw.WriteLine("JObject jo = new JObject();");
                         foreach (var fieldInfo in monoFields)
                         {
-                            if (fieldInfo.IsTexture || fieldInfo.IsSprite || fieldInfo.IsMaterial)
+                            if (fieldInfo.IsTexture || fieldInfo.IsSprite || fieldInfo.IsMaterial|| fieldInfo.IsCubemap)
                             {
-                                sw.WriteLine($"if({fieldInfo.MemberName}!=null)jo.Add(nameof({fieldInfo.MemberName}), {fieldInfo.MemberName});");
+                                sw.WriteLine($"if({fieldInfo.MemberName}!=null)jo.Add(nameof({fieldInfo.MemberName}), {fieldInfo.MemberName}.Id);");
                             }
                             else if (TypeValueSerializeFuncDic.TryGetValue(fieldInfo.MemberClassType, out var Func))
                             {
@@ -433,7 +475,16 @@ namespace BVA
                                 sw.WriteLine($"jo.Add(nameof({fieldInfo.MemberName}), {variableName});");
                             }
                         }
-                        sw.WriteLine($"return new JProperty({className}.PROPERTY, jo);");
+                        sw.WriteLine($"return new JProperty(ComponentName, jo);");
+                    }
+                    sw.WriteLine(endScope);
+                    #endregion
+                    #region Clone
+                    //write Serialize function
+                    sw.WriteLine("public object Clone()");
+                    sw.WriteLine(startScope);
+                    {
+                        sw.WriteLine($"return new {className}();");
                     }
                     sw.WriteLine(endScope);
                     #endregion

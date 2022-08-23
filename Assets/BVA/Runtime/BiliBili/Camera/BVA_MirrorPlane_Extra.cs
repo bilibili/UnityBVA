@@ -1,52 +1,67 @@
 using Newtonsoft.Json.Linq;
-using BVA.Component;
+using GLTF.Math;
+using GLTF.Schema;
 using Newtonsoft.Json;
 using GLTF.Extensions;
+using BVA.Extensions;
+using BVA.Component;
+using System.Threading.Tasks;
+using UnityEngine;
+using Color = UnityEngine.Color;
+using Vector4 = UnityEngine.Vector4;
 
 namespace GLTF.Schema.BVA
 {
-public class BVA_MirrorPlane_Extra : IExtra
-{
-public const string PROPERTY = "BVA_MirrorPlane_Extra";
-public int TextureResolution;
-public float HeightOffset;
-public System.String ReflectionTextureName;
-public BVA_MirrorPlane_Extra(){}
+    [ComponentExtra]
+    public class BVA_MirrorPlane_Extra : IComponentExtra
+    {
+        public int TextureResolution;
+        public float HeightOffset;
+        public string ReflectionTextureName;
+        public string ComponentName => ComponentType.Name;
+        public System.Type ComponentType => typeof(MirrorPlane);
+        public void SetData(Component component)
+        {
+            var target = component as MirrorPlane;
+            this.TextureResolution = target.TextureResolution;
+            this.HeightOffset = target.HeightOffset;
+            this.ReflectionTextureName = target.ReflectionTextureName;
+        }
+        public void Deserialize(GLTFRoot root, JsonReader reader, Component component)
+        {
+            var target = component as MirrorPlane;
+            while (reader.Read())
+            {
+                if (reader.TokenType == JsonToken.PropertyName)
+                {
+                    var curProp = reader.Value.ToString();
+                    switch (curProp)
+                    {
+                        case nameof(target.TextureResolution):
+                            target.TextureResolution = reader.ReadAsInt32().Value;
+                            break;
+                        case nameof(target.HeightOffset):
+                            target.HeightOffset = reader.ReadAsFloat();
+                            break;
+                        case nameof(target.ReflectionTextureName):
+                            target.ReflectionTextureName = reader.ReadAsString();
+                            break;
+                    }
+                }
+            }
+        }
+        public JProperty Serialize()
+        {
+            JObject jo = new JObject();
+            jo.Add(nameof(TextureResolution), TextureResolution);
+            jo.Add(nameof(HeightOffset), HeightOffset);
+            jo.Add(nameof(ReflectionTextureName), ReflectionTextureName);
+            return new JProperty(ComponentName, jo);
+        }
 
-public BVA_MirrorPlane_Extra(MirrorPlane target){
-this.TextureResolution = target.TextureResolution;
-this.HeightOffset = target.HeightOffset;
-this.ReflectionTextureName = target.ReflectionTextureName;
-}
-public static void Deserialize(GLTFRoot root, JsonReader reader, MirrorPlane  target)
-{
-while (reader.Read())
-{
-if (reader.TokenType == JsonToken.PropertyName)
-{
-var curProp = reader.Value.ToString();
-switch (curProp)
-{
-case nameof(BVA_MirrorPlane_Extra.TextureResolution):
-target.TextureResolution= reader.ReadAsInt32().Value;
-break;
-case nameof(BVA_MirrorPlane_Extra.HeightOffset):
-target.HeightOffset= reader.ReadAsFloat();
-break;
-case nameof(BVA_MirrorPlane_Extra.ReflectionTextureName):
-target.ReflectionTextureName= reader.ReadAsString();
-break;
-}
-}
-}
-}
-public JProperty Serialize()
-{
-JObject jo = new JObject();
-jo.Add(nameof(TextureResolution), TextureResolution);
-jo.Add(nameof(HeightOffset), HeightOffset);
-jo.Add(nameof(ReflectionTextureName), ReflectionTextureName);
-return new JProperty(BVA_MirrorPlane_Extra.PROPERTY, jo);
-}
-}
+        public object Clone()
+        {
+            return new BVA_MirrorPlane_Extra();
+        }
+    }
 }

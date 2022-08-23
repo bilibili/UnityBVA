@@ -9,7 +9,8 @@ using Vector4 = UnityEngine.Vector4;
 
 namespace GLTF.Schema.BVA
 {
-public class BVA_Material_ToonGGX_Extra : MaterialExtra
+[MaterialExtra]
+public class BVA_Material_ToonGGX_Extra : IMaterialExtra
 {
 public const string PROPERTY = "BVA_Material_ToonGGX_Extra";
 public const string SHADER_NAME = "Shader Graphs/Toon (GGX)";
@@ -24,36 +25,40 @@ public const string OUTLINEWIDTH = "_OutlineWidth";
 public const string TONNYLIGHTING = "_TonnyLighting";
 public const string CURVATURE = "_Curvature";
 public const string WIDTHSCALEDMAXDISTANCE = "_WidthScaledMaxDistance";
-public MaterialParam<Color> parameter_BaseColor = new MaterialParam<Color>(BASECOLOR, Color.white);
-public MaterialTextureParam parameter_BaseMap = new MaterialTextureParam(BASEMAP);
-public MaterialTextureParam parameter_SssMap = new MaterialTextureParam(SSSMAP);
-public MaterialParam<Color> parameter_EnviromentalColor = new MaterialParam<Color>(ENVIRONMENTCOLOR, Color.white);
-public MaterialParam<Color> parameter_HighlightColor = new MaterialParam<Color>(HIGHLIGHTCOLOR, Color.white);
-public MaterialTextureParam parameter_NormalMap = new MaterialTextureParam(NORMALMAP);
-public MaterialTextureParam parameter_IlliminationMap = new MaterialTextureParam(ILLIMINATIONMAP);
-public MaterialParam<float> parameter_OutlineWidth = new MaterialParam<float>(OUTLINEWIDTH, 1.0f);
-public MaterialParam<float> parameter_ToonyLighting = new MaterialParam<float>(TONNYLIGHTING, 1.0f);
-public MaterialParam<float> parameter_Curvature = new MaterialParam<float>(CURVATURE, 1.0f);
-public MaterialParam<float> parameter_WidthScaledMaxDistance = new MaterialParam<float>(WIDTHSCALEDMAXDISTANCE, 1.0f);
-public BVA_Material_ToonGGX_Extra(Material material, ExportTextureInfo exportTextureInfo, ExportTextureInfo exportNormalTextureInfo, ExportCubemapInfo exportCubemapInfo)
+public MaterialParam<Color> parameter__BaseColor = new MaterialParam<Color>(BASECOLOR, Color.white);
+public MaterialTextureParam parameter__BaseMap = new MaterialTextureParam(BASEMAP);
+public MaterialTextureParam parameter__SSSMap = new MaterialTextureParam(SSSMAP);
+public MaterialParam<Color> parameter__EnvironmentColor = new MaterialParam<Color>(ENVIRONMENTCOLOR, Color.white);
+public MaterialParam<Color> parameter__HighlightColor = new MaterialParam<Color>(HIGHLIGHTCOLOR, Color.white);
+public MaterialTextureParam parameter__NormalMap = new MaterialTextureParam(NORMALMAP);
+public MaterialTextureParam parameter__IlliminationMap = new MaterialTextureParam(ILLIMINATIONMAP);
+public MaterialParam<float> parameter__OutlineWidth = new MaterialParam<float>(OUTLINEWIDTH, 1.0f);
+public MaterialParam<float> parameter__TonnyLighting = new MaterialParam<float>(TONNYLIGHTING, 1.0f);
+public MaterialParam<float> parameter__Curvature = new MaterialParam<float>(CURVATURE, 1.0f);
+public MaterialParam<float> parameter__WidthScaledMaxDistance = new MaterialParam<float>(WIDTHSCALEDMAXDISTANCE, 1.0f);
+public string[] keywords;
+public string ShaderName => SHADER_NAME;
+public string ExtraName => GetType().Name;
+public void SetData(Material material, ExportTextureInfo exportTextureInfo, ExportTextureInfo exportNormalTextureInfo, ExportCubemap exportCubemapInfo)
 {
-parameter_BaseColor.Value = material.GetColor(parameter_BaseColor.ParamName);
-var parameter_basemap_temp = material.GetTexture(parameter_BaseMap.ParamName);
-if (parameter_basemap_temp != null) parameter_BaseMap.Value = exportTextureInfo(parameter_basemap_temp);
-var parameter_sssmap_temp = material.GetTexture(parameter_SssMap.ParamName);
-if (parameter_sssmap_temp != null) parameter_SssMap.Value = exportTextureInfo(parameter_sssmap_temp);
-parameter_EnviromentalColor.Value = material.GetColor(parameter_EnviromentalColor.ParamName);
-parameter_HighlightColor.Value = material.GetColor(parameter_HighlightColor.ParamName);
-var parameter_normalmap_temp = material.GetTexture(parameter_NormalMap.ParamName);
-if (parameter_normalmap_temp != null) parameter_NormalMap.Value = exportNormalTextureInfo(parameter_normalmap_temp);
-var parameter_illiminationmap_temp = material.GetTexture(parameter_IlliminationMap.ParamName);
-if (parameter_illiminationmap_temp != null) parameter_IlliminationMap.Value = exportTextureInfo(parameter_illiminationmap_temp);
-parameter_OutlineWidth.Value = material.GetFloat(parameter_OutlineWidth.ParamName);
-parameter_ToonyLighting.Value = material.GetFloat(parameter_ToonyLighting.ParamName);
-parameter_Curvature.Value = material.GetFloat(parameter_Curvature.ParamName);
-parameter_WidthScaledMaxDistance.Value = material.GetFloat(parameter_WidthScaledMaxDistance.ParamName);
+keywords = material.shaderKeywords;
+parameter__BaseColor.Value = material.GetColor(parameter__BaseColor.ParamName);
+var parameter__basemap_temp = material.GetTexture(parameter__BaseMap.ParamName);
+if (parameter__basemap_temp != null) parameter__BaseMap.Value = exportTextureInfo(parameter__basemap_temp);
+var parameter__sssmap_temp = material.GetTexture(parameter__SSSMap.ParamName);
+if (parameter__sssmap_temp != null) parameter__SSSMap.Value = exportTextureInfo(parameter__sssmap_temp);
+parameter__EnvironmentColor.Value = material.GetColor(parameter__EnvironmentColor.ParamName);
+parameter__HighlightColor.Value = material.GetColor(parameter__HighlightColor.ParamName);
+var parameter__normalmap_temp = material.GetTexture(parameter__NormalMap.ParamName);
+if (parameter__normalmap_temp != null) parameter__NormalMap.Value = exportNormalTextureInfo(parameter__normalmap_temp);
+var parameter__illiminationmap_temp = material.GetTexture(parameter__IlliminationMap.ParamName);
+if (parameter__illiminationmap_temp != null) parameter__IlliminationMap.Value = exportTextureInfo(parameter__illiminationmap_temp);
+parameter__OutlineWidth.Value = material.GetFloat(parameter__OutlineWidth.ParamName);
+parameter__TonnyLighting.Value = material.GetFloat(parameter__TonnyLighting.ParamName);
+parameter__Curvature.Value = material.GetFloat(parameter__Curvature.ParamName);
+parameter__WidthScaledMaxDistance.Value = material.GetFloat(parameter__WidthScaledMaxDistance.ParamName);
 }
-public static async Task Deserialize(GLTFRoot root, JsonReader reader, Material matCache,AsyncLoadTexture loadTexture, AsyncLoadTexture loadNormalMap, AsyncLoadCubemap loadCubemap)
+public async Task Deserialize(GLTFRoot root, JsonReader reader, Material matCache,AsyncLoadTexture loadTexture, AsyncLoadTexture loadNormalMap, AsyncLoadCubemap loadCubemap)
 {
 while (reader.Read())
 {
@@ -111,25 +116,44 @@ break;
 case BVA_Material_ToonGGX_Extra.WIDTHSCALEDMAXDISTANCE:
 matCache.SetFloat(BVA_Material_ToonGGX_Extra.WIDTHSCALEDMAXDISTANCE, reader.ReadAsFloat());
 break;
+case nameof(keywords):
+{
+var keywords = reader.ReadStringList();
+foreach (var keyword in keywords)
+matCache.EnableKeyword(keyword);
+}
+break;
 }
 }
 }
 }
-public override JProperty Serialize()
+public JProperty Serialize()
 {
 JObject jo = new JObject();
-jo.Add(parameter_BaseColor.ParamName, parameter_BaseColor.Value.ToNumericsColorRaw().ToJArray());
-if (parameter_BaseMap != null && parameter_BaseMap.Value != null) jo.Add(parameter_BaseMap.ParamName, parameter_BaseMap.Serialize());
-if (parameter_SssMap != null && parameter_SssMap.Value != null) jo.Add(parameter_SssMap.ParamName, parameter_SssMap.Serialize());
-jo.Add(parameter_EnviromentalColor.ParamName, parameter_EnviromentalColor.Value.ToNumericsColorRaw().ToJArray());
-jo.Add(parameter_HighlightColor.ParamName, parameter_HighlightColor.Value.ToNumericsColorRaw().ToJArray());
-if (parameter_NormalMap != null && parameter_NormalMap.Value != null) jo.Add(parameter_NormalMap.ParamName, parameter_NormalMap.Serialize());
-if (parameter_IlliminationMap != null && parameter_IlliminationMap.Value != null) jo.Add(parameter_IlliminationMap.ParamName, parameter_IlliminationMap.Serialize());
-jo.Add(parameter_OutlineWidth.ParamName, parameter_OutlineWidth.Value);
-jo.Add(parameter_ToonyLighting.ParamName, parameter_ToonyLighting.Value);
-jo.Add(parameter_Curvature.ParamName, parameter_Curvature.Value);
-jo.Add(parameter_WidthScaledMaxDistance.ParamName, parameter_WidthScaledMaxDistance.Value);
+jo.Add(parameter__BaseColor.ParamName, parameter__BaseColor.Value.ToNumericsColorRaw().ToJArray());
+if (parameter__BaseMap != null && parameter__BaseMap.Value != null) jo.Add(parameter__BaseMap.ParamName, parameter__BaseMap.Serialize());
+if (parameter__SSSMap != null && parameter__SSSMap.Value != null) jo.Add(parameter__SSSMap.ParamName, parameter__SSSMap.Serialize());
+jo.Add(parameter__EnvironmentColor.ParamName, parameter__EnvironmentColor.Value.ToNumericsColorRaw().ToJArray());
+jo.Add(parameter__HighlightColor.ParamName, parameter__HighlightColor.Value.ToNumericsColorRaw().ToJArray());
+if (parameter__NormalMap != null && parameter__NormalMap.Value != null) jo.Add(parameter__NormalMap.ParamName, parameter__NormalMap.Serialize());
+if (parameter__IlliminationMap != null && parameter__IlliminationMap.Value != null) jo.Add(parameter__IlliminationMap.ParamName, parameter__IlliminationMap.Serialize());
+jo.Add(parameter__OutlineWidth.ParamName, parameter__OutlineWidth.Value);
+jo.Add(parameter__TonnyLighting.ParamName, parameter__TonnyLighting.Value);
+jo.Add(parameter__Curvature.ParamName, parameter__Curvature.Value);
+jo.Add(parameter__WidthScaledMaxDistance.ParamName, parameter__WidthScaledMaxDistance.Value);
+if(keywords != null && keywords.Length > 0)
+{
+JArray jKeywords = new JArray();
+foreach (var keyword in jKeywords)
+jKeywords.Add(keyword);
+jo.Add(nameof(keywords), jKeywords);
+}
 return new JProperty(BVA_Material_ToonGGX_Extra.SHADER_NAME, jo);
 }
-}
+
+        public object Clone()
+        {
+            return new BVA_Material_ToonGGX_Extra();
+        }
+    }
 }

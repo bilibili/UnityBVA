@@ -34,9 +34,9 @@ namespace BVA
         private static bool CheckNormalMap(string paramName)
         {
             string lowerCase = paramName.ToLower();
-            return lowerCase.EndsWith("normalmap") || lowerCase.EndsWith("bumpmap");
+            return lowerCase.EndsWith("normalmap") || lowerCase.EndsWith("bumpmap") || lowerCase.EndsWith("normal_map");
         }
-        
+
         void OnGUI()
         {
             shaderGraphObject = EditorGUILayout.ObjectField("Shader Graph ", shaderGraphObject, typeof(Shader), false) as Shader;
@@ -123,7 +123,7 @@ namespace BVA
             {
                 EditorUtility.DisplayDialog("error", "need file name,and should start with BVA!", "OK");
             }
-            string classHeader = $"public class {className} : MaterialExtra";
+            string classHeader = $"public class {className} : {typeof(IMaterialExtra).Name}";
             string ParameterName(string desc) { return "parameter_" + desc.GetNumberAlphaUnderLine(); }
             StringWriter sw = new StringWriter();
             foreach (var f in namespaceField)
@@ -134,6 +134,7 @@ namespace BVA
             // namespace scope
             sw.WriteLine(startScope);
             {
+                sw.WriteLine("[MaterialExtra]");
                 sw.WriteLine(classHeader);
                 sw.WriteLine(startScope);
                 {
@@ -176,12 +177,12 @@ namespace BVA
                             sw.WriteLine($"public MaterialParam<int> {v.parameterName} = new MaterialParam<int>({v.constParameter}, 1);");
                         }
                     }
-                    sw.WriteLine($"public string[] keywords;");
+                    sw.WriteLine("public string[] keywords;");
+                    sw.WriteLine("public string ShaderName => SHADER_NAME;");
+                    sw.WriteLine($"public string ExtraName => GetType().Name;");
                     // write construction function
-                    sw.WriteLine($"public {className}(Material material, {nameof(ExportTextureInfo)} exportTextureInfo, {nameof(ExportTextureInfo)} exportNormalTextureInfo, {nameof(ExportCubemapInfo)} exportCubemapInfo)");
-
+                    sw.WriteLine($"public void SetData(Material material, {nameof(ExportTextureInfo)} exportTextureInfo, {nameof(ExportTextureInfo)} exportNormalTextureInfo, {nameof(ExportCubemap)} exportCubemapInfo)");
                     sw.WriteLine(startScope);
-
                     sw.WriteLine("keywords = material.shaderKeywords;");
                     foreach (var v in properties)
                     {
@@ -218,7 +219,7 @@ namespace BVA
                     sw.WriteLine(endScope);
 
                     // write Deserialize function
-                    sw.WriteLine($"public static async Task Deserialize(GLTFRoot root, JsonReader reader, Material matCache,{nameof(AsyncLoadTexture)} loadTexture, {nameof(AsyncLoadTexture)} loadNormalMap, {nameof(AsyncLoadCubemap)} loadCubemap)");
+                    sw.WriteLine($"public async Task Deserialize(GLTFRoot root, JsonReader reader, Material matCache,{nameof(AsyncLoadTexture)} loadTexture, {nameof(AsyncLoadTexture)} loadNormalMap, {nameof(AsyncLoadCubemap)} loadCubemap)");
                     sw.WriteLine(startScope);
                     {
                         sw.WriteLine("while (reader.Read())");
@@ -297,7 +298,7 @@ namespace BVA
                     sw.WriteLine(endScope);
 
                     // write Serialize function
-                    sw.WriteLine("public override JProperty Serialize()");
+                    sw.WriteLine("public JProperty Serialize()");
                     sw.WriteLine(startScope);
                     {
                         sw.WriteLine("JObject jo = new JObject();");
@@ -337,14 +338,22 @@ namespace BVA
                         sw.WriteLine($"return new JProperty({className}.SHADER_NAME, jo);");
                     }
                     sw.WriteLine(endScope);
+
+                    sw.WriteLine("public object Clone()");
+                    sw.WriteLine(startScope);
+                    {
+                        sw.WriteLine($"return new {className}();");
+                    }
+                    sw.WriteLine(endScope);
+
+                    sw.WriteLine(endScope);
                 }
                 sw.WriteLine(endScope);
+                // finish string write
+                File.WriteAllText(exportPath, sw.ToString());
+                AssetDatabase.ImportAsset(exportPath);
+                EditorGUIUtility.PingObject(AssetDatabase.LoadAssetAtPath<Object>(exportPath));
             }
-            sw.WriteLine(endScope);
-            // finish string write
-            File.WriteAllText(exportPath, sw.ToString());
-            AssetDatabase.ImportAsset(exportPath);
-            EditorGUIUtility.PingObject(AssetDatabase.LoadAssetAtPath<Object>(exportPath));
         }
     }
 }

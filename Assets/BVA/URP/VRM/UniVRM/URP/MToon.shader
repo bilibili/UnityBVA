@@ -116,31 +116,32 @@ Shader "VRM/URP/MToon"
 
 
         // Forward Add
-        //Pass
-        //{
-        //    Name "FORWARD_ADD"
-        //    Tags { "LightMode" = "ForwardAdd" }
+        Pass
+        {
+            Name "FORWARD_ADD"
+            Tags { "LightMode" = "ForwardAdd" }
 
-        //    Cull [_CullMode]
-        //    Blend [_SrcBlend] One
-        //    ZWrite Off
-        //    ZTest LEqual
-        //    BlendOp Add, Max
-        //    AlphaToMask [_AlphaToMask]
+            Cull [_CullMode]
+            Blend [_SrcBlend] One
+            ZWrite Off
+            ZTest LEqual
+            BlendOp Add, Max
+            AlphaToMask [_AlphaToMask]
 
-        //    CGPROGRAM
-        //    #pragma target 3.0
-        //    #pragma shader_feature _ MTOON_DEBUG_NORMAL MTOON_DEBUG_LITSHADERATE
-        //    #pragma multi_compile _ _NORMALMAP
-        //    #pragma multi_compile _ _ALPHATEST_ON _ALPHABLEND_ON
-        //    #define MTOON_FORWARD_ADD
-        //    #include "../MToonSM3.cginc"
-        //    #pragma vertex vert_forward_add
-        //    #pragma fragment frag_forward
-        //    #pragma multi_compile_fwdadd_fullshadows
-        //    #pragma multi_compile_fog
-        //    ENDCG
-        //}
+            CGPROGRAM
+            #pragma target 3.0
+            #pragma shader_feature _ MTOON_DEBUG_NORMAL MTOON_DEBUG_LITSHADERATE
+            #pragma multi_compile _ _NORMALMAP
+            #pragma multi_compile _ _ALPHATEST_ON _ALPHABLEND_ON
+            #define MTOON_FORWARD_ADD
+            //#include "../MToonSM3.cginc"
+            #include "MToonSM3.hlsl"
+            #pragma vertex vert_forward_add
+            #pragma fragment frag_forward
+            #pragma multi_compile_fwdadd_fullshadows
+            #pragma multi_compile_fog
+            ENDCG
+        }
 
         //  Shadow rendering pass
         Pass

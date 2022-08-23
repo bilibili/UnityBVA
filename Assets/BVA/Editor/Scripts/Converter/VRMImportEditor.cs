@@ -28,7 +28,7 @@ namespace VRM
             if (Application.isPlaying)
             {
                 Selection.activeGameObject = ImportRuntime(path);
-                SwitchToURPMToon(Selection.activeGameObject);
+                SwitchMaterial(Selection.activeGameObject);
                 SwitchComponent(Selection.activeGameObject, null);
                 return;
             }
@@ -50,7 +50,7 @@ namespace VRM
             }
         }
 
-        static void SwitchToURPMToon(GameObject go)
+        static void SwitchMaterial(GameObject go)
         {
             Shader replaceShader = Shader.Find("VRM/URP/MToon");
             var skinnedMeshRenderers = go.GetComponentsInChildren<Renderer>();
@@ -59,7 +59,7 @@ namespace VRM
                 foreach (var v in skinnedMeshRenderer.sharedMaterials)
                 {
                     v.shader = replaceShader;
-                    GLTF.Schema.BVA.MaterialImporter.MToon.ValidateProperties(v);
+                    MaterialImporter.MToon.ValidateProperties(v);
                 }
             }
         }
@@ -176,6 +176,8 @@ namespace VRM
                         break;
                 }
             }
+
+            go.AddComponent<LookAt>();
             // Don't destroy original VRM Component
             //GameObject.DestroyImmediate(go.GetComponent<VRMMeta>());
             //GameObject.DestroyImmediate(go.GetComponent<VRMHumanoidDescription>());
@@ -319,7 +321,7 @@ namespace VRM
                         Directory.CreateDirectory(physicsFolderPath);
                     }
 
-                    SwitchToURPMToon(model);
+                    SwitchMaterial(model);
 
                     var renderers = model.GetComponentsInChildren<SkinnedMeshRenderer>();
                     foreach (var renderer in renderers)

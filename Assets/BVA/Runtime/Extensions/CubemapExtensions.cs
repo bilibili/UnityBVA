@@ -111,7 +111,11 @@ namespace BVA.Extensions
                 Graphics.CopyTexture(src, i, 0, 0, 0, srcWidth, srcWidth, flatCubemap, 0, 0, dstX, dstY);
             }
 
+#if UNITY_ANDROID || UNITY_IOS
+            var destRenderTexture = RenderTexture.GetTemporary(newWidth, newHeight, 0, RenderTextureFormat.Default, RenderTextureReadWrite.Linear);
+#else
             var destRenderTexture = RenderTexture.GetTemporary(newWidth, newHeight, 0, RenderTextureFormat.DefaultHDR, RenderTextureReadWrite.Linear);
+#endif
 
             Graphics.Blit(flatCubemap, destRenderTexture, UnityExtensions.FlipYMaterial);
             Graphics.Blit(flatCubemap, destRenderTexture, UnityExtensions.GetLightmapEncodeMaterial(LightmapEncodingMode.LinearToGamma));

@@ -26,7 +26,7 @@ using Vector4 = UnityEngine.Vector4;
 
 namespace GLTF.Schema.BVA
 {
-    public class BVA_Material_ClothLED_Extra : MaterialDescriptor
+    public class BVA_Material_ClothLED_Extra : IMaterialExtra
     {
         public const string PROPERTY = "BVA_Material_ClothLED_Extra";
         public const string SHADER_NAME = "Shader Graphs/UnityChanSSU/ClothLED";
@@ -72,7 +72,7 @@ namespace GLTF.Schema.BVA
         public MaterialParam<float> parameter_SonarA = new MaterialParam<float>(SONARA, 1.0f);
         public MaterialParam<float> parameter_SonarB = new MaterialParam<float>(SONARB, 1.0f);
         public MaterialParam<float> parameter_LEDPower = new MaterialParam<float>(LEDPOWER, 1.0f);
-        public BVA_Material_ClothLED_Extra(Material material, ExportTextureInfo exportTextureInfo, ExportTextureInfo exportNormalTextureInfo, ExportCubemapInfo exportCubemapInfo)
+        public void SetData(Material material, ExportTextureInfo exportTextureInfo, ExportTextureInfo exportNormalTextureInfo, ExportCubemapInfo exportCubemapInfo)
         {
             var parameter_maintex_temp = material.GetTexture(parameter_MainTex.ParamName);
             if (parameter_maintex_temp != null) parameter_MainTex.Value = exportTextureInfo(parameter_maintex_temp);
@@ -103,7 +103,7 @@ namespace GLTF.Schema.BVA
             parameter_SonarB.Value = material.GetFloat(parameter_SonarB.ParamName);
             parameter_LEDPower.Value = material.GetFloat(parameter_LEDPower.ParamName);
         }
-        public static async Task Deserialize(GLTFRoot root, JsonReader reader, Material matCache, AsyncLoadTexture loadTexture, AsyncLoadTexture loadNormalMap, AsyncLoadCubemap loadCubemap)
+        public async Task Deserialize(GLTFRoot root, JsonReader reader, Material matCache, AsyncLoadTexture loadTexture, AsyncLoadTexture loadNormalMap, AsyncLoadCubemap loadCubemap)
         {
             while (reader.Read())
             {
@@ -222,7 +222,7 @@ namespace GLTF.Schema.BVA
                 }
             }
         }
-        public override JProperty Serialize()
+        public JProperty Serialize()
         {
             JObject jo = new JObject();
             if (parameter_MainTex != null && parameter_MainTex.Value != null) jo.Add(parameter_MainTex.ParamName, parameter_MainTex.Serialize());

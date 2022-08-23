@@ -35,13 +35,13 @@ namespace BVA
             loadMesh.Start();
 
             await PreloadTextures();
+            await PreloadMaterials();
             await PreloadNodes(_gltfRoot.GetDefaultScene());
             _lastLoadedScene = _assetCache.NodeCache[0];
             _assetManager = _lastLoadedScene.GetOrAddComponent<AssetManager>();
             _assetManager.Init(_assetCache);
             await LoadAudio(_lastLoadedScene);
             await LoadAnimation(_lastLoadedScene, CancellationToken.None);
-            await PreloadMaterials();
 
 #if !UNITY_WEBGL
             loadMesh.Join();
@@ -64,13 +64,27 @@ namespace BVA
             //}
         }
 
-
+        public HashSet<int> ExtractNormalTextures()
+        {
+            HashSet<int> normalTexturesIndex = new HashSet<int>();
+            for (int i = 0; i < _gltfRoot.Materials.Count; i++)
+            {
+                GLTFMaterial gLTFMaterial = _gltfRoot.Materials[i];
+                if (gLTFMaterial.NormalTexture != null && gLTFMaterial.NormalTexture.Index.IsValid)
+                {
+                    normalTexturesIndex.Add(gLTFMaterial.NormalTexture.Index.Id);
+                }
+            }
+            return normalTexturesIndex;
+        }
         /// <summary>
         /// load all textures
         /// </summary>
         public async Task PreloadTextures()
         {
             if (_gltfRoot.Textures == null) return;
+            HashSet<int> normalTexturesIndex = ExtractNormalTextures();
+
             for (int i = 0; i < _gltfRoot.Textures.Count; i++)
             {
                 GLTFTexture texture = _gltfRoot.Textures[i];
@@ -79,7 +93,7 @@ namespace BVA
                 int sourceId = GetTextureSourceId(texture);
                 GLTFImage image = _gltfRoot.Images[sourceId];
                 Texture2D unity_texture;
-
+                bool isLinear = normalTexturesIndex.Contains(i);
                 if (_assetCache.ImageCache[sourceId] == null)
                 {
                     var bufferView = image.BufferView.Value;
@@ -103,7 +117,7 @@ namespace BVA
                         var ktxTexture = new KtxUnity.KtxTexture();
                         NativeArray<byte> nativeArray = new NativeArray<byte>(buffer, Allocator.Persistent);
 
-                        var result = await ktxTexture.LoadFromBytes(nativeArray, false);
+                        var result = await ktxTexture.LoadFromBytes(nativeArray, isLinear);
                         unity_texture = result.texture;
                     }
                     else if (mimeType == ImageMimeType.BASIS)
@@ -111,12 +125,12 @@ namespace BVA
                         var basisTexture = new KtxUnity.BasisUniversalTexture();
                         NativeArray<byte> nativeArray = new NativeArray<byte>(buffer, Allocator.Persistent);
 
-                        var result = await basisTexture.LoadFromBytes(nativeArray, false);
+                        var result = await basisTexture.LoadFromBytes(nativeArray, isLinear);
                         unity_texture = result.texture;
                     }
                     else
                     {
-                        unity_texture = new Texture2D(0, 0, TextureFormat.ARGB32, false, false);
+                        unity_texture = new Texture2D(0, 0, TextureFormat.ARGB32, false, isLinear);
                         unity_texture.name = image.Name ?? "No name";
                         unity_texture.LoadImage(buffer, true);
                         _assetCache.ImageCache[sourceId] = unity_texture;
@@ -448,21 +462,20 @@ namespace BVA
                     childObj.transform.SetParent(nodeObj.transform, false);
                 }
             }
-
-            await AddNodeComponent(node, nodeObj);
         }
         public void AttachRenderers()
         {
             for (int i = 0; i < _gltfRoot.Nodes.Count; i++)
             {
                 Node node = _gltfRoot.Nodes[i];
-                if (node.Mesh == null) continue;
                 GameObject nodeObj = _assetCache.NodeCache[i];
                 AttachMesh(node, nodeObj);
+                AddNodeComponent(node, nodeObj);
             }
         }
         private void AttachMesh(Node node, GameObject nodeObj)
         {
+            if (node.Mesh == null) return;
             var meshIndex = node.Mesh.Id;
             var mesh = node.Mesh.Value;
 

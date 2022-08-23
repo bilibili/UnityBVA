@@ -2084,9 +2084,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: VWA.Sampler.VWAViewer, Assembly-CSharp
-        m_MethodName: OpenSceneFile
+      - m_Target: {fileID: 1108791022}
+        m_TargetAssemblyTypeName: BVA.Sample.MultipleScenePayload, BVA.Sample
+        m_MethodName: ClearScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

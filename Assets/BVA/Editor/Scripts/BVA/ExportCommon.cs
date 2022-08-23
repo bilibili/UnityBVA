@@ -152,30 +152,67 @@ namespace BVA
             {
                 return errorList;
              }
-            HashSet<Material> materials = new HashSet<Material>(model.GetComponentsInChildren<Renderer>().SelectMany(x => x.sharedMaterials));
-
-
-            foreach (var material in materials)
+            Renderer[] allRenderer = model.GetComponentsInChildren<Renderer>();
+            bool isShow_EnvironmentReflectionsOnce = false;
+            foreach (var renderer in allRenderer)
             {
-                if (material==null)
+                var materials = renderer.sharedMaterials;
+                foreach (var material in materials)
                 {
-                    continue;
-                }
-                Shader shader = material.shader;
-                if (!(MaterialImporter.CUSTOM_SHADER_LIST.ContainsKey(shader.name)|| DEFAULT_SHADER_NAME.Contains(shader.name)))
-                {
-                    errorList.Add(material);
-                    string data = ExportCommon.Localization($"{shader.name} 不是支持的shader,但是在 {material.name}被使用!", $"{shader.name} is not vaild shader for exporter ,but is is been used by {material.name} !");
-
-                    EditorGUILayout.BeginHorizontal();
-                    EditorGUILayout.HelpBox(data, MessageType.Warning);
-                    if (GUILayout.Button(ExportCommon.Localization("选择","Select")))
+                    if (material == null)
                     {
-                        Selection.activeObject = material;
+                        continue;
                     }
-                    EditorGUILayout.EndHorizontal();
+                    Shader shader = material.shader;
+
+                    if (DEFAULT_SHADER_NAME.Contains(shader.name))
+                    {
+                        if (material.GetFloat("_EnvironmentReflections") == 1)
+                        {
+                            isShow_EnvironmentReflectionsOnce = true;
+                        }
+
+                    }
+                    else if (!(MaterialImporter.CustomShaders.ContainsKey(shader.name) || DEFAULT_SHADER_NAME.Contains(shader.name)))
+                    {
+                        errorList.Add(material);
+                        string data = ExportCommon.Localization($"{shader.name} 不是支持的shader,但是在 {material.name}被使用!", $"{shader.name} is not vaild shader for exporter ,but is is been used by {material.name} !");
+
+                        EditorGUILayout.BeginHorizontal();
+                        EditorGUILayout.HelpBox(data, MessageType.Warning);
+                        if (GUILayout.Button(ExportCommon.Localization("选择Renderer", "Select Renderer")))
+                        {
+                            Selection.activeObject = renderer;
+                        }
+                        if (GUILayout.Button(ExportCommon.Localization("选择Material", "Select Material")))
+                        {
+                            Selection.activeObject = material;
+                        }
+                        EditorGUILayout.EndHorizontal();
+                    }
+
                 }
             }
+
+            if (isShow_EnvironmentReflectionsOnce)
+            {
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.HelpBox(ExportCommon.Localization(" BVA导出URP材质时不支持EnvironmentReflections!", $"BVA does not support ElementReflections when exporting URP Materials !"), MessageType.Warning);
+                if (GUILayout.Button(ExportCommon.Localization("修复", "Fix it")))
+                {
+                    foreach (var renderer in allRenderer)
+                    {
+                        var materials = renderer.sharedMaterials;
+                        foreach (var material in materials)
+                        {
+                            material.SetFloat("_EnvironmentReflections", 0);
+                        }
+                    }
+                    
+                }
+                EditorGUILayout.EndHorizontal();
+            }
+
             return errorList;
         }
     }

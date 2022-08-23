@@ -49,32 +49,24 @@ public class abc : MonoBehaviour
 ### 代码生成器会先针对结构体或者类生成序列化和反序列化的函数，然后在生成组件的导入导出代码
 
 ```csharp
-using Newtonsoft.Json.Linq;
-using GLTF.Math;
-using GLTF.Schema;
-using Newtonsoft.Json;
-using GLTF.Extensions;
-using BVA.Extensions;
-using System.Threading.Tasks;
-using UnityEngine;
-using Color = UnityEngine.Color;
-using Vector4 = UnityEngine.Vector4;
 
 namespace GLTF.Schema.BVA
 {
-    public class BVA_abc_Extra : IExtra
+    [ComponentExtra]
+    public class BVA_abc_Extra : IComponentExtra
     {
-        public const string PROPERTY = "BVA_abc_Extra";
         public t tt;
         public x xx;
         public System.Collections.Generic.List<string> strList;
         public float[] floatArray;
         public System.Collections.Generic.List<t> ttList;
         public x[] xxArray;
-        public BVA_abc_Extra() { }
-
-        public BVA_abc_Extra(abc target)
+        public string ComponentName => ComponentType.Name;
+        public string ExtraName => GetType().Name;
+        public System.Type ComponentType => typeof(abc);
+        public void SetData(Component component)
         {
+            var target = component as abc;
             this.tt = target.tt;
             this.xx = target.xx;
             this.strList = target.strList;
@@ -82,8 +74,9 @@ namespace GLTF.Schema.BVA
             this.ttList = target.ttList;
             this.xxArray = target.xxArray;
         }
-        public static void Deserialize(GLTFRoot root, JsonReader reader, abc target)
+        public void Deserialize(GLTFRoot root, JsonReader reader, Component component)
         {
+            var target = component as abc;
             while (reader.Read())
             {
                 if (reader.TokenType == JsonToken.PropertyName)
@@ -184,52 +177,13 @@ namespace GLTF.Schema.BVA
             foreach (var item in xxArray)
                 j_xxArray.Add(Serialize_x(item));
             jo.Add(nameof(xxArray), j_xxArray);
-            return new JProperty(BVA_abc_Extra.PROPERTY, jo);
+            return new JProperty(ComponentName, jo);
+        }
+        public object Clone()
+        {
+            return new BVA_abc_Extra();
         }
     }
 }
 
-```
-
-### 导入代码的添加
-
-找到`__Node.cs`这个文件打开编辑，找到类`GLTFSceneImporter`中的下述方法，添加对于`BVA_abc_Extra`的反序列化代码
-
-```csharp
- public async Task AddNodeComponent(Node node, GameObject nodeObj)
-```
-
-```csharp
- if (node.Extras != null && node.Extras.Count > 0)
-            {
-                foreach (var extra in node.Extras)
-                {
-                    var (propertyName, reader) = GetExtraProperty(extra);
-                    UnityEngine.Component comp = null;
-                    switch (propertyName)
-                    {
-                        case BVA_abc_Extra.PROPERTY:
-                            comp = nodeObj.GetComponent<abc>();
-                            if (comp != null)
-                                BVA_abc_Extra.Deserialize(_gltfRoot, reader, comp as abc);
-                            break;
-```
-
-### 导出代码的添加
-
-找到类`GLTFSceneExporter`中的下述方法
-
-```csharp
-private NodeId ExportNode(Transform nodeTransform)
-```
-
-判断组件`BVA_abc_Extra`是否存在，如果存在则添加到Node的Extra里
-
-```csharp
-//export abc extra 
-if (nodeTransform.TryGetComponent<abc>(out var variable))
-{
-    var extra = new BVA_abc_Extra(variable);
-    node.AddExtra(BVA_abc_Extra.PROPERTY,new BVA_abc_Extra(variable));
-}
 ```

@@ -1,6 +1,4 @@
 using Newtonsoft.Json.Linq;
-using GLTF.Math;
-using GLTF.Schema;
 using Newtonsoft.Json;
 using GLTF.Extensions;
 using BVA.Extensions;
@@ -11,7 +9,8 @@ using Vector4 = UnityEngine.Vector4;
 
 namespace GLTF.Schema.BVA
 {
-public class BVA_Material_SkyBox6Sided_Extra : MaterialExtra
+[MaterialExtra]
+public class BVA_Material_SkyBox6Sided_Extra : IMaterialExtra
 {
 public const string PROPERTY = "BVA_Material_SkyBox6Sided_Extra";
 public const string SHADER_NAME = "Skybox/6 Sided";
@@ -24,34 +23,38 @@ public const string LEFTTEX = "_LeftTex";
 public const string RIGHTTEX = "_RightTex";
 public const string UPTEX = "_UpTex";
 public const string DOWNTEX = "_DownTex";
-public MaterialParam<Color> parameter_TintColor = new MaterialParam<Color>(TINT, Color.white);
-public MaterialParam<float> parameter_Exposure = new MaterialParam<float>(EXPOSURE, 1.0f);
-public MaterialParam<float> parameter_Rotation = new MaterialParam<float>(ROTATION, 1.0f);
-public MaterialTextureParam parameter_FrontZHDR = new MaterialTextureParam(FRONTTEX);
-public MaterialTextureParam parameter_BackZHDR = new MaterialTextureParam(BACKTEX);
-public MaterialTextureParam parameter_LeftXHDR = new MaterialTextureParam(LEFTTEX);
-public MaterialTextureParam parameter_RightXHDR = new MaterialTextureParam(RIGHTTEX);
-public MaterialTextureParam parameter_UpYHDR = new MaterialTextureParam(UPTEX);
-public MaterialTextureParam parameter_DownYHDR = new MaterialTextureParam(DOWNTEX);
-public BVA_Material_SkyBox6Sided_Extra(Material material, ExportTextureInfo exportTextureInfo, ExportTextureInfo exportNormalMapInfo, ExportCubemapInfo exportCubemapInfo)
+public MaterialParam<Color> parameter__Tint = new MaterialParam<Color>(TINT, Color.white);
+public MaterialParam<float> parameter__Exposure = new MaterialParam<float>(EXPOSURE, 1.0f);
+public MaterialParam<float> parameter__Rotation = new MaterialParam<float>(ROTATION, 1.0f);
+public MaterialTextureParam parameter__FrontTex = new MaterialTextureParam(FRONTTEX);
+public MaterialTextureParam parameter__BackTex = new MaterialTextureParam(BACKTEX);
+public MaterialTextureParam parameter__LeftTex = new MaterialTextureParam(LEFTTEX);
+public MaterialTextureParam parameter__RightTex = new MaterialTextureParam(RIGHTTEX);
+public MaterialTextureParam parameter__UpTex = new MaterialTextureParam(UPTEX);
+public MaterialTextureParam parameter__DownTex = new MaterialTextureParam(DOWNTEX);
+public string[] keywords;
+public string ShaderName => SHADER_NAME;
+public string ExtraName => GetType().Name;
+public void SetData(Material material, ExportTextureInfo exportTextureInfo, ExportTextureInfo exportNormalTextureInfo, ExportCubemap exportCubemapInfo)
 {
-parameter_TintColor.Value = material.GetColor(parameter_TintColor.ParamName);
-parameter_Exposure.Value = material.GetFloat(parameter_Exposure.ParamName);
-parameter_Rotation.Value = material.GetFloat(parameter_Rotation.ParamName);
-var parameter_frontzhdr_temp = material.GetTexture(parameter_FrontZHDR.ParamName);
-if (parameter_frontzhdr_temp != null) parameter_FrontZHDR.Value = exportTextureInfo(parameter_frontzhdr_temp);
-var parameter_backzhdr_temp = material.GetTexture(parameter_BackZHDR.ParamName);
-if (parameter_backzhdr_temp != null) parameter_BackZHDR.Value = exportTextureInfo(parameter_backzhdr_temp);
-var parameter_leftxhdr_temp = material.GetTexture(parameter_LeftXHDR.ParamName);
-if (parameter_leftxhdr_temp != null) parameter_LeftXHDR.Value = exportTextureInfo(parameter_leftxhdr_temp);
-var parameter_rightxhdr_temp = material.GetTexture(parameter_RightXHDR.ParamName);
-if (parameter_rightxhdr_temp != null) parameter_RightXHDR.Value = exportTextureInfo(parameter_rightxhdr_temp);
-var parameter_upyhdr_temp = material.GetTexture(parameter_UpYHDR.ParamName);
-if (parameter_upyhdr_temp != null) parameter_UpYHDR.Value = exportTextureInfo(parameter_upyhdr_temp);
-var parameter_downyhdr_temp = material.GetTexture(parameter_DownYHDR.ParamName);
-if (parameter_downyhdr_temp != null) parameter_DownYHDR.Value = exportTextureInfo(parameter_downyhdr_temp);
+keywords = material.shaderKeywords;
+parameter__Tint.Value = material.GetColor(parameter__Tint.ParamName);
+parameter__Exposure.Value = material.GetFloat(parameter__Exposure.ParamName);
+parameter__Rotation.Value = material.GetFloat(parameter__Rotation.ParamName);
+var parameter__fronttex_temp = material.GetTexture(parameter__FrontTex.ParamName);
+if (parameter__fronttex_temp != null) parameter__FrontTex.Value = exportTextureInfo(parameter__fronttex_temp);
+var parameter__backtex_temp = material.GetTexture(parameter__BackTex.ParamName);
+if (parameter__backtex_temp != null) parameter__BackTex.Value = exportTextureInfo(parameter__backtex_temp);
+var parameter__lefttex_temp = material.GetTexture(parameter__LeftTex.ParamName);
+if (parameter__lefttex_temp != null) parameter__LeftTex.Value = exportTextureInfo(parameter__lefttex_temp);
+var parameter__righttex_temp = material.GetTexture(parameter__RightTex.ParamName);
+if (parameter__righttex_temp != null) parameter__RightTex.Value = exportTextureInfo(parameter__righttex_temp);
+var parameter__uptex_temp = material.GetTexture(parameter__UpTex.ParamName);
+if (parameter__uptex_temp != null) parameter__UpTex.Value = exportTextureInfo(parameter__uptex_temp);
+var parameter__downtex_temp = material.GetTexture(parameter__DownTex.ParamName);
+if (parameter__downtex_temp != null) parameter__DownTex.Value = exportTextureInfo(parameter__downtex_temp);
 }
-public static async Task Deserialize(GLTFRoot root, JsonReader reader, UnityEngine.Material matCache, AsyncLoadTexture loadTexture,AsyncLoadTexture loadNormalMap, AsyncLoadCubemap loadCubemap)
+public async Task Deserialize(GLTFRoot root, JsonReader reader, Material matCache,AsyncLoadTexture loadTexture, AsyncLoadTexture loadNormalMap, AsyncLoadCubemap loadCubemap)
 {
 while (reader.Read())
 {
@@ -111,23 +114,42 @@ var tex = await loadTexture(texInfo.Index);
 matCache.SetTexture(BVA_Material_SkyBox6Sided_Extra.DOWNTEX, tex);
 }
 break;
+case nameof(keywords):
+{
+var keywords = reader.ReadStringList();
+foreach (var keyword in keywords)
+matCache.EnableKeyword(keyword);
+}
+break;
 }
 }
 }
 }
-public override JProperty Serialize()
+public JProperty Serialize()
 {
 JObject jo = new JObject();
-jo.Add(parameter_TintColor.ParamName, parameter_TintColor.Value.ToNumericsColorRaw().ToJArray());
-jo.Add(parameter_Exposure.ParamName, parameter_Exposure.Value);
-jo.Add(parameter_Rotation.ParamName, parameter_Rotation.Value);
-if (parameter_FrontZHDR != null && parameter_FrontZHDR.Value != null) jo.Add(parameter_FrontZHDR.ParamName, parameter_FrontZHDR.Serialize());
-if (parameter_BackZHDR != null && parameter_BackZHDR.Value != null) jo.Add(parameter_BackZHDR.ParamName, parameter_BackZHDR.Serialize());
-if (parameter_LeftXHDR != null && parameter_LeftXHDR.Value != null) jo.Add(parameter_LeftXHDR.ParamName, parameter_LeftXHDR.Serialize());
-if (parameter_RightXHDR != null && parameter_RightXHDR.Value != null) jo.Add(parameter_RightXHDR.ParamName, parameter_RightXHDR.Serialize());
-if (parameter_UpYHDR != null && parameter_UpYHDR.Value != null) jo.Add(parameter_UpYHDR.ParamName, parameter_UpYHDR.Serialize());
-if (parameter_DownYHDR != null && parameter_DownYHDR.Value != null) jo.Add(parameter_DownYHDR.ParamName, parameter_DownYHDR.Serialize());
+jo.Add(parameter__Tint.ParamName, parameter__Tint.Value.ToNumericsColorRaw().ToJArray());
+jo.Add(parameter__Exposure.ParamName, parameter__Exposure.Value);
+jo.Add(parameter__Rotation.ParamName, parameter__Rotation.Value);
+if (parameter__FrontTex != null && parameter__FrontTex.Value != null) jo.Add(parameter__FrontTex.ParamName, parameter__FrontTex.Serialize());
+if (parameter__BackTex != null && parameter__BackTex.Value != null) jo.Add(parameter__BackTex.ParamName, parameter__BackTex.Serialize());
+if (parameter__LeftTex != null && parameter__LeftTex.Value != null) jo.Add(parameter__LeftTex.ParamName, parameter__LeftTex.Serialize());
+if (parameter__RightTex != null && parameter__RightTex.Value != null) jo.Add(parameter__RightTex.ParamName, parameter__RightTex.Serialize());
+if (parameter__UpTex != null && parameter__UpTex.Value != null) jo.Add(parameter__UpTex.ParamName, parameter__UpTex.Serialize());
+if (parameter__DownTex != null && parameter__DownTex.Value != null) jo.Add(parameter__DownTex.ParamName, parameter__DownTex.Serialize());
+if(keywords != null && keywords.Length > 0)
+{
+JArray jKeywords = new JArray();
+foreach (var keyword in jKeywords)
+jKeywords.Add(keyword);
+jo.Add(nameof(keywords), jKeywords);
+}
 return new JProperty(BVA_Material_SkyBox6Sided_Extra.SHADER_NAME, jo);
 }
-}
+
+        public object Clone()
+        {
+            return new BVA_Material_SkyBox6Sided_Extra();
+        }
+    }
 }

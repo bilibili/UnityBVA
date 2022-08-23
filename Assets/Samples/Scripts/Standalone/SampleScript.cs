@@ -6,6 +6,7 @@ using UniHumanoid;
 using System.IO;
 using OggVorbis;
 using NAudio.Wave;
+using GLTF.Schema.BVA;
 
 namespace BVA.Sample
 {
@@ -55,7 +56,7 @@ namespace BVA.Sample
         }
         public async void LoadBVA()
         {
-            string[] paths = SFB.StandaloneFileBrowser.OpenFilePanel("BVA", "", new SFB.ExtensionFilter[] { new SFB.ExtensionFilter("BVA Avatar Files", "bva") }, false);
+            string[] paths = SFB.StandaloneFileBrowser.OpenFilePanel("BVA", "", new SFB.ExtensionFilter[] { new SFB.ExtensionFilter("BVA Avatar Files", "bva","glb","gltf") }, false);
             if (paths.Length == 0) return;
             BVASceneManager.Instance.onSceneLoaded += (type, scene) =>
             {
@@ -122,6 +123,7 @@ namespace BVA.Sample
                 foreach (var v in skinnedMeshRenderer.materials)
                 {
                     v.shader = replaceShader;
+                    MaterialImporter.MToon.ValidateProperties(v);
                 }
             }
         }
@@ -227,6 +229,8 @@ namespace BVA.Sample
                     Application.OpenURL(musicPath);
                 }
             }
+
+            cameraCenter.GetComponent<InitialPositionRecorder>()?.ResetData();
         }
 
         public void DestroyModel()

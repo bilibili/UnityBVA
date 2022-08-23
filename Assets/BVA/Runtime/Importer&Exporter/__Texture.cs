@@ -723,6 +723,10 @@ namespace BVA
         /// <returns></returns>
         private CubemapId ExportCubemap(Cubemap textureObj, CubemapImageType cubemapImageType, bool mipmap)
         {
+#pragma warning disable CS0162
+#if UNITY_ANDROID || UNITY_IOS
+            throw new EditorExportOnlyException("Please switch to Standalone from Build Setting!");
+#endif
             if (textureObj == null)
                 return null;
             CubemapId id = GetCubemapId(_root, textureObj);

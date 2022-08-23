@@ -10,6 +10,7 @@ Enabling developer using their own shaders.
 ![glb](pics/material_code_gen.png)
 
 > Please make sure that the NormalMap was identified correctly. Because when exporting NormalMap, an Blit operation of `Decoding` will be applied.
+> Use reflection to automatically handle the necessary import and export entries without any additional code. If you have specific keyword processing requirements, you can add an implementation in the MaterialImporter
 
 [Check this out to know how to use the generated code.](MaterialExtra.md)
 
@@ -26,6 +27,7 @@ Enabling developer using their own shaders.
 > Serializable class or struct
 > Array of primary type, List of primary type
 > Array of serializable class or struct, List of serializable class or struct
+> Attribute is used to automatically handle the necessary import and export entries without adding any additional code. If an error is reported, it can be manually modified. The component is added when the Node (that is, the GameObject) is created.
 
 [Check this out to know how to use the generated code.](ComponentExtra.md)
 

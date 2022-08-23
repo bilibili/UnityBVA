@@ -1,17 +1,16 @@
 using Newtonsoft.Json.Linq;
 using UnityEngine;
-using GLTF.Schema;
 using Newtonsoft.Json;
 using GLTF.Extensions;
 using BVA.Extensions;
+using System;
 
 namespace GLTF.Schema.BVA
 {
-    public class BVA_Renderer_Text_Extra : IExtra
+    [ComponentExtra]
+    public class BVA_Renderer_TextMesh_Extra : IComponentExtra
     {
-        public const string PROPERTY = "MeshText";
         public string text;
-        //public Font font;
         public int fontSize;
         public FontStyle fontStyle;
         public float offsetZ;
@@ -22,20 +21,9 @@ namespace GLTF.Schema.BVA
         public float tabSize;
         public bool richText;
         public Color color;
-        public BVA_Renderer_Text_Extra(TextMesh textMesh)
-        {
-            text = textMesh.text;
-            fontSize = textMesh.fontSize;
-            fontStyle = textMesh.fontStyle;
-            offsetZ = textMesh.offsetZ;
-            alignment = textMesh.alignment;
-            anchor = textMesh.anchor;
-            characterSize = textMesh.characterSize;
-            lineSpacing = textMesh.lineSpacing;
-            tabSize = textMesh.tabSize;
-            richText = textMesh.richText;
-            color = textMesh.color;
-        }
+
+        public string ComponentName => ComponentType.Name;
+        public Type ComponentType => typeof(TextMesh);
 
         public JProperty Serialize()
         {
@@ -51,10 +39,12 @@ namespace GLTF.Schema.BVA
             jo.Add(nameof(tabSize), tabSize);
             jo.Add(nameof(richText), richText);
             jo.Add(nameof(color), color.ToNumericsColorRaw().ToJArray());
-            return new JProperty(PROPERTY, jo);
+            return new JProperty(ComponentName, jo);
         }
-        public static void Deserialize(GLTFRoot _gltfRoot, JsonReader reader, TextMesh meshText)
+
+        public void Deserialize(GLTFRoot root, JsonReader reader, Component component)
         {
+            var textMesh = component as TextMesh;
             while (reader.Read())
             {
                 if (reader.TokenType == JsonToken.PropertyName)
@@ -63,41 +53,62 @@ namespace GLTF.Schema.BVA
                     switch (curProp)
                     {
                         case nameof(text):
-                            meshText.text = reader.ReadAsString();
+                            textMesh.text = reader.ReadAsString();
                             break;
                         case nameof(fontSize):
-                            meshText.fontSize = reader.ReadAsInt32().Value;
+                            textMesh.fontSize = reader.ReadAsInt32().Value;
                             break;
                         case nameof(fontStyle):
-                            meshText.fontStyle = reader.ReadStringEnum<FontStyle>();
+                            textMesh.fontStyle = reader.ReadStringEnum<FontStyle>();
                             break;
                         case nameof(offsetZ):
-                            meshText.offsetZ = reader.ReadAsFloat();
+                            textMesh.offsetZ = reader.ReadAsFloat();
                             break;
                         case nameof(alignment):
-                            meshText.alignment = reader.ReadStringEnum<TextAlignment>();
+                            textMesh.alignment = reader.ReadStringEnum<TextAlignment>();
                             break;
                         case nameof(anchor):
-                            meshText.anchor = reader.ReadStringEnum<TextAnchor>();
+                            textMesh.anchor = reader.ReadStringEnum<TextAnchor>();
                             break;
                         case nameof(characterSize):
-                            meshText.characterSize = reader.ReadAsFloat();
+                            textMesh.characterSize = reader.ReadAsFloat();
                             break;
                         case nameof(lineSpacing):
-                            meshText.lineSpacing = reader.ReadAsFloat();
+                            textMesh.lineSpacing = reader.ReadAsFloat();
                             break;
                         case nameof(tabSize):
-                            meshText.tabSize = reader.ReadAsFloat();
+                            textMesh.tabSize = reader.ReadAsFloat();
                             break;
                         case nameof(richText):
-                            meshText.richText = reader.ReadAsBoolean().Value;
+                            textMesh.richText = reader.ReadAsBoolean().Value;
                             break;
                         case nameof(color):
-                            meshText.color = reader.ReadAsRGBAColor().ToUnityColorRaw();
+                            textMesh.color = reader.ReadAsRGBAColor().ToUnityColorRaw();
                             break;
                     }
                 }
             }
+        }
+
+        public void SetData(Component component)
+        {
+            var textMesh = component as TextMesh;
+            text = textMesh.text;
+            fontSize = textMesh.fontSize;
+            fontStyle = textMesh.fontStyle;
+            offsetZ = textMesh.offsetZ;
+            alignment = textMesh.alignment;
+            anchor = textMesh.anchor;
+            characterSize = textMesh.characterSize;
+            lineSpacing = textMesh.lineSpacing;
+            tabSize = textMesh.tabSize;
+            richText = textMesh.richText;
+            color = textMesh.color;
+        }
+
+        public object Clone()
+        {
+            return new BVA_Renderer_TextMesh_Extra();
         }
     }
 }

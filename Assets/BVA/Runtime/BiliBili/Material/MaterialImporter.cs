@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using BVA;
 using UnityEngine.Rendering;
+using System.Linq;
 
 namespace GLTF.Schema.BVA
 {
@@ -21,40 +22,51 @@ namespace GLTF.Schema.BVA
         Metallic
     }
 
-
-    public abstract class MaterialExtra : IExtra
+    public interface IMaterialExtra : IExtra,ICloneable
     {
-        public abstract JProperty Serialize();
+        Task Deserialize(GLTFRoot root, JsonReader reader, Material matCache, AsyncLoadTexture loadTexture, AsyncLoadTexture loadNormalMap, AsyncLoadCubemap loadCubemap);
+        void SetData(Material material, ExportTextureInfo exportTextureInfo, ExportTextureInfo exportNormalTextureInfo, ExportCubemap exportCubemapInfo);
+        string ShaderName { get; }
+        string ExtraName { get; }
     }
+    public class MaterialExtraAttribute : Attribute {}
+
     public static class MaterialImporter
     {
-        public static readonly Dictionary<string, Tuple<Type, AsyncDeserializeCustomMaterial>> CUSTOM_SHADER_LIST = new Dictionary<string, Tuple<Type, AsyncDeserializeCustomMaterial>>
+        private static Dictionary<string, IMaterialExtra> customShaders;
+        public static Dictionary<string, IMaterialExtra> CustomShaders
         {
-            { BVA_Material_ClothLED_Extra.SHADER_NAME,new(typeof(BVA_Material_ClothLED_Extra), BVA_Material_ClothLED_Extra.Deserialize) },
-            { BVA_Material_BackLED_Extra.SHADER_NAME,new(typeof(BVA_Material_BackLED_Extra), BVA_Material_BackLED_Extra.Deserialize) },
-            { BVA_Material_UTS_Extra.SHADER_NAME,new(typeof(BVA_Material_UTS_Extra),BVA_Material_UTS_Extra.Deserialize) },
-            { BVA_Material_MToon_Extra.SHADER_NAME,new(typeof(BVA_Material_MToon_Extra),BVA_Material_MToon_Extra.Deserialize) },
-            { BVA_Material_ToonLit_Extra.SHADER_NAME,new(typeof(BVA_Material_ToonLit_Extra),BVA_Material_ToonLit_Extra.Deserialize) },
-            { BVA_Material_ToonSimple_Extra.SHADER_NAME,new(typeof(BVA_Material_ToonSimple_Extra),BVA_Material_ToonSimple_Extra.Deserialize) },
-            { BVA_Material_ToonGGX_Extra.SHADER_NAME,new(typeof(BVA_Material_ToonGGX_Extra),BVA_Material_ToonGGX_Extra.Deserialize )},
-            { BVA_Material_ToonDisolve_Extra.SHADER_NAME,new(typeof(BVA_Material_ToonDisolve_Extra),BVA_Material_ToonDisolve_Extra.Deserialize) },
-            { BVA_Material_ToonHair_Extra.SHADER_NAME,new(typeof(BVA_Material_ToonHair_Extra),BVA_Material_ToonHair_Extra.Deserialize) },
-            { BVA_Material_ToonRamp_Extra.SHADER_NAME,new(typeof(BVA_Material_ToonRamp_Extra),BVA_Material_ToonRamp_Extra.Deserialize) },
-            { BVA_Material_ToonStylized_Extra.SHADER_NAME,new(typeof(BVA_Material_ToonStylized_Extra),BVA_Material_ToonStylized_Extra.Deserialize) },
-            { BVA_Material_ToonTransparent_Extra.SHADER_NAME,new(typeof(BVA_Material_ToonTransparent_Extra),BVA_Material_ToonTransparent_Extra.Deserialize) },
-            { BVA_Material_ToonTransparentCutout_Extra.SHADER_NAME,new(typeof(BVA_Material_ToonTransparentCutout_Extra),BVA_Material_ToonTransparentCutout_Extra.Deserialize) },
-            { BVA_Material_Toon_Extra.SHADER_NAME,new(typeof(BVA_Material_Toon_Extra),BVA_Material_Toon_Extra.Deserialize) },
-            { BVA_Material_ZeldaToon_Extra.SHADER_NAME,new(typeof(BVA_Material_ZeldaToon_Extra),BVA_Material_ZeldaToon_Extra.Deserialize) },
-            { BVA_Material_SkyBox6Sided_Extra.SHADER_NAME,new(typeof(BVA_Material_SkyBox6Sided_Extra),BVA_Material_SkyBox6Sided_Extra.Deserialize) },
-            { BVA_Material_SkyboxCubemap_Extra.SHADER_NAME,new(typeof(BVA_Material_SkyboxCubemap_Extra),BVA_Material_SkyboxCubemap_Extra.Deserialize) },
-            { BVA_Material_SkyboxPanoramic_Extra.SHADER_NAME,new(typeof(BVA_Material_SkyboxPanoramic_Extra),BVA_Material_SkyboxPanoramic_Extra.Deserialize )},
-            { BVA_Material_SkyboxProcedural_Extra.SHADER_NAME,new(typeof(BVA_Material_SkyboxProcedural_Extra),BVA_Material_SkyboxProcedural_Extra.Deserialize) },
-            { BVA_Material_Decal_Extra.SHADER_NAME,new(typeof(BVA_Material_Decal_Extra),BVA_Material_Decal_Extra.Deserialize) },
-            { BVA_Material_UnlitCutout_Extra.SHADER_NAME,new(typeof(BVA_Material_UnlitCutout_Extra),BVA_Material_UnlitCutout_Extra.Deserialize) },
-            { BVA_Material_UnlitTexture_Extra.SHADER_NAME,new(typeof(BVA_Material_UnlitTexture_Extra),BVA_Material_UnlitTexture_Extra.Deserialize) },
-            { BVA_Material_UnlitTransparent_Extra.SHADER_NAME,new(typeof(BVA_Material_UnlitTransparent_Extra),BVA_Material_UnlitTransparent_Extra.Deserialize) },
-            { BVA_Material_UnlitTransparentZwrite_Extra.SHADER_NAME,new(typeof(BVA_Material_UnlitTransparentZwrite_Extra),BVA_Material_UnlitTransparentZwrite_Extra.Deserialize) },
-        };
+            get
+            {
+                if (customShaders == null)
+                {
+                    customShaders = new Dictionary<string, IMaterialExtra>();
+                    System.Reflection.Assembly asm = System.Reflection.Assembly.GetAssembly(typeof(MaterialExtraAttribute));
+                    Type[] types = asm.GetExportedTypes();
+
+                    Func<Attribute[], bool> IsAttribute = o =>
+                    {
+                        foreach (Attribute a in o)
+                        {
+                            if (a is MaterialExtraAttribute)
+                                return true;
+                        }
+                        return false;
+                    };
+
+                    var cosType = types.Where(o =>
+                    {
+                        return IsAttribute(Attribute.GetCustomAttributes(o, true));
+                    });
+                    foreach (var extraType in cosType)
+                    {
+                        IMaterialExtra extraExtra = (IMaterialExtra)Activator.CreateInstance(extraType);
+                        customShaders.Add(extraExtra.ShaderName, extraExtra);
+                    }
+                }
+                return customShaders;
+            }
+        }
 
         /// <summary>
         /// for export material extra
@@ -63,17 +75,21 @@ namespace GLTF.Schema.BVA
         /// <param name="material"></param>
         /// <param name="exportTextureInfo"></param>
         /// <returns></returns>
-        public static bool ExportMaterialExtra(Material materialObj, GLTFMaterial material, ExportTextureInfo exportTextureInfo, ExportTextureInfo exportNormalMapInfo, ExportCubemapInfo exportCubemapInfo)
+        public static bool ExportMaterialExtra(Material materialObj, GLTFMaterial material, ExportTextureInfo exportTextureInfo, ExportTextureInfo exportNormalMapInfo, ExportCubemap exportCubemapInfo)
         {
             string shader = materialObj.shader.name;
-            foreach (var kvp in CUSTOM_SHADER_LIST)
+            foreach (var kvp in CustomShaders)
             {
                 if (kvp.Key == shader)
                 {
-                    Type t = kvp.Value.Item1;
-                    MaterialExtra extra = (MaterialExtra)Activator.CreateInstance(t, new object[] { materialObj, exportTextureInfo, exportNormalMapInfo, exportCubemapInfo });
-                    if (extra != null)
-                        material.AddExtra(t.Name, extra);
+                    //Type t = kvp.Value.Item1;
+                    //MaterialExtra extra = (MaterialExtra)Activator.CreateInstance(t, new object[] { materialObj, exportTextureInfo, exportNormalMapInfo, exportCubemapInfo });
+                    if (kvp.Value != null)
+                    {
+                        IMaterialExtra me = kvp.Value.Clone() as IMaterialExtra;
+                        me.SetData(materialObj, exportTextureInfo, exportNormalMapInfo, exportCubemapInfo);
+                        material.AddExtra(me.ExtraName, me);
+                    }
                     return true;
                 }
             }
@@ -150,9 +166,9 @@ namespace GLTF.Schema.BVA
                 CoreUtils.SetKeyword(material, "_METALLICSPECGLOSSMAP", hasGlossMap);
 
                 if (material.HasProperty("_SpecularHighlights"))
-                    CoreUtils.SetKeyword(material, "_SPECULARHIGHLIGHTS_OFF",material.GetFloat("_SpecularHighlights") == 0.0f);
+                    CoreUtils.SetKeyword(material, "_SPECULARHIGHLIGHTS_OFF", material.GetFloat("_SpecularHighlights") == 0.0f);
                 if (material.HasProperty("_EnvironmentReflections"))
-                    CoreUtils.SetKeyword(material, "_ENVIRONMENTREFLECTIONS_OFF",material.GetFloat("_EnvironmentReflections") == 0.0f);
+                    CoreUtils.SetKeyword(material, "_ENVIRONMENTREFLECTIONS_OFF", material.GetFloat("_EnvironmentReflections") == 0.0f);
                 if (material.HasProperty("_OcclusionMap"))
                     CoreUtils.SetKeyword(material, "_OCCLUSIONMAP", material.GetTexture("_OcclusionMap"));
 
@@ -853,10 +869,10 @@ namespace GLTF.Schema.BVA
         #endregion
         public static async Task<Material> ImportMaterial(string shaderName, GLTFMaterial materialDef, GLTFRoot root, JsonReader reader, AsyncLoadTexture loadTexture, AsyncLoadTexture loadNormalMap, AsyncLoadCubemap loadCubemap)
         {
-            if (!CUSTOM_SHADER_LIST.ContainsKey(shaderName))
-            {
-                return null;
-            }
+            if (!CustomShaders.ContainsKey(shaderName)) return null;
+
+            //if (!CUSTOM_SHADER_LIST.ContainsKey(shaderName)){ return null;  }
+
             Shader shader = Shader.Find(shaderName);
 
             if (shader == null)
@@ -865,11 +881,12 @@ namespace GLTF.Schema.BVA
             Material matCache = new Material(shader);
             matCache.name = materialDef.Name;
 
-            await CUSTOM_SHADER_LIST[shaderName].Item2(root, reader, matCache, loadTexture, loadNormalMap, loadCubemap);
+            //await CUSTOM_SHADER_LIST[shaderName].Item2(root, reader, matCache, loadTexture, loadNormalMap, loadCubemap);
+            await CustomShaders[shaderName].Deserialize(root, reader, matCache, loadTexture, loadNormalMap, loadCubemap);
 
             SetCommonMaterialKeywords(matCache);
 
-            if (shaderName == BVA_Material_ToonLit_Extra.SHADER_NAME)
+            /*if (shaderName == BVA_Material_ToonLit_Extra.SHADER_NAME)
             {
                 ToonLit.SetupMaterialBlendMode(matCache);
                 ToonLit.SetMaterialKeywords(matCache);
@@ -883,7 +900,7 @@ namespace GLTF.Schema.BVA
                 UTS.ApplyQueueAndRenderType(matCache);
                 UTS.ApplyStencilMode(matCache);
             }
-            else if (shaderName == BVA_Material_MToon_Extra.SHADER_NAME)
+            else */if (shaderName == BVA_Material_MToon_Extra.SHADER_NAME)
             {
                 MToon.ValidateProperties(matCache, false);
             }

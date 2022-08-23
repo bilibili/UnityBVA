@@ -22,7 +22,6 @@ namespace BVA
                     if (instance == null)
                     {
                         string instanceName = typeof(T).Name;
-                        Debug.Log("Instance Name: " + instanceName);
                         GameObject instanceGO = GameObject.Find(instanceName);
 
                         if (instanceGO == null)
@@ -30,7 +29,6 @@ namespace BVA
                         instance = instanceGO.AddComponent<T>();
                         if(Application.isPlaying)
                             DontDestroyOnLoad(instanceGO);
-                        Debug.Log("Add New Singleton " + instance.name + " in Game!");
                     }
                     else
                     {

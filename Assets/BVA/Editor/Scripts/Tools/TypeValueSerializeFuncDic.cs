@@ -13,6 +13,7 @@ namespace BVA
         const string FUNCTOIN_LOAD_MATERIAL = "loadMaterial";
         const string FUNCTION_LOAD_TEXTURE = "loadTexture";
         const string FUNCTION_LOAD_SPRITE = "loadSprite";
+        const string FUNCTION_LOAD_CUBEMAP = "loadCubemap";
 
         public readonly static Dictionary<Type, Func<string, string>> TypeValueSerializeFuncDic = new Dictionary<Type, Func<string, string>>()
         {
@@ -163,6 +164,7 @@ namespace BVA
             public bool IsMaterial => MemberClassType == typeof(Material);
             public bool IsTexture => MemberClassType == typeof(Texture);
             public bool IsSprite => MemberClassType == typeof(Sprite);
+            public bool IsCubemap => MemberClassType == typeof(Cubemap);
         }
     };
 

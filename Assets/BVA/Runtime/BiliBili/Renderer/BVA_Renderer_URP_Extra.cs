@@ -1,6 +1,6 @@
 using Newtonsoft.Json.Linq;
 using UnityEngine;
-using GLTF.Schema;
+using System;
 using UnityEngine.Rendering;
 using BVA.Extensions;
 using Newtonsoft.Json;
@@ -8,9 +8,9 @@ using GLTF.Extensions;
 
 namespace GLTF.Schema.BVA
 {
-    public class BVA_Renderer_URP_Extra : IExtra
+    [ComponentExtra]
+    public class BVA_Renderer_URP_Extra : IComponentExtra
     {
-        public const string PROPERTY = "Renderer";
         public bool staticShadowCaster;
         public ReflectionProbeUsage reflectionProbeUsage;
         public uint renderingLayerMask;
@@ -27,26 +27,10 @@ namespace GLTF.Schema.BVA
         public int lightmapIndex;
         public Vector4 lightmapScaleOffset;
 
-        public BVA_Renderer_URP_Extra(Renderer renderer)
-        {
-            isStatic = renderer.gameObject.isStatic;
-            tag = renderer.gameObject.tag;
-            layer = renderer.gameObject.layer;
-#if UNITY_2021_1_OR_NEWER
-            staticShadowCaster = renderer.staticShadowCaster;
-#endif
-            reflectionProbeUsage = renderer.reflectionProbeUsage;
-            renderingLayerMask = renderer.renderingLayerMask;
-            rendererPriority = renderer.rendererPriority;
-            sortingLayerName = renderer.sortingLayerName;
-            sortingLayerID = renderer.sortingLayerID;
-            sortingOrder = renderer.sortingOrder;
-            allowOcclusionWhenDynamic = renderer.allowOcclusionWhenDynamic;
-            shadowCastingMode = renderer.shadowCastingMode;
-            receiveShadows = renderer.receiveShadows;
-            lightmapIndex = renderer.lightmapIndex;
-            lightmapScaleOffset = renderer.lightmapScaleOffset;
-        }
+        public string ComponentName => ComponentType.Name;
+        public string ExtraName => GetType().Name;
+        public Type ComponentType => typeof(Renderer);
+
         public JProperty Serialize()
         {
             JObject jo = new JObject();
@@ -65,10 +49,11 @@ namespace GLTF.Schema.BVA
             if (receiveShadows) jo.Add(nameof(receiveShadows), receiveShadows);
             jo.Add(nameof(lightmapIndex), lightmapIndex);
             jo.Add(nameof(lightmapScaleOffset), lightmapScaleOffset.ToGltfVector4Raw().ToJArray());
-            return new JProperty(PROPERTY, jo);
+            return new JProperty(ComponentName, jo);
         }
-        public static void Deserialize(GLTFRoot root, JsonReader reader, Renderer renderer)
+        public void Deserialize(GLTFRoot root, JsonReader reader, Component component)
         {
+            var renderer = component as Renderer;
             while (reader.Read())
             {
                 if (reader.TokenType == JsonToken.PropertyName)
@@ -126,6 +111,32 @@ namespace GLTF.Schema.BVA
                     }
                 }
             }
+        }
+        public void SetData(Component component)
+        {
+            var renderer = component as Renderer;
+            isStatic = renderer.gameObject.isStatic;
+            tag = renderer.gameObject.tag;
+            layer = renderer.gameObject.layer;
+#if UNITY_2021_1_OR_NEWER
+            staticShadowCaster = renderer.staticShadowCaster;
+#endif
+            reflectionProbeUsage = renderer.reflectionProbeUsage;
+            renderingLayerMask = renderer.renderingLayerMask;
+            rendererPriority = renderer.rendererPriority;
+            sortingLayerName = renderer.sortingLayerName;
+            sortingLayerID = renderer.sortingLayerID;
+            sortingOrder = renderer.sortingOrder;
+            allowOcclusionWhenDynamic = renderer.allowOcclusionWhenDynamic;
+            shadowCastingMode = renderer.shadowCastingMode;
+            receiveShadows = renderer.receiveShadows;
+            lightmapIndex = renderer.lightmapIndex;
+            lightmapScaleOffset = renderer.lightmapScaleOffset;
+        }
+
+        public object Clone()
+        {
+            return new BVA_Renderer_URP_Extra();
         }
     }
 }

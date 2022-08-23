@@ -94,19 +94,8 @@ namespace BVA.Sample
 
         public void ClearScene()
         {
-            var assets = FindObjectsOfType<AssetManager>();
-            foreach (var asset in assets)
-                Destroy(asset);
-        }
-
-        public void ListAllScenes(GLTFSceneImporter importer)
-        {
-
-        }
-
-        public void ListAllFiles()
-        {
-
+            BVASceneManager.Instance.UnloadAllScenes();
+            RebuildGUI();
         }
     }
 }

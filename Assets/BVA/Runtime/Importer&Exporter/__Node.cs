@@ -1,3 +1,6 @@
+using BVA.Component;
+using BVA.EventSystem;
+using BVA.Extensions;
 using GLTF.Schema;
 using GLTF.Schema.BVA;
 using System;
@@ -5,12 +8,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 using UnityEngine.Video;
-using UnityEngine.Rendering.Universal;
-using BVA.Extensions;
-using BVA.Component;
-using BVA.EventSystem;
 
 namespace BVA
 {
@@ -184,17 +184,6 @@ namespace BVA
                     renderer.sharedMaterials = materials;
                     renderer.UpdateGIMaterials();
                 }
-                if (node.Extras != null && node.Extras.Count > 0)
-                {
-                    foreach (var extra in node.Extras)
-                    {
-                        var (propertyName, reader) = GetExtraProperty(extra);
-                        if (propertyName == BVA_Renderer_URP_Extra.PROPERTY)
-                        {
-                            BVA_Renderer_URP_Extra.Deserialize(_gltfRoot, reader, renderer);
-                        }
-                    }
-                }
 
                 switch (Collider)
                 {
@@ -215,14 +204,14 @@ namespace BVA
                 }
             }
 
-            await AddNodeComponent(node, nodeObj);
+            AddNodeComponent(node, nodeObj);
 
             nodeObj.SetActive(true);
 
             progressStatus.NodeLoaded++;
             progress?.Report(progressStatus);
         }
-        public async Task AddNodeComponent(Node node, GameObject nodeObj)
+        public void AddNodeComponent(Node node, GameObject nodeObj)
         {
             // implement camera
             if (node.Camera != null)
@@ -255,88 +244,13 @@ namespace BVA
                 }
             }
 
-            // import decal projector
             if (node.Extras != null && node.Extras.Count > 0)
             {
                 foreach (var extra in node.Extras)
                 {
                     var (propertyName, reader) = GetExtraProperty(extra);
-                    UnityEngine.Component comp = null;
-                    switch (propertyName)
-                    {
-                        case BVA_Renderer_URP_Extra.PROPERTY:
-                            comp = nodeObj.GetComponent<Renderer>();
-                            if (comp != null)
-                                BVA_Renderer_URP_Extra.Deserialize(_gltfRoot, reader, comp as Renderer);
-                            break;
-                        case BVA_Renderer_Text_Extra.PROPERTY:
-                            comp = nodeObj.AddComponent<TextMesh>();
-                            BVA_Renderer_Text_Extra.Deserialize(_gltfRoot, reader, comp as TextMesh);
-                            break;
-                        case BVA_MirrorObject_Extra.PROPERTY:
-                            comp = nodeObj.AddComponent<MirrorObject>();
-                            BVA_MirrorObject_Extra.Deserialize(_gltfRoot, reader, comp as MirrorObject);
-                            break;
-                        case BVA_MirrorPlane_Extra.PROPERTY:
-                            comp = nodeObj.AddComponent<MirrorPlane>();
-                            BVA_MirrorPlane_Extra.Deserialize(_gltfRoot, reader, comp as MirrorPlane);
-                            break;
-#if UNITY_2021_1_OR_NEWER
-                        case BVA_Decal_Projector_Extra.PROPERTY:
-                            comp = nodeObj.AddComponent<DecalProjector>();
-                            await BVA_Decal_Projector_Extra.Deserialize(_gltfRoot, reader, comp as DecalProjector, LoadMaterial);
-                            break;
-#endif
-                        case BVA_ReflectionProbe_Extra.PROPERTY:
-                            comp = nodeObj.AddComponent<ReflectionProbe>();
-                            await BVA_ReflectionProbe_Extra.Deserialize(_gltfRoot, reader, comp as ReflectionProbe, LoadCubemap);
-                            break;
-                        case BVA_UI_InfoText_Extra.PROPERTY:
-                            comp = nodeObj.AddComponent<InfoText>();
-                            BVA_UI_InfoText_Extra.Deserialize(_gltfRoot, reader, comp as InfoText);
-                            break;
-                        case BVA_UI_RectTransform_Extra.PROPERTY:
-                            comp = nodeObj.AddComponent<RectTransform>();
-                            BVA_UI_RectTransform_Extra.Deserialize(_gltfRoot, reader, comp as RectTransform);
-                            break;
-                        case BVA_UI_Canvas_Extra.PROPERTY:
-                            comp = nodeObj.AddComponent<Canvas>();
-                            BVA_UI_Canvas_Extra.Deserialize(_gltfRoot, reader, comp as Canvas);
-                            break;
-                        case BVA_UI_CanvasScaler_Extra.PROPERTY:
-                            comp = nodeObj.AddComponent<CanvasScaler>();
-                            BVA_UI_CanvasScaler_Extra.Deserialize(_gltfRoot, reader, comp as CanvasScaler);
-                            break;
-                        case BVA_UI_GraphicRaycaster_Extra.PROPERTY:
-                            comp = nodeObj.AddComponent<GraphicRaycaster>();
-                            BVA_UI_GraphicRaycaster_Extra.Deserialize(_gltfRoot, reader, comp as GraphicRaycaster);
-                            break;
-                        case BVA_UI_Text_Extra.PROPERTY:
-                            comp = nodeObj.AddComponent<Text>();
-                            BVA_UI_Text_Extra.Deserialize(_gltfRoot, reader, comp as Text);
-                            break;
-                        case BVA_UI_InputField_Extra.PROPERTY:
-                            comp = nodeObj.AddComponent<InputField>();
-                            BVA_UI_InputField_Extra.Deserialize(_gltfRoot, reader, comp as InputField);
-                            break;
-                        case BVA_UI_Image_Extra.PROPERTY:
-                            comp = nodeObj.AddComponent<Image>();
-                            await BVA_UI_Image_Extra.Deserialize(_gltfRoot, reader, comp as Image, GetTexture, LoadMaterial, LoadSprite);
-                            break;
-                        case BVA_UI_RawImage_Extra.PROPERTY:
-                            comp = nodeObj.AddComponent<RawImage>();
-                            await BVA_UI_RawImage_Extra.Deserialize(_gltfRoot, reader, comp as RawImage, GetTexture, LoadMaterial, LoadSprite);
-                            break;
-                        case BVA_UI_Button_Extra.PROPERTY:
-                            comp = nodeObj.AddComponent<Button>();
-                            BVA_UI_Button_Extra.Deserialize(_gltfRoot, reader, comp as Button);
-                            break;
-                        case BVA_Camera_ViewPoint_Extra.PROPERTY:
-                            comp = nodeObj.AddComponent<CameraViewPoint>();
-                            BVA_Camera_ViewPoint_Extra.Deserialize(_gltfRoot, reader, comp as CameraViewPoint);
-                            break;
-                    }
-                    EventManager.Allocate<AddComponentEventArgs>().Config(ScriptEvent.Add, nodeObj, comp).Invoke();
+                    if (ComponentImporter.ImportComponent(propertyName, _gltfRoot, reader, nodeObj, GetTexture, LoadMaterial, LoadSprite, LoadCubemap))
+                        continue;
                 }
             }
 
@@ -372,8 +286,6 @@ namespace BVA
                 if (impl == null) throw new Exception($"cast {nameof(BVA_audio_audioClipExtensionFactory)} failed");
                 foreach (var v in impl.components)
                 {
-                    //    var audioExt = _gltfRoot.Extensions.Audios[v.audio.Id];
-                    //    if (audioExt != null)
                     ImportAudio(v, nodeObj);
                 }
             }
@@ -391,6 +303,8 @@ namespace BVA
                 node.Name = nodeTransform.name;
             }
 
+            ComponentImporter.ExportComponentExtra(nodeTransform.gameObject, node,ExportTexture,ExportMaterial,ExportSprite,ExportCubemap);
+
             //export camera attached to node
             if (nodeTransform.TryGetComponent<Camera>(out var unityCamera))
             {
@@ -405,57 +319,6 @@ namespace BVA
                 node.AddExtension(_root, KHR_lights_punctualExtensionFactory.EXTENSION_NAME, new KHR_lights_punctualExtensionFactory(lightId), RequireExtensions);
 
                 node.AddExtra(BVA_Light_URP_Extra.PROPERTY, new BVA_Light_URP_Extra(unityLight));
-            }
-
-            //export renderer extra 
-            if (nodeTransform.TryGetComponent<Renderer>(out var renderer))
-            {
-                var extra = new BVA_Renderer_URP_Extra(renderer);
-                node.AddExtra(BVA_Renderer_URP_Extra.PROPERTY, extra);
-            }
-#if UNITY_2021_1_OR_NEWER
-            //export decal projector extra 
-            if (nodeTransform.TryGetComponent<DecalProjector>(out var decal))
-            {
-                var extra = new BVA_Decal_Projector_Extra(decal, ExportMaterial(decal.material));
-                node.AddExtra(BVA_Decal_Projector_Extra.PROPERTY, extra);
-            }
-#endif
-            //export reflection probe extra ,baked reflectionProbe has already stored in lightmaps
-            if (nodeTransform.TryGetComponent<ReflectionProbe>(out var reflectionProbe))
-            {
-                Cubemap cubemap = (reflectionProbe.customBakedTexture ?? reflectionProbe.bakedTexture) as Cubemap;
-                if (cubemap != null)
-                {
-                    var extra = new BVA_ReflectionProbe_Extra(reflectionProbe, ExportCubemap(cubemap));
-                    node.AddExtra(BVA_ReflectionProbe_Extra.PROPERTY, extra);
-                }
-            }
-
-            //export TextMesh
-            if (nodeTransform.TryGetComponent<TextMesh>(out var textMesh))
-            {
-                var extra = new BVA_Renderer_Text_Extra(textMesh);
-                node.AddExtra(BVA_Renderer_Text_Extra.PROPERTY, extra);
-            }
-
-            //export Mirror
-            if (nodeTransform.TryGetComponent<MirrorObject>(out var mirror))
-            {
-                var extra = new BVA_MirrorObject_Extra(mirror);
-                node.AddExtra(BVA_MirrorObject_Extra.PROPERTY, extra);
-            }
-            if (nodeTransform.TryGetComponent<MirrorPlane>(out var mirrorPlane))
-            {
-                var extra = new BVA_MirrorPlane_Extra(mirrorPlane);
-                node.AddExtra(BVA_MirrorPlane_Extra.PROPERTY, extra);
-            }
-
-            //export CameraViewPoint
-            if (nodeTransform.TryGetComponent<CameraViewPoint>(out var cameraViewPoint))
-            {
-                var extra = new BVA_Camera_ViewPoint_Extra(cameraViewPoint);
-                node.AddExtra(BVA_Camera_ViewPoint_Extra.PROPERTY, extra);
             }
 
             //export metaInfo attached to node
@@ -598,35 +461,6 @@ namespace BVA
             {
                 var variableId = ExportVariableCollection(audioCollection);
                 node.AddExtension(_root, BVA_variable_collectionExtensionFactory.EXTENSION_NAME, new BVA_variable_collectionExtensionFactory(variableId), RequireExtensions);
-            }
-            #endregion
-
-            #region
-            // add UI Image
-            if (nodeTransform.TryGetComponent<Image>(out var ui_image))
-            {
-                var extra = new BVA_UI_Image_Extra(ui_image, ExportSprite(ui_image.sprite));
-                node.AddExtra(BVA_UI_Image_Extra.PROPERTY, extra);
-            }
-            if (nodeTransform.TryGetComponent<RawImage>(out var ui_rawImage))
-            {
-                var extra = new BVA_UI_RawImage_Extra(ui_rawImage, ExportTexture(ui_rawImage.texture));
-                node.AddExtra(BVA_UI_RawImage_Extra.PROPERTY, extra);
-            }
-            if (nodeTransform.TryGetComponent<Text>(out var ui_text))
-            {
-                var extra = new BVA_UI_Text_Extra(ui_text);
-                node.AddExtra(BVA_UI_Text_Extra.PROPERTY, extra);
-            }
-            if (nodeTransform.TryGetComponent<InputField>(out var ui_inputField))
-            {
-                var extra = new BVA_UI_InputField_Extra(ui_inputField);
-                node.AddExtra(BVA_UI_InputField_Extra.PROPERTY, extra);
-            }
-            if (nodeTransform.TryGetComponent<Button>(out var ui_button))
-            {
-                var extra = new BVA_UI_Button_Extra(ui_button);
-                node.AddExtra(BVA_UI_Button_Extra.PROPERTY, extra);
             }
             #endregion
 
