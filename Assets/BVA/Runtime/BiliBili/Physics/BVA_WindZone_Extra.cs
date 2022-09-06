@@ -1,17 +1,10 @@
 using Newtonsoft.Json.Linq;
-using GLTF.Math;
-using GLTF.Schema;
 using Newtonsoft.Json;
 using GLTF.Extensions;
-using BVA.Extensions;
-using System.Threading.Tasks;
-using UnityEngine;
-using Color = UnityEngine.Color;
-using Vector4 = UnityEngine.Vector4;
 
 namespace GLTF.Schema.BVA
 {
-public class BVA_WindZone_Extra : IExtra
+    public class BVA_WindZone_Extra : IExtra
 {
 public const string PROPERTY = "BVA_WindZone_Extra";
 public UnityEngine.WindZoneMode mode;

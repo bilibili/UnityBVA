@@ -63,7 +63,7 @@ namespace BVA
         public override JProperty Serialize(NodeCache cache)
         {
             JObject jo = SerializeBase(cache);
-            jo.Add(nameof(value), value.ToGltfVector4Raw().ToJArray());
+            jo.Add(nameof(value), value.ToJArray());
             return new JProperty(gltfProperty, jo);
         }
 
@@ -98,7 +98,7 @@ namespace BVA
         public override JProperty Serialize(NodeCache cache)
         {
             JObject jo = SerializeBase(cache);
-            jo.Add(nameof(value), value.ToNumericsColorRaw().ToJArray());
+            jo.Add(nameof(value), value.ToJArray());
             return new JProperty(gltfProperty, jo);
         }
 

@@ -1,4 +1,4 @@
-﻿using GLTF.Math;
+﻿using UnityEngine;
 using GLTF.Extensions;
 using Newtonsoft.Json.Linq;
 
@@ -14,7 +14,7 @@ namespace GLTF.Schema
     public class KHR_materials_pbrSpecularGlossinessExtension : IExtension
     {
         public static readonly Vector3 SPEC_FACTOR_DEFAULT = new Vector3(0.2f, 0.2f, 0.2f);
-        public static readonly double GLOSS_FACTOR_DEFAULT = 0.5d;
+        public static readonly float GLOSS_FACTOR_DEFAULT = 0.5f;
 
         /// <summary>
         /// The RGBA components of the reflected diffuse color of the material. 
@@ -23,7 +23,7 @@ namespace GLTF.Schema
         /// The <see cref="GLTFMaterial.AlphaMode"/> property specifies how alpha is interpreted. 
         /// The values are linear.
         /// </summary>
-        public Color DiffuseFactor = Color.White;
+        public Color DiffuseFactor = Color.white;
 
         /// <summary>
         /// The diffuse texture. 
@@ -46,7 +46,7 @@ namespace GLTF.Schema
         /// A value of 0.0 means the material has no glossiness or is completely rough. 
         /// This value is linear.
         /// </summary>
-        public double GlossinessFactor = GLOSS_FACTOR_DEFAULT;
+        public float GlossinessFactor = GLOSS_FACTOR_DEFAULT;
 
         /// <summary>
         /// The specular-glossiness texture is RGBA texture, containing the specular color of the material (RGB components) and its glossiness (A component). 
@@ -54,7 +54,7 @@ namespace GLTF.Schema
         /// </summary>
         public TextureInfo SpecularGlossinessTexture;
 
-        public KHR_materials_pbrSpecularGlossinessExtension(Color diffuseFactor, TextureInfo diffuseTexture, Vector3 specularFactor, double glossinessFactor, TextureInfo specularGlossinessTexture)
+        public KHR_materials_pbrSpecularGlossinessExtension(Color diffuseFactor, TextureInfo diffuseTexture, Vector3 specularFactor, float glossinessFactor, TextureInfo specularGlossinessTexture)
         {
             DiffuseFactor = diffuseFactor;
             DiffuseTexture = diffuseTexture;
@@ -83,10 +83,10 @@ namespace GLTF.Schema
         public JProperty Serialize()
         {
             JObject jo = new JObject();
-            jo.Add(KHR_materials_pbrSpecularGlossinessExtensionFactory.DIFFUSE_FACTOR, new JArray(DiffuseFactor.R, DiffuseFactor.G, DiffuseFactor.B, DiffuseFactor.A));
+            jo.Add(KHR_materials_pbrSpecularGlossinessExtensionFactory.DIFFUSE_FACTOR, new JArray(DiffuseFactor.r, DiffuseFactor.g, DiffuseFactor.b, DiffuseFactor.a));
             if (DiffuseTexture != null && DiffuseTexture.Index != null && DiffuseTexture.Index.Id >= 0)
                 jo.Add(KHR_materials_pbrSpecularGlossinessExtensionFactory.DIFFUSE_TEXTURE, new JObject(new JProperty(TextureInfo.INDEX, DiffuseTexture?.Index.Id)));
-            jo.Add(KHR_materials_pbrSpecularGlossinessExtensionFactory.SPECULAR_FACTOR, new JArray(SpecularFactor.X, SpecularFactor.Y, SpecularFactor.Z));
+            jo.Add(KHR_materials_pbrSpecularGlossinessExtensionFactory.SPECULAR_FACTOR, new JArray(SpecularFactor.x, SpecularFactor.y, SpecularFactor.z));
             jo.Add(KHR_materials_pbrSpecularGlossinessExtensionFactory.GLOSSINESS_FACTOR, GlossinessFactor);
             if (SpecularGlossinessTexture != null && SpecularGlossinessTexture.Index != null && SpecularGlossinessTexture.Index.Id >= 0)
                 jo.Add(KHR_materials_pbrSpecularGlossinessExtensionFactory.SPECULAR_GLOSSINESS_TEXTURE, new JObject(new JProperty(TextureInfo.INDEX, SpecularGlossinessTexture?.Index.Id)));
@@ -109,10 +109,10 @@ namespace GLTF.Schema
 
         public override IExtension Deserialize(GLTFRoot root, JProperty extensionToken)
         {
-            Color diffuseFactor = Color.White;
+            Color diffuseFactor = Color.white;
             TextureInfo diffuseTextureInfo = new TextureInfo();
             Vector3 specularFactor = KHR_materials_pbrSpecularGlossinessExtension.SPEC_FACTOR_DEFAULT;
-            double glossinessFactor = KHR_materials_pbrSpecularGlossinessExtension.GLOSS_FACTOR_DEFAULT;
+            float glossinessFactor = KHR_materials_pbrSpecularGlossinessExtension.GLOSS_FACTOR_DEFAULT;
             TextureInfo specularGlossinessTextureInfo = new TextureInfo();
 
             if (extensionToken != null)
@@ -123,7 +123,7 @@ namespace GLTF.Schema
                 JToken specularFactorToken = extensionToken.Value[SPECULAR_FACTOR];
                 specularFactor = specularFactorToken != null ? specularFactorToken.DeserializeAsVector3() : specularFactor;
                 JToken glossinessFactorToken = extensionToken.Value[GLOSSINESS_FACTOR];
-                glossinessFactor = glossinessFactorToken != null ? glossinessFactorToken.DeserializeAsDouble() : glossinessFactor;
+                glossinessFactor = glossinessFactorToken != null ? glossinessFactorToken.DeserializeAsFloat() : glossinessFactor;
                 specularGlossinessTextureInfo = extensionToken.Value[SPECULAR_GLOSSINESS_TEXTURE]?.DeserializeAsTexture(root);
             }
 

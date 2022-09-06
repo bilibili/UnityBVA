@@ -35,7 +35,7 @@ namespace BVA
 			}
 		}
 
-		public double DiffuseXRotation
+		public float DiffuseXRotation
 		{
 			get { return 0; }
 			set { return; }
@@ -92,7 +92,7 @@ namespace BVA
 			}
 		}
 
-		public double SpecularGlossinessXRotation
+		public float SpecularGlossinessXRotation
 		{
 			get { return 0; }
 			set { return; }
@@ -120,7 +120,7 @@ namespace BVA
 			set { _material.SetVector("_SpecColor", value); }
 		}
 
-		public double GlossinessFactor
+		public float GlossinessFactor
 		{
 			get { return _material.GetFloat("_GlossMapScale"); }
 			set

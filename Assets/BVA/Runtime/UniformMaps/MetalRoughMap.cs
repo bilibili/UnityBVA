@@ -64,7 +64,7 @@ namespace BVA
 			}
 		}
 
-		public override double MetallicRoughnessXRotation
+		public override float MetallicRoughnessXRotation
 		{
 			get { return 0; }
 			set { return; }
@@ -86,7 +86,7 @@ namespace BVA
 			set { return; }
 		}
 
-		public override double RoughnessFactor
+		public override float RoughnessFactor
 		{
 			get { return _material.GetFloat("_Glossiness"); }
 			set { _material.SetFloat("_Glossiness", (float)value); }

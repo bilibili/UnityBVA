@@ -5,6 +5,7 @@ using System.IO;
 using BVA.Component;
 using OggVorbis;
 using NAudio.Wave;
+using System;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -119,7 +120,7 @@ namespace BVA
         {
             if (clip == null)
             {
-                throw new System.Exception("audio can not be NULL.");
+                throw new ArgumentNullException("audio can not be NULL.");
             }
             var url = GetExportPath(clip);
             AudioAsset audio = new AudioAsset() { name = clip.name, uri = url, mimeType = GetAudioMime(audioType) };
@@ -192,7 +193,7 @@ namespace BVA
                             }
                     }
                 }
-                catch (System.Exception e)
+                catch (Exception e)
                 {
                     Debug.LogException(e);
                     return null;

@@ -56,7 +56,7 @@ namespace BVA.Sample
         }
         public async void LoadBVA()
         {
-            string[] paths = SFB.StandaloneFileBrowser.OpenFilePanel("BVA", "", new SFB.ExtensionFilter[] { new SFB.ExtensionFilter("BVA Avatar Files", "bva","glb","gltf") }, false);
+            string[] paths = SFB.StandaloneFileBrowser.OpenFilePanel("BVA", "", new SFB.ExtensionFilter[] { new SFB.ExtensionFilter("BVA Avatar Files", "bva", "glb", "gltf") }, false);
             if (paths.Length == 0) return;
             BVASceneManager.Instance.onSceneLoaded += (type, scene) =>
             {
@@ -93,6 +93,7 @@ namespace BVA.Sample
         }
         public void LoadVRM()
         {
+
             string[] path = SFB.StandaloneFileBrowser.OpenFilePanel("VRM File", "", new SFB.ExtensionFilter[] { new SFB.ExtensionFilter("VRM Files", "vrm") }, false);
             if (path.Length == 0) return;
             string vrmPath = path[0];
@@ -102,7 +103,9 @@ namespace BVA.Sample
             // VRM extension を parse します
             var vrm = new VRMData(data);
             var context = new VRMImporterContext(vrm);
+
             var loaded = context.Load();
+            data.Dispose();
             loaded.EnableUpdateWhenOffscreen();
             loaded.ShowMeshes();
             loaded.gameObject.name = loaded.name;
@@ -116,16 +119,8 @@ namespace BVA.Sample
             modelType = ModelType.VRM;
             logText.text += $"成功加载VRM模型 : {vrmPath}  Load Time :{CpuWatch.Ellapsed}s\n";
 
-            Shader replaceShader = Shader.Find("VRM/URP/MToon");
-            var skinnedMeshRenderers = loaded.gameObject.GetComponentsInChildren<Renderer>();
-            foreach (var skinnedMeshRenderer in skinnedMeshRenderers)
-            {
-                foreach (var v in skinnedMeshRenderer.materials)
-                {
-                    v.shader = replaceShader;
-                    MaterialImporter.MToon.ValidateProperties(v);
-                }
-            }
+            BVAMaterialExtension.ChangeMaterial(alicia.gameObject);
+            BVASpringBoneExtension.TranslateVRMPhysicToBVAPhysics(alicia.gameObject);
         }
         public void LoadVMDMotion()
         {

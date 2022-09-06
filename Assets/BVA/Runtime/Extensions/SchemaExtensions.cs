@@ -1,6 +1,7 @@
 ﻿using GLTF;
 using GLTF.Schema;
 using Newtonsoft.Json.Linq;
+using System;
 using UnityEngine;
 
 namespace BVA.Extensions
@@ -15,7 +16,7 @@ namespace BVA.Extensions
         /// unity matrix: column vectors, column-major storage, +Y up, +Z forward, +X right, left-handed
         /// multiply by a negative X scale to convert handedness
         /// </summary>
-        public static readonly GLTF.Math.Vector3 CoordinateSpaceConversionScale = new GLTF.Math.Vector3(-1, 1, 1);
+        public static readonly Vector3 CoordinateSpaceConversionScale = new Vector3(-1, 1, 1);
 
         /// <summary>
         /// Define whether the coordinate space scale conversion above means we have a change in handedness.
@@ -27,11 +28,11 @@ namespace BVA.Extensions
         {
             get
             {
-                return CoordinateSpaceConversionScale.X * CoordinateSpaceConversionScale.Y * CoordinateSpaceConversionScale.Z < 0.0f;
+                return CoordinateSpaceConversionScale.x * CoordinateSpaceConversionScale.y * CoordinateSpaceConversionScale.z < 0.0f;
             }
         }
 
-        public static readonly GLTF.Math.Vector4 TangentSpaceConversionScale = new GLTF.Math.Vector4(-1, 1, 1, -1);
+        public static readonly Vector4 TangentSpaceConversionScale = new Vector4(-1, 1, 1, -1);
 
         /// <summary>
         /// Get the converted unity translation, rotation, and scale from a gltf node
@@ -52,7 +53,7 @@ namespace BVA.Extensions
             {
                 position = node.Translation.ToUnityVector3Convert();
                 rotation = node.Rotation.ToUnityQuaternionConvert();
-                scale = node.Scale.ToUnityVector3Raw();
+                scale = node.Scale;
             }
         }
 
@@ -65,7 +66,7 @@ namespace BVA.Extensions
         {
             node.Translation = transform.localPosition.ToGltfVector3Convert();
             node.Rotation = transform.localRotation.ToGltfQuaternionConvert();
-            node.Scale = transform.localScale.ToGltfVector3Raw();
+            node.Scale = transform.localScale;
         }
 
         // todo: move to utility class
@@ -91,48 +92,34 @@ namespace BVA.Extensions
 
             rotation = Quaternion.LookRotation(mat.GetColumn(2), mat.GetColumn(1));
         }
-
-        /// <summary>
-        /// Get converted unity translation, rotation, and scale from a gltf matrix
-        /// </summary>
-        /// <param name="gltfMat">gltf matrix to get and convert properties from</param>
-        /// <param name="position">unity translation vector</param>
-        /// <param name="rotation">unity rotation quaternion</param>
-        /// <param name="scale">unity scale vector</param>
-        public static void GetTRSProperties(this GLTF.Math.Matrix4x4 gltfMat, out Vector3 position, out Quaternion rotation,
-            out Vector3 scale)
-        {
-            gltfMat.ToUnityMatrix4x4Convert().GetTRSProperties(out position, out rotation, out scale);
-        }
-
         /// <summary>
         /// Get a gltf column vector from a gltf matrix
         /// </summary>
         /// <param name="mat">gltf matrix</param>
         /// <param name="columnNum">the specified column vector from the matrix</param>
         /// <returns></returns>
-        public static GLTF.Math.Vector4 GetColumn(this GLTF.Math.Matrix4x4 mat, uint columnNum)
+        public static Vector4 GetColumn(this Matrix4x4 mat, uint columnNum)
         {
             switch (columnNum)
             {
                 case 0:
                     {
-                        return new GLTF.Math.Vector4(mat.M11, mat.M21, mat.M31, mat.M41);
+                        return new Vector4(mat.m00, mat.m10, mat.m20, mat.m30);
                     }
                 case 1:
                     {
-                        return new GLTF.Math.Vector4(mat.M12, mat.M22, mat.M32, mat.M42);
+                        return new Vector4(mat.m01, mat.m11, mat.m21, mat.m31);
                     }
                 case 2:
                     {
-                        return new GLTF.Math.Vector4(mat.M13, mat.M23, mat.M33, mat.M43);
+                        return new Vector4(mat.m02, mat.m12, mat.m22, mat.m32);
                     }
                 case 3:
                     {
-                        return new GLTF.Math.Vector4(mat.M14, mat.M24, mat.M34, mat.M44);
+                        return new Vector4(mat.m03, mat.m13, mat.m23, mat.m33);
                     }
                 default:
-                    throw new System.Exception("column num is out of bounds");
+                    throw new ArgumentOutOfRangeException("column num is out of bounds");
             }
         }
 
@@ -141,13 +128,13 @@ namespace BVA.Extensions
         /// </summary>
         /// <param name="gltfQuat">gltf quaternion</param>
         /// <returns>unity quaternion</returns>
-        public static Quaternion ToUnityQuaternionConvert(this GLTF.Math.Quaternion gltfQuat)
+        public static Quaternion ToUnityQuaternionConvert(this Quaternion gltfQuat)
         {
-            Vector3 fromAxisOfRotation = new Vector3(gltfQuat.X, gltfQuat.Y, gltfQuat.Z);
+            Vector3 fromAxisOfRotation = new Vector3(gltfQuat.x, gltfQuat.y, gltfQuat.z);
             float axisFlipScale = CoordinateSpaceConversionRequiresHandednessFlip ? -1.0f : 1.0f;
-            Vector3 toAxisOfRotation = axisFlipScale * Vector3.Scale(fromAxisOfRotation, CoordinateSpaceConversionScale.ToUnityVector3Raw());
+            Vector3 toAxisOfRotation = axisFlipScale * Vector3.Scale(fromAxisOfRotation, CoordinateSpaceConversionScale);
 
-            return new Quaternion(toAxisOfRotation.x, toAxisOfRotation.y, toAxisOfRotation.z, gltfQuat.W);
+            return new Quaternion(toAxisOfRotation.x, toAxisOfRotation.y, toAxisOfRotation.z, gltfQuat.w);
         }
 
         /// <summary>
@@ -155,13 +142,13 @@ namespace BVA.Extensions
         /// </summary>
         /// <param name="unityQuat">unity quaternion</param>
         /// <returns>gltf quaternion</returns>
-        public static GLTF.Math.Quaternion ToGltfQuaternionConvert(this Quaternion unityQuat)
+        public static Quaternion ToGltfQuaternionConvert(this Quaternion unityQuat)
         {
             Vector3 fromAxisOfRotation = new Vector3(unityQuat.x, unityQuat.y, unityQuat.z);
             float axisFlipScale = CoordinateSpaceConversionRequiresHandednessFlip ? -1.0f : 1.0f;
-            Vector3 toAxisOfRotation = axisFlipScale * Vector3.Scale(fromAxisOfRotation, CoordinateSpaceConversionScale.ToUnityVector3Raw());
+            Vector3 toAxisOfRotation = axisFlipScale * Vector3.Scale(fromAxisOfRotation, CoordinateSpaceConversionScale);
 
-            return new GLTF.Math.Quaternion(toAxisOfRotation.x, toAxisOfRotation.y, toAxisOfRotation.z, unityQuat.w);
+            return new Quaternion(toAxisOfRotation.x, toAxisOfRotation.y, toAxisOfRotation.z, unityQuat.w);
         }
         /// <summary>
         /// export as unity vector4 type
@@ -172,7 +159,7 @@ namespace BVA.Extensions
         {
             Vector3 fromAxisOfRotation = new Vector3(unityQuat.x, unityQuat.y, unityQuat.z);
             float axisFlipScale = CoordinateSpaceConversionRequiresHandednessFlip ? -1.0f : 1.0f;
-            Vector3 toAxisOfRotation = axisFlipScale * Vector3.Scale(fromAxisOfRotation, CoordinateSpaceConversionScale.ToUnityVector3Raw());
+            Vector3 toAxisOfRotation = axisFlipScale * Vector3.Scale(fromAxisOfRotation, CoordinateSpaceConversionScale);
 
             return new Vector4(toAxisOfRotation.x, toAxisOfRotation.y, toAxisOfRotation.z, unityQuat.w);
         }
@@ -181,25 +168,44 @@ namespace BVA.Extensions
         /// </summary>
         /// <param name="gltfMat">gltf matrix</param>
         /// <returns>unity matrix</returns>
-        public static Matrix4x4 ToUnityMatrix4x4Convert(this GLTF.Math.Matrix4x4 gltfMat)
+        public static Matrix4x4 ToUnityMatrix4x4Convert(this Matrix4x4 gltfMat)
         {
-            Matrix4x4 rawUnityMat = gltfMat.ToUnityMatrix4x4Raw();
-            Vector3 coordinateSpaceConversionScale = CoordinateSpaceConversionScale.ToUnityVector3Raw();
-            Matrix4x4 convert = Matrix4x4.Scale(coordinateSpaceConversionScale);
-            Matrix4x4 unityMat = convert * rawUnityMat * convert;
+            Matrix4x4 convert = Matrix4x4.Scale(CoordinateSpaceConversionScale);
+            Matrix4x4 unityMat = convert * gltfMat * convert;
             return unityMat;
         }
-
+        public static void SetValue(ref Matrix4x4 matrix, uint i, float value)
+        {
+            switch (i)
+            {
+                case 0: matrix.m00 = value; break;
+                case 1: matrix.m10 = value; break;
+                case 2: matrix.m20 = value; break;
+                case 3: matrix.m30 = value; break;
+                case 4: matrix.m01 = value; break;
+                case 5: matrix.m11 = value; break;
+                case 6: matrix.m21 = value; break;
+                case 7: matrix.m31 = value; break;
+                case 8: matrix.m02 = value; break;
+                case 9: matrix.m12 = value; break;
+                case 10: matrix.m22 = value; break;
+                case 11: matrix.m32 = value; break;
+                case 12: matrix.m03 = value; break;
+                case 13: matrix.m13 = value; break;
+                case 14: matrix.m23 = value; break;
+                case 15: matrix.m33 = value; break;
+            }
+        }
         /// <summary>
         /// Convert gltf matrix to a unity matrix
         /// </summary>
         /// <param name="unityMat">unity matrix</param>
         /// <returns>gltf matrix</returns>
-        public static GLTF.Math.Matrix4x4 ToGltfMatrix4x4Convert(this Matrix4x4 unityMat)
+        public static Matrix4x4 ToGltfMatrix4x4Convert(this Matrix4x4 unityMat)
         {
-            Vector3 coordinateSpaceConversionScale = CoordinateSpaceConversionScale.ToUnityVector3Raw();
-            Matrix4x4 convert = Matrix4x4.Scale(coordinateSpaceConversionScale);
-            GLTF.Math.Matrix4x4 gltfMat = (convert * unityMat * convert).ToGltfMatrix4x4Raw();
+            Debug.Log("matrix");
+            Matrix4x4 convert = Matrix4x4.Scale(CoordinateSpaceConversionScale);
+            Matrix4x4 gltfMat = convert * unityMat * convert;
             return gltfMat;
         }
 
@@ -208,10 +214,9 @@ namespace BVA.Extensions
         /// </summary>
         /// <param name="gltfVec3">gltf vector3</param>
         /// <returns>unity vector3</returns>
-        public static Vector3 ToUnityVector3Convert(this GLTF.Math.Vector3 gltfVec3)
+        public static Vector3 ToUnityVector3Convert(this Vector3 gltfVec3)
         {
-            Vector3 coordinateSpaceConversionScale = CoordinateSpaceConversionScale.ToUnityVector3Raw();
-            Vector3 unityVec3 = Vector3.Scale(gltfVec3.ToUnityVector3Raw(), coordinateSpaceConversionScale);
+            Vector3 unityVec3 = Vector3.Scale(gltfVec3, CoordinateSpaceConversionScale);
             return unityVec3;
         }
 
@@ -220,206 +225,63 @@ namespace BVA.Extensions
         /// </summary>
         /// <param name="unityVec3">unity Vector3</param>
         /// <returns>gltf Vector3</returns>
-        public static GLTF.Math.Vector3 ToGltfVector3Convert(this Vector3 unityVec3)
+        public static Vector3 ToGltfVector3Convert(this Vector3 unityVec3)
         {
-            Vector3 coordinateSpaceConversionScale = CoordinateSpaceConversionScale.ToUnityVector3Raw();
-            GLTF.Math.Vector3 gltfVec3 = Vector3.Scale(unityVec3, coordinateSpaceConversionScale).ToGltfVector3Raw();
+            Vector3 gltfVec3 = Vector3.Scale(unityVec3, CoordinateSpaceConversionScale);
             return gltfVec3;
         }
         public static Vector3 ToGltfVector3ConvertToUnityVector3(this Vector3 unityVec3)
         {
-            Vector3 coordinateSpaceConversionScale = CoordinateSpaceConversionScale.ToUnityVector3Raw();
-            Vector3 gltfVec3 = Vector3.Scale(unityVec3, coordinateSpaceConversionScale);
+            Vector3 gltfVec3 = Vector3.Scale(unityVec3, CoordinateSpaceConversionScale);
             return gltfVec3;
         }
-        public static GLTF.Math.Vector2 ToGltfVector2Raw(this Vector2 unityVec2)
+        public static Vector4 ToVector4(this Rect unityRect)
         {
-            GLTF.Math.Vector2 gltfVec2 = new GLTF.Math.Vector2(unityVec2.x, unityVec2.y);
-            return gltfVec2;
-        }
-        public static GLTF.Math.Vector3 ToGltfVector3Raw(this Vector3 unityVec3)
-        {
-            GLTF.Math.Vector3 gltfVec3 = new GLTF.Math.Vector3(unityVec3.x, unityVec3.y, unityVec3.z);
-            return gltfVec3;
-        }
-        public static GLTF.Math.Vector4 ToGltfVector4Raw(this Vector4 unityVec4)
-        {
-            GLTF.Math.Vector4 gltfVec4 = new GLTF.Math.Vector4(unityVec4.x, unityVec4.y, unityVec4.z, unityVec4.w);
+            Vector4 gltfVec4 = new Vector4(unityRect.x, unityRect.y, unityRect.width, unityRect.height);
             return gltfVec4;
         }
-        public static GLTF.Math.Vector2Int ToGltfVector2IntRaw(this Vector2Int unityVec2)
-        {
-            GLTF.Math.Vector2Int gltfVec2 = new GLTF.Math.Vector2Int(unityVec2.x, unityVec2.y);
-            return gltfVec2;
-        }
-        public static GLTF.Math.Vector3Int ToGltfVector3Raw(this Vector3Int unityVec3)
-        {
-            GLTF.Math.Vector3Int gltfVec3 = new GLTF.Math.Vector3Int(unityVec3.x, unityVec3.y, unityVec3.z);
-            return gltfVec3;
-        }
-        public static GLTF.Math.Vector4 ToGltfVector4Raw(this Rect unityRect)
-        {
-            GLTF.Math.Vector4 gltfVec4 = new GLTF.Math.Vector4(unityRect.x, unityRect.y, unityRect.width, unityRect.height);
-            return gltfVec4;
-        }
-        public static Matrix4x4 ToUnityMatrix4x4Raw(this GLTF.Math.Matrix4x4 gltfMat)
-        {
-            Vector4 rawUnityCol0 = gltfMat.GetColumn(0).ToUnityVector4Raw();
-            Vector4 rawUnityCol1 = gltfMat.GetColumn(1).ToUnityVector4Raw();
-            Vector4 rawUnityCol2 = gltfMat.GetColumn(2).ToUnityVector4Raw();
-            Vector4 rawUnityCol3 = gltfMat.GetColumn(3).ToUnityVector4Raw();
-            Matrix4x4 rawUnityMat = new Matrix4x4();
-            rawUnityMat.SetColumn(0, rawUnityCol0);
-            rawUnityMat.SetColumn(1, rawUnityCol1);
-            rawUnityMat.SetColumn(2, rawUnityCol2);
-            rawUnityMat.SetColumn(3, rawUnityCol3);
 
-            return rawUnityMat;
+        public static JArray ToJArray(this Vector3 vec3)
+        {
+            return new JArray(vec3.x, vec3.y, vec3.z);
         }
 
-        public static GLTF.Math.Matrix4x4 ToGltfMatrix4x4Raw(this Matrix4x4 unityMat)
+        public static JArray ToJArray(this Vector2 vec2)
         {
-            GLTF.Math.Vector4 c0 = unityMat.GetColumn(0).ToGltfVector4Raw();
-            GLTF.Math.Vector4 c1 = unityMat.GetColumn(1).ToGltfVector4Raw();
-            GLTF.Math.Vector4 c2 = unityMat.GetColumn(2).ToGltfVector4Raw();
-            GLTF.Math.Vector4 c3 = unityMat.GetColumn(3).ToGltfVector4Raw();
-            GLTF.Math.Matrix4x4 rawGltfMat = new GLTF.Math.Matrix4x4(c0.X, c0.Y, c0.Z, c0.W, c1.X, c1.Y, c1.Z, c1.W, c2.X, c2.Y, c2.Z, c2.W, c3.X, c3.Y, c3.Z, c3.W);
-            return rawGltfMat;
+            return new JArray(vec2.x, vec2.y);
         }
 
-        public static Vector2 ToUnityVector2Raw(this GLTF.Math.Vector2 vec2)
+        public static JArray ToJArray(this Vector4 vec4)
         {
-            return new Vector2(vec2.X, vec2.Y);
+            return new JArray(vec4.x, vec4.y, vec4.z, vec4.w);
         }
 
-        public static Vector2[] ToUnityVector2Raw(this GLTF.Math.Vector2[] inVecArr)
+        public static JArray ToJArray(this Quaternion quat)
         {
-            Vector2[] outVecArr = new Vector2[inVecArr.Length];
-            for (int i = 0; i < inVecArr.Length; ++i)
-            {
-                outVecArr[i] = inVecArr[i].ToUnityVector2Raw();
-            }
-            return outVecArr;
+            return new JArray(quat.x, quat.y, quat.z, quat.w);
         }
 
-        public static void ToUnityVector2Raw(this GLTF.Math.Vector2[] inArr, Vector2[] outArr, int offset = 0)
+        public static void ToUnityRaw<T>(this T[] inArr, T[] outArr, int offset)
         {
-            for (int i = 0; i < inArr.Length; i++)
-            {
-                outArr[offset + i] = inArr[i].ToUnityVector2Raw();
-            }
+            Array.Copy(inArr, 0, outArr, offset, inArr.Length);
         }
 
-        public static JArray ToJArray(this GLTF.Math.Vector3 vec3)
+        public static JArray ToJArray(this Color color)
         {
-            return new JArray(vec3.X, vec3.Y, vec3.Z);
+            return new JArray(color.r, color.g, color.b, color.a);
         }
 
-        public static JArray ToJArray(this GLTF.Math.Vector2 vec2)
+        public static Vector4 ToVector4(this Color color)
         {
-            return new JArray(vec2.X, vec2.Y);
+            return new Vector4(color.r, color.g, color.b, color.a);
         }
 
-        public static JArray ToJArray(this GLTF.Math.Vector4 vec4)
+        public static Rect ToRect(this Vector4 vec4)
         {
-            return new JArray(vec4.X, vec4.Y, vec4.Z, vec4.W);
+            return new Rect(vec4.x, vec4.y, vec4.z, vec4.w);
         }
 
-        public static JArray ToJArray(this GLTF.Math.Quaternion quat)
-        {
-            return new JArray(quat.X, quat.Y, quat.Z, quat.W);
-        }
-
-        public static Vector3 ToUnityVector3Raw(this GLTF.Math.Vector3 vec3)
-        {
-            return new Vector3(vec3.X, vec3.Y, vec3.Z);
-        }
-
-        public static Vector3[] ToUnityVector3Raw(this GLTF.Math.Vector3[] inVecArr)
-        {
-            Vector3[] outVecArr = new Vector3[inVecArr.Length];
-            for (int i = 0; i < inVecArr.Length; ++i)
-            {
-                outVecArr[i] = inVecArr[i].ToUnityVector3Raw();
-            }
-            return outVecArr;
-        }
-
-        public static void ToUnityVector3Raw(this GLTF.Math.Vector3[] inArr, Vector3[] outArr, int offset = 0)
-        {
-            for (int i = 0; i < inArr.Length; i++)
-            {
-                outArr[offset + i] = inArr[i].ToUnityVector3Raw();
-            }
-        }
-
-        public static Vector4 ToUnityVector4Raw(this GLTF.Math.Vector4 vec4)
-        {
-            return new Vector4(vec4.X, vec4.Y, vec4.Z, vec4.W);
-        }
-
-        public static Vector4[] ToUnityVector4Raw(this GLTF.Math.Vector4[] inVecArr)
-        {
-            Vector4[] outVecArr = new Vector4[inVecArr.Length];
-            for (int i = 0; i < inVecArr.Length; ++i)
-            {
-                outVecArr[i] = inVecArr[i].ToUnityVector4Raw();
-            }
-            return outVecArr;
-        }
-
-        public static void ToUnityVector4Raw(this GLTF.Math.Vector4[] inArr, Vector4[] outArr, int offset = 0)
-        {
-            for (int i = 0; i < inArr.Length; i++)
-            {
-                outArr[offset + i] = inArr[i].ToUnityVector4Raw();
-            }
-        }
-
-        public static JArray ToJArray(this GLTF.Math.Color color)
-        {
-            return new JArray(color.R, color.G, color.B, color.A);
-        }
-
-        public static Color ToUnityColorRaw(this GLTF.Math.Color color)
-        {
-            return new Color(color.R, color.G, color.B, color.A);
-        }
-
-        public static Vector4 ToUnityVector4(this GLTF.Math.Color color)
-        {
-            return new Vector4(color.R, color.G, color.B, color.A);
-        }
-
-        public static GLTF.Math.Color ToNumericsColorRaw(this Color color)
-        {
-            return new GLTF.Math.Color(color.r, color.g, color.b, color.a);
-        }
-
-        public static Color[] ToUnityColorRaw(this GLTF.Math.Color[] inColorArr)
-        {
-            Color[] outColorArr = new Color[inColorArr.Length];
-            for (int i = 0; i < inColorArr.Length; ++i)
-            {
-                outColorArr[i] = inColorArr[i].ToUnityColorRaw();
-            }
-            return outColorArr;
-        }
-
-        public static void ToUnityColorRaw(this GLTF.Math.Color[] inArr, Color[] outArr, int offset = 0)
-        {
-            for (int i = 0; i < inArr.Length; i++)
-            {
-                outArr[offset + i] = inArr[i].ToUnityColorRaw();
-            }
-        }
-
-        public static Rect ToUnityRectRaw(this GLTF.Math.Vector4 vec4)
-        {
-            return new Rect(vec4.X, vec4.Y, vec4.Z, vec4.W);
-        }
-
-        public static int[] ToIntArrayRaw(this uint[] uintArr)
+        public static int[] ToIntArray(this uint[] uintArr)
         {
             int[] intArr = new int[uintArr.Length];
             for (int i = 0; i < uintArr.Length; ++i)
@@ -442,16 +304,6 @@ namespace BVA.Extensions
 
             return intArr;
         }
-        public static GLTF.Math.Quaternion ToGltfQuaternionRaw(this Quaternion unityQuat)
-        {
-            return new GLTF.Math.Quaternion(unityQuat.x, unityQuat.y, unityQuat.z, unityQuat.w);
-        }
-
-        public static Quaternion ToUnityQuaternionRaw(this GLTF.Math.Quaternion quaternion)
-        {
-            return new Quaternion(quaternion.X, quaternion.Y, quaternion.Z, quaternion.W);
-        }
-
         /// <summary>
         /// Flips the V component of the UV (1-V) to put from glTF into Unity space
         /// </summary>
@@ -460,7 +312,7 @@ namespace BVA.Extensions
         {
             for (var i = 0; i < attributeAccessor.AccessorContent.AsVec2s.Length; i++)
             {
-                attributeAccessor.AccessorContent.AsVec2s[i].Y = 1.0f - attributeAccessor.AccessorContent.AsVec2s[i].Y;
+                attributeAccessor.AccessorContent.AsVec2s[i].y = 1.0f - attributeAccessor.AccessorContent.AsVec2s[i].y;
             }
         }
 
@@ -487,13 +339,13 @@ namespace BVA.Extensions
         /// </summary>
         /// <param name="attributeAccessor">The attribute accessor to modify</param>
         /// <param name="coordinateSpaceCoordinateScale">The coordinate space to move into</param>
-        public static void ConvertVector3CoordinateSpace(ref AttributeAccessor attributeAccessor, GLTF.Math.Vector3 coordinateSpaceCoordinateScale)
+        public static void ConvertVector3CoordinateSpace(ref AttributeAccessor attributeAccessor, Vector3 coordinateSpaceCoordinateScale)
         {
             for (int i = 0; i < attributeAccessor.AccessorContent.AsVertices.Length; i++)
             {
-                attributeAccessor.AccessorContent.AsVertices[i].X *= coordinateSpaceCoordinateScale.X;
-                attributeAccessor.AccessorContent.AsVertices[i].Y *= coordinateSpaceCoordinateScale.Y;
-                attributeAccessor.AccessorContent.AsVertices[i].Z *= coordinateSpaceCoordinateScale.Z;
+                attributeAccessor.AccessorContent.AsVertices[i].x *= coordinateSpaceCoordinateScale.x;
+                attributeAccessor.AccessorContent.AsVertices[i].y *= coordinateSpaceCoordinateScale.y;
+                attributeAccessor.AccessorContent.AsVertices[i].z *= coordinateSpaceCoordinateScale.z;
             }
         }
 
@@ -503,15 +355,15 @@ namespace BVA.Extensions
         /// <param name="array">The array to convert and copy</param>
         /// <param name="coordinateSpaceCoordinateScale">The specified coordinate space</param>
         /// <returns>The copied and converted coordinate space</returns>
-        public static Vector3[] ConvertVector3CoordinateSpaceAndCopy(Vector3[] array, GLTF.Math.Vector3 coordinateSpaceCoordinateScale)
+        public static Vector3[] ConvertVector3CoordinateSpaceAndCopy(Vector3[] array, Vector3 coordinateSpaceCoordinateScale)
         {
             var returnArray = new Vector3[array.Length];
 
             for (int i = 0; i < array.Length; i++)
             {
-                returnArray[i].x = array[i].x * coordinateSpaceCoordinateScale.X;
-                returnArray[i].y = array[i].y * coordinateSpaceCoordinateScale.Y;
-                returnArray[i].z = array[i].z * coordinateSpaceCoordinateScale.Z;
+                returnArray[i].x = array[i].x * coordinateSpaceCoordinateScale.x;
+                returnArray[i].y = array[i].y * coordinateSpaceCoordinateScale.y;
+                returnArray[i].z = array[i].z * coordinateSpaceCoordinateScale.z;
             }
 
             return returnArray;
@@ -523,15 +375,15 @@ namespace BVA.Extensions
         /// <param name="array">The array to convert and copy</param>
         /// <param name="coordinateSpaceCoordinateScale">The specified coordinate space</param>
         /// <returns>The copied and converted coordinate space</returns>
-        public static Vector3[] ConvertVector3CoordinateSpaceAndCopyNormalized(Vector3[] array, GLTF.Math.Vector3 coordinateSpaceCoordinateScale)
+        public static Vector3[] ConvertVector3CoordinateSpaceAndCopyNormalized(Vector3[] array, Vector3 coordinateSpaceCoordinateScale)
         {
             var returnArray = new Vector3[array.Length];
 
             for (int i = 0; i < array.Length; i++)
             {
-                returnArray[i].x = array[i].x * coordinateSpaceCoordinateScale.X;
-                returnArray[i].y = array[i].y * coordinateSpaceCoordinateScale.Y;
-                returnArray[i].z = array[i].z * coordinateSpaceCoordinateScale.Z;
+                returnArray[i].x = array[i].x * coordinateSpaceCoordinateScale.x;
+                returnArray[i].y = array[i].y * coordinateSpaceCoordinateScale.y;
+                returnArray[i].z = array[i].z * coordinateSpaceCoordinateScale.z;
                 returnArray[i] = returnArray[i].normalized;
             }
 
@@ -543,14 +395,14 @@ namespace BVA.Extensions
         /// </summary>
         /// <param name="attributeAccessor">The attribute accessor to modify</param>
         /// <param name="coordinateSpaceCoordinateScale">The coordinate space to move into</param>
-        public static void ConvertVector4CoordinateSpace(ref AttributeAccessor attributeAccessor, GLTF.Math.Vector4 coordinateSpaceCoordinateScale)
+        public static void ConvertVector4CoordinateSpace(ref AttributeAccessor attributeAccessor, Vector4 coordinateSpaceCoordinateScale)
         {
             for (int i = 0; i < attributeAccessor.AccessorContent.AsVec4s.Length; i++)
             {
-                attributeAccessor.AccessorContent.AsVec4s[i].X *= coordinateSpaceCoordinateScale.X;
-                attributeAccessor.AccessorContent.AsVec4s[i].Y *= coordinateSpaceCoordinateScale.Y;
-                attributeAccessor.AccessorContent.AsVec4s[i].Z *= coordinateSpaceCoordinateScale.Z;
-                attributeAccessor.AccessorContent.AsVec4s[i].W *= coordinateSpaceCoordinateScale.W;
+                attributeAccessor.AccessorContent.AsVec4s[i].x *= coordinateSpaceCoordinateScale.x;
+                attributeAccessor.AccessorContent.AsVec4s[i].y *= coordinateSpaceCoordinateScale.y;
+                attributeAccessor.AccessorContent.AsVec4s[i].z *= coordinateSpaceCoordinateScale.z;
+                attributeAccessor.AccessorContent.AsVec4s[i].w *= coordinateSpaceCoordinateScale.w;
             }
         }
 
@@ -560,16 +412,16 @@ namespace BVA.Extensions
         /// <param name="array">The array to convert and copy</param>
         /// <param name="coordinateSpaceCoordinateScale">The specified coordinate space</param>
         /// <returns>The copied and converted coordinate space</returns>
-        public static Vector4[] ConvertVector4CoordinateSpaceAndCopy(Vector4[] array, GLTF.Math.Vector4 coordinateSpaceCoordinateScale)
+        public static Vector4[] ConvertVector4CoordinateSpaceAndCopy(Vector4[] array, Vector4 coordinateSpaceCoordinateScale)
         {
             var returnArray = new Vector4[array.Length];
 
             for (var i = 0; i < array.Length; i++)
             {
-                returnArray[i].x = array[i].x * coordinateSpaceCoordinateScale.X;
-                returnArray[i].y = array[i].y * coordinateSpaceCoordinateScale.Y;
-                returnArray[i].z = array[i].z * coordinateSpaceCoordinateScale.Z;
-                returnArray[i].w = array[i].w * coordinateSpaceCoordinateScale.W;
+                returnArray[i].x = array[i].x * coordinateSpaceCoordinateScale.x;
+                returnArray[i].y = array[i].y * coordinateSpaceCoordinateScale.y;
+                returnArray[i].z = array[i].z * coordinateSpaceCoordinateScale.z;
+                returnArray[i].w = array[i].w * coordinateSpaceCoordinateScale.w;
             }
 
             return returnArray;
@@ -586,38 +438,5 @@ namespace BVA.Extensions
                 (indices[i], indices[i + 2]) = (indices[i + 2], indices[i]);
             }
         }
-        public static Matrix4x4 ToUnityMatrix4x4(this GLTF.Math.Matrix4x4 matrix)
-        {
-            return new Matrix4x4()
-            {
-                m00 = matrix.M11,
-                m01 = matrix.M12,
-                m02 = matrix.M13,
-                m03 = matrix.M14,
-                m10 = matrix.M21,
-                m11 = matrix.M22,
-                m12 = matrix.M23,
-                m13 = matrix.M24,
-                m20 = matrix.M31,
-                m21 = matrix.M32,
-                m22 = matrix.M33,
-                m23 = matrix.M34,
-                m30 = matrix.M41,
-                m31 = matrix.M42,
-                m32 = matrix.M43,
-                m33 = matrix.M44
-            };
-        }
-
-        public static Matrix4x4[] ToUnityMatrix4x4(this GLTF.Math.Matrix4x4[] inMatrixArr)
-        {
-            Matrix4x4[] outMatrixArr = new Matrix4x4[inMatrixArr.Length];
-            for (int i = 0; i < inMatrixArr.Length; ++i)
-            {
-                outMatrixArr[i] = inMatrixArr[i].ToUnityMatrix4x4();
-            }
-            return outMatrixArr;
-        }
-
     }
 }

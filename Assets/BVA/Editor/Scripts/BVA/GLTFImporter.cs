@@ -1010,10 +1010,6 @@ namespace BVA
                 if (gltfScene) DestroyImmediate(gltfScene);
                 throw;
             }
-            if (gltfScene.transform.childCount == 1)
-            {
-                gltfScene = gltfScene.transform.GetChild(0).gameObject;
-            }
             // Set main asset
             ctx.AddObjectToAsset("main asset", gltfScene);
 

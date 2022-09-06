@@ -45,7 +45,7 @@ namespace BVA
         protected async Task ConstructUnityCubemap(CubemapId cubemapId, TextureId textureId, bool mipmap)
         {
             await ConstructImageBuffer(textureId.Value, textureId.Id);
-            await ConstructTexture(textureId.Value, textureId.Id, !KeepCPUCopyOfTexture);
+            await ConstructTexture(textureId.Value, textureId.Id, !_options.KeepCPUCopyOfTexture);
             Texture2D texture = _assetCache.TextureCache[textureId.Id].Texture as Texture2D;
             string name = texture.name;
             Cubemap cubemap = CubemapExtensions.CreateCubemapFromTexture(texture, mipmap);
@@ -217,7 +217,7 @@ namespace BVA
             }
             //Texture2D texture = isLinear ? new Texture2D(0, 0, UnityEngine.Experimental.Rendering.DefaultFormat.LDR, UnityEngine.Experimental.Rendering.TextureCreationFlags.None) :
             //new Texture2D(0, 0, UnityEngine.Experimental.Rendering.DefaultFormat.LDR, UnityEngine.Experimental.Rendering.TextureCreationFlags.None);
-            Texture2D texture = new Texture2D(0, 0, TextureFormat.ARGB32, mipmap && GenerateMipMapsForTextures, isLinear);
+            Texture2D texture = new Texture2D(0, 0, TextureFormat.ARGB32, mipmap && _options.GenerateMipMapsForTextures, isLinear);
             texture.name = image.Name ?? "No name";
             texture.filterMode = filterMode;
             texture.wrapMode = wrapMode;
@@ -391,7 +391,7 @@ namespace BVA
             if (_assetCache.TextureCache[textureId.Id] == null)
             {
                 await ConstructImageBuffer(textureId.Value, textureId.Id);
-                await ConstructTexture(textureId.Value, textureId.Id, !KeepCPUCopyOfTexture);
+                await ConstructTexture(textureId.Value, textureId.Id, !_options.KeepCPUCopyOfTexture);
             }
 
             return _assetCache.TextureCache[textureId.Id].Texture;
@@ -401,7 +401,7 @@ namespace BVA
             if (_assetCache.TextureCache[textureId.Id] == null)
             {
                 await ConstructImageBuffer(textureId.Value, textureId.Id);
-                await ConstructTexture(textureId.Value, textureId.Id, !KeepCPUCopyOfTexture, true);
+                await ConstructTexture(textureId.Value, textureId.Id, !_options.KeepCPUCopyOfTexture, true);
             }
 
             return _assetCache.TextureCache[textureId.Id].Texture;
@@ -625,16 +625,16 @@ namespace BVA
                 def.Extensions = new Dictionary<string, IExtension>();
 
             def.Extensions[KHR_texture_transformExtensionFactory.EXTENSION_NAME] = new KHR_texture_transformExtension(
-                new GLTF.Math.Vector2(offset.x, -offset.y),
-                0, // TODO: support rotation
-                new GLTF.Math.Vector2(scale.x, scale.y),
-                0 // TODO: support UV channels
+                new Vector2(offset.x, -offset.y),
+                0,
+                new Vector2(scale.x, scale.y),
+                0
             );
         }
 
         private NormalTextureInfo ExportNormalTextureInfo(Texture texture, Material material)
         {
-            var info = new NormalTextureInfo() { Scale = 1.0 };
+            var info = new NormalTextureInfo() { Scale = 1.0f };
 
             info.Index = ExportTexture(texture, TextureMapType.Bump);
 
@@ -932,7 +932,7 @@ namespace BVA
         {
             if (texture == null)
             {
-                throw new System.Exception("texture can not be NULL.");
+                throw new System.ArgumentNullException("texture can not be NULL.");
             }
             if (textureMapType == TextureMapType.MetallicGloss)
                 return ExportImageInternalBuffer(texture, textureMapType);
@@ -978,7 +978,7 @@ namespace BVA
         {
             if (texture == null)
             {
-                throw new System.Exception("texture can not be NULL.");
+                throw new System.ArgumentNullException("texture can not be NULL.");
             }
 
             var image = new GLTFImage

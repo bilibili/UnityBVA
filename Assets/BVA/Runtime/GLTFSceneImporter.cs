@@ -31,6 +31,44 @@ namespace BVA
         public AsyncCoroutineHelper AsyncCoroutineHelper = null;
         public bool ThrowOnLowMemory = false;
         public bool RuntimeImport = false;
+
+        /// <summary>
+        /// Whether to keep a CPU-side copy of the mesh after upload to GPU (for example, in case normals/tangents need recalculation)
+        /// </summary>
+        public bool KeepCPUCopyOfMesh = true;
+
+        /// <summary>
+        /// Whether to keep a CPU-side copy of the texture after upload to GPU
+        /// </summary>
+        /// <remaks>
+        /// This is is necessary when a texture is used with different sampler states, as Unity doesn't allow setting
+        /// of filter and wrap modes separately form the texture object. Setting this to false will omit making a copy
+        /// of a texture in that case and use the original texture's sampler state wherever it's referenced; this is
+        /// appropriate in cases such as the filter and wrap modes being specified in the shader instead
+        /// </remaks>
+        public bool KeepCPUCopyOfTexture = false;
+
+        /// <summary>
+        /// Specifies whether the MipMap chain should be generated for model textures
+        /// </summary>
+        public bool GenerateMipMapsForTextures = true;
+
+        /// <summary>
+        /// Specifies whether Environment Reflection should be enabled for materials 
+        /// </summary>
+        public bool EnableEnvironmentReflection = false;
+
+        /// <summary>
+        /// Specifies whether Specular Highlight should be enabled for materials 
+        /// </summary>
+        public bool EnableSpecularHighlight = true;
+
+        /// <summary>
+        /// When screen coverage is above threashold and no LOD mesh cull the object
+        /// </summary>
+
+        public bool CullFarLOD = false;
+
     }
 
     public class UnityMeshData
@@ -176,48 +214,6 @@ namespace BVA
         public GameObject CreatedObject { get; private set; }
 
         /// <summary>
-        /// Adds colliders to primitive objects when created
-        /// </summary>
-        public ColliderType Collider { get; set; }
-
-        /// <summary>
-        /// Whether to keep a CPU-side copy of the mesh after upload to GPU (for example, in case normals/tangents need recalculation)
-        /// </summary>
-        public bool KeepCPUCopyOfMesh = true;
-
-        /// <summary>
-        /// Whether to keep a CPU-side copy of the texture after upload to GPU
-        /// </summary>
-        /// <remaks>
-        /// This is is necessary when a texture is used with different sampler states, as Unity doesn't allow setting
-        /// of filter and wrap modes separately form the texture object. Setting this to false will omit making a copy
-        /// of a texture in that case and use the original texture's sampler state wherever it's referenced; this is
-        /// appropriate in cases such as the filter and wrap modes being specified in the shader instead
-        /// </remaks>
-        public bool KeepCPUCopyOfTexture = false;
-
-        /// <summary>
-        /// Specifies whether the MipMap chain should be generated for model textures
-        /// </summary>
-        public bool GenerateMipMapsForTextures = true;
-
-        /// <summary>
-        /// Specifies whether Environment Reflection should be enabled for materials 
-        /// </summary>
-        public bool EnableEnvironmentReflection = false;
-
-        /// <summary>
-        /// Specifies whether Specular Highlight should be enabled for materials 
-        /// </summary>
-        public bool EnableSpecularHighlight = true;
-
-        /// <summary>
-        /// When screen coverage is above threashold and no LOD mesh cull the object
-        /// </summary>
-
-        public bool CullFarLOD = false;
-
-        /// <summary>
         /// Statistics from the scene
         /// </summary>
         public ImportStatistics Statistics;
@@ -243,6 +239,7 @@ namespace BVA
         public GameObject LastLoadedScene => _lastLoadedScene;
         public AssetManager AssetManager => _assetManager;
         protected bool _isRunning = false;
+        protected SceneType _sceneType;
 
         protected ImportProgress progressStatus = default(ImportProgress);
         protected IProgress<ImportProgress> progress = null;
@@ -275,6 +272,16 @@ namespace BVA
 
         public void Dispose()
         {
+            SceneParent = null;
+            CreatedObject = null;
+            _gltfStream.Stream?.Dispose();
+            if (_assetCache != null && _assetCache.BufferCache != null)
+            {
+                foreach (var buffer in _assetCache.BufferCache)
+                {
+                    buffer?.Dispose();
+                }
+            }
             Cleanup();
         }
 
@@ -288,8 +295,8 @@ namespace BVA
             {
                 await LoadJson(_gltfFileName);
             }
-            SceneType sceneType = BVAConst.GetSceneType(_gltfRoot.Asset.Generator);
-            if (sceneType == SceneType.Avatar)
+            _sceneType = BVAConst.GetSceneType(_gltfRoot.Asset.Generator);
+            if (_sceneType == SceneType.Avatar && _gltfRoot.IsGLB)
             {
                 await LoadAvatar();
             }
@@ -646,7 +653,7 @@ namespace BVA
             }
         }
 
-        float GetLodCoverage(List<double> lodcoverageExtras, int lodIndex)
+        float GetLodCoverage(List<float> lodcoverageExtras, int lodIndex)
         {
             if (lodcoverageExtras != null && lodIndex < lodcoverageExtras.Count)
             {
@@ -678,6 +685,13 @@ namespace BVA
                 Stream = _gltfStream.Stream,
                 ChunkOffset = (uint)_gltfStream.Stream.Position
             };
+        }
+        protected BufferCacheData ConstructMemoryBufferFromGLB(int bufferIndex)
+        {
+            GLTFParser.SeekToBinaryChunk(_gltfStream.Stream, bufferIndex, _gltfStream.StartPosition);
+            MemoryStream memoryStream = new MemoryStream();
+            _gltfStream.Stream.CopyTo(memoryStream);
+            return new BufferCacheData { Stream = memoryStream };
         }
 
         protected async Task YieldOnTimeoutAndThrowOnLowMemory()

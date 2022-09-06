@@ -33,7 +33,7 @@ namespace BVA
             }
         }
 
-        public double BaseColorXRotation
+        public float BaseColorXRotation
         {
             get { return 0; }
             set { return; }
@@ -84,7 +84,7 @@ namespace BVA
             set { return; }
         }
 
-        public double MetallicRoughnessXRotation
+        public float MetallicRoughnessXRotation
         {
             get { return 0; }
             set { return; }
@@ -102,14 +102,14 @@ namespace BVA
             set { return; }
         }
 
-        public double MetallicFactor
+        public float MetallicFactor
         {
             get { return _material.GetFloat("_Metallic"); }
             set { _material.SetFloat("_Metallic", (float)value); }
         }
 
         // not supported by the Standard shader
-        public double RoughnessFactor
+        public float RoughnessFactor
         {
             get { return 1.0f - _material.GetFloat("_Smoothness"); }
             set { _material.SetFloat("_Smoothness", 1.0f - (float)value); }

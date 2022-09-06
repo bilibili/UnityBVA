@@ -35,14 +35,14 @@ namespace GLTF.Schema.BVA
             if (sun != null && sun.IsValid) propObj.Add(nameof(sun), sun.Id);
             if (customReflection != null && customReflection.IsValid) propObj.Add(nameof(customReflection), customReflection.Id);
 
-            propObj.Add(nameof(RenderSettings.subtractiveShadowColor), RenderSettings.subtractiveShadowColor.ToNumericsColorRaw().ToJArray());
+            propObj.Add(nameof(RenderSettings.subtractiveShadowColor), RenderSettings.subtractiveShadowColor.ToJArray());
 
             propObj.Add(nameof(RenderSettings.ambientMode), RenderSettings.ambientMode.ToString());
             propObj.Add(nameof(RenderSettings.ambientIntensity), RenderSettings.ambientIntensity);
-            propObj.Add(nameof(RenderSettings.ambientLight), RenderSettings.ambientLight.ToNumericsColorRaw().ToJArray());
-            propObj.Add(nameof(RenderSettings.ambientSkyColor), RenderSettings.ambientSkyColor.ToNumericsColorRaw().ToJArray());
-            propObj.Add(nameof(RenderSettings.ambientEquatorColor), RenderSettings.ambientEquatorColor.ToNumericsColorRaw().ToJArray());
-            propObj.Add(nameof(RenderSettings.ambientGroundColor), RenderSettings.ambientGroundColor.ToNumericsColorRaw().ToJArray());
+            propObj.Add(nameof(RenderSettings.ambientLight), RenderSettings.ambientLight.ToJArray());
+            propObj.Add(nameof(RenderSettings.ambientSkyColor), RenderSettings.ambientSkyColor.ToJArray());
+            propObj.Add(nameof(RenderSettings.ambientEquatorColor), RenderSettings.ambientEquatorColor.ToJArray());
+            propObj.Add(nameof(RenderSettings.ambientGroundColor), RenderSettings.ambientGroundColor.ToJArray());
 
             propObj.Add(nameof(RenderSettings.reflectionIntensity), RenderSettings.reflectionIntensity);
             propObj.Add(nameof(RenderSettings.reflectionBounces), RenderSettings.reflectionBounces);
@@ -55,7 +55,7 @@ namespace GLTF.Schema.BVA
             propObj.Add(nameof(RenderSettings.haloStrength), RenderSettings.haloStrength);
 
             propObj.Add(nameof(RenderSettings.fog), RenderSettings.fog);
-            propObj.Add(nameof(RenderSettings.fogColor), RenderSettings.fogColor.ToNumericsColorRaw().ToJArray());
+            propObj.Add(nameof(RenderSettings.fogColor), RenderSettings.fogColor.ToJArray());
             propObj.Add(nameof(RenderSettings.fogDensity), RenderSettings.fogDensity);
             propObj.Add(nameof(RenderSettings.fogStartDistance), RenderSettings.fogStartDistance);
             propObj.Add(nameof(RenderSettings.fogEndDistance), RenderSettings.fogEndDistance);
@@ -90,7 +90,7 @@ namespace GLTF.Schema.BVA
                 switch (curProp)
                 {
                     case nameof(RenderSettings.subtractiveShadowColor):
-                        RenderSettings.subtractiveShadowColor = reader.ReadAsRGBAColor().ToUnityColorRaw();
+                        RenderSettings.subtractiveShadowColor = reader.ReadAsRGBAColor();
                         break;
                     case nameof(RenderSettings.skybox):
                         skybox = new MaterialId() { Id = reader.ReadAsInt32().Value, Root = root };
@@ -128,16 +128,16 @@ namespace GLTF.Schema.BVA
                         RenderSettings.ambientIntensity = reader.ReadAsFloat();
                         break;
                     case nameof(RenderSettings.ambientLight):
-                        RenderSettings.ambientLight = reader.ReadAsRGBAColor().ToUnityColorRaw();
+                        RenderSettings.ambientLight = reader.ReadAsRGBAColor();
                         break;
                     case nameof(RenderSettings.ambientSkyColor):
-                        RenderSettings.ambientSkyColor = reader.ReadAsRGBAColor().ToUnityColorRaw();
+                        RenderSettings.ambientSkyColor = reader.ReadAsRGBAColor();
                         break;
                     case nameof(RenderSettings.ambientEquatorColor):
-                        RenderSettings.ambientEquatorColor = reader.ReadAsRGBAColor().ToUnityColorRaw();
+                        RenderSettings.ambientEquatorColor = reader.ReadAsRGBAColor();
                         break;
                     case nameof(RenderSettings.ambientGroundColor):
-                        RenderSettings.ambientGroundColor = reader.ReadAsRGBAColor().ToUnityColorRaw();
+                        RenderSettings.ambientGroundColor = reader.ReadAsRGBAColor();
                         break;
                     case nameof(RenderSettings.reflectionIntensity):
                         RenderSettings.reflectionIntensity = reader.ReadAsFloat();
@@ -158,7 +158,7 @@ namespace GLTF.Schema.BVA
                         RenderSettings.fog = reader.ReadAsBoolean().Value;
                         break;
                     case nameof(RenderSettings.fogColor):
-                        RenderSettings.fogColor = reader.ReadAsRGBAColor().ToUnityColorRaw();
+                        RenderSettings.fogColor = reader.ReadAsRGBAColor();
                         break;
                     case nameof(RenderSettings.fogDensity):
                         RenderSettings.fogDensity = reader.ReadAsFloat();

@@ -1,4 +1,5 @@
 using System;
+using GLTF.Extensions;
 using Newtonsoft.Json;
 
 namespace GLTF.Schema
@@ -12,7 +13,7 @@ namespace GLTF.Schema
 		/// This value is ignored if normalTexture is not specified.
 		/// This value is linear.
 		/// </summary>
-		public double Scale = 1.0f;
+		public float Scale = 1.0f;
 
 		public NormalTextureInfo()
 		{
@@ -29,7 +30,7 @@ namespace GLTF.Schema
 
 			if (reader.Read() && reader.TokenType != JsonToken.StartObject)
 			{
-				throw new Exception("Asset must be an object.");
+				throw new ArgumentException("Asset must be an object.");
 			}
 
 			while (reader.Read() && reader.TokenType == JsonToken.PropertyName)
@@ -45,7 +46,7 @@ namespace GLTF.Schema
 						textureInfo.TexCoord = reader.ReadAsInt32().Value;
 						break;
 					case SCALE:
-						textureInfo.Scale = reader.ReadAsDouble().Value;
+						textureInfo.Scale = reader.ReadAsFloat();
 						break;
 					default:
 						textureInfo.DefaultPropertyDeserializer(root, reader);

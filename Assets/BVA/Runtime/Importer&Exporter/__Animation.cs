@@ -78,7 +78,7 @@ namespace BVA
                 path.Insert(0, current.name);
             }
 
-            throw new Exception("no RelativePath");
+            throw new ArgumentException("no RelativePath");
         }
 
         protected virtual async Task BuildAnimationSamplers(bool isAnimatorClip, GLTFAnimation animation, int animationId)
@@ -345,7 +345,6 @@ namespace BVA
 
                     var node = await GetNode(channel.Target.Node.Id);
                     string relativePath = RelativePathFrom(node.transform, root);
-                    Debug.Log(relativePath);
                     NumericArray input = samplerCache.Input.AccessorContent, output = samplerCache.Output.AccessorContent;
 
                     string[] propertyNames;
@@ -372,7 +371,7 @@ namespace BVA
                                               (data, frame) =>
                                               {
                                                   var rotation = data.AsVec4s[frame];
-                                                  var quaternion = new GLTF.Math.Quaternion(rotation.X, rotation.Y, rotation.Z, rotation.W).ToUnityQuaternionConvert();
+                                                  var quaternion = new Quaternion(rotation.x, rotation.y, rotation.z, rotation.w).ToUnityQuaternionConvert();
                                                   return new float[] { quaternion.x, quaternion.y, quaternion.z, quaternion.w };
                                               });
 
@@ -385,7 +384,7 @@ namespace BVA
                                               samplerCache.Interpolation, typeof(Transform),
                                               (data, frame) =>
                                               {
-                                                  var scale = data.AsVec3s[frame].ToUnityVector3Raw();
+                                                  var scale = data.AsVec3s[frame];
                                                   return new float[] { scale.x, scale.y, scale.z };
                                               });
                             break;

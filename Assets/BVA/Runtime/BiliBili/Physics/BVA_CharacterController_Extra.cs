@@ -1,17 +1,11 @@
 using Newtonsoft.Json.Linq;
-using GLTF.Math;
-using GLTF.Schema;
 using Newtonsoft.Json;
 using GLTF.Extensions;
 using BVA.Extensions;
-using System.Threading.Tasks;
-using UnityEngine;
-using Color = UnityEngine.Color;
-using Vector4 = UnityEngine.Vector4;
 
 namespace GLTF.Schema.BVA
 {
-public class BVA_CharacterController_Extra : IExtra
+    public class BVA_CharacterController_Extra : IExtra
 {
 public const string PROPERTY = "BVA_CharacterController_Extra";
 public float radius;
@@ -52,7 +46,7 @@ case nameof(BVA_CharacterController_Extra.height):
 target.height= reader.ReadAsFloat();
 break;
 case nameof(BVA_CharacterController_Extra.center):
-target.center= reader.ReadAsVector3().ToUnityVector3Raw();
+target.center= reader.ReadAsVector3();
 break;
 case nameof(BVA_CharacterController_Extra.slopeLimit):
 target.slopeLimit= reader.ReadAsFloat();
@@ -81,7 +75,7 @@ public JProperty Serialize()
 JObject jo = new JObject();
 jo.Add(nameof(radius), radius);
 jo.Add(nameof(height), height);
-jo.Add(nameof(center), center.ToGltfVector3Raw().ToJArray());
+jo.Add(nameof(center), center.ToJArray());
 jo.Add(nameof(slopeLimit), slopeLimit);
 jo.Add(nameof(stepOffset), stepOffset);
 jo.Add(nameof(skinWidth), skinWidth);

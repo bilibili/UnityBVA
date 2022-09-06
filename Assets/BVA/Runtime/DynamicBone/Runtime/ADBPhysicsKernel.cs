@@ -31,6 +31,7 @@ namespace ADBRuntime
         private ADBRunTimeJobsTable.PointUpdate pointUpdate;
         private ADBRunTimeJobsTable.ConstraintUpdate constraintUpdates;
         private ADBRunTimeJobsTable.ConstraintForceUpdateByPoint constraintForceUpdateByPoint;
+        private ADBRunTimeJobsTable.ClacSpringBonePhysics clacSpringBonePhysics;
         private ADBRunTimeJobsTable.JobPointToTransform pointToTransform;
 
 
@@ -73,13 +74,13 @@ namespace ADBRuntime
             }
 
             CompleteHandleArray.Clear();
-
+            deltaTime = math.clamp(deltaTime, 0, 1 / 60f);
             float oneDivideIteration = 1.0f / iteration;
             pointToTransform.startDampTime = startDampTime;
 
             constraintForceUpdateByPoint.oneDivideIteration = constraintUpdates.oneDivideIteration = pointUpdate.oneDivideIteration = colliderCalcAABB.oneDivideIteration = pointGet.oneDivideIteration = colliderUpdate.oneDivideIteration= oneDivideIteration;
 
-            pointGet.deltaTime= pointUpdate.deltaTime = deltaTime;
+            clacSpringBonePhysics.deltaTime= pointGet.deltaTime= pointUpdate.deltaTime = deltaTime;
             pointToTransform.worldScale=  pointGet.worldScale = scale;
             colliderCalcAABB.localScale = 1 / scale;
             pointUpdate.isOptimize = isOptimize;
@@ -96,10 +97,10 @@ namespace ADBRuntime
                 
                 colliderCalcAABB.Run(pointUpdate.colliderCount);
                 pointGet.Schedule(pointTransformsAccessArray).Complete();
-
+                clacSpringBonePhysics.Run(pointReadNativeArray.Length);
                 for (int i = 0; i < iteration; i++)
                 {
-                    pointUpdate.Run(pointReadNativeArray.Length);
+                   pointUpdate.Run(pointReadNativeArray.Length);
                     colliderUpdate.Run(pointUpdate.colliderCount);
 
 
@@ -112,10 +113,12 @@ namespace ADBRuntime
                         constraintForceUpdateByPoint.Run(pointReadNativeArray.Length);
                     }
                 }
+
             }
             else
             {
                 Hjob = JobHandle.CombineDependencies(colliderCalcAABB.Schedule(pointUpdate.colliderCount, BatchLength), pointGet.Schedule(pointTransformsAccessArray));
+                Hjob = clacSpringBonePhysics.Schedule(pointReadNativeArray.Length, Hjob);
                 CompleteHandleArray.Add(Hjob);
                 NativeList<JobHandle> HJobs = CompleteHandleArray;
 
@@ -155,9 +158,10 @@ namespace ADBRuntime
                         }
                     }
                 }
+
                 Hjob = JobHandle.CombineDependencies(HJobs.AsArray());
             }
-
+            
             Hjob = pointToTransform.Schedule(pointTransformsAccessArray, Hjob);
             #endregion
             return true;
@@ -260,6 +264,7 @@ namespace ADBRuntime
             constraintUpdates = new ADBRunTimeJobsTable.ConstraintUpdate();
             constraintForceUpdateByPoint = new ADBRunTimeJobsTable.ConstraintForceUpdateByPoint();
             pointToTransform = new ADBRunTimeJobsTable.JobPointToTransform();
+            clacSpringBonePhysics = new ClacSpringBonePhysics();
 
             pointGet.pReadPoints = (PointRead*)pointReadNativeArray.GetUnsafePtr();
             pointGet.pReadWritePoints = (PointReadWrite*)pointReadWriteListNativeArray.GetUnsafePtr();
@@ -269,6 +274,11 @@ namespace ADBRuntime
             pointUpdate.pReadWritePoints = (PointReadWrite*)pointReadWriteListNativeArray.GetUnsafePtr();
             pointUpdate.pReadColliders = (ColliderRead*)collidersReadNativeArray.GetUnsafePtr();
             pointUpdate.pReadWriteColliders = (ColliderReadWrite*)collidersReadWriteNativeArray.GetUnsafePtr();
+
+            clacSpringBonePhysics.pReadPoints = (PointRead*)pointReadNativeArray.GetUnsafePtr();
+            clacSpringBonePhysics.pReadWritePoints = (PointReadWrite*)pointReadWriteListNativeArray.GetUnsafePtr();
+            clacSpringBonePhysics.pReadColliders = (ColliderRead*)collidersReadNativeArray.GetUnsafePtr();
+            clacSpringBonePhysics.pReadWriteColliders = (ColliderReadWrite*)collidersReadWriteNativeArray.GetUnsafePtr();
 
             constraintUpdates.pReadPoints = (PointRead*)pointReadNativeArray.GetUnsafePtr();
             constraintUpdates.pReadWritePoints = (PointReadWrite*)pointReadWriteListNativeArray.GetUnsafePtr();
@@ -327,15 +337,36 @@ namespace ADBRuntime
             isInitialize = false;
             Hjob.Complete();
 
-            pointReadNativeArray.Dispose();
-            pointReadWriteListNativeArray.Dispose();
-            pointTransformsAccessArray.Dispose();
-            positionFliterNativeArray.Dispose();
-            constraintReadList.Dispose();
-            ConstraintReadMultiHashMap.Dispose();
-            collidersReadNativeArray.Dispose();
-            collidersReadWriteNativeArray.Dispose();
-            CompleteHandleArray.Dispose();
+
+            DisposeNativeArray(pointReadNativeArray);
+            DisposeNativeArray(pointReadWriteListNativeArray);
+            DisposeNativeArray(positionFliterNativeArray);
+            DisposeNativeArray(constraintReadList);
+            DisposeNativeArray(collidersReadNativeArray);
+            DisposeNativeArray(collidersReadWriteNativeArray);
+
+            if (pointTransformsAccessArray.isCreated)
+            {
+                pointTransformsAccessArray.Dispose();
+            }
+
+            if (CompleteHandleArray.IsCreated)
+            {
+                CompleteHandleArray.Dispose();
+            }
+
+            if (ConstraintReadMultiHashMap.IsCreated)
+            {
+                ConstraintReadMultiHashMap.Dispose();
+            }
+        }
+
+        private void DisposeNativeArray<T>(NativeArray<T> data) where T : struct
+        {
+            if ( data.IsCreated)
+            {
+                data.Dispose();
+            }
         }
 
         internal void DrawGizmos()

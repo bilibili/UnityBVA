@@ -186,10 +186,10 @@ namespace BVA
                         track.pingpongOnce = reader.ReadAsBoolean().Value;
                         break;
                     case nameof(track.startColor):
-                        track.startColor = reader.ReadAsRGBAColor().ToUnityColorRaw();
+                        track.startColor = reader.ReadAsRGBAColor();
                         break;
                     case nameof(track.endColor):
-                        track.endColor = reader.ReadAsRGBAColor().ToUnityColorRaw();
+                        track.endColor = reader.ReadAsRGBAColor();
                         break;
                 }
             }
@@ -294,7 +294,7 @@ namespace BVA
                         track.index = reader.ReadAsInt32().Value;
                         break;
                     case nameof(track.value):
-                        track.value = reader.ReadAsRGBAColor().ToUnityColorRaw();
+                        track.value = reader.ReadAsRGBAColor();
                         break;
                 }
             }
@@ -329,7 +329,7 @@ namespace BVA
                         track.index = reader.ReadAsInt32().Value;
                         break;
                     case nameof(track.value):
-                        track.value = reader.ReadAsRGBAColor().ToUnityVector4();
+                        track.value = reader.ReadAsRGBAColor().ToVector4();
                         break;
                 }
             }

@@ -6,6 +6,7 @@ namespace GLTF
 	{
 		public AccessorId AccessorId { get; set; }
 		public NumericArray AccessorContent { get; set; }
+		public NativeNumericArray NativeAccessorContent { get; set; }
 		public System.IO.Stream Stream { get; set; }
 		public uint Offset { get; set; }
 

@@ -2,11 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using GLTF.Extensions;
-using GLTF.Math;
 using Newtonsoft.Json;
 using System.Runtime.InteropServices;
 using GLTF.Utilities;
+using UnityEngine;
 using BVA.Extensions;
+using Unity.Collections;
+using Unity.Jobs;
+using Unity.Collections.LowLevel.Unsafe;
+
 
 namespace GLTF.Schema
 {
@@ -294,7 +298,19 @@ namespace GLTF.Schema
                 return *((float*)offsetBuffer);
             }
         }
-
+        private static unsafe float GetFloatElement(byte* buffer, int byteOffset)
+        {
+            byte* offsetBuffer = buffer + byteOffset;
+            {
+                return *((float*)offsetBuffer);
+            }
+        }
+        private static unsafe float GetFloatElement(NativeArray<byte> buffer, int byteOffset)
+        {
+            byte* offsetBuffer = (byte*)buffer.GetUnsafeReadOnlyPtr();
+            offsetBuffer += byteOffset;
+            return *((float*)offsetBuffer);
+        }
         private static void GetTypeDetails(
             GLTFComponentType type,
             out uint componentSize,
@@ -423,13 +439,13 @@ namespace GLTF.Schema
             {
                 if (ComponentType == GLTFComponentType.Float)
                 {
-                    arr[idx].X = GetFloatElement(bufferViewData, totalByteOffset + idx * stride);
-                    arr[idx].Y = GetFloatElement(bufferViewData, totalByteOffset + idx * stride + componentSize);
+                    arr[idx].x = GetFloatElement(bufferViewData, totalByteOffset + idx * stride);
+                    arr[idx].y = GetFloatElement(bufferViewData, totalByteOffset + idx * stride + componentSize);
                 }
                 else
                 {
-                    arr[idx].X = GetDiscreteElement(bufferViewData, totalByteOffset + idx * stride, ComponentType) / maxValue;
-                    arr[idx].Y = GetDiscreteElement(bufferViewData, totalByteOffset + idx * stride + componentSize, ComponentType) / maxValue;
+                    arr[idx].x = GetDiscreteElement(bufferViewData, totalByteOffset + idx * stride, ComponentType) / maxValue;
+                    arr[idx].y = GetDiscreteElement(bufferViewData, totalByteOffset + idx * stride + componentSize, ComponentType) / maxValue;
                 }
             }
 
@@ -473,13 +489,13 @@ namespace GLTF.Schema
                 uint byteOffset = totalByteOffset + idx * stride;
                 if (ComponentType == GLTFComponentType.Float)
                 {
-                    arr[idx].X = GetFloatElement(bufferViewData, byteOffset);
-                    arr[idx].Y = 1.0f - GetFloatElement(bufferViewData, byteOffset + componentSize);
+                    arr[idx].x = GetFloatElement(bufferViewData, byteOffset);
+                    arr[idx].y = 1.0f - GetFloatElement(bufferViewData, byteOffset + componentSize);
                 }
                 else
                 {
-                    arr[idx].X = GetDiscreteElement(bufferViewData, byteOffset, ComponentType) / maxValue;
-                    arr[idx].Y = 1.0f - GetDiscreteElement(bufferViewData, byteOffset + componentSize, ComponentType) / maxValue;
+                    arr[idx].x = GetDiscreteElement(bufferViewData, byteOffset, ComponentType) / maxValue;
+                    arr[idx].y = 1.0f - GetDiscreteElement(bufferViewData, byteOffset + componentSize, ComponentType) / maxValue;
                 }
             }
 
@@ -512,15 +528,15 @@ namespace GLTF.Schema
                 uint baseOffset = totalByteOffset + (idx * stride);
                 if (ComponentType == GLTFComponentType.Float)
                 {
-                    arr[idx].X = GetFloatElement(bufferViewData, baseOffset);
-                    arr[idx].Y = GetFloatElement(bufferViewData, baseOffset + componentSize);
-                    arr[idx].Z = GetFloatElement(bufferViewData, baseOffset + componentSize * 2);
+                    arr[idx].x = GetFloatElement(bufferViewData, baseOffset);
+                    arr[idx].y = GetFloatElement(bufferViewData, baseOffset + componentSize);
+                    arr[idx].z = GetFloatElement(bufferViewData, baseOffset + componentSize * 2);
                 }
                 else
                 {
-                    arr[idx].X = GetDiscreteElement(bufferViewData, baseOffset, ComponentType) / maxValue;
-                    arr[idx].Y = GetDiscreteElement(bufferViewData, baseOffset + componentSize, ComponentType) / maxValue;
-                    arr[idx].Z = GetDiscreteElement(bufferViewData, baseOffset + componentSize * 2, ComponentType) / maxValue;
+                    arr[idx].x = GetDiscreteElement(bufferViewData, baseOffset, ComponentType) / maxValue;
+                    arr[idx].y = GetDiscreteElement(bufferViewData, baseOffset + componentSize, ComponentType) / maxValue;
+                    arr[idx].z = GetDiscreteElement(bufferViewData, baseOffset + componentSize * 2, ComponentType) / maxValue;
                 }
             }
 
@@ -548,9 +564,9 @@ namespace GLTF.Schema
             for (uint idx = 0; idx < Count; idx++)
             {
                 uint baseOffset = totalByteOffset + (idx * stride);
-                arr[idx].X = GetFloatElement(bufferViewData, baseOffset) * conversionScale.X;
-                arr[idx].Y = GetFloatElement(bufferViewData, baseOffset + componentSize) * conversionScale.Y;
-                arr[idx].Z = GetFloatElement(bufferViewData, baseOffset + componentSize * 2) * conversionScale.Z;
+                arr[idx].x = GetFloatElement(bufferViewData, baseOffset) * conversionScale.x;
+                arr[idx].y = GetFloatElement(bufferViewData, baseOffset + componentSize) * conversionScale.y;
+                arr[idx].z = GetFloatElement(bufferViewData, baseOffset + componentSize * 2) * conversionScale.z;
             }
 
             contents.AsVec3s = arr;
@@ -587,17 +603,17 @@ namespace GLTF.Schema
                 uint baseOffset = totalByteOffset + (idx * stride);
                 if (ComponentType == GLTFComponentType.Float)
                 {
-                    arr[idx].X = GetFloatElement(bufferViewData, baseOffset);
-                    arr[idx].Y = GetFloatElement(bufferViewData, baseOffset + componentSize);
-                    arr[idx].Z = GetFloatElement(bufferViewData, baseOffset + componentSize * 2);
-                    arr[idx].W = GetFloatElement(bufferViewData, baseOffset + componentSize * 3);
+                    arr[idx].x = GetFloatElement(bufferViewData, baseOffset);
+                    arr[idx].y = GetFloatElement(bufferViewData, baseOffset + componentSize);
+                    arr[idx].z = GetFloatElement(bufferViewData, baseOffset + componentSize * 2);
+                    arr[idx].w = GetFloatElement(bufferViewData, baseOffset + componentSize * 3);
                 }
                 else
                 {
-                    arr[idx].X = GetDiscreteElement(bufferViewData, baseOffset, ComponentType) / maxValue;
-                    arr[idx].Y = GetDiscreteElement(bufferViewData, baseOffset + componentSize, ComponentType) / maxValue;
-                    arr[idx].Z = GetDiscreteElement(bufferViewData, baseOffset + componentSize * 2, ComponentType) / maxValue;
-                    arr[idx].W = GetDiscreteElement(bufferViewData, baseOffset + componentSize * 3, ComponentType) / maxValue;
+                    arr[idx].x = GetDiscreteElement(bufferViewData, baseOffset, ComponentType) / maxValue;
+                    arr[idx].y = GetDiscreteElement(bufferViewData, baseOffset + componentSize, ComponentType) / maxValue;
+                    arr[idx].z = GetDiscreteElement(bufferViewData, baseOffset + componentSize * 2, ComponentType) / maxValue;
+                    arr[idx].w = GetDiscreteElement(bufferViewData, baseOffset + componentSize * 3, ComponentType) / maxValue;
                 }
             }
 
@@ -632,31 +648,31 @@ namespace GLTF.Schema
             for (uint idx = 0; idx < Count; idx++)
             {
                 uint baseOffset = totalByteOffset + (idx * stride);
-                arr[idx].X = GetFloatElement(bufferViewData, baseOffset) * conversionScale.X;
-                arr[idx].Y = GetFloatElement(bufferViewData, baseOffset + componentSize) * conversionScale.Y;
-                arr[idx].Z = GetFloatElement(bufferViewData, baseOffset + componentSize * 2) * conversionScale.Z;
-                arr[idx].W = GetFloatElement(bufferViewData, baseOffset + componentSize * 3) * conversionScale.W;
+                arr[idx].x = GetFloatElement(bufferViewData, baseOffset) * conversionScale.x;
+                arr[idx].y = GetFloatElement(bufferViewData, baseOffset + componentSize) * conversionScale.y;
+                arr[idx].z = GetFloatElement(bufferViewData, baseOffset + componentSize * 2) * conversionScale.z;
+                arr[idx].w = GetFloatElement(bufferViewData, baseOffset + componentSize * 3) * conversionScale.w;
             }
 
             contents.AsVec4s = arr;
             return arr;
         }
 
-        public Color[] AsColorArray(ref NumericArray contents, byte[] bufferViewData, uint offset)
+        public void AsColorArray(ref NumericArray contents, byte[] bufferViewData, uint offset)
         {
             if (contents.AsColors != null)
             {
-                return contents.AsColors;
+                return;
             }
 
             if (Type != GLTFAccessorAttributeType.VEC3 && Type != GLTFAccessorAttributeType.VEC4)
             {
-                return null;
+                return;
             }
 
             if (ComponentType == GLTFComponentType.UnsignedInt)
             {
-                return null;
+                return;
             }
 
             var arr = new Color[Count];
@@ -671,99 +687,86 @@ namespace GLTF.Schema
                 if (ComponentType == GLTFComponentType.Float)
                 {
                     uint baseOffset = totalByteOffset + (idx * stride);
-                    arr[idx].R = GetFloatElement(bufferViewData, baseOffset);
-                    arr[idx].G = GetFloatElement(bufferViewData, baseOffset + componentSize);
-                    arr[idx].B = GetFloatElement(bufferViewData, baseOffset + componentSize * 2);
+                    arr[idx].r = GetFloatElement(bufferViewData, baseOffset);
+                    arr[idx].g = GetFloatElement(bufferViewData, baseOffset + componentSize);
+                    arr[idx].b = GetFloatElement(bufferViewData, baseOffset + componentSize * 2);
                     if (Type == GLTFAccessorAttributeType.VEC4)
-                        arr[idx].A = GetFloatElement(bufferViewData, totalByteOffset + idx * stride + componentSize * 3);
+                        arr[idx].a = GetFloatElement(bufferViewData, totalByteOffset + idx * stride + componentSize * 3);
                     else
-                        arr[idx].A = 1;
+                        arr[idx].a = 1;
                 }
                 else
                 {
                     uint baseOffset = totalByteOffset + (idx * stride);
-                    arr[idx].R = GetDiscreteElement(bufferViewData, baseOffset, ComponentType) / maxValue;
-                    arr[idx].G = GetDiscreteElement(bufferViewData, baseOffset + componentSize, ComponentType) / maxValue;
-                    arr[idx].B = GetDiscreteElement(bufferViewData, baseOffset + componentSize * 2, ComponentType) / maxValue;
+                    arr[idx].r = GetDiscreteElement(bufferViewData, baseOffset, ComponentType) / maxValue;
+                    arr[idx].g = GetDiscreteElement(bufferViewData, baseOffset + componentSize, ComponentType) / maxValue;
+                    arr[idx].b = GetDiscreteElement(bufferViewData, baseOffset + componentSize * 2, ComponentType) / maxValue;
                     if (Type == GLTFAccessorAttributeType.VEC4)
-                        arr[idx].A = GetDiscreteElement(bufferViewData, totalByteOffset + idx * stride + componentSize * 3, ComponentType) / maxValue;
+                        arr[idx].a = GetDiscreteElement(bufferViewData, totalByteOffset + idx * stride + componentSize * 3, ComponentType) / maxValue;
                     else
-                        arr[idx].A = 1;
+                        arr[idx].a = 1;
                 }
             }
 
             contents.AsColors = arr;
-            return arr;
         }
 
-        public Vector2[] AsTexcoordArray(ref NumericArray contents, byte[] bufferViewData, uint offset)
+        public void AsTexcoordArray(ref NumericArray contents, byte[] bufferViewData, uint offset)
         {
             if (contents.AsTexcoords != null)
             {
-                return contents.AsTexcoords;
+                return;
             }
 
             contents.AsTexcoords = AsVector2Array(ref contents, bufferViewData, offset);
-
-            return contents.AsTexcoords;
         }
-        public Vector2[] AsTexcoordArrayFlipY(ref NumericArray contents, byte[] bufferViewData, uint offset)
+        public void AsTexcoordArrayFlipY(ref NumericArray contents, byte[] bufferViewData, uint offset)
         {
             if (contents.AsTexcoords != null)
             {
-                return contents.AsTexcoords;
+                return;
             }
 
             contents.AsTexcoords = AsVector2ArrayFlipY(ref contents, bufferViewData, offset);
-
-            return contents.AsTexcoords;
         }
 
-        public Vector3[] AsVertexArray(ref NumericArray contents, byte[] bufferViewData, uint offset)
+        public void AsVertexArray(ref NumericArray contents, byte[] bufferViewData, uint offset)
         {
             if (contents.AsVertices != null)
             {
-                return contents.AsVertices;
+                return;
             }
 
             contents.AsVertices = AsVector3Array(ref contents, bufferViewData, offset);
-
-            return contents.AsVertices;
         }
 
-        public Vector3[] AsVertexArrayConvertCoordinateSpace(ref NumericArray contents, byte[] bufferViewData, uint offset, Vector3 conversionScale)
+        public void AsVertexArrayConvertCoordinateSpace(ref NumericArray contents, byte[] bufferViewData, uint offset, Vector3 conversionScale)
         {
             if (contents.AsVertices != null)
             {
-                return contents.AsVertices;
+                return;
             }
 
             contents.AsVertices = AsVector3ArrayConvertCoordinateSpace(ref contents, bufferViewData, offset, conversionScale);
-
-            return contents.AsVertices;
         }
 
-        public Vector3[] AsNormalArray(ref NumericArray contents, byte[] bufferViewData, uint offset)
+        public void AsNormalArray(ref NumericArray contents, byte[] bufferViewData, uint offset)
         {
             if (contents.AsNormals != null)
             {
-                return contents.AsNormals;
+                return;
             }
 
             contents.AsNormals = AsVector3Array(ref contents, bufferViewData, offset);
-
-            return contents.AsNormals;
         }
-        public Vector3[] AsNormalArrayConvertCoordinateSpace(ref NumericArray contents, byte[] bufferViewData, uint offset, Vector3 conversionScale)
+        public void AsNormalArrayConvertCoordinateSpace(ref NumericArray contents, byte[] bufferViewData, uint offset, Vector3 conversionScale)
         {
             if (contents.AsNormals != null)
             {
-                return contents.AsNormals;
+                return;
             }
 
             contents.AsNormals = AsVector3ArrayConvertCoordinateSpace(ref contents, bufferViewData, offset, conversionScale);
-
-            return contents.AsNormals;
         }
 
         public Vector4[] AsTangentArray(ref NumericArray contents, byte[] bufferViewData, uint offset)
@@ -778,39 +781,35 @@ namespace GLTF.Schema
             return contents.AsTangents;
         }
 
-        public Vector4[] AsTangentArrayConvertCoordinateSpace(ref NumericArray contents, byte[] bufferViewData, uint offset, Vector4 conversionScale)
+        public void AsTangentArrayConvertCoordinateSpace(ref NumericArray contents, byte[] bufferViewData, uint offset, Vector4 conversionScale)
         {
             if (contents.AsTangents != null)
             {
-                return contents.AsTangents;
+                return;
             }
 
             contents.AsTangents = AsVector4ArrayConvertCoordinateSpace(ref contents, bufferViewData, offset, conversionScale);
-
-            return contents.AsTangents;
         }
-        public uint[] AsTriangles(ref NumericArray contents, byte[] bufferViewData, uint offset)
+        public void AsTriangles(ref NumericArray contents, byte[] bufferViewData, uint offset)
         {
             if (contents.AsTriangles != null)
             {
-                return contents.AsTriangles;
+                return;
             }
 
             contents.AsTriangles = AsUIntArray(ref contents, bufferViewData, offset);
-
-            return contents.AsTriangles;
         }
 
-        public Matrix4x4[] AsMatrix4x4Array(ref NumericArray contents, byte[] bufferViewData, uint offset, bool normalizeIntValues = true)
+        public void AsMatrix4x4Array(ref NumericArray contents, byte[] bufferViewData, uint offset, bool normalizeIntValues = true)
         {
             if (contents.AsMatrix4x4s != null)
             {
-                return contents.AsMatrix4x4s;
+                return;
             }
 
             if (Type != GLTFAccessorAttributeType.MAT4)
             {
-                return null;
+                return;
             }
 
             Matrix4x4[] arr = new Matrix4x4[Count];
@@ -827,14 +826,14 @@ namespace GLTF.Schema
 
             for (uint idx = 0; idx < Count; idx++)
             {
-                arr[idx] = new Matrix4x4(Matrix4x4.Identity);
+                arr[idx] = Matrix4x4.identity;
 
                 if (ComponentType == GLTFComponentType.Float)
                 {
                     for (uint i = 0; i < 16; i++)
                     {
                         float value = GetFloatElement(bufferViewData, totalByteOffset + idx * stride + componentSize * i);
-                        arr[idx].SetValue((int)i, value);
+                        SchemaExtensions.SetValue(ref arr[idx], i, value);
                     }
                 }
                 else
@@ -842,13 +841,12 @@ namespace GLTF.Schema
                     for (uint i = 0; i < 16; i++)
                     {
                         float value = GetDiscreteElement(bufferViewData, totalByteOffset + idx * stride + componentSize * i, ComponentType) / maxValue;
-                        arr[idx].SetValue((int)i, value);
+                        SchemaExtensions.SetValue(ref arr[idx], i, value);
                     }
                 }
             }
 
             contents.AsMatrix4x4s = arr;
-            return arr;
         }
 
         private static int GetDiscreteElement(byte[] bufferViewData, uint offset, GLTFComponentType type)
@@ -961,24 +959,25 @@ namespace GLTF.Schema
         public Vector4[] AsTangents;
         [FieldOffset(0)]
         public uint[] AsTriangles;
+    }
 
+    /// <summary>
+    [StructLayout(LayoutKind.Explicit)]
+    public struct NativeNumericArray
+    {
         [FieldOffset(0)]
-        public UnityEngine.Vector2[] AsUnityVec2s;
+        public NativeArray<uint> AsUInts;
         [FieldOffset(0)]
-        public UnityEngine.Vector3[] AsUnityVec3s;
+        public NativeArray<float> AsFloats;
         [FieldOffset(0)]
-        public UnityEngine.Vector4[] AsUnityVec4s;
+        public NativeArray<Vector2> AsVec2s;
         [FieldOffset(0)]
-        public UnityEngine.Matrix4x4[] AsUnityMatrix4x4s;
+        public NativeArray<Vector3> AsVec3s;
         [FieldOffset(0)]
-        public UnityEngine.Color[] AsUnityColors;
+        public NativeArray<Vector4> AsVec4s;
         [FieldOffset(0)]
-        public UnityEngine.Vector2[] AsUnityTexcoords;
+        public NativeArray<Matrix4x4> AsMatrix4x4s;
         [FieldOffset(0)]
-        public UnityEngine.Vector3[] AsUnityVertices;
-        [FieldOffset(0)]
-        public UnityEngine.Vector3[] AsUnityNormals;
-        [FieldOffset(0)]
-        public UnityEngine.Vector4[] AsUnityTangents;
+        public NativeArray<Color> AsColors;
     }
 }

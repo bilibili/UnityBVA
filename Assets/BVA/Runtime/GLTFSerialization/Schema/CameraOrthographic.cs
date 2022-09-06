@@ -1,4 +1,5 @@
 using System;
+using GLTF.Extensions;
 using Newtonsoft.Json;
 
 namespace GLTF.Schema
@@ -12,27 +13,27 @@ namespace GLTF.Schema
 		/// <summary>
 		/// The floating-point horizontal magnification of the view.
 		/// </summary>
-		public double XMag;
+		public float XMag;
 
 		/// <summary>
 		/// The floating-point vertical magnification of the view.
 		/// </summary>
-		public double YMag;
+		public float YMag;
 
 		/// <summary>
 		/// The floating-point distance to the far clipping plane.
 		/// </summary>
-		public double ZFar;
+		public float ZFar;
 
 		/// <summary>
 		/// The floating-point distance to the near clipping plane.
 		/// </summary>
-		public double ZNear;
+		public float ZNear;
 
 		/// <summary>
 		/// The floating-point Orthographic Size.
 		/// </summary>
-		public double Size;
+		public float Size;
 
 		public CameraOrthographic()
 		{
@@ -64,19 +65,19 @@ namespace GLTF.Schema
 				switch (curProp)
 				{
 					case "xmag":
-						cameraOrthographic.XMag = reader.ReadAsDouble().Value;
+						cameraOrthographic.XMag = reader.ReadAsFloat();
 						break;
 					case "ymag":
-						cameraOrthographic.YMag = reader.ReadAsDouble().Value;
+						cameraOrthographic.YMag = reader.ReadAsFloat();
 						break;
 					case "zfar":
-						cameraOrthographic.ZFar = reader.ReadAsDouble().Value;
+						cameraOrthographic.ZFar = reader.ReadAsFloat();
 						break;
 					case "znear":
-						cameraOrthographic.ZNear = reader.ReadAsDouble().Value;
+						cameraOrthographic.ZNear = reader.ReadAsFloat();
 						break;
 					case "size":
-						cameraOrthographic.Size = reader.ReadAsDouble().Value;
+						cameraOrthographic.Size = reader.ReadAsFloat();
 						break;
 					default:
 						cameraOrthographic.DefaultPropertyDeserializer(root, reader);

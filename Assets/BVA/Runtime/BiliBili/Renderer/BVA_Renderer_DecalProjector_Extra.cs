@@ -68,19 +68,19 @@ namespace GLTF.Schema.BVA
                             target.endAngleFade = reader.ReadAsFloat();
                             break;
                         case nameof(target.uvScale):
-                            target.uvScale = reader.ReadAsVector2().ToUnityVector2Raw();
+                            target.uvScale = reader.ReadAsVector2();
                             break;
                         case nameof(target.uvBias):
-                            target.uvBias = reader.ReadAsVector2().ToUnityVector2Raw();
+                            target.uvBias = reader.ReadAsVector2();
                             break;
                         case nameof(target.scaleMode):
                             target.scaleMode = reader.ReadStringEnum<UnityEngine.Rendering.Universal.DecalScaleMode>();
                             break;
                         case nameof(target.pivot):
-                            target.pivot = reader.ReadAsVector3().ToUnityVector3Raw();
+                            target.pivot = reader.ReadAsVector3();
                             break;
                         case nameof(target.size):
-                            target.size = reader.ReadAsVector3().ToUnityVector3Raw();
+                            target.size = reader.ReadAsVector3();
                             break;
                         case nameof(target.fadeFactor):
                             target.fadeFactor = reader.ReadAsFloat();
@@ -97,11 +97,11 @@ namespace GLTF.Schema.BVA
             jo.Add(nameof(fadeScale), fadeScale);
             jo.Add(nameof(startAngleFade), startAngleFade);
             jo.Add(nameof(endAngleFade), endAngleFade);
-            jo.Add(nameof(uvScale), uvScale.ToGltfVector2Raw().ToJArray());
-            jo.Add(nameof(uvBias), uvBias.ToGltfVector2Raw().ToJArray());
+            jo.Add(nameof(uvScale), uvScale.ToJArray());
+            jo.Add(nameof(uvBias), uvBias.ToJArray());
             jo.Add(nameof(scaleMode), scaleMode.ToString());
-            jo.Add(nameof(pivot), pivot.ToGltfVector3Raw().ToJArray());
-            jo.Add(nameof(size), size.ToGltfVector3Raw().ToJArray());
+            jo.Add(nameof(pivot), pivot.ToJArray());
+            jo.Add(nameof(size), size.ToJArray());
             jo.Add(nameof(fadeFactor), fadeFactor);
             return new JProperty(ComponentName, jo);
         }

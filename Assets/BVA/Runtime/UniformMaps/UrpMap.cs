@@ -11,7 +11,7 @@ namespace BVA
         protected Material _material;
         private AlphaMode _alphaMode = AlphaMode.OPAQUE;
         private BlendMode _blendMode = BlendMode.ALPHA;
-        private double _alphaCutoff = 0.5;
+        private float _alphaCutoff = 0.5f;
 
         private Vector2 normalOffset = new Vector2(0, 0);
         private Vector2 occlusionOffset = new Vector2(0, 0);
@@ -96,7 +96,7 @@ namespace BVA
             }
         }
 
-        public virtual double NormalXRotation
+        public virtual float NormalXRotation
         {
             get { return 0; }
             set { return; }
@@ -118,7 +118,7 @@ namespace BVA
             set { return; }
         }
 
-        public virtual double NormalTexScale
+        public virtual float NormalTexScale
         {
             get { return _material.HasProperty("_BumpScale") ? _material.GetFloat("_BumpScale") : 1; }
             set
@@ -170,7 +170,7 @@ namespace BVA
             }
         }
 
-        public virtual double OcclusionXRotation
+        public virtual float OcclusionXRotation
         {
             get { return 0; }
             set { return; }
@@ -192,7 +192,7 @@ namespace BVA
             set { return; }
         }
 
-        public virtual double OcclusionTexStrength
+        public virtual float OcclusionTexStrength
         {
             get { return _material.HasProperty("_OcclusionStrength") ? _material.GetFloat("_OcclusionStrength") : 1; }
             set
@@ -251,7 +251,7 @@ namespace BVA
             }
         }
 
-        public virtual double EmissiveXRotation
+        public virtual float EmissiveXRotation
         {
             get { return 0; }
             set { return; }
@@ -297,7 +297,7 @@ namespace BVA
             }
         }
 
-        public double ClearcoatFactor
+        public float ClearcoatFactor
         {
             get
             {
@@ -338,11 +338,11 @@ namespace BVA
             }
         }
 
-        public double ClearcoatRoughnessFactor
+        public float ClearcoatRoughnessFactor
         {
             get
             {
-                return 1.0 - _material.GetFloat("_ClearCoatSmoothness");
+                return 1.0f - _material.GetFloat("_ClearCoatSmoothness");
             }
             set
             {
@@ -408,7 +408,7 @@ namespace BVA
             }
         }
 
-        public virtual double AlphaCutoff
+        public virtual float AlphaCutoff
         {
             get { return _alphaCutoff; }
             set

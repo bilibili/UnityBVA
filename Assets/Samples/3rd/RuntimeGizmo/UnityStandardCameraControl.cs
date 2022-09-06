@@ -61,6 +61,7 @@ public class UnityStandardCameraControl : MonoBehaviour
                 if (Input.GetKey(KeyCode.Q)) offset.y -= offsetDelta;
                 if (Input.GetKey(KeyCode.E)) offset.y += offsetDelta;
 
+                Debug.Log(offset);
                 transform.Translate(offset, Space.Self);
             }
 

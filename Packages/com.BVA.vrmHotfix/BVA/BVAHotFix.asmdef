@@ -1,0 +1,21 @@
+{
+    "name": "BVAHotFix",
+    "rootNamespace": "",
+    "references": [
+        "GUID:0f65aa97340947a43af1c76333c36e29",
+        "GUID:05dd262a0c0a2f841b8252c8c3815582",
+        "GUID:8a2eafa29b15f444eb6d74f94a930e1d",
+        "GUID:e0cd26848372d4e5c891c569017e11f1",
+        "GUID:2665a8d13d1b3f18800f46e256720795",
+        "GUID:d8b63aba1907145bea998dd612889d6b"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,22 +1,17 @@
 using Newtonsoft.Json.Linq;
-using GLTF.Math;
-using GLTF.Schema;
+using UnityEngine;
 using Newtonsoft.Json;
 using GLTF.Extensions;
 using BVA.Extensions;
-using BVA.Component;
 using System.Threading.Tasks;
-using UnityEngine;
-using Color = UnityEngine.Color;
-using Vector4 = UnityEngine.Vector4;
 
 namespace GLTF.Schema.BVA
 {
-[AsyncComponentExtra]
+    [AsyncComponentExtra]
 public class BVA_Light_ReflectionProbe_Extra :  IAsyncComponentExtra
 {
-public UnityEngine.Vector3 size;
-public UnityEngine.Vector3 center;
+public Vector3 size;
+public Vector3 center;
 public float nearClipPlane;
 public float farClipPlane;
 public float intensity;
@@ -26,7 +21,7 @@ public float shadowDistance;
 public int resolution;
 public int cullingMask;
 public UnityEngine.Rendering.ReflectionProbeClearFlags clearFlags;
-public UnityEngine.Color backgroundColor;
+public Color backgroundColor;
 public float blendDistance;
 public bool boxProjection;
 public UnityEngine.Rendering.ReflectionProbeMode mode;
@@ -75,10 +70,10 @@ var curProp = reader.Value.ToString();
 switch (curProp)
 {
 case nameof(target.size):
-target.size =  reader.ReadAsVector3().ToUnityVector3Raw();
+target.size =  reader.ReadAsVector3();
 break;
 case nameof(target.center):
-target.center =  reader.ReadAsVector3().ToUnityVector3Raw();
+target.center =  reader.ReadAsVector3();
 break;
 case nameof(target.nearClipPlane):
 target.nearClipPlane =  reader.ReadAsFloat();
@@ -108,7 +103,7 @@ case nameof(target.clearFlags):
 target.clearFlags = reader.ReadStringEnum<UnityEngine.Rendering.ReflectionProbeClearFlags>();
 break;
 case nameof(target.backgroundColor):
-target.backgroundColor =  reader.ReadAsRGBAColor().ToUnityColorRaw();
+target.backgroundColor =  reader.ReadAsRGBAColor();
 break;
 case nameof(target.blendDistance):
 target.blendDistance =  reader.ReadAsFloat();
@@ -143,8 +138,8 @@ break;
 public JProperty Serialize()
 {
 JObject jo = new JObject();
-jo.Add(nameof(size), size.ToGltfVector3Raw().ToJArray());
-jo.Add(nameof(center), center.ToGltfVector3Raw().ToJArray());
+jo.Add(nameof(size), size.ToJArray());
+jo.Add(nameof(center), center.ToJArray());
 jo.Add(nameof(nearClipPlane), nearClipPlane);
 jo.Add(nameof(farClipPlane), farClipPlane);
 jo.Add(nameof(intensity), intensity);
@@ -154,7 +149,7 @@ jo.Add(nameof(shadowDistance), shadowDistance);
 jo.Add(nameof(resolution), resolution);
 jo.Add(nameof(cullingMask), cullingMask);
 jo.Add(nameof(clearFlags), clearFlags.ToString());
-jo.Add(nameof(backgroundColor), backgroundColor.ToNumericsColorRaw().ToJArray());
+jo.Add(nameof(backgroundColor), backgroundColor.ToJArray());
 jo.Add(nameof(blendDistance), blendDistance);
 jo.Add(nameof(boxProjection), boxProjection);
 jo.Add(nameof(mode), mode.ToString());

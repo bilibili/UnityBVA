@@ -77,14 +77,6 @@ namespace SFB
 
         public string SaveFilePanel(string title, string directory, string defaultName, ExtensionFilter[] extensions)
         {
-#if ENABLE_IL2CPP
-            List<string> ext = new List<string>();
-            foreach (var v in extensions)
-            {
-                ext.AddRange(v.Extensions);
-            }
-            return  FileDialogForWindows.SaveDialog(title, directory);
-#else
             var fd = new VistaSaveFileDialog();
             fd.Title = title;
 
@@ -118,7 +110,6 @@ namespace SFB
             var filename = res == DialogResult.OK ? fd.FileName : "";
             fd.Dispose();
             return filename;
-#endif
         }
 
         public void SaveFilePanelAsync(string title, string directory, string defaultName, ExtensionFilter[] extensions, Action<string> cb)

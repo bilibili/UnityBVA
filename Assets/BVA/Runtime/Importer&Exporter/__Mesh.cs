@@ -118,7 +118,7 @@ namespace BVA
                     unityMesh.RecalculateNormals();
                 }
 
-                if (!KeepCPUCopyOfMesh)
+                if (!_options.KeepCPUCopyOfMesh)
                 {
                     unityMesh.UploadMeshData(true);
                 }
@@ -136,14 +136,6 @@ namespace BVA
                         Normals = firstPrim.Attributes.ContainsKey(SemanticProperties.NORMAL) ? new Vector3[firstPrimVertexCount] : null,
                         Tangents = firstPrim.Attributes.ContainsKey(SemanticProperties.TANGENT) ? new Vector4[firstPrimVertexCount] : null,
                         Uv1 = firstPrim.Attributes.ContainsKey(SemanticProperties.TEXCOORD_0) ? new Vector2[firstPrimVertexCount] : null,
-                        // for decal projector, it might generate uv2 for use
-                        Uv2 = meshPrimitives.Any((x) => x.Attributes.ContainsKey(SemanticProperties.TEXCOORD_1)) ? new Vector2[firstPrimVertexCount] : null,
-                        Uv3 = meshPrimitives.Any((x) => x.Attributes.ContainsKey(SemanticProperties.TEXCOORD_2)) ? new Vector2[firstPrimVertexCount] : null,
-                        Uv4 = meshPrimitives.Any((x) => x.Attributes.ContainsKey(SemanticProperties.TEXCOORD_3)) ? new Vector2[firstPrimVertexCount] : null,
-                        Uv5 = meshPrimitives.Any((x) => x.Attributes.ContainsKey(SemanticProperties.TEXCOORD_4)) ? new Vector2[firstPrimVertexCount] : null,
-                        Uv6 = meshPrimitives.Any((x) => x.Attributes.ContainsKey(SemanticProperties.TEXCOORD_5)) ? new Vector2[firstPrimVertexCount] : null,
-                        Uv7 = meshPrimitives.Any((x) => x.Attributes.ContainsKey(SemanticProperties.TEXCOORD_6)) ? new Vector2[firstPrimVertexCount] : null,
-                        Uv8 = meshPrimitives.Any((x) => x.Attributes.ContainsKey(SemanticProperties.TEXCOORD_7)) ? new Vector2[firstPrimVertexCount] : null,
                         BoneWeights = firstPrim.Attributes.ContainsKey(SemanticProperties.WEIGHTS_0) ? new BoneWeight[firstPrimVertexCount] : null,
                         Colors = firstPrim.Attributes.ContainsKey(SemanticProperties.COLOR_0) ? new Color[firstPrimVertexCount] : null,
 
@@ -155,6 +147,17 @@ namespace BVA
                         Indices = new int[meshPrimitives.Count][],
                         FirstPrimContainsAllVertex = firstPrimContainsAll
                     };
+                    // for decal projector, it might generate uv2 for use
+                    if (_sceneType != SceneType.Avatar)
+                    {
+                        unityData.Uv2 = meshPrimitives.Any((x) => x.Attributes.ContainsKey(SemanticProperties.TEXCOORD_1)) ? new Vector2[firstPrimVertexCount] : null;
+                        unityData.Uv3 = meshPrimitives.Any((x) => x.Attributes.ContainsKey(SemanticProperties.TEXCOORD_2)) ? new Vector2[firstPrimVertexCount] : null;
+                        unityData.Uv4 = meshPrimitives.Any((x) => x.Attributes.ContainsKey(SemanticProperties.TEXCOORD_3)) ? new Vector2[firstPrimVertexCount] : null;
+                        unityData.Uv5 = meshPrimitives.Any((x) => x.Attributes.ContainsKey(SemanticProperties.TEXCOORD_4)) ? new Vector2[firstPrimVertexCount] : null;
+                        unityData.Uv6 = meshPrimitives.Any((x) => x.Attributes.ContainsKey(SemanticProperties.TEXCOORD_5)) ? new Vector2[firstPrimVertexCount] : null;
+                        unityData.Uv7 = meshPrimitives.Any((x) => x.Attributes.ContainsKey(SemanticProperties.TEXCOORD_6)) ? new Vector2[firstPrimVertexCount] : null;
+                        unityData.Uv8 = meshPrimitives.Any((x) => x.Attributes.ContainsKey(SemanticProperties.TEXCOORD_7)) ? new Vector2[firstPrimVertexCount] : null;
+                    }
 
                     ConvertAttributeAccessorsToUnityTypes(meshCache.Primitives[0], unityData, 0);
 
@@ -169,7 +172,7 @@ namespace BVA
 
                         int[] indices = unityData.Topology[i] == MeshTopology.Triangles ? meshAttributes.ContainsKey(SemanticProperties.INDICES) ?
                         meshAttributes[SemanticProperties.INDICES].AccessorContent.AsUInts.ToIntArrayFlipTriangleFaces() : MeshPrimitive.GenerateIndices(vertCount) :
-                         meshAttributes.ContainsKey(SemanticProperties.INDICES) ? meshAttributes[SemanticProperties.INDICES].AccessorContent.AsUInts.ToIntArrayRaw() : MeshPrimitive.GenerateIndices(vertCount);
+                         meshAttributes.ContainsKey(SemanticProperties.INDICES) ? meshAttributes[SemanticProperties.INDICES].AccessorContent.AsUInts.ToIntArray() : MeshPrimitive.GenerateIndices(vertCount);
 
                         int truncate = indices.Length % 3;
                         if (truncate != 0)
@@ -203,14 +206,6 @@ namespace BVA
                         Normals = firstPrim.Attributes.ContainsKey(SemanticProperties.NORMAL) ? new Vector3[totalVertCount] : null,
                         Tangents = firstPrim.Attributes.ContainsKey(SemanticProperties.TANGENT) ? new Vector4[totalVertCount] : null,
                         Uv1 = firstPrim.Attributes.ContainsKey(SemanticProperties.TEXCOORD_0) ? new Vector2[totalVertCount] : null,
-                        // for decal projector, it might generate uv2 for use
-                        Uv2 = mesh.Primitives.Any((x) => x.Attributes.ContainsKey(SemanticProperties.TEXCOORD_1)) ? new Vector2[totalVertCount] : null,
-                        Uv3 = mesh.Primitives.Any((x) => x.Attributes.ContainsKey(SemanticProperties.TEXCOORD_2)) ? new Vector2[totalVertCount] : null,
-                        Uv4 = mesh.Primitives.Any((x) => x.Attributes.ContainsKey(SemanticProperties.TEXCOORD_3)) ? new Vector2[totalVertCount] : null,
-                        Uv5 = mesh.Primitives.Any((x) => x.Attributes.ContainsKey(SemanticProperties.TEXCOORD_4)) ? new Vector2[totalVertCount] : null,
-                        Uv6 = mesh.Primitives.Any((x) => x.Attributes.ContainsKey(SemanticProperties.TEXCOORD_5)) ? new Vector2[totalVertCount] : null,
-                        Uv7 = mesh.Primitives.Any((x) => x.Attributes.ContainsKey(SemanticProperties.TEXCOORD_6)) ? new Vector2[totalVertCount] : null,
-                        Uv8 = mesh.Primitives.Any((x) => x.Attributes.ContainsKey(SemanticProperties.TEXCOORD_7)) ? new Vector2[totalVertCount] : null,
                         BoneWeights = firstPrim.Attributes.ContainsKey(SemanticProperties.WEIGHTS_0) ? new BoneWeight[totalVertCount] : null,
                         Colors = firstPrim.Attributes.ContainsKey(SemanticProperties.COLOR_0) ? new Color[totalVertCount] : null,
 
@@ -225,6 +220,17 @@ namespace BVA
                         Indices = new int[mesh.Primitives.Count][],
                         FirstPrimContainsAllVertex = firstPrimContainsAll
                     };
+                    
+                    if (_sceneType != SceneType.Avatar)
+                    {
+                        unityData.Uv2 = firstPrim.Attributes.ContainsKey(SemanticProperties.TEXCOORD_1) ? new Vector2[firstPrimVertexCount] : null;
+                        unityData.Uv3 = firstPrim.Attributes.ContainsKey(SemanticProperties.TEXCOORD_2) ? new Vector2[firstPrimVertexCount] : null;
+                        unityData.Uv4 = firstPrim.Attributes.ContainsKey(SemanticProperties.TEXCOORD_3) ? new Vector2[firstPrimVertexCount] : null;
+                        unityData.Uv5 = firstPrim.Attributes.ContainsKey(SemanticProperties.TEXCOORD_4) ? new Vector2[firstPrimVertexCount] : null;
+                        unityData.Uv6 = firstPrim.Attributes.ContainsKey(SemanticProperties.TEXCOORD_5) ? new Vector2[firstPrimVertexCount] : null;
+                        unityData.Uv7 = firstPrim.Attributes.ContainsKey(SemanticProperties.TEXCOORD_6) ? new Vector2[firstPrimVertexCount] : null;
+                        unityData.Uv8 = firstPrim.Attributes.ContainsKey(SemanticProperties.TEXCOORD_7) ? new Vector2[firstPrimVertexCount] : null;
+                    }
                     for (int i = 0; i < mesh.Primitives.Count; ++i)
                     {
                         var primitive = mesh.Primitives[i];
@@ -292,7 +298,7 @@ namespace BVA
             uint vertexCount = meshAttributes[SemanticProperties.POSITION].AccessorId.Value.Count;
 
             var indices = meshAttributes.ContainsKey(SemanticProperties.INDICES)
-                ? meshAttributes[SemanticProperties.INDICES].AccessorContent.AsUInts.ToIntArrayRaw()
+                ? meshAttributes[SemanticProperties.INDICES].AccessorContent.AsUInts.ToIntArray()
                 : MeshPrimitive.GenerateIndices(vertexCount);
             if (unityData.Topology[indexOffset] == MeshTopology.Triangles)
                 SchemaExtensions.FlipTriangleFaces(indices);
@@ -305,59 +311,59 @@ namespace BVA
             if (meshAttributes.ContainsKey(SemanticProperties.Weight[0]) && meshAttributes.ContainsKey(SemanticProperties.Joint[0]))
             {
                 CreateBoneWeightArray(
-                    meshAttributes[SemanticProperties.Joint[0]].AccessorContent.AsVec4s.ToUnityVector4Raw(),
-                    meshAttributes[SemanticProperties.Weight[0]].AccessorContent.AsVec4s.ToUnityVector4Raw(),
+                    meshAttributes[SemanticProperties.Joint[0]].AccessorContent.AsVec4s,
+                    meshAttributes[SemanticProperties.Weight[0]].AccessorContent.AsVec4s,
                     ref unityData.BoneWeights,
                     vertOffset);
             }
 
             if (meshAttributes.ContainsKey(SemanticProperties.POSITION))
             {
-                meshAttributes[SemanticProperties.POSITION].AccessorContent.AsVertices.ToUnityVector3Raw(unityData.Vertices, vertOffset);
+                meshAttributes[SemanticProperties.POSITION].AccessorContent.AsVertices.ToUnityRaw(unityData.Vertices, vertOffset);
             }
             if (meshAttributes.ContainsKey(SemanticProperties.NORMAL))
             {
-                meshAttributes[SemanticProperties.NORMAL].AccessorContent.AsNormals.ToUnityVector3Raw(unityData.Normals, vertOffset);
+                meshAttributes[SemanticProperties.NORMAL].AccessorContent.AsNormals.ToUnityRaw(unityData.Normals, vertOffset);
             }
             if (meshAttributes.ContainsKey(SemanticProperties.TANGENT))
             {
-                meshAttributes[SemanticProperties.TANGENT].AccessorContent.AsTangents.ToUnityVector4Raw(unityData.Tangents, vertOffset);
+                meshAttributes[SemanticProperties.TANGENT].AccessorContent.AsTangents.ToUnityRaw(unityData.Tangents, vertOffset);
             }
             if (meshAttributes.ContainsKey(SemanticProperties.TexCoord[0]))
             {
-                meshAttributes[SemanticProperties.TexCoord[0]].AccessorContent.AsTexcoords.ToUnityVector2Raw(unityData.Uv1, vertOffset);
+                meshAttributes[SemanticProperties.TexCoord[0]].AccessorContent.AsTexcoords.ToUnityRaw(unityData.Uv1, vertOffset);
             }
             if (meshAttributes.ContainsKey(SemanticProperties.TexCoord[1]))
             {
-                meshAttributes[SemanticProperties.TexCoord[1]].AccessorContent.AsTexcoords.ToUnityVector2Raw(unityData.Uv2, vertOffset);
+                meshAttributes[SemanticProperties.TexCoord[1]].AccessorContent.AsTexcoords.ToUnityRaw(unityData.Uv2, vertOffset);
             }
             if (meshAttributes.ContainsKey(SemanticProperties.TexCoord[2]))
             {
-                meshAttributes[SemanticProperties.TexCoord[2]].AccessorContent.AsTexcoords.ToUnityVector2Raw(unityData.Uv3, vertOffset);
+                meshAttributes[SemanticProperties.TexCoord[2]].AccessorContent.AsTexcoords.ToUnityRaw(unityData.Uv3, vertOffset);
             }
             if (meshAttributes.ContainsKey(SemanticProperties.TexCoord[3]))
             {
-                meshAttributes[SemanticProperties.TexCoord[3]].AccessorContent.AsTexcoords.ToUnityVector2Raw(unityData.Uv4, vertOffset);
+                meshAttributes[SemanticProperties.TexCoord[3]].AccessorContent.AsTexcoords.ToUnityRaw(unityData.Uv4, vertOffset);
             }
             if (meshAttributes.ContainsKey(SemanticProperties.TexCoord[4]))
             {
-                meshAttributes[SemanticProperties.TexCoord[4]].AccessorContent.AsTexcoords.ToUnityVector2Raw(unityData.Uv5, vertOffset);
+                meshAttributes[SemanticProperties.TexCoord[4]].AccessorContent.AsTexcoords.ToUnityRaw(unityData.Uv5, vertOffset);
             }
             if (meshAttributes.ContainsKey(SemanticProperties.TexCoord[5]))
             {
-                meshAttributes[SemanticProperties.TexCoord[5]].AccessorContent.AsTexcoords.ToUnityVector2Raw(unityData.Uv6, vertOffset);
+                meshAttributes[SemanticProperties.TexCoord[5]].AccessorContent.AsTexcoords.ToUnityRaw(unityData.Uv6, vertOffset);
             }
             if (meshAttributes.ContainsKey(SemanticProperties.TexCoord[6]))
             {
-                meshAttributes[SemanticProperties.TexCoord[6]].AccessorContent.AsTexcoords.ToUnityVector2Raw(unityData.Uv7, vertOffset);
+                meshAttributes[SemanticProperties.TexCoord[6]].AccessorContent.AsTexcoords.ToUnityRaw(unityData.Uv7, vertOffset);
             }
             if (meshAttributes.ContainsKey(SemanticProperties.TexCoord[7]))
             {
-                meshAttributes[SemanticProperties.TexCoord[7]].AccessorContent.AsTexcoords.ToUnityVector2Raw(unityData.Uv8, vertOffset);
+                meshAttributes[SemanticProperties.TexCoord[7]].AccessorContent.AsTexcoords.ToUnityRaw(unityData.Uv8, vertOffset);
             }
             if (meshAttributes.ContainsKey(SemanticProperties.Color[0]))
             {
-                meshAttributes[SemanticProperties.Color[0]].AccessorContent.AsColors.ToUnityColorRaw(unityData.Colors, vertOffset);
+                meshAttributes[SemanticProperties.Color[0]].AccessorContent.AsColors.ToUnityRaw(unityData.Colors, vertOffset);
             }
 
             var targets = primData.Targets;
@@ -367,15 +373,15 @@ namespace BVA
                 {
                     if (targets[i].ContainsKey(SemanticProperties.POSITION))
                     {
-                        targets[i][SemanticProperties.POSITION].AccessorContent.AsVec3s.ToUnityVector3Raw(unityData.MorphTargetVertices[i], vertOffset);
+                        targets[i][SemanticProperties.POSITION].AccessorContent.AsVec3s.ToUnityRaw(unityData.MorphTargetVertices[i], vertOffset);
                     }
                     if (targets[i].ContainsKey(SemanticProperties.NORMAL))
                     {
-                        targets[i][SemanticProperties.NORMAL].AccessorContent.AsVec3s.ToUnityVector3Raw(unityData.MorphTargetNormals[i], vertOffset);
+                        targets[i][SemanticProperties.NORMAL].AccessorContent.AsVec3s.ToUnityRaw(unityData.MorphTargetNormals[i], vertOffset);
                     }
                     if (targets[i].ContainsKey(SemanticProperties.TANGENT))
                     {
-                        targets[i][SemanticProperties.TANGENT].AccessorContent.AsVec3s.ToUnityVector3Raw(unityData.MorphTargetTangents[i], vertOffset);
+                        targets[i][SemanticProperties.TANGENT].AccessorContent.AsVec3s.ToUnityRaw(unityData.MorphTargetTangents[i], vertOffset);
                     }
                 }
             }
@@ -387,56 +393,56 @@ namespace BVA
 
             if (meshAttributes.ContainsKey(SemanticProperties.Weight[0]) && meshAttributes.ContainsKey(SemanticProperties.Joint[0]))
             {
-                CreateBoneWeightArray(meshAttributes[SemanticProperties.Joint[0]].AccessorContent.AsVec4s.ToUnityVector4Raw(), meshAttributes[SemanticProperties.Weight[0]].AccessorContent.AsVec4s.ToUnityVector4Raw(), ref unityData.BoneWeights, vertOffset);
+                CreateBoneWeightArray(meshAttributes[SemanticProperties.Joint[0]].AccessorContent.AsVec4s, meshAttributes[SemanticProperties.Weight[0]].AccessorContent.AsVec4s, ref unityData.BoneWeights, vertOffset);
             }
 
             if (meshAttributes.ContainsKey(SemanticProperties.POSITION))
             {
-                meshAttributes[SemanticProperties.POSITION].AccessorContent.AsVertices.ToUnityVector3Raw(unityData.Vertices, vertOffset);
+                meshAttributes[SemanticProperties.POSITION].AccessorContent.AsVertices.ToUnityRaw(unityData.Vertices, vertOffset);
             }
             if (meshAttributes.ContainsKey(SemanticProperties.NORMAL))
             {
-                meshAttributes[SemanticProperties.NORMAL].AccessorContent.AsNormals.ToUnityVector3Raw(unityData.Normals, vertOffset);
+                meshAttributes[SemanticProperties.NORMAL].AccessorContent.AsNormals.ToUnityRaw(unityData.Normals, vertOffset);
             }
             if (meshAttributes.ContainsKey(SemanticProperties.TANGENT))
             {
-                meshAttributes[SemanticProperties.TANGENT].AccessorContent.AsTangents.ToUnityVector4Raw(unityData.Tangents, vertOffset);
+                meshAttributes[SemanticProperties.TANGENT].AccessorContent.AsTangents.ToUnityRaw(unityData.Tangents, vertOffset);
             }
             if (meshAttributes.ContainsKey(SemanticProperties.TexCoord[0]))
             {
-                meshAttributes[SemanticProperties.TexCoord[0]].AccessorContent.AsTexcoords.ToUnityVector2Raw(unityData.Uv1, vertOffset);
+                meshAttributes[SemanticProperties.TexCoord[0]].AccessorContent.AsTexcoords.ToUnityRaw(unityData.Uv1, vertOffset);
             }
             if (meshAttributes.ContainsKey(SemanticProperties.TexCoord[1]))
             {
-                meshAttributes[SemanticProperties.TexCoord[1]].AccessorContent.AsTexcoords.ToUnityVector2Raw(unityData.Uv2, vertOffset);
+                meshAttributes[SemanticProperties.TexCoord[1]].AccessorContent.AsTexcoords.ToUnityRaw(unityData.Uv2, vertOffset);
             }
             if (meshAttributes.ContainsKey(SemanticProperties.TexCoord[2]))
             {
-                meshAttributes[SemanticProperties.TexCoord[2]].AccessorContent.AsTexcoords.ToUnityVector2Raw(unityData.Uv3, vertOffset);
+                meshAttributes[SemanticProperties.TexCoord[2]].AccessorContent.AsTexcoords.ToUnityRaw(unityData.Uv3, vertOffset);
             }
             if (meshAttributes.ContainsKey(SemanticProperties.TexCoord[3]))
             {
-                meshAttributes[SemanticProperties.TexCoord[3]].AccessorContent.AsTexcoords.ToUnityVector2Raw(unityData.Uv4, vertOffset);
+                meshAttributes[SemanticProperties.TexCoord[3]].AccessorContent.AsTexcoords.ToUnityRaw(unityData.Uv4, vertOffset);
             }
             if (meshAttributes.ContainsKey(SemanticProperties.TexCoord[4]))
             {
-                meshAttributes[SemanticProperties.TexCoord[4]].AccessorContent.AsTexcoords.ToUnityVector2Raw(unityData.Uv5, vertOffset);
+                meshAttributes[SemanticProperties.TexCoord[4]].AccessorContent.AsTexcoords.ToUnityRaw(unityData.Uv5, vertOffset);
             }
             if (meshAttributes.ContainsKey(SemanticProperties.TexCoord[5]))
             {
-                meshAttributes[SemanticProperties.TexCoord[5]].AccessorContent.AsTexcoords.ToUnityVector2Raw(unityData.Uv6, vertOffset);
+                meshAttributes[SemanticProperties.TexCoord[5]].AccessorContent.AsTexcoords.ToUnityRaw(unityData.Uv6, vertOffset);
             }
             if (meshAttributes.ContainsKey(SemanticProperties.TexCoord[6]))
             {
-                meshAttributes[SemanticProperties.TexCoord[6]].AccessorContent.AsTexcoords.ToUnityVector2Raw(unityData.Uv7, vertOffset);
+                meshAttributes[SemanticProperties.TexCoord[6]].AccessorContent.AsTexcoords.ToUnityRaw(unityData.Uv7, vertOffset);
             }
             if (meshAttributes.ContainsKey(SemanticProperties.TexCoord[7]))
             {
-                meshAttributes[SemanticProperties.TexCoord[7]].AccessorContent.AsTexcoords.ToUnityVector2Raw(unityData.Uv8, vertOffset);
+                meshAttributes[SemanticProperties.TexCoord[7]].AccessorContent.AsTexcoords.ToUnityRaw(unityData.Uv8, vertOffset);
             }
             if (meshAttributes.ContainsKey(SemanticProperties.Color[0]))
             {
-                meshAttributes[SemanticProperties.Color[0]].AccessorContent.AsColors.ToUnityColorRaw(unityData.Colors, vertOffset);
+                meshAttributes[SemanticProperties.Color[0]].AccessorContent.AsColors.ToUnityRaw(unityData.Colors, vertOffset);
             }
 
             var targets = primData.Targets;
@@ -446,15 +452,15 @@ namespace BVA
                 {
                     if (targets[i].ContainsKey(SemanticProperties.POSITION))
                     {
-                        targets[i][SemanticProperties.POSITION].AccessorContent.AsVec3s.ToUnityVector3Raw(unityData.MorphTargetVertices[i], vertOffset);
+                        targets[i][SemanticProperties.POSITION].AccessorContent.AsVec3s.ToUnityRaw(unityData.MorphTargetVertices[i], vertOffset);
                     }
                     if (targets[i].ContainsKey(SemanticProperties.NORMAL))
                     {
-                        targets[i][SemanticProperties.NORMAL].AccessorContent.AsVec3s.ToUnityVector3Raw(unityData.MorphTargetNormals[i], vertOffset);
+                        targets[i][SemanticProperties.NORMAL].AccessorContent.AsVec3s.ToUnityRaw(unityData.MorphTargetNormals[i], vertOffset);
                     }
                     if (targets[i].ContainsKey(SemanticProperties.TANGENT))
                     {
-                        targets[i][SemanticProperties.TANGENT].AccessorContent.AsVec3s.ToUnityVector3Raw(unityData.MorphTargetTangents[i], vertOffset);
+                        targets[i][SemanticProperties.TANGENT].AccessorContent.AsVec3s.ToUnityRaw(unityData.MorphTargetTangents[i], vertOffset);
                     }
                 }
             }
@@ -529,7 +535,7 @@ namespace BVA
                 mesh.RecalculateNormals();
             }
 
-            if (!KeepCPUCopyOfMesh)
+            if (!_options.KeepCPUCopyOfMesh)
             {
                 mesh.UploadMeshData(false);
             }

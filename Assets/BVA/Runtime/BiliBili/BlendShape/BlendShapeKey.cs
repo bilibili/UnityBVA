@@ -172,8 +172,8 @@ namespace BVA
         public override JObject Serialize(NodeCache cache)
         {
             JObject jo = base.Serialize(cache);
-            jo.Add(nameof(baseValue), baseValue.ToNumericsColorRaw().ToJArray());
-            jo.Add(nameof(targetValue), targetValue.ToNumericsColorRaw().ToJArray());
+            jo.Add(nameof(baseValue), baseValue.ToJArray());
+            jo.Add(nameof(targetValue), targetValue.ToJArray());
             return jo;
         }
         public override void Set(float lerp)
@@ -200,10 +200,10 @@ namespace BVA
                         binding.propertyName = reader.ReadAsString();
                         break;
                     case nameof(binding.baseValue):
-                        binding.baseValue = reader.ReadAsRGBAColor().ToUnityColorRaw();
+                        binding.baseValue = reader.ReadAsRGBAColor();
                         break;
                     case nameof(binding.targetValue):
-                        binding.targetValue = reader.ReadAsRGBAColor().ToUnityColorRaw();
+                        binding.targetValue = reader.ReadAsRGBAColor();
                         break;
                 }
             }
@@ -216,8 +216,8 @@ namespace BVA
         public override JObject Serialize(NodeCache cache)
         {
             JObject jo = base.Serialize(cache);
-            jo.Add(nameof(baseValue), baseValue.ToGltfVector4Raw().ToJArray());
-            jo.Add(nameof(targetValue), targetValue.ToGltfVector4Raw().ToJArray());
+            jo.Add(nameof(baseValue), baseValue.ToJArray());
+            jo.Add(nameof(targetValue), targetValue.ToJArray());
             return jo;
         }
         public override void Set(float lerp)
@@ -244,10 +244,10 @@ namespace BVA
                         binding.propertyName = reader.ReadAsString();
                         break;
                     case nameof(binding.baseValue):
-                        binding.baseValue = reader.ReadAsRGBAColor().ToUnityVector4();
+                        binding.baseValue = reader.ReadAsRGBAColor().ToVector4();
                         break;
                     case nameof(binding.targetValue):
-                        binding.targetValue = reader.ReadAsRGBAColor().ToUnityVector4();
+                        binding.targetValue = reader.ReadAsRGBAColor().ToVector4();
                         break;
                 }
             }

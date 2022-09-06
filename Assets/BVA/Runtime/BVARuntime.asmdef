@@ -1,5 +1,5 @@
 {
-    "name": "BVAScripts",
+    "name": "BVARuntime",
     "rootNamespace": "",
     "references": [
         "GUID:df380645f10b7bc4b97d4f5eb6303d95",
@@ -11,7 +11,8 @@
         "GUID:6369f65a3f137eb448c3456fdbf498ff",
         "GUID:2665a8d13d1b3f18800f46e256720795",
         "GUID:9530b821cc81cff439e7e0b1086b9319",
-        "GUID:3d354272d3f2f4c3387dbccbaebd0f60"
+        "GUID:3d354272d3f2f4c3387dbccbaebd0f60",
+        "GUID:e0cd26848372d4e5c891c569017e11f1"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

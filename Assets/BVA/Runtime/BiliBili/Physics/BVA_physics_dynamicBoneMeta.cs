@@ -381,7 +381,7 @@ namespace GLTF.Schema.BVA
             //OYM:4
             jo.Add(nameof(ADBPhysicsSetting.isDebugDraw), physicsSetting.isDebugDraw);
             jo.Add(nameof(ADBPhysicsSetting.isFixGravityAxis), physicsSetting.isFixGravityAxis);
-            jo.Add(nameof(ADBPhysicsSetting.gravity), physicsSetting.gravity.ToGltfVector3Raw().ToJArray());
+            jo.Add(nameof(ADBPhysicsSetting.gravity), physicsSetting.gravity.ToJArray());
             //OYM:1
             jo.Add(nameof(ADBPhysicsSetting.colliderChoice), (int)physicsSetting.colliderChoice);
 

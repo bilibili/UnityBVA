@@ -364,7 +364,7 @@ namespace GLTF.Schema.BVA
             if (jt != null) bloom.clamp = jt.DeserializeAsFloat();
 
             jt = jo.GetValue(nameof(bloom.tint));
-            if (jt != null) bloom.tint = jt.DeserializeAsColor().ToUnityColorRaw();
+            if (jt != null) bloom.tint = jt.DeserializeAsColor();
 
             jt = jo.GetValue(nameof(bloom.highQualityFiltering));
             if (jt != null) bloom.highQualityFiltering = jt.DeserializeAsBool();
@@ -394,7 +394,7 @@ namespace GLTF.Schema.BVA
             if (value.threshold.overrideState) pro.Add(new JProperty(nameof(threshold), threshold));
             if (value.scatter.overrideState) pro.Add(new JProperty(nameof(scatter), scatter));
             if (value.clamp.overrideState) pro.Add(new JProperty(nameof(clamp), clamp));
-            if (value.tint.overrideState) pro.Add(new JProperty(nameof(tint), tint.ToNumericsColorRaw().ToJArray()));
+            if (value.tint.overrideState) pro.Add(new JProperty(nameof(tint), tint.ToJArray()));
             if (value.highQualityFiltering.overrideState) pro.Add(new JProperty(nameof(highQualityFiltering), highQualityFiltering));
             if (value.skipIterations.overrideState) pro.Add(new JProperty(nameof(skipIterations), skipIterations));
             if (value.dirtTexture.overrideState && dirtTexture != null)
@@ -616,7 +616,7 @@ namespace GLTF.Schema.BVA
             jt = jo.GetValue(nameof(result.contrast));
             if (jt != null) result.contrast = jt.DeserializeAsFloat();
             jt = jo.GetValue(nameof(result.colorFilter));
-            if (jt != null) result.colorFilter = jt.DeserializeAsColor().ToUnityColorRaw();
+            if (jt != null) result.colorFilter = jt.DeserializeAsColor();
             jt = jo.GetValue(nameof(result.hueShift));
             if (jt != null) result.hueShift = jt.DeserializeAsFloat();
             jt = jo.GetValue(nameof(result.saturation));
@@ -628,7 +628,7 @@ namespace GLTF.Schema.BVA
             JObject pro = base.Serialize();
             if (value.postExposure.overrideState) pro.Add(new JProperty(nameof(postExposure), postExposure));
             if (value.contrast.overrideState) pro.Add(new JProperty(nameof(contrast), contrast));
-            if (value.colorFilter.overrideState) pro.Add(new JProperty(nameof(colorFilter), colorFilter.ToNumericsColorRaw().ToJArray()));
+            if (value.colorFilter.overrideState) pro.Add(new JProperty(nameof(colorFilter), colorFilter.ToJArray()));
             if (value.hueShift.overrideState) pro.Add(new JProperty(nameof(hueShift), hueShift));
             if (value.saturation.overrideState) pro.Add(new JProperty(nameof(saturation), saturation));
             return pro;
@@ -998,7 +998,7 @@ namespace GLTF.Schema.BVA
             jt = jo.GetValue(nameof(result.yMultiplier));
             if (jt != null) result.yMultiplier = jt.DeserializeAsFloat();
             jt = jo.GetValue(nameof(result.center));
-            if (jt != null) result.center = jt.DeserializeAsVector2().ToUnityVector2Raw();
+            if (jt != null) result.center = jt.DeserializeAsVector2();
             jt = jo.GetValue(nameof(result.scale));
             if (jt != null) result.scale = jt.DeserializeAsFloat();
             return result;
@@ -1009,7 +1009,7 @@ namespace GLTF.Schema.BVA
             if (value.intensity.overrideState) pro.Add(new JProperty(nameof(intensity), intensity));
             if (value.xMultiplier.overrideState) pro.Add(new JProperty(nameof(xMultiplier), xMultiplier));
             if (value.yMultiplier.overrideState) pro.Add(new JProperty(nameof(yMultiplier), yMultiplier));
-            if (value.center.overrideState) pro.Add(new JProperty(nameof(center), center.ToGltfVector2Raw().ToJArray()));
+            if (value.center.overrideState) pro.Add(new JProperty(nameof(center), center.ToJArray()));
             if (value.scale.overrideState) pro.Add(new JProperty(nameof(scale), scale));
             return pro;
         }
@@ -1054,19 +1054,19 @@ namespace GLTF.Schema.BVA
             jt = jo.GetValue(nameof(result.active));
             if (jt != null) result.active = jt.DeserializeAsBool();
             jt = jo.GetValue(nameof(result.lift));
-            if (jt != null) result.lift = jt.DeserializeAsColor().ToUnityVector4();
+            if (jt != null) result.lift = jt.DeserializeAsColor().ToVector4();
             jt = jo.GetValue(nameof(result.gamma));
-            if (jt != null) result.gamma = jt.DeserializeAsColor().ToUnityVector4();
+            if (jt != null) result.gamma = jt.DeserializeAsColor().ToVector4();
             jt = jo.GetValue(nameof(result.gain));
-            if (jt != null) result.gain = jt.DeserializeAsColor().ToUnityVector4();
+            if (jt != null) result.gain = jt.DeserializeAsColor().ToVector4();
             return result;
         }
         public override JObject Serialize()
         {
             JObject pro = base.Serialize();
-            if (value.lift.overrideState) pro.Add(new JProperty(nameof(lift), lift.ToGltfVector4Raw().ToJArray()));
-            if (value.gamma.overrideState) pro.Add(new JProperty(nameof(gamma), gamma.ToGltfVector4Raw().ToJArray()));
-            if (value.gain.overrideState) pro.Add(new JProperty(nameof(gain), gain.ToGltfVector4Raw().ToJArray()));
+            if (value.lift.overrideState) pro.Add(new JProperty(nameof(lift), lift.ToJArray()));
+            if (value.gamma.overrideState) pro.Add(new JProperty(nameof(gamma), gamma.ToJArray()));
+            if (value.gain.overrideState) pro.Add(new JProperty(nameof(gain), gain.ToJArray()));
             return pro;
         }
     }
@@ -1234,11 +1234,11 @@ namespace GLTF.Schema.BVA
             jt = jo.GetValue(nameof(result.active));
             if (jt != null) result.active = jt.DeserializeAsBool();
             jt = jo.GetValue(nameof(result.shadows));
-            if (jt != null) result.shadows = jt.DeserializeAsColor().ToUnityVector4();
+            if (jt != null) result.shadows = jt.DeserializeAsColor().ToVector4();
             jt = jo.GetValue(nameof(result.midtones));
-            if (jt != null) result.midtones = jt.DeserializeAsColor().ToUnityVector4();
+            if (jt != null) result.midtones = jt.DeserializeAsColor().ToVector4();
             jt = jo.GetValue(nameof(result.highlights));
-            if (jt != null) result.highlights = jt.DeserializeAsColor().ToUnityVector4();
+            if (jt != null) result.highlights = jt.DeserializeAsColor().ToVector4();
             jt = jo.GetValue(nameof(result.shadowsStart));
             if (jt != null) result.shadowsStart = jt.DeserializeAsFloat();
             jt = jo.GetValue(nameof(result.shadowsEnd));
@@ -1252,9 +1252,9 @@ namespace GLTF.Schema.BVA
         public override JObject Serialize()
         {
             JObject pro = base.Serialize();
-            if (value.shadows.overrideState) pro.Add(new JProperty(nameof(shadows), shadows.ToGltfVector4Raw().ToJArray()));
-            if (value.midtones.overrideState) pro.Add(new JProperty(nameof(midtones), midtones.ToGltfVector4Raw().ToJArray()));
-            if (value.highlights.overrideState) pro.Add(new JProperty(nameof(highlights), highlights.ToGltfVector4Raw().ToJArray()));
+            if (value.shadows.overrideState) pro.Add(new JProperty(nameof(shadows), shadows.ToJArray()));
+            if (value.midtones.overrideState) pro.Add(new JProperty(nameof(midtones), midtones.ToJArray()));
+            if (value.highlights.overrideState) pro.Add(new JProperty(nameof(highlights), highlights.ToJArray()));
             if (value.shadowsStart.overrideState) pro.Add(new JProperty(nameof(shadowsStart), shadowsStart));
             if (value.shadowsEnd.overrideState) pro.Add(new JProperty(nameof(shadowsEnd), shadowsEnd));
             if (value.highlightsStart.overrideState) pro.Add(new JProperty(nameof(highlightsStart), highlightsStart));
@@ -1302,9 +1302,9 @@ namespace GLTF.Schema.BVA
             jt = jo.GetValue(nameof(result.active));
             if (jt != null) result.active = jt.DeserializeAsBool();
             jt = jo.GetValue(nameof(result.shadows));
-            if (jt != null) result.shadows = jt.DeserializeAsColor().ToUnityColorRaw();
+            if (jt != null) result.shadows = jt.DeserializeAsColor();
             jt = jo.GetValue(nameof(result.highlights));
-            if (jt != null) result.highlights = jt.DeserializeAsColor().ToUnityColorRaw();
+            if (jt != null) result.highlights = jt.DeserializeAsColor();
             jt = jo.GetValue(nameof(result.balance));
             if (jt != null) result.balance = jt.DeserializeAsFloat();
             return result;
@@ -1312,8 +1312,8 @@ namespace GLTF.Schema.BVA
         public override JObject Serialize()
         {
             JObject pro = base.Serialize();
-            if (value.shadows.overrideState) pro.Add(new JProperty(nameof(shadows), shadows.ToNumericsColorRaw().ToJArray()));
-            if (value.shadows.overrideState) pro.Add(new JProperty(nameof(highlights), highlights.ToNumericsColorRaw().ToJArray()));
+            if (value.shadows.overrideState) pro.Add(new JProperty(nameof(shadows), shadows.ToJArray()));
+            if (value.shadows.overrideState) pro.Add(new JProperty(nameof(highlights), highlights.ToJArray()));
             if (value.shadows.overrideState) pro.Add(new JProperty(nameof(balance), balance));
             return pro;
         }
@@ -1413,8 +1413,8 @@ namespace GLTF.Schema.BVA
         public override JObject Serialize()
         {
             JObject pro = base.Serialize();
-            if (value.color.overrideState) pro.Add(new JProperty(nameof(color), color.ToNumericsColorRaw().ToJArray()));
-            if (value.center.overrideState) pro.Add(new JProperty(nameof(center), center.ToGltfVector2Raw().ToJArray()));
+            if (value.color.overrideState) pro.Add(new JProperty(nameof(color), color.ToJArray()));
+            if (value.center.overrideState) pro.Add(new JProperty(nameof(center), center.ToJArray()));
             if (value.intensity.overrideState) pro.Add(new JProperty(nameof(intensity), intensity));
             if (value.smoothness.overrideState) pro.Add(new JProperty(nameof(smoothness), smoothness));
             if (value.rounded.overrideState) pro.Add(new JProperty(nameof(rounded), rounded));
@@ -1428,10 +1428,10 @@ namespace GLTF.Schema.BVA
             if (jt != null) vignette.active = jt.DeserializeAsBool();
 
             jt = jo.GetValue(nameof(vignette.color));
-            if (jt != null) vignette.color = jt.DeserializeAsColor().ToUnityColorRaw();
+            if (jt != null) vignette.color = jt.DeserializeAsColor();
 
             jt = jo.GetValue(nameof(vignette.center));
-            if (jt != null) vignette.center = jt.DeserializeAsVector2().ToUnityVector2Raw();
+            if (jt != null) vignette.center = jt.DeserializeAsVector2();
 
             jt = jo.GetValue(nameof(vignette.intensity));
             if (jt != null) vignette.intensity = jt.DeserializeAsFloat();

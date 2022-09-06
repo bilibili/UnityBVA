@@ -89,7 +89,7 @@ var curProp = reader.Value.ToString();
 switch (curProp)
 {
 case BVA_Material_ToonHair_Extra.BASECOLOR:
-matCache.SetColor(BVA_Material_ToonHair_Extra.BASECOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+matCache.SetColor(BVA_Material_ToonHair_Extra.BASECOLOR, reader.ReadAsRGBAColor());
 break;
 case BVA_Material_ToonHair_Extra.BASEMAP:
 {
@@ -99,7 +99,7 @@ matCache.SetTexture(BVA_Material_ToonHair_Extra.BASEMAP, tex);
 }
 break;
 case BVA_Material_ToonHair_Extra.SHADECOLOR:
-matCache.SetColor(BVA_Material_ToonHair_Extra.SHADECOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+matCache.SetColor(BVA_Material_ToonHair_Extra.SHADECOLOR, reader.ReadAsRGBAColor());
 break;
 case BVA_Material_ToonHair_Extra.SMOOTHNESS:
 matCache.SetFloat(BVA_Material_ToonHair_Extra.SMOOTHNESS, reader.ReadAsFloat());
@@ -126,13 +126,13 @@ matCache.SetTexture(BVA_Material_ToonHair_Extra.STRIPSHIFTMAP, tex);
 }
 break;
 case BVA_Material_ToonHair_Extra.STRIPSHIFTTILING:
-matCache.SetVector(BVA_Material_ToonHair_Extra.STRIPSHIFTTILING, reader.ReadAsVector4().ToUnityVector4Raw());
+matCache.SetVector(BVA_Material_ToonHair_Extra.STRIPSHIFTTILING, reader.ReadAsVector4());
 break;
 case BVA_Material_ToonHair_Extra.FIRSTLAYERHIGHLIGHTCOLOR:
-matCache.SetColor(BVA_Material_ToonHair_Extra.FIRSTLAYERHIGHLIGHTCOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+matCache.SetColor(BVA_Material_ToonHair_Extra.FIRSTLAYERHIGHLIGHTCOLOR, reader.ReadAsRGBAColor());
 break;
 case BVA_Material_ToonHair_Extra.FIRSTLAYEREXPONENT:
-matCache.SetVector(BVA_Material_ToonHair_Extra.FIRSTLAYEREXPONENT, reader.ReadAsVector4().ToUnityVector4Raw());
+matCache.SetVector(BVA_Material_ToonHair_Extra.FIRSTLAYEREXPONENT, reader.ReadAsVector4());
 break;
 case BVA_Material_ToonHair_Extra.FIRSTLAYERSHIFTPOWER:
 matCache.SetFloat(BVA_Material_ToonHair_Extra.FIRSTLAYERSHIFTPOWER, reader.ReadAsFloat());
@@ -141,10 +141,10 @@ case BVA_Material_ToonHair_Extra.FIRSTLAYERSHIFT:
 matCache.SetFloat(BVA_Material_ToonHair_Extra.FIRSTLAYERSHIFT, reader.ReadAsFloat());
 break;
 case BVA_Material_ToonHair_Extra.SECONDLAYERHIGHLIGHTCOLOR:
-matCache.SetColor(BVA_Material_ToonHair_Extra.SECONDLAYERHIGHLIGHTCOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+matCache.SetColor(BVA_Material_ToonHair_Extra.SECONDLAYERHIGHLIGHTCOLOR, reader.ReadAsRGBAColor());
 break;
 case BVA_Material_ToonHair_Extra.SECONDLAYEREXPONENT:
-matCache.SetVector(BVA_Material_ToonHair_Extra.SECONDLAYEREXPONENT, reader.ReadAsVector4().ToUnityVector4Raw());
+matCache.SetVector(BVA_Material_ToonHair_Extra.SECONDLAYEREXPONENT, reader.ReadAsVector4());
 break;
 case BVA_Material_ToonHair_Extra.SECONDLAYERSHIFTPOWER:
 matCache.SetFloat(BVA_Material_ToonHair_Extra.SECONDLAYERSHIFTPOWER, reader.ReadAsFloat());
@@ -172,20 +172,20 @@ break;
 public JProperty Serialize()
 {
 JObject jo = new JObject();
-jo.Add(parameter__BaseColor.ParamName, parameter__BaseColor.Value.ToNumericsColorRaw().ToJArray());
+jo.Add(parameter__BaseColor.ParamName, parameter__BaseColor.Value.ToJArray());
 if (parameter__BaseMap != null && parameter__BaseMap.Value != null) jo.Add(parameter__BaseMap.ParamName, parameter__BaseMap.Serialize());
-jo.Add(parameter__ShadeColor.ParamName, parameter__ShadeColor.Value.ToNumericsColorRaw().ToJArray());
+jo.Add(parameter__ShadeColor.ParamName, parameter__ShadeColor.Value.ToJArray());
 jo.Add(parameter__Smoothness.ParamName, parameter__Smoothness.Value);
 if (parameter__NormalMap != null && parameter__NormalMap.Value != null) jo.Add(parameter__NormalMap.ParamName, parameter__NormalMap.Serialize());
 if (parameter__Hightlight != null && parameter__Hightlight.Value != null) jo.Add(parameter__Hightlight.ParamName, parameter__Hightlight.Serialize());
 if (parameter__StripShiftMap != null && parameter__StripShiftMap.Value != null) jo.Add(parameter__StripShiftMap.ParamName, parameter__StripShiftMap.Serialize());
-jo.Add(parameter__StripShiftTiling.ParamName, parameter__StripShiftTiling.Value.ToGltfVector4Raw().ToJArray());
-jo.Add(parameter__FirstLayerHighlightColor.ParamName, parameter__FirstLayerHighlightColor.Value.ToNumericsColorRaw().ToJArray());
-jo.Add(parameter__FirstLayerExponent.ParamName, parameter__FirstLayerExponent.Value.ToGltfVector4Raw().ToJArray());
+jo.Add(parameter__StripShiftTiling.ParamName, parameter__StripShiftTiling.Value.ToJArray());
+jo.Add(parameter__FirstLayerHighlightColor.ParamName, parameter__FirstLayerHighlightColor.Value.ToJArray());
+jo.Add(parameter__FirstLayerExponent.ParamName, parameter__FirstLayerExponent.Value.ToJArray());
 jo.Add(parameter__FirstLayerShiftPower.ParamName, parameter__FirstLayerShiftPower.Value);
 jo.Add(parameter__FirstLayerShift.ParamName, parameter__FirstLayerShift.Value);
-jo.Add(parameter__SecondLayerHighlightColor.ParamName, parameter__SecondLayerHighlightColor.Value.ToNumericsColorRaw().ToJArray());
-jo.Add(parameter__SecondLayerExponent.ParamName, parameter__SecondLayerExponent.Value.ToGltfVector4Raw().ToJArray());
+jo.Add(parameter__SecondLayerHighlightColor.ParamName, parameter__SecondLayerHighlightColor.Value.ToJArray());
+jo.Add(parameter__SecondLayerExponent.ParamName, parameter__SecondLayerExponent.Value.ToJArray());
 jo.Add(parameter__SecondLayerShiftPower.ParamName, parameter__SecondLayerShiftPower.Value);
 jo.Add(parameter__SecondLayerShift.ParamName, parameter__SecondLayerShift.Value);
 jo.Add(parameter__TonnyLighting.ParamName, parameter__TonnyLighting.Value);

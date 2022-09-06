@@ -61,6 +61,7 @@ namespace BVA.Component
                 {
                     var propertyMap = new Dictionary<string, MaterialExportProperty>();
                     Material material = sharedMaterials[i];
+                    if (material == null) continue;
                     indexes[i] = i; names[i] = material.name;
 
                     List<string> propertyName = new List<string>();
@@ -158,7 +159,7 @@ namespace BVA.Component
                 }
                 currentKey.keyName = EditorGUILayout.TextField("Key Name", currentKey.keyName);
             }
-            
+
             //currentKey.preset = (BlendShapeMixerPreset)EditorGUILayout.EnumPopup("Preset", currentKey.preset);
             currentKey.isBinary = EditorGUILayout.Toggle("Is Binary", currentKey.isBinary);
             BlendShapeConfirm();

@@ -44,9 +44,9 @@ namespace GLTF.Schema.BVA
         public JProperty Serialize()
         {
             JObject jo = new JObject();
-            jo.Add(nameof(backgroundColor), backgroundColor.ToNumericsColorRaw().ToJArray());
+            jo.Add(nameof(backgroundColor), backgroundColor.ToJArray());
             jo.Add(nameof(clearFlags), clearFlags.ToString());
-            jo.Add(nameof(rect), rect.ToGltfVector4Raw().ToJArray());
+            jo.Add(nameof(rect), rect.ToJArray());
             if (renderPostProcessing) jo.Add(nameof(renderPostProcessing), renderPostProcessing);
             if (renderShadows) jo.Add(nameof(renderShadows), renderShadows);
             if (dithering) jo.Add(nameof(dithering), dithering);
@@ -67,14 +67,14 @@ namespace GLTF.Schema.BVA
                     switch (curProp)
                     {
                         case nameof(backgroundColor):
-                            camera.backgroundColor = reader.ReadAsRGBAColor().ToUnityColorRaw();
+                            camera.backgroundColor = reader.ReadAsRGBAColor();
                             break;
                         case nameof(clearFlags):
                             camera.clearFlags = reader.ReadStringEnum<CameraClearFlags>();
                             break;
                         case nameof(rect):
-                            Math.Vector4 rectData = reader.ReadAsVector4();
-                            camera.rect = new Rect(rectData.X, rectData.Y, rectData.Z, rectData.W);
+                            Vector4 rectData = reader.ReadAsVector4();
+                            camera.rect = new Rect(rectData.x, rectData.y, rectData.z, rectData.w);
                             break;
                         case nameof(renderPostProcessing):
                             additionalData.renderPostProcessing = reader.ReadAsBoolean().Value;

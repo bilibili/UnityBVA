@@ -128,7 +128,7 @@ Shader "VRM/URP/MToon"
             BlendOp Add, Max
             AlphaToMask [_AlphaToMask]
 
-            CGPROGRAM
+            HLSLPROGRAM
             #pragma target 3.0
             #pragma shader_feature _ MTOON_DEBUG_NORMAL MTOON_DEBUG_LITSHADERATE
             #pragma multi_compile _ _NORMALMAP
@@ -140,7 +140,7 @@ Shader "VRM/URP/MToon"
             #pragma fragment frag_forward
             #pragma multi_compile_fwdadd_fullshadows
             #pragma multi_compile_fog
-            ENDCG
+            ENDHLSL
         }
 
         //  Shadow rendering pass

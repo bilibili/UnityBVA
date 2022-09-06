@@ -37,10 +37,10 @@ namespace GLTF.Schema.BVA
             JObject propObj = new JObject();
             if (name != null) propObj.Add(nameof(name), name);
             propObj.Add(nameof(texture), texture.Id);
-            propObj.Add(nameof(rect), rect.ToGltfVector4Raw().ToJArray());
-            propObj.Add(nameof(pivot), pivot.ToGltfVector2Raw().ToJArray());
+            propObj.Add(nameof(rect), rect.ToJArray());
+            propObj.Add(nameof(pivot), pivot.ToJArray());
             propObj.Add(nameof(pixelsPerUnit), pixelsPerUnit);
-            propObj.Add(nameof(border), border.ToGltfVector4Raw().ToJArray());
+            propObj.Add(nameof(border), border.ToJArray());
             propObj.Add(nameof(generateFallbackPhysicsShape), generateFallbackPhysicsShape);
 
             JProperty jProperty = new JProperty(BVA_ui_spriteExtensionFactory.EXTENSION_NAME, propObj);
@@ -62,16 +62,16 @@ namespace GLTF.Schema.BVA
                         ret.texture = new TextureId() { Id = reader.ReadAsInt32().Value, Root = root };
                         break;
                     case nameof(rect):
-                        ret.rect = reader.ReadAsVector4().ToUnityVector4Raw();
+                        ret.rect = reader.ReadAsVector4();
                         break;
                     case nameof(pivot):
-                        ret.pivot = reader.ReadAsVector2().ToUnityVector2Raw();
+                        ret.pivot = reader.ReadAsVector2();
                         break;
                     case nameof(pixelsPerUnit):
                         ret.pixelsPerUnit = reader.ReadAsInt32().Value;
                         break;
                     case nameof(border):
-                        ret.border = reader.ReadAsVector4().ToUnityVector4Raw();
+                        ret.border = reader.ReadAsVector4();
                         break;
                     case nameof(generateFallbackPhysicsShape):
                         ret.generateFallbackPhysicsShape = reader.ReadAsBoolean().Value;

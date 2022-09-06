@@ -1,5 +1,5 @@
 ﻿using GLTF.Extensions;
-using GLTF.Math;
+using UnityEngine;
 using Newtonsoft.Json.Linq;
 
 namespace GLTF.Schema
@@ -16,8 +16,8 @@ namespace GLTF.Schema
 		/// Rotate the UVs by this many radians counter-clockwise around the origin. This is equivalent
 		/// to a similar rotation of the image clockwise.
 		/// </summary>
-		public double Rotation = 0.0f;
-		public static readonly double ROTATION_DEFAULT = 0.0f;
+		public float Rotation = 0.0f;
+		public static readonly float ROTATION_DEFAULT = 0.0f;
 
 		/// <summary>
 		/// The scale factor applied to the components of the UV coordinates.
@@ -31,7 +31,7 @@ namespace GLTF.Schema
 		public int TexCoord = 0;
 		public static readonly int TEXCOORD_DEFAULT = 0;
 
-		public KHR_texture_transformExtension(Vector2 offset, double rotation, Vector2 scale, int texCoord)
+		public KHR_texture_transformExtension(Vector2 offset, float rotation, Vector2 scale, int texCoord)
 		{
 			Offset = offset;
 			Rotation = rotation;
@@ -52,7 +52,7 @@ namespace GLTF.Schema
 			{
 				ext.Add(new JProperty(
 					KHR_texture_transformExtensionFactory.OFFSET,
-					new JArray(Offset.X, Offset.Y)
+					new JArray(Offset.x, Offset.y)
 				));
 			}
 
@@ -68,7 +68,7 @@ namespace GLTF.Schema
 			{
 				ext.Add(new JProperty(
 					KHR_texture_transformExtensionFactory.SCALE,
-					new JArray(Scale.X, Scale.Y)
+					new JArray(Scale.x, Scale.y)
 				));
 			}
 
@@ -98,9 +98,9 @@ namespace GLTF.Schema
 
 		public override IExtension Deserialize(GLTFRoot root, JProperty extensionToken)
 		{
-			Vector2 offset = new Vector2(KHR_texture_transformExtension.OFFSET_DEFAULT);
-			double rotation = 0;
-			Vector2 scale = new Vector2(KHR_texture_transformExtension.SCALE_DEFAULT);
+			Vector2 offset = KHR_texture_transformExtension.OFFSET_DEFAULT;
+			float rotation = 0;
+			Vector2 scale = KHR_texture_transformExtension.SCALE_DEFAULT;
 			int texCoord = KHR_texture_transformExtension.TEXCOORD_DEFAULT;
 
 			if (extensionToken != null)
@@ -109,7 +109,7 @@ namespace GLTF.Schema
 				offset = offsetToken != null ? offsetToken.DeserializeAsVector2() : offset;
 
 				JToken rotationToken = extensionToken.Value[ROTATION];
-				rotation = rotationToken != null ? rotationToken.DeserializeAsDouble() : rotation;
+				rotation = rotationToken != null ? rotationToken.DeserializeAsFloat() : rotation;
 
 				JToken scaleToken = extensionToken.Value[SCALE];
 				scale = scaleToken != null ? scaleToken.DeserializeAsVector2() : scale;

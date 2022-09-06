@@ -132,7 +132,7 @@ namespace BVA
                 if (!preloadedTextures)
                 {
                     await ConstructImageBuffer(textureId.Value, textureId.Id);
-                    await ConstructTexture(textureId.Value, textureId.Id, !KeepCPUCopyOfTexture);
+                    await ConstructTexture(textureId.Value, textureId.Id, !_options.KeepCPUCopyOfTexture);
                 }
                 return _assetCache.TextureCache[textureId.Id].Texture;
             }
@@ -192,21 +192,21 @@ namespace BVA
                 mapper.Material.SetFloat("_WorkflowMode", 1.0f);
                 var pbr = def.PbrMetallicRoughness;
 
-                mrMapper.BaseColorFactor = pbr.BaseColorFactor.ToUnityColorRaw();
+                mrMapper.BaseColorFactor = pbr.BaseColorFactor;
 
                 if (pbr.BaseColorTexture != null)
                 {
                     TextureId textureId = pbr.BaseColorTexture.Index;
-                    await ConstructTexture(textureId.Value, textureId.Id, !KeepCPUCopyOfTexture);
+                    await ConstructTexture(textureId.Value, textureId.Id, !_options.KeepCPUCopyOfTexture);
                     mrMapper.BaseColorTexture = _assetCache.TextureCache[textureId.Id].Texture;
                     mrMapper.BaseColorTexCoord = pbr.BaseColorTexture.TexCoord;
 
                     var ext = GetTextureTransform(pbr.BaseColorTexture);
                     if (ext != null)
                     {
-                        mrMapper.BaseColorXOffset = ext.Offset.ToUnityVector2Raw();
+                        mrMapper.BaseColorXOffset = ext.Offset;
                         mrMapper.BaseColorXRotation = ext.Rotation;
-                        mrMapper.BaseColorXScale = ext.Scale.ToUnityVector2Raw();
+                        mrMapper.BaseColorXScale = ext.Scale;
                         mrMapper.BaseColorXTexCoord = ext.TexCoord;
                     }
                 }
@@ -217,16 +217,16 @@ namespace BVA
                 if (pbr.MetallicRoughnessTexture != null)
                 {
                     TextureId textureId = pbr.MetallicRoughnessTexture.Index;
-                    await ConstructTexture(textureId.Value, textureId.Id, !KeepCPUCopyOfTexture, true);
+                    await ConstructTexture(textureId.Value, textureId.Id, !_options.KeepCPUCopyOfTexture, true);
                     mrMapper.MetallicRoughnessTexture = _assetCache.TextureCache[textureId.Id].Texture;
                     mrMapper.MetallicRoughnessTexCoord = pbr.MetallicRoughnessTexture.TexCoord;
 
                     var ext = GetTextureTransform(pbr.MetallicRoughnessTexture);
                     if (ext != null)
                     {
-                        mrMapper.MetallicRoughnessXOffset = ext.Offset.ToUnityVector2Raw();
+                        mrMapper.MetallicRoughnessXOffset = ext.Offset;
                         mrMapper.MetallicRoughnessXRotation = ext.Rotation;
-                        mrMapper.MetallicRoughnessXScale = ext.Scale.ToUnityVector2Raw();
+                        mrMapper.MetallicRoughnessXScale = ext.Scale;
                         mrMapper.MetallicRoughnessXTexCoord = ext.TexCoord;
                     }
                 }
@@ -237,40 +237,40 @@ namespace BVA
             {
                 mapper.Material.SetFloat("_WorkflowMode", 0.0f);
                 var specGloss = def.Extensions[specGlossExtName] as KHR_materials_pbrSpecularGlossinessExtension;
-                sgMapper.DiffuseFactor = specGloss.DiffuseFactor.ToUnityColorRaw();
+                sgMapper.DiffuseFactor = specGloss.DiffuseFactor;
 
                 if (specGloss.DiffuseTexture != null)
                 {
                     TextureId textureId = specGloss.DiffuseTexture.Index;
-                    await ConstructTexture(textureId.Value, textureId.Id, !KeepCPUCopyOfTexture);
+                    await ConstructTexture(textureId.Value, textureId.Id, !_options.KeepCPUCopyOfTexture);
                     sgMapper.DiffuseTexture = _assetCache.TextureCache[textureId.Id].Texture;
                     sgMapper.DiffuseTexCoord = specGloss.DiffuseTexture.TexCoord;
 
                     var ext = GetTextureTransform(specGloss.DiffuseTexture);
                     if (ext != null)
                     {
-                        sgMapper.DiffuseXOffset = ext.Offset.ToUnityVector2Raw();
+                        sgMapper.DiffuseXOffset = ext.Offset;
                         sgMapper.DiffuseXRotation = ext.Rotation;
-                        sgMapper.DiffuseXScale = ext.Scale.ToUnityVector2Raw();
+                        sgMapper.DiffuseXScale = ext.Scale;
                         sgMapper.DiffuseXTexCoord = ext.TexCoord;
                     }
                 }
 
-                sgMapper.SpecularFactor = specGloss.SpecularFactor.ToUnityVector3Raw();
+                sgMapper.SpecularFactor = specGloss.SpecularFactor;
                 sgMapper.GlossinessFactor = specGloss.GlossinessFactor;
 
                 if (specGloss.SpecularGlossinessTexture != null)
                 {
                     TextureId textureId = specGloss.SpecularGlossinessTexture.Index;
-                    await ConstructTexture(textureId.Value, textureId.Id, !KeepCPUCopyOfTexture);
+                    await ConstructTexture(textureId.Value, textureId.Id, !_options.KeepCPUCopyOfTexture);
                     sgMapper.SpecularGlossinessTexture = _assetCache.TextureCache[textureId.Id].Texture;
 
                     var ext = GetTextureTransform(specGloss.SpecularGlossinessTexture);
                     if (ext != null)
                     {
-                        sgMapper.SpecularGlossinessXOffset = ext.Offset.ToUnityVector2Raw();
+                        sgMapper.SpecularGlossinessXOffset = ext.Offset;
                         sgMapper.SpecularGlossinessXRotation = ext.Rotation;
-                        sgMapper.SpecularGlossinessXScale = ext.Scale.ToUnityVector2Raw();
+                        sgMapper.SpecularGlossinessXScale = ext.Scale;
                         sgMapper.SpecularGlossinessXTexCoord = ext.TexCoord;
                     }
                 }
@@ -279,7 +279,7 @@ namespace BVA
             if (def.NormalTexture != null)
             {
                 TextureId textureId = def.NormalTexture.Index;
-                await ConstructTexture(textureId.Value, textureId.Id, !KeepCPUCopyOfTexture, true);
+                await ConstructTexture(textureId.Value, textureId.Id, !_options.KeepCPUCopyOfTexture, true);
                 mapper.NormalTexture = _assetCache.TextureCache[textureId.Id].Texture;
                 mapper.NormalTexCoord = def.NormalTexture.TexCoord;
                 mapper.NormalTexScale = def.NormalTexture.Scale;
@@ -287,9 +287,9 @@ namespace BVA
                 var ext = GetTextureTransform(def.NormalTexture);
                 if (ext != null)
                 {
-                    mapper.NormalXOffset = ext.Offset.ToUnityVector2Raw();
+                    mapper.NormalXOffset = ext.Offset;
                     mapper.NormalXRotation = ext.Rotation;
-                    mapper.NormalXScale = ext.Scale.ToUnityVector2Raw();
+                    mapper.NormalXScale = ext.Scale;
                     mapper.NormalXTexCoord = ext.TexCoord;
                 }
             }
@@ -298,15 +298,15 @@ namespace BVA
             {
                 mapper.OcclusionTexStrength = def.OcclusionTexture.Strength;
                 TextureId textureId = def.OcclusionTexture.Index;
-                await ConstructTexture(textureId.Value, textureId.Id, !KeepCPUCopyOfTexture, true);
+                await ConstructTexture(textureId.Value, textureId.Id, !_options.KeepCPUCopyOfTexture, true);
                 mapper.OcclusionTexture = _assetCache.TextureCache[textureId.Id].Texture;
 
                 var ext = GetTextureTransform(def.OcclusionTexture);
                 if (ext != null)
                 {
-                    mapper.OcclusionXOffset = ext.Offset.ToUnityVector2Raw();
+                    mapper.OcclusionXOffset = ext.Offset;
                     mapper.OcclusionXRotation = ext.Rotation;
-                    mapper.OcclusionXScale = ext.Scale.ToUnityVector2Raw();
+                    mapper.OcclusionXScale = ext.Scale;
                     mapper.OcclusionXTexCoord = ext.TexCoord;
                 }
             }
@@ -318,16 +318,16 @@ namespace BVA
             if (def.EmissiveTexture != null)
             {
                 TextureId textureId = def.EmissiveTexture.Index;
-                await ConstructTexture(textureId.Value, textureId.Id, !KeepCPUCopyOfTexture);
+                await ConstructTexture(textureId.Value, textureId.Id, !_options.KeepCPUCopyOfTexture);
                 mapper.EmissiveTexture = _assetCache.TextureCache[textureId.Id].Texture;
                 mapper.EmissiveTexCoord = def.EmissiveTexture.TexCoord;
 
                 var ext = GetTextureTransform(def.EmissiveTexture);
                 if (ext != null)
                 {
-                    mapper.EmissiveXOffset = ext.Offset.ToUnityVector2Raw();
+                    mapper.EmissiveXOffset = ext.Offset;
                     mapper.EmissiveXRotation = ext.Rotation;
-                    mapper.EmissiveXScale = ext.Scale.ToUnityVector2Raw();
+                    mapper.EmissiveXScale = ext.Scale;
                     mapper.EmissiveXTexCoord = ext.TexCoord;
                 }
             }
@@ -336,16 +336,16 @@ namespace BVA
                 mapper.EmissiveTexture = null;
             }
 
-            mapper.EmissiveFactor = def.EmissiveFactor.ToUnityColorRaw();
+            mapper.EmissiveFactor = def.EmissiveFactor;
 
             // Environment Reflection
-            if (!EnableEnvironmentReflection)
+            if (!_options.EnableEnvironmentReflection)
             {
                 mapper.Material.SetInt("_EnvironmentReflections", 0);
                 CoreUtils.SetKeyword(mapper.Material, "_ENVIRONMENTREFLECTIONS_OFF", true);
             }
             // Specular Highlight
-            if (!EnableSpecularHighlight)
+            if (!_options.EnableSpecularHighlight)
             {
                 mapper.Material.SetInt("_SpecularHighlights", 0);
                 CoreUtils.SetKeyword(mapper.Material, "_SPECULARHIGHLIGHTS_OFF", true);
@@ -367,7 +367,7 @@ namespace BVA
                 {
                     TextureId textureId = clearcoat.clearcoatTexture.Index;
                     await ConstructImageBuffer(textureId.Value, textureId.Id);
-                    await ConstructTexture(textureId.Value, textureId.Id, !KeepCPUCopyOfTexture);
+                    await ConstructTexture(textureId.Value, textureId.Id, !_options.KeepCPUCopyOfTexture);
                     mapper.ClearcoatTexture = _assetCache.TextureCache[textureId.Id].Texture;
                 }
 
@@ -376,7 +376,7 @@ namespace BVA
                 {
                     TextureId textureId = clearcoat.clearcoatRoughnessTexture.Index;
                     await ConstructImageBuffer(textureId.Value, textureId.Id);
-                    await ConstructTexture(textureId.Value, textureId.Id, !KeepCPUCopyOfTexture);
+                    await ConstructTexture(textureId.Value, textureId.Id, !_options.KeepCPUCopyOfTexture);
                     mapper.ClearcoatRoughnessTexture = _assetCache.TextureCache[textureId.Id].Texture;
                 }
             }
@@ -385,6 +385,8 @@ namespace BVA
             {
                 var unlitShader = Shader.Find("Universal Render Pipeline/Unlit") ?? Shader.Find("Unlit/Texture");
                 mapper.Material.shader = unlitShader;
+                mapper.AlphaCutoff = def.AlphaCutoff;
+                mapper.AlphaMode = def.AlphaMode;
             }
 
             var vertColorMapper = mapper.Clone();
@@ -493,12 +495,12 @@ namespace BVA
                     float maxFactor = emissiveColor.maxColorComponent;
                     if (maxFactor > 1.0f)
                     {
-                        material.EmissiveFactor = (emissiveColor / maxFactor).ToNumericsColorRaw();
+                        material.EmissiveFactor = (emissiveColor / maxFactor);
                         material.AddExtension(_root, KHR_materials_emissive_strengthExtensionFactory.EXTENSION_NAME, new KHR_materials_emissive_strengthExtension(maxFactor), RequireExtensions);
                     }
                     else
                     {
-                        material.EmissiveFactor = emissiveColor.ToNumericsColorRaw();
+                        material.EmissiveFactor = emissiveColor;
                     }
                 }
 
@@ -617,7 +619,7 @@ namespace BVA
 
             if (GetOneMaterialProperty(material, MATERIAL_PROPERTY_BaseColor, out string baseColorProperty))
             {
-                pbr.BaseColorFactor = material.GetColor(baseColorProperty).ToNumericsColorRaw();
+                pbr.BaseColorFactor = material.GetColor(baseColorProperty);
             }
 
             if (GetOneMaterialProperty(material, MATERIAL_PROPERTY_BaseMap, out string baseMapProperty))
@@ -660,12 +662,12 @@ namespace BVA
 
             if (GetOneMaterialProperty(material, MATERIAL_PROPERTY_Metallic, out string metallicProperty))
             {
-                pbr.MetallicFactor = hasMetallicGlossMap ? 1.0 : material.GetFloat(metallicProperty);
+                pbr.MetallicFactor = hasMetallicGlossMap ? 1.0f : material.GetFloat(metallicProperty);
             }
 
             if (GetOneMaterialProperty(material, MATERIAL_PROPERTY_Smoothness, out string smoothnessProperty))
             {
-                pbr.RoughnessFactor = /*hasMetallicGlossMap ? 1.0 : */1.0 - material.GetFloat(smoothnessProperty);
+                pbr.RoughnessFactor = /*hasMetallicGlossMap ? 1.0 : */1.0f - material.GetFloat(smoothnessProperty);
             }
             else if (GetOneMaterialProperty(material, MATERIAL_PROPERTY_Roughness, out string roughnessProperty))
             {
@@ -682,7 +684,7 @@ namespace BVA
 
             if (material.HasProperty("_AmbientFactor"))
             {
-                constant.AmbientFactor = material.GetColor("_AmbientFactor").ToNumericsColorRaw();
+                constant.AmbientFactor = material.GetColor("_AmbientFactor");
             }
 
             if (material.HasProperty("_LightMap"))
@@ -699,7 +701,7 @@ namespace BVA
 
             if (material.HasProperty("_LightFactor"))
             {
-                constant.LightmapFactor = material.GetColor("_LightFactor").ToNumericsColorRaw();
+                constant.LightmapFactor = material.GetColor("_LightFactor");
             }
 
             return constant;
@@ -707,7 +709,7 @@ namespace BVA
 
         private void ExportPBRSpecularGlossiness(GLTFMaterial gltfMaterial, Material material)
         {
-            var specColor = material.GetColor("_BaseColor").ToNumericsColorRaw();
+            var specColor = material.GetColor("_BaseColor");
 
             var baseTex = material.GetTexture("_BaseMap");
             var baseTexInfo = baseTex == null ? null : ExportTextureInfo(baseTex, TextureMapType.SpecGloss);
@@ -717,7 +719,7 @@ namespace BVA
             var glossTex = material.GetTexture("_SpecGlossMap");
             var glossTexInfo = glossTex == null ? null : ExportTextureInfo(glossTex, TextureMapType.SpecGloss);
 
-            var pbrSpec = new KHR_materials_pbrSpecularGlossinessExtension(specColor, baseTexInfo, new GLTF.Math.Vector3(specColor.R, specColor.G, specColor.B), specFactor, glossTexInfo);
+            var pbrSpec = new KHR_materials_pbrSpecularGlossinessExtension(specColor, baseTexInfo, new Vector3(specColor.r, specColor.g, specColor.b), specFactor, glossTexInfo);
             gltfMaterial.AddExtension(_root, KHR_materials_pbrSpecularGlossinessExtensionFactory.EXTENSION_NAME, pbrSpec, RequireExtensions);
         }
 

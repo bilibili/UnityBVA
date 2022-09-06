@@ -105,8 +105,8 @@ namespace BVA
             JObject jo = base.SerializeBase(cache);
             jo.Add(nameof(propertyName), propertyName);
             jo.Add(nameof(source), cache.GetId(source.gameObject));
-            jo.Add(nameof(startColor), startColor.ToNumericsColorRaw().ToJArray());
-            jo.Add(nameof(endColor), endColor.ToNumericsColorRaw().ToJArray());
+            jo.Add(nameof(startColor), startColor.ToJArray());
+            jo.Add(nameof(endColor), endColor.ToJArray());
             return new JProperty(gltfProperty, jo);
         }
     }

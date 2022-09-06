@@ -276,7 +276,7 @@ namespace BVA
             string TRS = property.Substring(dotIndex - 1, 1);
             string element = property.Substring(dotIndex + 1);
             if (element.Length != 1)
-                throw new System.Exception("The element after dot must be xyzw");
+                throw new LoadException("The element after dot must be xyzw");
             return (true, property, TRS, element);
         }
         /// <summary>

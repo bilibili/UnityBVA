@@ -104,13 +104,13 @@ namespace BVA
                 if (lodsextension != null && lodsextension.MeshIds.Count > 0)
                 {
                     int lodCount = lodsextension.MeshIds.Count + 1;
-                    if (!CullFarLOD)
+                    if (!_options.CullFarLOD)
                     {
                         //create a final lod with the mesh as the last LOD in file
                         lodCount += 1;
                     }
                     LOD[] lods = new LOD[lodsextension.MeshIds.Count + 2];
-                    List<double> lodCoverage = lodsextension.GetLODCoverage(node);
+                    List<float> lodCoverage = lodsextension.GetLODCoverage(node);
 
                     var lodGroupNodeObj = new GameObject(string.IsNullOrEmpty(node.Name) ? ("GLTFNode_LODGroup" + nodeIndex) : node.Name);
                     lodGroupNodeObj.SetActive(false);
@@ -129,7 +129,7 @@ namespace BVA
                         lods[lodIndex] = new LOD(GetLodCoverage(lodCoverage, lodIndex), childRenders);
                     }
 
-                    if (!CullFarLOD)
+                    if (!_options.CullFarLOD)
                     {
                         //use the last mesh as the LOD
                         lods[lodsextension.MeshIds.Count + 1] = new LOD(0, childRenders);
@@ -184,24 +184,6 @@ namespace BVA
                     renderer.sharedMaterials = materials;
                     renderer.UpdateGIMaterials();
                 }
-
-                switch (Collider)
-                {
-                    case ColliderType.Box:
-                        var boxCollider = nodeObj.AddComponent<BoxCollider>();
-                        boxCollider.center = unityMesh.bounds.center;
-                        boxCollider.size = unityMesh.bounds.size;
-                        break;
-                    case ColliderType.Mesh:
-                        var meshCollider = nodeObj.AddComponent<MeshCollider>();
-                        meshCollider.sharedMesh = unityMesh;
-                        break;
-                    case ColliderType.MeshConvex:
-                        var meshConvexCollider = nodeObj.AddComponent<MeshCollider>();
-                        meshConvexCollider.sharedMesh = unityMesh;
-                        meshConvexCollider.convex = true;
-                        break;
-                }
             }
 
             AddNodeComponent(node, nodeObj);
@@ -223,7 +205,7 @@ namespace BVA
             {
                 IExtension ext = node.Extensions[KHR_lights_punctualExtensionFactory.EXTENSION_NAME];
                 var impl = (KHR_lights_punctualExtensionFactory)ext;
-                if (impl == null) throw new Exception($"cast {nameof(KHR_lights_punctualExtensionFactory)} failed");
+                if (impl == null) throw new InvalidCastException($"cast {nameof(KHR_lights_punctualExtensionFactory)} failed");
                 var lightExt = _gltfRoot.Extensions.Lights[impl.id.Id];
 
                 if (lightExt != null)
@@ -235,7 +217,7 @@ namespace BVA
             {
                 IExtension ext = node.Extensions[BVA_collisions_colliderExtensionFactory.EXTENSION_NAME];
                 var impl = (BVA_collisions_colliderExtensionFactory)ext;
-                if (impl == null) throw new Exception($"cast {nameof(BVA_collisions_colliderExtensionFactory)} failed");
+                if (impl == null) throw new InvalidCastException($"cast {nameof(BVA_collisions_colliderExtensionFactory)} failed");
                 foreach (var v in impl.ids)
                 {
                     var collisionExt = _gltfRoot.Extensions.Collisions[v.Id];
@@ -259,7 +241,7 @@ namespace BVA
             {
                 IExtension ext = node.Extensions[BVA_metaExtensionFactory.EXTENSION_NAME];
                 var impl = (BVA_metaExtensionFactory)ext;
-                if (impl == null) throw new Exception($"cast {nameof(BVA_metaExtensionFactory)} failed");
+                if (impl == null) throw new InvalidCastException($"cast {nameof(BVA_metaExtensionFactory)} failed");
 
                 var metaExt = _gltfRoot.Extensions.Metas[impl.id.Id];
                 if (metaExt != null)
@@ -271,7 +253,7 @@ namespace BVA
             {
                 IExtension ext = node.Extensions[BVA_postprocess_volumeExtensionFactory.EXTENSION_NAME];
                 var impl = (BVA_postprocess_volumeExtensionFactory)ext;
-                if (impl == null) throw new Exception($"cast {nameof(BVA_postprocess_volumeExtensionFactory)} failed");
+                if (impl == null) throw new InvalidCastException($"cast {nameof(BVA_postprocess_volumeExtensionFactory)} failed");
 
                 var volumeExt = _gltfRoot.Extensions.PostProcessUrpVolumes[impl.id.Id];
                 if (volumeExt != null)
@@ -283,7 +265,7 @@ namespace BVA
             {
                 IExtension ext = node.Extensions[BVA_audio_audioClipExtensionFactory.EXTENSION_NAME];
                 var impl = (BVA_audio_audioClipExtensionFactory)ext;
-                if (impl == null) throw new Exception($"cast {nameof(BVA_audio_audioClipExtensionFactory)} failed");
+                if (impl == null) throw new InvalidCastException($"cast {nameof(BVA_audio_audioClipExtensionFactory)} failed");
                 foreach (var v in impl.components)
                 {
                     ImportAudio(v, nodeObj);

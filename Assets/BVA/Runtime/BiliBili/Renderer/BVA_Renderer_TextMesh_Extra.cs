@@ -38,7 +38,7 @@ namespace GLTF.Schema.BVA
             jo.Add(nameof(lineSpacing), lineSpacing);
             jo.Add(nameof(tabSize), tabSize);
             jo.Add(nameof(richText), richText);
-            jo.Add(nameof(color), color.ToNumericsColorRaw().ToJArray());
+            jo.Add(nameof(color), color.ToJArray());
             return new JProperty(ComponentName, jo);
         }
 
@@ -83,7 +83,7 @@ namespace GLTF.Schema.BVA
                             textMesh.richText = reader.ReadAsBoolean().Value;
                             break;
                         case nameof(color):
-                            textMesh.color = reader.ReadAsRGBAColor().ToUnityColorRaw();
+                            textMesh.color = reader.ReadAsRGBAColor();
                             break;
                     }
                 }

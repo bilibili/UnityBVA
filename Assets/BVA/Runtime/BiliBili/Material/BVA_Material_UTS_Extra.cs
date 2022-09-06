@@ -530,7 +530,7 @@ namespace GLTF.Schema.BVA
                             matCache.SetFloat(BVA_Material_UTS_Extra.SMOOTHNESS, reader.ReadAsFloat());
                             break;
                         case BVA_Material_UTS_Extra.SPECCOLOR:
-                            matCache.SetColor(BVA_Material_UTS_Extra.SPECCOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_UTS_Extra.SPECCOLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_UTS_Extra.CLIPPINGMODE:
                             matCache.SetFloat(BVA_Material_UTS_Extra.CLIPPINGMODE, reader.ReadAsFloat());
@@ -577,10 +577,10 @@ namespace GLTF.Schema.BVA
                             }
                             break;
                         case BVA_Material_UTS_Extra.BASECOLOR:
-                            matCache.SetColor(BVA_Material_UTS_Extra.BASECOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_UTS_Extra.BASECOLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_UTS_Extra.COLOR:
-                            matCache.SetColor(BVA_Material_UTS_Extra.COLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_UTS_Extra.COLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_UTS_Extra.ISLIGHTCOLORBASE:
                             matCache.SetFloat(BVA_Material_UTS_Extra.ISLIGHTCOLORBASE, reader.ReadAsFloat());
@@ -596,7 +596,7 @@ namespace GLTF.Schema.BVA
                             matCache.SetFloat(BVA_Material_UTS_Extra.USEBASEASFIRST, reader.ReadAsFloat());
                             break;
                         case BVA_Material_UTS_Extra.FIRSTSHADECOLOR:
-                            matCache.SetColor(BVA_Material_UTS_Extra.FIRSTSHADECOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_UTS_Extra.FIRSTSHADECOLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_UTS_Extra.ISLIGHTCOLORFIRSTSHADE:
                             matCache.SetFloat(BVA_Material_UTS_Extra.ISLIGHTCOLORFIRSTSHADE, reader.ReadAsFloat());
@@ -612,7 +612,7 @@ namespace GLTF.Schema.BVA
                             matCache.SetFloat(BVA_Material_UTS_Extra.USEFIRSTASSECOND, reader.ReadAsFloat());
                             break;
                         case BVA_Material_UTS_Extra.SECONDSHADECOLOR:
-                            matCache.SetColor(BVA_Material_UTS_Extra.SECONDSHADECOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_UTS_Extra.SECONDSHADECOLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_UTS_Extra.ISLIGHTCOLORSECONDSHADE:
                             matCache.SetFloat(BVA_Material_UTS_Extra.ISLIGHTCOLORSECONDSHADE, reader.ReadAsFloat());
@@ -694,7 +694,7 @@ namespace GLTF.Schema.BVA
                             matCache.SetFloat(BVA_Material_UTS_Extra.BLURLEVELSGM, reader.ReadAsFloat());
                             break;
                         case BVA_Material_UTS_Extra.HIGHCOLOR:
-                            matCache.SetColor(BVA_Material_UTS_Extra.HIGHCOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_UTS_Extra.HIGHCOLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_UTS_Extra.HIGHCOLORTEX:
                             {
@@ -738,7 +738,7 @@ namespace GLTF.Schema.BVA
                             matCache.SetFloat(BVA_Material_UTS_Extra.RIMLIGHT, reader.ReadAsFloat());
                             break;
                         case BVA_Material_UTS_Extra.RIMLIGHTCOLOR:
-                            matCache.SetColor(BVA_Material_UTS_Extra.RIMLIGHTCOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_UTS_Extra.RIMLIGHTCOLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_UTS_Extra.ISLIGHTCOLORRIMLIGHT:
                             matCache.SetFloat(BVA_Material_UTS_Extra.ISLIGHTCOLORRIMLIGHT, reader.ReadAsFloat());
@@ -765,7 +765,7 @@ namespace GLTF.Schema.BVA
                             matCache.SetFloat(BVA_Material_UTS_Extra.ADDANTIPODEANRIMLIGHT, reader.ReadAsFloat());
                             break;
                         case BVA_Material_UTS_Extra.APRIMLIGHTCOLOR:
-                            matCache.SetColor(BVA_Material_UTS_Extra.APRIMLIGHTCOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_UTS_Extra.APRIMLIGHTCOLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_UTS_Extra.ISLIGHTCOLORAPRIMLIGHT:
                             matCache.SetFloat(BVA_Material_UTS_Extra.ISLIGHTCOLORAPRIMLIGHT, reader.ReadAsFloat());
@@ -800,7 +800,7 @@ namespace GLTF.Schema.BVA
                             matCache.SetFloat(BVA_Material_UTS_Extra.BLURLEVELMATCAP, reader.ReadAsFloat());
                             break;
                         case BVA_Material_UTS_Extra.MATCAPCOLOR:
-                            matCache.SetColor(BVA_Material_UTS_Extra.MATCAPCOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_UTS_Extra.MATCAPCOLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_UTS_Extra.ISLIGHTCOLORMATCAP:
                             matCache.SetFloat(BVA_Material_UTS_Extra.ISLIGHTCOLORMATCAP, reader.ReadAsFloat());
@@ -866,7 +866,7 @@ namespace GLTF.Schema.BVA
                             }
                             break;
                         case BVA_Material_UTS_Extra.ANGELRINGCOLOR:
-                            matCache.SetColor(BVA_Material_UTS_Extra.ANGELRINGCOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_UTS_Extra.ANGELRINGCOLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_UTS_Extra.ISLIGHTCOLORAR:
                             matCache.SetFloat(BVA_Material_UTS_Extra.ISLIGHTCOLORAR, reader.ReadAsFloat());
@@ -891,7 +891,7 @@ namespace GLTF.Schema.BVA
                             }
                             break;
                         case BVA_Material_UTS_Extra.EMISSIVECOLOR:
-                            matCache.SetColor(BVA_Material_UTS_Extra.EMISSIVECOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_UTS_Extra.EMISSIVECOLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_UTS_Extra.BASESPEED:
                             matCache.SetFloat(BVA_Material_UTS_Extra.BASESPEED, reader.ReadAsFloat());
@@ -912,7 +912,7 @@ namespace GLTF.Schema.BVA
                             matCache.SetFloat(BVA_Material_UTS_Extra.ISCOLORSHIFT, reader.ReadAsFloat());
                             break;
                         case BVA_Material_UTS_Extra.COLORSHIFT:
-                            matCache.SetColor(BVA_Material_UTS_Extra.COLORSHIFT, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_UTS_Extra.COLORSHIFT, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_UTS_Extra.COLORSHIFTSPEED:
                             matCache.SetFloat(BVA_Material_UTS_Extra.COLORSHIFTSPEED, reader.ReadAsFloat());
@@ -921,7 +921,7 @@ namespace GLTF.Schema.BVA
                             matCache.SetFloat(BVA_Material_UTS_Extra.ISVIEWSHIFT, reader.ReadAsFloat());
                             break;
                         case BVA_Material_UTS_Extra.VIEWSHIFT:
-                            matCache.SetColor(BVA_Material_UTS_Extra.VIEWSHIFT, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_UTS_Extra.VIEWSHIFT, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_UTS_Extra.ISVIEWCOORDSCROLL:
                             matCache.SetFloat(BVA_Material_UTS_Extra.ISVIEWCOORDSCROLL, reader.ReadAsFloat());
@@ -946,7 +946,7 @@ namespace GLTF.Schema.BVA
                             }
                             break;
                         case BVA_Material_UTS_Extra.OUTLINECOLOR:
-                            matCache.SetColor(BVA_Material_UTS_Extra.OUTLINECOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_UTS_Extra.OUTLINECOLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_UTS_Extra.ISBLENDBASECOLOR:
                             matCache.SetFloat(BVA_Material_UTS_Extra.ISBLENDBASECOLOR, reader.ReadAsFloat());
@@ -1029,7 +1029,7 @@ namespace GLTF.Schema.BVA
             jo.Add(parameter__TransparentEnabled.ParamName, parameter__TransparentEnabled.Value);
             jo.Add(parameter__Metallic.ParamName, parameter__Metallic.Value);
             jo.Add(parameter__Smoothness.ParamName, parameter__Smoothness.Value);
-            jo.Add(parameter__SpecColor.ParamName, parameter__SpecColor.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter__SpecColor.ParamName, parameter__SpecColor.Value.ToJArray());
             jo.Add(parameter__ClippingMode.ParamName, parameter__ClippingMode.Value);
             jo.Add(parameter__CullMode.ParamName, parameter__CullMode.Value);
             jo.Add(parameter__ZWriteMode.ParamName, parameter__ZWriteMode.Value);
@@ -1042,16 +1042,16 @@ namespace GLTF.Schema.BVA
             jo.Add(parameter__Clipping_Level.ParamName, parameter__Clipping_Level.Value);
             jo.Add(parameter__Tweak_transparency.ParamName, parameter__Tweak_transparency.Value);
             if (parameter__MainTex != null && parameter__MainTex.Value != null) jo.Add(parameter__MainTex.ParamName, parameter__MainTex.Serialize());
-            jo.Add(parameter__BaseColor.ParamName, parameter__BaseColor.Value.ToNumericsColorRaw().ToJArray());
-            jo.Add(parameter__Color.ParamName, parameter__Color.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter__BaseColor.ParamName, parameter__BaseColor.Value.ToJArray());
+            jo.Add(parameter__Color.ParamName, parameter__Color.Value.ToJArray());
             jo.Add(parameter__Is_LightColor_Base.ParamName, parameter__Is_LightColor_Base.Value);
             if (parameter__1st_ShadeMap != null && parameter__1st_ShadeMap.Value != null) jo.Add(parameter__1st_ShadeMap.ParamName, parameter__1st_ShadeMap.Serialize());
             jo.Add(parameter__Use_BaseAs1st.ParamName, parameter__Use_BaseAs1st.Value);
-            jo.Add(parameter__1st_ShadeColor.ParamName, parameter__1st_ShadeColor.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter__1st_ShadeColor.ParamName, parameter__1st_ShadeColor.Value.ToJArray());
             jo.Add(parameter__Is_LightColor_1st_Shade.ParamName, parameter__Is_LightColor_1st_Shade.Value);
             if (parameter__2nd_ShadeMap != null && parameter__2nd_ShadeMap.Value != null) jo.Add(parameter__2nd_ShadeMap.ParamName, parameter__2nd_ShadeMap.Serialize());
             jo.Add(parameter__Use_1stAs2nd.ParamName, parameter__Use_1stAs2nd.Value);
-            jo.Add(parameter__2nd_ShadeColor.ParamName, parameter__2nd_ShadeColor.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter__2nd_ShadeColor.ParamName, parameter__2nd_ShadeColor.Value.ToJArray());
             jo.Add(parameter__Is_LightColor_2nd_Shade.ParamName, parameter__Is_LightColor_2nd_Shade.Value);
             if (parameter__NormalMap != null && parameter__NormalMap.Value != null) jo.Add(parameter__NormalMap.ParamName, parameter__NormalMap.Serialize());
             jo.Add(parameter__BumpScale.ParamName, parameter__BumpScale.Value);
@@ -1073,7 +1073,7 @@ namespace GLTF.Schema.BVA
             if (parameter__ShadingGradeMap != null && parameter__ShadingGradeMap.Value != null) jo.Add(parameter__ShadingGradeMap.ParamName, parameter__ShadingGradeMap.Serialize());
             jo.Add(parameter__Tweak_ShadingGradeMapLevel.ParamName, parameter__Tweak_ShadingGradeMapLevel.Value);
             jo.Add(parameter__BlurLevelSGM.ParamName, parameter__BlurLevelSGM.Value);
-            jo.Add(parameter__HighColor.ParamName, parameter__HighColor.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter__HighColor.ParamName, parameter__HighColor.Value.ToJArray());
             if (parameter__HighColor_Tex != null && parameter__HighColor_Tex.Value != null) jo.Add(parameter__HighColor_Tex.ParamName, parameter__HighColor_Tex.Serialize());
             jo.Add(parameter__Is_LightColor_HighColor.ParamName, parameter__Is_LightColor_HighColor.Value);
             jo.Add(parameter__Is_NormalMapToHighColor.ParamName, parameter__Is_NormalMapToHighColor.Value);
@@ -1085,7 +1085,7 @@ namespace GLTF.Schema.BVA
             if (parameter__Set_HighColorMask != null && parameter__Set_HighColorMask.Value != null) jo.Add(parameter__Set_HighColorMask.ParamName, parameter__Set_HighColorMask.Serialize());
             jo.Add(parameter__Tweak_HighColorMaskLevel.ParamName, parameter__Tweak_HighColorMaskLevel.Value);
             jo.Add(parameter__RimLight.ParamName, parameter__RimLight.Value);
-            jo.Add(parameter__RimLightColor.ParamName, parameter__RimLightColor.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter__RimLightColor.ParamName, parameter__RimLightColor.Value.ToJArray());
             jo.Add(parameter__Is_LightColor_RimLight.ParamName, parameter__Is_LightColor_RimLight.Value);
             jo.Add(parameter__Is_NormalMapToRimLight.ParamName, parameter__Is_NormalMapToRimLight.Value);
             jo.Add(parameter__RimLight_Power.ParamName, parameter__RimLight_Power.Value);
@@ -1094,7 +1094,7 @@ namespace GLTF.Schema.BVA
             jo.Add(parameter__LightDirection_MaskOn.ParamName, parameter__LightDirection_MaskOn.Value);
             jo.Add(parameter__Tweak_LightDirection_MaskLevel.ParamName, parameter__Tweak_LightDirection_MaskLevel.Value);
             jo.Add(parameter__Add_Antipodean_RimLight.ParamName, parameter__Add_Antipodean_RimLight.Value);
-            jo.Add(parameter__Ap_RimLightColor.ParamName, parameter__Ap_RimLightColor.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter__Ap_RimLightColor.ParamName, parameter__Ap_RimLightColor.Value.ToJArray());
             jo.Add(parameter__Is_LightColor_Ap_RimLight.ParamName, parameter__Is_LightColor_Ap_RimLight.Value);
             jo.Add(parameter__Ap_RimLight_Power.ParamName, parameter__Ap_RimLight_Power.Value);
             jo.Add(parameter__Ap_RimLight_FeatherOff.ParamName, parameter__Ap_RimLight_FeatherOff.Value);
@@ -1103,7 +1103,7 @@ namespace GLTF.Schema.BVA
             jo.Add(parameter__MatCap.ParamName, parameter__MatCap.Value);
             if (parameter__MatCap_Sampler != null && parameter__MatCap_Sampler.Value != null) jo.Add(parameter__MatCap_Sampler.ParamName, parameter__MatCap_Sampler.Serialize());
             jo.Add(parameter__BlurLevelMatcap.ParamName, parameter__BlurLevelMatcap.Value);
-            jo.Add(parameter__MatCapColor.ParamName, parameter__MatCapColor.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter__MatCapColor.ParamName, parameter__MatCapColor.Value.ToJArray());
             jo.Add(parameter__Is_LightColor_MatCap.ParamName, parameter__Is_LightColor_MatCap.Value);
             jo.Add(parameter__Is_BlendAddToMatCap.ParamName, parameter__Is_BlendAddToMatCap.Value);
             jo.Add(parameter__Tweak_MatCapUV.ParamName, parameter__Tweak_MatCapUV.Value);
@@ -1121,31 +1121,31 @@ namespace GLTF.Schema.BVA
             jo.Add(parameter__Is_Ortho.ParamName, parameter__Is_Ortho.Value);
             jo.Add(parameter__AngelRing.ParamName, parameter__AngelRing.Value);
             if (parameter__AngelRing_Sampler != null && parameter__AngelRing_Sampler.Value != null) jo.Add(parameter__AngelRing_Sampler.ParamName, parameter__AngelRing_Sampler.Serialize());
-            jo.Add(parameter__AngelRing_Color.ParamName, parameter__AngelRing_Color.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter__AngelRing_Color.ParamName, parameter__AngelRing_Color.Value.ToJArray());
             jo.Add(parameter__Is_LightColor_AR.ParamName, parameter__Is_LightColor_AR.Value);
             jo.Add(parameter__AR_OffsetU.ParamName, parameter__AR_OffsetU.Value);
             jo.Add(parameter__AR_OffsetV.ParamName, parameter__AR_OffsetV.Value);
             jo.Add(parameter__ARSampler_AlphaOn.ParamName, parameter__ARSampler_AlphaOn.Value);
             jo.Add(parameter__EMISSIVE.ParamName, parameter__EMISSIVE.Value);
             if (parameter__Emissive_Tex != null && parameter__Emissive_Tex.Value != null) jo.Add(parameter__Emissive_Tex.ParamName, parameter__Emissive_Tex.Serialize());
-            jo.Add(parameter__Emissive_Color.ParamName, parameter__Emissive_Color.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter__Emissive_Color.ParamName, parameter__Emissive_Color.Value.ToJArray());
             jo.Add(parameter__Base_Speed.ParamName, parameter__Base_Speed.Value);
             jo.Add(parameter__Scroll_EmissiveU.ParamName, parameter__Scroll_EmissiveU.Value);
             jo.Add(parameter__Scroll_EmissiveV.ParamName, parameter__Scroll_EmissiveV.Value);
             jo.Add(parameter__Rotate_EmissiveUV.ParamName, parameter__Rotate_EmissiveUV.Value);
             jo.Add(parameter__Is_PingPong_Base.ParamName, parameter__Is_PingPong_Base.Value);
             jo.Add(parameter__Is_ColorShift.ParamName, parameter__Is_ColorShift.Value);
-            jo.Add(parameter__ColorShift.ParamName, parameter__ColorShift.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter__ColorShift.ParamName, parameter__ColorShift.Value.ToJArray());
             jo.Add(parameter__ColorShift_Speed.ParamName, parameter__ColorShift_Speed.Value);
             jo.Add(parameter__Is_ViewShift.ParamName, parameter__Is_ViewShift.Value);
-            jo.Add(parameter__ViewShift.ParamName, parameter__ViewShift.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter__ViewShift.ParamName, parameter__ViewShift.Value.ToJArray());
             jo.Add(parameter__Is_ViewCoord_Scroll.ParamName, parameter__Is_ViewCoord_Scroll.Value);
             jo.Add(parameter__OUTLINE.ParamName, parameter__OUTLINE.Value);
             jo.Add(parameter__Outline_Width.ParamName, parameter__Outline_Width.Value);
             jo.Add(parameter__Farthest_Distance.ParamName, parameter__Farthest_Distance.Value);
             jo.Add(parameter__Nearest_Distance.ParamName, parameter__Nearest_Distance.Value);
             if (parameter__Outline_Sampler != null && parameter__Outline_Sampler.Value != null) jo.Add(parameter__Outline_Sampler.ParamName, parameter__Outline_Sampler.Serialize());
-            jo.Add(parameter__Outline_Color.ParamName, parameter__Outline_Color.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter__Outline_Color.ParamName, parameter__Outline_Color.Value.ToJArray());
             jo.Add(parameter__Is_BlendBaseColor.ParamName, parameter__Is_BlendBaseColor.Value);
             jo.Add(parameter__Is_LightColor_Outline.ParamName, parameter__Is_LightColor_Outline.Value);
             jo.Add(parameter__Cutoff.ParamName, parameter__Cutoff.Value);

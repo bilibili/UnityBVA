@@ -25,7 +25,7 @@ namespace BVA
             {
                 IExtension ext = node.Extensions[BVA_physics_dynamicBoneExtensionFactory.EXTENSION_NAME];
                 var impl = (BVA_physics_dynamicBoneExtensionFactory)ext;
-                if (impl == null) throw new Exception($"cast {nameof(BVA_physics_dynamicBoneExtensionFactory)} failed");
+                if (impl == null) throw new InvalidCastException($"cast {nameof(BVA_physics_dynamicBoneExtensionFactory)} failed");
                 foreach (var v in impl.ids)
                 {
                     var collisionExt = _gltfRoot.Extensions.DynamicBones[v.Id];

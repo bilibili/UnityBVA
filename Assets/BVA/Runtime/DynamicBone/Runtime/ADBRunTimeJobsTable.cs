@@ -44,7 +44,7 @@ namespace ADBRuntime.Internal
                 {
                     transform.localRotation = pReadPoint->initialLocalRotation;// transform.rotation will be change too 
 
-                    pReadWritePoint->rotationNoSelfRotateChange = transform.rotation;
+                    pReadWritePoint->Rotation = transform.rotation;
                     pReadWritePoint->position = transform.position / worldScale;
                     pReadWritePoint->deltaPosition = float3.zero;
 
@@ -75,17 +75,16 @@ namespace ADBRuntime.Internal
                     var pFixReadWritePoint = pReadWritePoints + (pReadPoint->fixedIndex);
                     var pFixReadPoint = pReadPoints + (pReadPoint->fixedIndex);
                     transform.localRotation = pReadPoint->initialLocalRotation;
-                    float3 transformPosition = (pFixReadWritePoint->position + math.mul(pFixReadWritePoint->rotationNoSelfRotateChange, pReadPoint->initialPosition));
+                    float3 transformPosition = (pFixReadWritePoint->position + math.mul(pFixReadWritePoint->Rotation, pReadPoint->initialPosition));
 
-                    pReadWritePoint->position = transformPosition;
+                    pReadWritePoint->oldPosition = pReadWritePoint->position = transformPosition;
                     transform.position = transformPosition * worldScale;
                     pReadWritePoint->deltaPosition = float3.zero;
 
                 }
                 pPositionFliter[index] = new PositionKalmanFilter(pReadWritePoint->position, pReadWritePoint->deltaPosition);
-
-
             }
+
         }
 
         /// <summary>
@@ -197,20 +196,15 @@ namespace ADBRuntime.Internal
 
                 quaternion parentRotation = math.mul(transformRotation, math.inverse(localRotation));
                 quaternion currentRotationNoSelfRotateChange = math.mul(parentRotation, pReadPoint->initialLocalRotation);
-
                 if (pReadPoint->parentIndex == -1)//fixed point
                 {
                     pReadWritePoint->deltaPosition = (transformPosition - pReadWritePoint->position);
-                    pReadWritePoint->deltaRotation = math.slerp(pReadWritePoint->rotationNoSelfRotateChange, currentRotationNoSelfRotateChange, oneDivideIteration);//dampDivIteration^iteration =damping
-                    pReadWritePoint->rotationNoSelfRotateChange = currentRotationNoSelfRotateChange;
-
+                    pReadWritePoint->deltaRotation = math.slerp(pReadWritePoint->Rotation, currentRotationNoSelfRotateChange, oneDivideIteration);//dampDivIteration^iteration =damping
                 }
-                else //other's point
-                {
-                    pReadPoint->dampDivIteration = math.exp(math.log(pReadPoint->damping) * oneDivideIteration);//dampDivIteration^iteration =damping
-                    pReadWritePoint->rotationNoSelfRotateChange = currentRotationNoSelfRotateChange;
-                }
-
+                pReadWritePoint->Rotation = transformRotation;
+                pReadWritePoint->LoacalRotation = localRotation;
+                pReadWritePoint->rotationNoSelfRotateChange = currentRotationNoSelfRotateChange;
+                pReadPoint->dampDivIteration = pReadPoint->damping == 0 ? 0 : math.exp(math.log(pReadPoint->damping) * oneDivideIteration);//dampDivIteration^iteration =damping
             }
         }
         /// <summary>
@@ -274,6 +268,7 @@ namespace ADBRuntime.Internal
                 }
                 pReadWritePoint->position += oneDivideIteration * pReadWritePoint->deltaPosition * deltaTime * 60;
 
+
             }
             /// <summary>
             /// Update point physics move.
@@ -288,12 +283,13 @@ namespace ADBRuntime.Internal
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             public static void EvaluatePosition(int index, PointRead* pReadPointTarget, PointReadWrite* pReadWritePointTarget, float3 addForcePower, float oneDivideIteration, float deltaTime, bool isOptimize)
             {
+
                 float timeScale = deltaTime * 60;
                 pReadWritePointTarget->deltaPosition *= pReadPointTarget->dampDivIteration;
 
                 if (pReadPointTarget->stiffnessLocal != 0 || pReadPointTarget->elasticity != 0 || pReadPointTarget->elasticityVelocity != 0 || pReadPointTarget->lengthLimitForceScale != 0)//Updates the forces from dynamic bone's schematic
                 {
-                    UpdateDynamicBone(index, pReadPointTarget, pReadWritePointTarget, oneDivideIteration, timeScale);
+                    UpdateDynamicBone(index, pReadPointTarget, pReadWritePointTarget, oneDivideIteration, deltaTime, timeScale);
                 }
                 if (pReadPointTarget->velocityIncrease != 0 || pReadPointTarget->moveInert != 0)
                 {
@@ -330,7 +326,7 @@ namespace ADBRuntime.Internal
             /// <param name="oneDivideIteration"></param>
             /// <param name="timeScale"></param>
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            private static void UpdateDynamicBone(int index, PointRead* pReadPointTarget, PointReadWrite* pReadWritePointTarget, float oneDivideIteration, float timeScale)
+            private static void UpdateDynamicBone(int index, PointRead* pReadPointTarget, PointReadWrite* pReadWritePointTarget, float oneDivideIteration, float deltaTime, float timeScale)
             {
 
                 PointReadWrite* pPointReadWriteParent = pReadWritePointTarget + (pReadPointTarget->parentIndex - index);
@@ -339,7 +335,6 @@ namespace ADBRuntime.Internal
                 float3 targetDirection = math.mul(pPointReadWriteParent->rotationNoSelfRotateChange, pReadPointTarget->initialLocalPosition) * pReadPointTarget->initialLocalPositionLength;
 
                 float3 currentDirection = pReadWritePointTarget->position - pPointReadWriteParent->position;
-                currentDirection += targetDirection * pReadPointTarget->vrmstiffnessForce* oneDivideIteration;
                 //stiffness: Prevent excessive deflection and force back into the original position 
 
                 float3 difficult = currentDirection - targetDirection;
@@ -392,6 +387,7 @@ namespace ADBRuntime.Internal
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             private static void UpdateGravity(PointRead* pReadPointTarget, PointReadWrite* pReadWritePointTarget, float deltaTime, float oneDivideIteration)
             {
+               
                 float3 gravity = pReadPointTarget->gravity * (deltaTime * deltaTime);
                 pReadWritePointTarget->deltaPosition += gravity * oneDivideIteration;
             }
@@ -1199,57 +1195,71 @@ out float tP, out float tQ, out float3 pointOnP, out float3 pointOnQ)
                 }
             }
         }
-        /// <summary>
-        /// Convert the point to the actual Transform
-        /// </summary>
         [BurstCompile]
-        public struct JobPointToTransform : IJobParallelForTransform
+        public struct ClacSpringBonePhysics : IJobFor
         {
-            [ReadOnly, NativeDisableUnsafePtrRestriction]
-            public PointRead* pReadPoints;
             [NativeDisableUnsafePtrRestriction]
-            public PointReadWrite* pReadWritePoints;
-            [ReadOnly]
+            internal PointReadWrite* pReadWritePoints;
+
+            [ReadOnly, NativeDisableUnsafePtrRestriction]
+            internal PointRead* pReadPoints;
+
+            [ReadOnly, NativeDisableUnsafePtrRestriction]
+            public ColliderRead* pReadColliders;
+
+            [ReadOnly, NativeDisableUnsafePtrRestriction]
+            public ColliderReadWrite* pReadWriteColliders;
+
             public float deltaTime;
-            [ReadOnly]
-            public float startDampTime;
-            [ReadOnly]
-            public float worldScale;
-            public void Execute(int index, TransformAccess transform)
+
+            public void Execute(int index)
             {
-                PointReadWrite* pReadWritePoint = pReadWritePoints + index;
-                PointRead* pReadPoint = pReadPoints + index;
+                PointRead* pReadPointTarget = pReadPoints + index;
+                PointReadWrite* pReadWritePointTarget = pReadWritePoints + index;
 
-                float3 writePosition = pReadWritePoint->position * worldScale;
-                if (pReadPoint->parentIndex != -1)
+                int childIndex = pReadPointTarget->childFirstIndex;
+                int parentIndex = pReadPointTarget->parentIndex;
+                if (pReadPointTarget->vrmstiffnessForce == 0 || childIndex == -1)
                 {
-                    transform.position = writePosition;
+                    return;
+                }
+                PointRead* pReadPointChild = pReadPoints + (childIndex);
+                PointReadWrite* pReadWritePointChild = pReadWritePoints + (childIndex);
+                quaternion currentRotationNoSelfRotateChange = quaternion.identity;
+                if (parentIndex == -1)
+                {
+                    currentRotationNoSelfRotateChange = pReadWritePointTarget->rotationNoSelfRotateChange;
+                }
+                else
+                {
+                    quaternion parentRotation = (pReadWritePoints + (parentIndex))->Rotation;
+                    currentRotationNoSelfRotateChange = math.mul(parentRotation, pReadPointTarget->initialLocalRotation);
+                }
+                float3 axis = math.mul(currentRotationNoSelfRotateChange, pReadPointChild->initialLocalPosition);
+                float3 childPosition = pReadWritePointChild->position;
+                float3 oldChildPosition = pReadWritePointChild->oldPosition;
+                pReadWritePointChild->oldPosition = childPosition;
+
+                float3 nextChildPosition = childPosition + (childPosition - oldChildPosition) * pReadPointTarget->damping + axis * pReadPointTarget->vrmstiffnessForce * deltaTime;
+                //float3 nextChildPosition = childPosition;
+                float3 direction = nextChildPosition - pReadWritePointTarget->position;
+                if (math.all(direction == 0))
+                {
+                    return;
                 }
 
 
-                if (pReadPoint->childFirstIndex > -1 &&
-                   !(pReadPoint->isFixedPointFreezeRotation && pReadPoint->parentIndex == -1))
-                {
-                    transform.localRotation = pReadPoint->initialLocalRotation;
-                    int childCount = pReadPoint->childLastIndex - pReadPoint->childFirstIndex;
-                    if (childCount > 1) return;
+                direction = math.normalizesafe(direction);
+                nextChildPosition = pReadWritePointTarget->position + direction * pReadPointChild->initialLocalPositionLength;
+                pReadWritePointChild->position = nextChildPosition;
 
-                    float3 ToDirection = 0;
-                    float3 FromDirection = 0;
-                    for (int i = pReadPoint->childFirstIndex; i < pReadPoint->childLastIndex; i++)
-                    {
-                        var targetChild = pReadWritePoints + i;
-                        var targetChildRead = pReadPoints + i;
-                        FromDirection += math.normalize(math.mul((quaternion)transform.rotation, targetChildRead->initialLocalPosition));
-                        ToDirection += math.normalize(targetChild->position * worldScale - math.lerp(transform.position, writePosition, startDampTime));
+                var ftrotation = FromToRotation(axis, direction);
 
-                    }
-
-                    Quaternion AimRotation = FromToRotation(FromDirection, ToDirection);
-                    transform.rotation = AimRotation * transform.rotation;
-                }
-
+                quaternion currentRotation = math.mul(ftrotation, currentRotationNoSelfRotateChange);
+                pReadWritePointTarget->Rotation = currentRotation;
+                pReadWritePointTarget->LoacalRotation = math.mul(math.inverse(currentRotationNoSelfRotateChange), currentRotation);
             }
+
 
             public static quaternion FromToRotation(float3 from, float3 to, float t = 1.0f)
             {
@@ -1282,7 +1292,94 @@ out float tP, out float tQ, out float3 pointOnP, out float3 pointOnQ)
                 return quaternion.AxisAngle(math.normalize(axis), angle * t);
             }
         }
-        #endregion
+
+
+        /// <summary>
+        /// Convert the point to the actual Transform
+        /// </summary>
+        [BurstCompile]
+        public struct JobPointToTransform : IJobParallelForTransform
+        {
+            [ReadOnly, NativeDisableUnsafePtrRestriction]
+            public PointRead* pReadPoints;
+            [NativeDisableUnsafePtrRestriction]
+            public PointReadWrite* pReadWritePoints;
+            [ReadOnly]
+            public float deltaTime;
+            [ReadOnly]
+            public float startDampTime;
+            [ReadOnly]
+            public float worldScale;
+            public void Execute(int index, TransformAccess transform)
+            {
+                PointReadWrite* pReadWritePoint = pReadWritePoints + index;
+                PointRead* pReadPoint = pReadPoints + index;
+
+                float3 writePosition = pReadWritePoint->position * worldScale;
+/*                if (pReadPoint->parentIndex != -1)
+                {
+                    transform.position = writePosition;
+                }*/
+
+
+                if (pReadPoint->childFirstIndex > -1 &&
+                   !(pReadPoint->isFixedPointFreezeRotation && pReadPoint->parentIndex == -1))
+                {
+                    transform.localRotation = pReadPoint->initialLocalRotation;
+                    int childCount = pReadPoint->childLastIndex - pReadPoint->childFirstIndex;
+                    if (childCount > 1) return;
+
+                    float3 ToDirection = 0;
+                    float3 FromDirection = 0;
+                    for (int i = pReadPoint->childFirstIndex; i < pReadPoint->childLastIndex; i++)
+                    {
+                        var targetChild = pReadWritePoints + i;
+                        var targetChildRead = pReadPoints + i;
+                        FromDirection += math.normalize(math.mul((quaternion)transform.rotation, targetChildRead->initialLocalPosition));
+                        ToDirection += math.normalize(targetChild->position * worldScale - math.lerp(transform.position, writePosition, startDampTime));
+
+                    }
+
+                    Quaternion AimRotation = FromToRotation(FromDirection, ToDirection);
+                    transform.rotation = AimRotation * transform.rotation;
+
+                    //transform.rotation = pReadWritePoint->Rotation;
+
+                }
+
+            }
+            public static quaternion FromToRotation(float3 from, float3 to, float t = 1.0f)
+            {
+                from = math.normalize(from);
+                to = math.normalize(to);
+
+                float cos = math.dot(from, to);
+                float angle = math.acos(cos);
+                float3 axis = math.cross(from, to);
+
+                if (math.abs(1.0f + cos) < 1e-06f)
+                {
+                    angle = (float)math.PI;
+
+                    if (from.x > from.y && from.x > from.z)
+                    {
+                        axis = math.cross(from, new float3(0, 1, 0));
+                    }
+                    else
+                    {
+                        axis = math.cross(from, new float3(1, 0, 0));
+                    }
+                }
+                if (math.abs(1.0f - cos) < 1e-06f)
+                {
+                    //angle = 0.0f;
+                    //axis = new float3(1, 0, 0);
+                    return quaternion.identity;
+                }
+                return quaternion.AxisAngle(math.normalize(axis), angle * t);
+            }
+            #endregion
+        }
     }
 }
 

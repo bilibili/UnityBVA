@@ -173,10 +173,10 @@ namespace GLTF.Schema.BVA
                             matCache.SetFloat(BVA_Material_MToon_Extra.CUTOFF, reader.ReadAsFloat());
                             break;
                         case BVA_Material_MToon_Extra.COLOR:
-                            matCache.SetColor(BVA_Material_MToon_Extra.COLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_MToon_Extra.COLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_MToon_Extra.SHADECOLOR:
-                            matCache.SetColor(BVA_Material_MToon_Extra.SHADECOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_MToon_Extra.SHADECOLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_MToon_Extra.MAINTEX:
                             {
@@ -235,7 +235,7 @@ namespace GLTF.Schema.BVA
                             matCache.SetFloat(BVA_Material_MToon_Extra.INDIRECTLIGHTINTENSITY, reader.ReadAsFloat());
                             break;
                         case BVA_Material_MToon_Extra.RIMCOLOR:
-                            matCache.SetColor(BVA_Material_MToon_Extra.RIMCOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_MToon_Extra.RIMCOLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_MToon_Extra.RIMTEXTURE:
                             {
@@ -261,7 +261,7 @@ namespace GLTF.Schema.BVA
                             }
                             break;
                         case BVA_Material_MToon_Extra.EMISSIONCOLOR:
-                            matCache.SetColor(BVA_Material_MToon_Extra.EMISSIONCOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_MToon_Extra.EMISSIONCOLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_MToon_Extra.EMISSIONMAP:
                             {
@@ -284,7 +284,7 @@ namespace GLTF.Schema.BVA
                             matCache.SetFloat(BVA_Material_MToon_Extra.OUTLINESCALEDMAXDISTANCE, reader.ReadAsFloat());
                             break;
                         case BVA_Material_MToon_Extra.OUTLINECOLOR:
-                            matCache.SetColor(BVA_Material_MToon_Extra.OUTLINECOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_MToon_Extra.OUTLINECOLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_MToon_Extra.OUTLINELIGHTINGMIX:
                             matCache.SetFloat(BVA_Material_MToon_Extra.OUTLINELIGHTINGMIX, reader.ReadAsFloat());
@@ -347,8 +347,8 @@ namespace GLTF.Schema.BVA
         {
             JObject jo = new JObject();
             jo.Add(parameter_AlphaCutoff.ParamName, parameter_AlphaCutoff.Value);
-            jo.Add(parameter_LitColorAlpha.ParamName, parameter_LitColorAlpha.Value.ToNumericsColorRaw().ToJArray());
-            jo.Add(parameter_ShadeColor.ParamName, parameter_ShadeColor.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter_LitColorAlpha.ParamName, parameter_LitColorAlpha.Value.ToJArray());
+            jo.Add(parameter_ShadeColor.ParamName, parameter_ShadeColor.Value.ToJArray());
             if (parameter_LitTextureAlpha != null && parameter_LitTextureAlpha.Value != null) jo.Add(parameter_LitTextureAlpha.ParamName, parameter_LitTextureAlpha.Serialize());
             if (parameter_ShadeTexture != null && parameter_ShadeTexture.Value != null) jo.Add(parameter_ShadeTexture.ParamName, parameter_ShadeTexture.Serialize());
             jo.Add(parameter_NormalScale.ParamName, parameter_NormalScale.Value);
@@ -361,18 +361,18 @@ namespace GLTF.Schema.BVA
             jo.Add(parameter_ShadeToony.ParamName, parameter_ShadeToony.Value);
             jo.Add(parameter_LightColorAttenuation.ParamName, parameter_LightColorAttenuation.Value);
             jo.Add(parameter_IndirectLightIntensity.ParamName, parameter_IndirectLightIntensity.Value);
-            jo.Add(parameter_RimColor.ParamName, parameter_RimColor.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter_RimColor.ParamName, parameter_RimColor.Value.ToJArray());
             if (parameter_RimTexture != null && parameter_RimTexture.Value != null) jo.Add(parameter_RimTexture.ParamName, parameter_RimTexture.Serialize());
             jo.Add(parameter_RimLightingMix.ParamName, parameter_RimLightingMix.Value);
             jo.Add(parameter_RimFresnelPower.ParamName, parameter_RimFresnelPower.Value);
             jo.Add(parameter_RimLift.ParamName, parameter_RimLift.Value);
             if (parameter_SphereTextureAdd != null && parameter_SphereTextureAdd.Value != null) jo.Add(parameter_SphereTextureAdd.ParamName, parameter_SphereTextureAdd.Serialize());
-            jo.Add(parameter_Color.ParamName, parameter_Color.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter_Color.ParamName, parameter_Color.Value.ToJArray());
             if (parameter_Emission != null && parameter_Emission.Value != null) jo.Add(parameter_Emission.ParamName, parameter_Emission.Serialize());
             if (parameter_OutlineWidthTex != null && parameter_OutlineWidthTex.Value != null) jo.Add(parameter_OutlineWidthTex.ParamName, parameter_OutlineWidthTex.Serialize());
             jo.Add(parameter_OutlineWidth.ParamName, parameter_OutlineWidth.Value);
             jo.Add(parameter_OutlineScaledMaxDistance.ParamName, parameter_OutlineScaledMaxDistance.Value);
-            jo.Add(parameter_OutlineColor.ParamName, parameter_OutlineColor.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter_OutlineColor.ParamName, parameter_OutlineColor.Value.ToJArray());
             jo.Add(parameter_OutlineLightingMix.ParamName, parameter_OutlineLightingMix.Value);
             if (parameter_UVAnimationMask != null && parameter_UVAnimationMask.Value != null) jo.Add(parameter_UVAnimationMask.ParamName, parameter_UVAnimationMask.Serialize());
             jo.Add(parameter_UVAnimationScrollX.ParamName, parameter_UVAnimationScrollX.Value);

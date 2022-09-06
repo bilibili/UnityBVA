@@ -15,7 +15,7 @@ namespace BVA
             Transform[] bones = new Transform[boneCount];
 
             // TODO: build bindpose arrays only once per skin, instead of once per node
-            GLTF.Math.Matrix4x4[] gltfBindPoses = null;
+            Matrix4x4[] gltfBindPoses = null;
             if (skin.InverseBindMatrices != null)
             {
                 int bufferId = skin.InverseBindMatrices.Value.BufferView.Value.Buffer.Id;
@@ -64,7 +64,7 @@ namespace BVA
                 }
                 else
                 {
-                    throw new Exception("glTF skin joints do not share a root node!");
+                    throw new ArgumentException("glTF skin joints do not share a root node!");
                 }
             }
             renderer.sharedMesh.bindposes = bindPoses;

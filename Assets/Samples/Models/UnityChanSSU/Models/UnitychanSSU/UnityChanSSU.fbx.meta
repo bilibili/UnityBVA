@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: f2c836f3e5c029140a0cc913d7df766a
 ModelImporter:
-  serializedVersion: 19300
+  serializedVersion: 21300
   internalIDToNameTable: []
   externalObjects:
   - first:
@@ -74,6 +74,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -91,7 +92,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations: []
-    isReadable: 0
+    isReadable: 1
   meshes:
     lODScreenPercentages: []
     globalScale: 1
@@ -103,20 +104,27 @@ ModelImporter:
     importBlendShapes: 1
     importCameras: 0
     importLights: 0
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
     keepQuads: 0
     weldVertices: 0
+    bakeAxisConversion: 0
     preserveHierarchy: 0
     skinWeightsMode: 1
     maxBonesPerVertex: 8
     minBoneWeight: 0.001
+    optimizeBones: 1
     meshOptimizationFlags: 0
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
   tangentSpace:
@@ -1243,8 +1251,7 @@ ModelImporter:
     - name: TW_Knee_L
       parentName: CH_Shin_L
       position: {x: -0.00000030480916, y: 0.000000034866204, z: -0.0000006657975}
-      rotation: {x: -0.0000006040791, y: -0.000000023283224, z: 0.00000026822084,
-        w: 1}
+      rotation: {x: -0.0000006040791, y: -0.000000023283224, z: 0.00000026822084, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: DB_LegRibbon_L_01
       parentName: CH_Thigh_L
@@ -1493,6 +1500,8 @@ ModelImporter:
   animationType: 3
   humanoidOversampling: 1
   avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

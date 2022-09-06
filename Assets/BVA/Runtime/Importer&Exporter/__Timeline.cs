@@ -27,7 +27,7 @@ namespace BVA
                 {
                     IExtension ext = node.Extensions[BVA_timeline_playableExtensionFactory.EXTENSION_NAME];
                     var impl = (BVA_timeline_playableExtensionFactory)ext;
-                    if (impl == null) throw new Exception($"cast {nameof(BVA_timeline_playableExtensionFactory)} failed");
+                    if (impl == null) throw new InvalidCastException($"cast {nameof(BVA_timeline_playableExtensionFactory)} failed");
                     var playableExt = _gltfRoot.Extensions.Playables[impl.playable.playable.Id];
                     await ImportPlayable(playableExt.track, nodeObj, impl.playable.playOnAwake, impl.playable.loop);
                 }
@@ -108,7 +108,7 @@ namespace BVA
                     if (textureCache == null)
                     {
                         await ConstructImageBuffer(textureId.Value, textureId.Id);
-                        await ConstructTexture(v.textureId.Value, v.textureId.Id, !KeepCPUCopyOfTexture);
+                        await ConstructTexture(v.textureId.Value, v.textureId.Id, !_options.KeepCPUCopyOfTexture);
                     }
                     v.value = (Texture2D)_assetCache.TextureCache[v.textureId.Id].Texture;
                 }

@@ -67,10 +67,10 @@ namespace GLTF.Schema.BVA
                     switch (curProp)
                     {
                         case nameof(BVA_Rigidbody_Extra.velocity):
-                            target.velocity = reader.ReadAsVector3().ToUnityVector3Raw();
+                            target.velocity = reader.ReadAsVector3();
                             break;
                         case nameof(BVA_Rigidbody_Extra.angularVelocity):
-                            target.angularVelocity = reader.ReadAsVector3().ToUnityVector3Raw();
+                            target.angularVelocity = reader.ReadAsVector3();
                             break;
                         case nameof(BVA_Rigidbody_Extra.drag):
                             target.drag = reader.ReadAsFloat();
@@ -100,22 +100,22 @@ namespace GLTF.Schema.BVA
                             target.collisionDetectionMode = reader.ReadStringEnum<UnityEngine.CollisionDetectionMode>();
                             break;
                         case nameof(BVA_Rigidbody_Extra.centerOfMass):
-                            target.centerOfMass = reader.ReadAsVector3().ToUnityVector3Raw();
+                            target.centerOfMass = reader.ReadAsVector3();
                             break;
                         case nameof(BVA_Rigidbody_Extra.inertiaTensorRotation):
-                            target.inertiaTensorRotation = reader.ReadAsQuaternion().ToUnityQuaternionRaw();
+                            target.inertiaTensorRotation = reader.ReadAsQuaternion();
                             break;
                         case nameof(BVA_Rigidbody_Extra.inertiaTensor):
-                            target.inertiaTensor = reader.ReadAsVector3().ToUnityVector3Raw();
+                            target.inertiaTensor = reader.ReadAsVector3();
                             break;
                         case nameof(BVA_Rigidbody_Extra.detectCollisions):
                             target.detectCollisions = reader.ReadAsBoolean().Value;
                             break;
                         case nameof(BVA_Rigidbody_Extra.position):
-                            target.position = reader.ReadAsVector3().ToUnityVector3Raw();
+                            target.position = reader.ReadAsVector3();
                             break;
                         case nameof(BVA_Rigidbody_Extra.rotation):
-                            target.rotation = reader.ReadAsQuaternion().ToUnityQuaternionRaw();
+                            target.rotation = reader.ReadAsQuaternion();
                             break;
                         case nameof(BVA_Rigidbody_Extra.interpolation):
                             target.interpolation = reader.ReadStringEnum<UnityEngine.RigidbodyInterpolation>();
@@ -139,8 +139,8 @@ namespace GLTF.Schema.BVA
         public JProperty Serialize()
         {
             JObject jo = new JObject();
-            jo.Add(nameof(velocity), velocity.ToGltfVector3Raw().ToJArray());
-            jo.Add(nameof(angularVelocity), angularVelocity.ToGltfVector3Raw().ToJArray());
+            jo.Add(nameof(velocity), velocity.ToJArray());
+            jo.Add(nameof(angularVelocity), angularVelocity.ToJArray());
             jo.Add(nameof(drag), drag);
             jo.Add(nameof(angularDrag), angularDrag);
             jo.Add(nameof(mass), mass);
@@ -150,12 +150,12 @@ namespace GLTF.Schema.BVA
             jo.Add(nameof(freezeRotation), freezeRotation);
             jo.Add(nameof(constraints), constraints.ToString());
             jo.Add(nameof(collisionDetectionMode), collisionDetectionMode.ToString());
-            jo.Add(nameof(centerOfMass), centerOfMass.ToGltfVector3Raw().ToJArray());
-            jo.Add(nameof(inertiaTensorRotation), inertiaTensorRotation.ToGltfQuaternionRaw().ToJArray());
-            jo.Add(nameof(inertiaTensor), inertiaTensor.ToGltfVector3Raw().ToJArray());
+            jo.Add(nameof(centerOfMass), centerOfMass.ToJArray());
+            jo.Add(nameof(inertiaTensorRotation), inertiaTensorRotation.ToJArray());
+            jo.Add(nameof(inertiaTensor), inertiaTensor.ToJArray());
             jo.Add(nameof(detectCollisions), detectCollisions);
-            jo.Add(nameof(position), position.ToGltfVector3Raw().ToJArray());
-            jo.Add(nameof(rotation), rotation.ToGltfQuaternionRaw().ToJArray());
+            jo.Add(nameof(position), position.ToJArray());
+            jo.Add(nameof(rotation), rotation.ToJArray());
             jo.Add(nameof(interpolation), interpolation.ToString());
             jo.Add(nameof(solverIterations), solverIterations);
             jo.Add(nameof(sleepThreshold), sleepThreshold);

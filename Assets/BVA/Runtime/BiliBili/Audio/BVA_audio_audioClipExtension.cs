@@ -133,7 +133,7 @@ namespace GLTF.Schema.BVA
                 JArray vectorArray = token as JArray;
                 if (vectorArray == null)
                 {
-                    throw new System.Exception("JToken used was not a JArray. It was a " + token.Type.ToString());
+                    throw new JsonReaderException("JToken used was not a JArray. It was a " + token.Type.ToString());
                 }
 
                 foreach (var extToken in vectorArray)

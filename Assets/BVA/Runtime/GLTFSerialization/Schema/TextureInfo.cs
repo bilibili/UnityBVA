@@ -42,7 +42,7 @@ namespace GLTF.Schema
 
             if (reader.Read() && reader.TokenType != JsonToken.StartObject)
             {
-                throw new Exception("Asset must be an object.");
+                throw new ArgumentException("Asset must be an object.");
             }
 
             while (reader.Read() && reader.TokenType == JsonToken.PropertyName)

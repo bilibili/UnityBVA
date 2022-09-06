@@ -86,7 +86,7 @@ namespace GLTF.Schema.BVA
                     switch (curProp)
                     {
                         case BVA_Material_ToonTransparentCutout_Extra.BASECOLOR:
-                            matCache.SetColor(BVA_Material_ToonTransparentCutout_Extra.BASECOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_ToonTransparentCutout_Extra.BASECOLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_ToonTransparentCutout_Extra.BASEMAP:
                             {
@@ -96,10 +96,10 @@ namespace GLTF.Schema.BVA
                             }
                             break;
                         case BVA_Material_ToonTransparentCutout_Extra.SHADEENVIRONMENTALCOLOR:
-                            matCache.SetColor(BVA_Material_ToonTransparentCutout_Extra.SHADEENVIRONMENTALCOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_ToonTransparentCutout_Extra.SHADEENVIRONMENTALCOLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_ToonTransparentCutout_Extra.SHADECOLOR:
-                            matCache.SetColor(BVA_Material_ToonTransparentCutout_Extra.SHADECOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_ToonTransparentCutout_Extra.SHADECOLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_ToonTransparentCutout_Extra.SHADEMAP:
                             {
@@ -159,7 +159,7 @@ namespace GLTF.Schema.BVA
                             }
                             break;
                         case BVA_Material_ToonTransparentCutout_Extra.EMISSIONCOLOR:
-                            matCache.SetColor(BVA_Material_ToonTransparentCutout_Extra.EMISSIONCOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_ToonTransparentCutout_Extra.EMISSIONCOLOR, reader.ReadAsRGBAColor());
                             break;
                         case nameof(keywords):
                             {
@@ -175,10 +175,10 @@ namespace GLTF.Schema.BVA
         public JProperty Serialize()
         {
             JObject jo = new JObject();
-            jo.Add(parameter__BaseColor.ParamName, parameter__BaseColor.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter__BaseColor.ParamName, parameter__BaseColor.Value.ToJArray());
             if (parameter__BaseMap != null && parameter__BaseMap.Value != null) jo.Add(parameter__BaseMap.ParamName, parameter__BaseMap.Serialize());
-            jo.Add(parameter__ShadeEnvironmentalColor.ParamName, parameter__ShadeEnvironmentalColor.Value.ToNumericsColorRaw().ToJArray());
-            jo.Add(parameter__ShadeColor.ParamName, parameter__ShadeColor.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter__ShadeEnvironmentalColor.ParamName, parameter__ShadeEnvironmentalColor.Value.ToJArray());
+            jo.Add(parameter__ShadeColor.ParamName, parameter__ShadeColor.Value.ToJArray());
             if (parameter__ShadeMap != null && parameter__ShadeMap.Value != null) jo.Add(parameter__ShadeMap.ParamName, parameter__ShadeMap.Serialize());
             jo.Add(parameter__Smoothness.ParamName, parameter__Smoothness.Value);
             jo.Add(parameter__Metalic.ParamName, parameter__Metalic.Value);
@@ -190,7 +190,7 @@ namespace GLTF.Schema.BVA
             jo.Add(parameter__ShadeToony.ParamName, parameter__ShadeToony.Value);
             jo.Add(parameter__ToonyLighting.ParamName, parameter__ToonyLighting.Value);
             if (parameter__EmissionMap != null && parameter__EmissionMap.Value != null) jo.Add(parameter__EmissionMap.ParamName, parameter__EmissionMap.Serialize());
-            jo.Add(parameter__EmissionColor.ParamName, parameter__EmissionColor.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter__EmissionColor.ParamName, parameter__EmissionColor.Value.ToJArray());
             if (keywords != null && keywords.Length > 0)
             {
                 JArray jKeywords = new JArray();

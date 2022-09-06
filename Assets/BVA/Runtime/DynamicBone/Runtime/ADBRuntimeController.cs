@@ -12,6 +12,7 @@ namespace ADBRuntime.Mono
     /// Phyiscs kernel controller
     /// </summary>
     [DisallowMultipleComponent]
+    [DefaultExecutionOrder(12000)]
     public class ADBRuntimeController : MonoBehaviour, IADBPhysicMonoComponent
     {
         public MonoBehaviour Target => this;
@@ -33,11 +34,8 @@ namespace ADBRuntime.Mono
         public bool isParallel ;
         public ColliderCollisionType colliderCollisionType = ColliderCollisionType.Constraint;
 
-
-
         public List<ADBColliderReader> overlapsColliderList;
         public Bounds OverlapBox;
-
 
         public UpdateMode updateMode=UpdateMode.FixedUpdate;
         public ADBChainProcessor[] allChain;
@@ -155,7 +153,8 @@ namespace ADBRuntime.Mono
                 startVelocityDamp = 0;
                 return;
             }
-            deltaTime =Mathf.Min(0.02f, Mathf.Lerp(deltaTime, inputDeltaTime, 1 / (bufferTime * 60)));
+            //deltaTime =Mathf.Min(0.02f, Mathf.Lerp(deltaTime, inputDeltaTime, 1 / (bufferTime * 60)));
+            deltaTime = inputDeltaTime;
             startVelocityDamp =math.saturate (startVelocityDamp+ inputDeltaTime / bufferTime);
 
 
@@ -226,6 +225,7 @@ namespace ADBRuntime.Mono
         public void ResetData()
         {
             RestoreRuntimePoint();
+            ADBkernel.Dispose();
             Start();
 
         }

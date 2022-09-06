@@ -17,7 +17,7 @@ namespace BVA
 
             IExtension ext = scene.Extensions[BVA_setting_renderSettingExtensionFactory.EXTENSION_NAME];
             var impl = (BVA_setting_renderSettingExtensionFactory)ext;
-            if (impl == null) throw new Exception($"cast {nameof(BVA_setting_renderSettingExtensionFactory)} failed");
+            if (impl == null) throw new InvalidCastException($"cast {nameof(BVA_setting_renderSettingExtensionFactory)} failed");
             await ImportLightmap(_gltfRoot.Extensions.RenderSettings[impl.id.Id]);
         }
         public async Task ImportLightmap(BVA_setting_renderSettingExtension ext)

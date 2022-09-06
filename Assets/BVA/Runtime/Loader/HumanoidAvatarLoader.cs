@@ -48,9 +48,9 @@ namespace BVA
                     limit = new HumanLimit()
                     {
                         useDefaultValues = bonelimit.useDefaultValues,
-                        min = bonelimit.min.ToUnityVector3Raw(),
-                        max = bonelimit.max.ToUnityVector3Raw(),
-                        center = bonelimit.center.ToUnityVector3Raw(),
+                        min = bonelimit.min,
+                        max = bonelimit.max,
+                        center = bonelimit.center,
                         axisLength = bonelimit.axisLength
                     }
                 };

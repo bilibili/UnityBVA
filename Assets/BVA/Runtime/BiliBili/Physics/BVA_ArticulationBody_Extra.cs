@@ -1,17 +1,11 @@
 using Newtonsoft.Json.Linq;
-using GLTF.Math;
-using GLTF.Schema;
 using Newtonsoft.Json;
 using GLTF.Extensions;
 using BVA.Extensions;
-using System.Threading.Tasks;
-using UnityEngine;
-using Color = UnityEngine.Color;
-using Vector4 = UnityEngine.Vector4;
 
 namespace GLTF.Schema.BVA
 {
-public class BVA_ArticulationBody_Extra : IExtra
+	public class BVA_ArticulationBody_Extra : IExtra
 {
 public const string PROPERTY = "BVA_ArticulationBody_Extra";
 public UnityEngine.ArticulationJointType jointType;
@@ -95,16 +89,16 @@ case nameof(BVA_ArticulationBody_Extra.jointType):
 target.jointType = reader.ReadStringEnum<UnityEngine.ArticulationJointType>();
 break;
 case nameof(BVA_ArticulationBody_Extra.anchorPosition):
-target.anchorPosition= reader.ReadAsVector3().ToUnityVector3Raw();
+target.anchorPosition= reader.ReadAsVector3();
 break;
 case nameof(BVA_ArticulationBody_Extra.parentAnchorPosition):
-target.parentAnchorPosition= reader.ReadAsVector3().ToUnityVector3Raw();
+target.parentAnchorPosition= reader.ReadAsVector3();
 break;
 case nameof(BVA_ArticulationBody_Extra.anchorRotation):
-target.anchorRotation= reader.ReadAsQuaternion().ToUnityQuaternionRaw();
+target.anchorRotation= reader.ReadAsQuaternion();
 break;
 case nameof(BVA_ArticulationBody_Extra.parentAnchorRotation):
-target.parentAnchorRotation= reader.ReadAsQuaternion().ToUnityQuaternionRaw();
+target.parentAnchorRotation= reader.ReadAsQuaternion();
 break;
 #if UNITY_2021_1_OR_NEWER
 case nameof(BVA_ArticulationBody_Extra.matchAnchors):
@@ -145,22 +139,22 @@ case nameof(BVA_ArticulationBody_Extra.jointFriction):
 target.jointFriction= reader.ReadAsFloat();
 break;
 case nameof(BVA_ArticulationBody_Extra.velocity):
-target.velocity= reader.ReadAsVector3().ToUnityVector3Raw();
+target.velocity= reader.ReadAsVector3();
 break;
 case nameof(BVA_ArticulationBody_Extra.angularVelocity):
-target.angularVelocity= reader.ReadAsVector3().ToUnityVector3Raw();
+target.angularVelocity= reader.ReadAsVector3();
 break;
 case nameof(BVA_ArticulationBody_Extra.mass):
 target.mass= reader.ReadAsFloat();
 break;
 case nameof(BVA_ArticulationBody_Extra.centerOfMass):
-target.centerOfMass= reader.ReadAsVector3().ToUnityVector3Raw();
+target.centerOfMass= reader.ReadAsVector3();
 break;
 case nameof(BVA_ArticulationBody_Extra.inertiaTensor):
-target.inertiaTensor= reader.ReadAsVector3().ToUnityVector3Raw();
+target.inertiaTensor= reader.ReadAsVector3();
 break;
 case nameof(BVA_ArticulationBody_Extra.inertiaTensorRotation):
-target.inertiaTensorRotation= reader.ReadAsQuaternion().ToUnityQuaternionRaw();
+target.inertiaTensorRotation= reader.ReadAsQuaternion();
 break;
 case nameof(BVA_ArticulationBody_Extra.sleepThreshold):
 target.sleepThreshold= reader.ReadAsFloat();
@@ -194,10 +188,10 @@ public JProperty Serialize()
 {
 JObject jo = new JObject();
 jo.Add(nameof(jointType), jointType.ToString());
-jo.Add(nameof(anchorPosition), anchorPosition.ToGltfVector3Raw().ToJArray());
-jo.Add(nameof(parentAnchorPosition), parentAnchorPosition.ToGltfVector3Raw().ToJArray());
-jo.Add(nameof(anchorRotation), anchorRotation.ToGltfQuaternionRaw().ToJArray());
-jo.Add(nameof(parentAnchorRotation), parentAnchorRotation.ToGltfQuaternionRaw().ToJArray());
+jo.Add(nameof(anchorPosition), anchorPosition.ToJArray());
+jo.Add(nameof(parentAnchorPosition), parentAnchorPosition.ToJArray());
+jo.Add(nameof(anchorRotation), anchorRotation.ToJArray());
+jo.Add(nameof(parentAnchorRotation), parentAnchorRotation.ToJArray());
 jo.Add(nameof(matchAnchors), matchAnchors);
 jo.Add(nameof(linearLockX), linearLockX.ToString());
 jo.Add(nameof(linearLockY), linearLockY.ToString());
@@ -210,12 +204,12 @@ jo.Add(nameof(useGravity), useGravity);
 jo.Add(nameof(linearDamping), linearDamping);
 jo.Add(nameof(angularDamping), angularDamping);
 jo.Add(nameof(jointFriction), jointFriction);
-jo.Add(nameof(velocity), velocity.ToGltfVector3Raw().ToJArray());
-jo.Add(nameof(angularVelocity), angularVelocity.ToGltfVector3Raw().ToJArray());
+jo.Add(nameof(velocity), velocity.ToJArray());
+jo.Add(nameof(angularVelocity), angularVelocity.ToJArray());
 jo.Add(nameof(mass), mass);
-jo.Add(nameof(centerOfMass), centerOfMass.ToGltfVector3Raw().ToJArray());
-jo.Add(nameof(inertiaTensor), inertiaTensor.ToGltfVector3Raw().ToJArray());
-jo.Add(nameof(inertiaTensorRotation), inertiaTensorRotation.ToGltfQuaternionRaw().ToJArray());
+jo.Add(nameof(centerOfMass), centerOfMass.ToJArray());
+jo.Add(nameof(inertiaTensor), inertiaTensor.ToJArray());
+jo.Add(nameof(inertiaTensorRotation), inertiaTensorRotation.ToJArray());
 jo.Add(nameof(sleepThreshold), sleepThreshold);
 jo.Add(nameof(solverIterations), solverIterations);
 jo.Add(nameof(solverVelocityIterations), solverVelocityIterations);

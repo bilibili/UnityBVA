@@ -1,6 +1,6 @@
 using GLTF.Extensions;
-using GLTF.Math;
 using Newtonsoft.Json;
+using UnityEngine;
 
 namespace GLTF.Schema
 {
@@ -51,7 +51,7 @@ namespace GLTF.Schema
         /// <minItems>3</minItems>
         /// <maxItems>3</maxItems>
         /// </summary>
-        public Color EmissiveFactor = Color.Black;
+        public Color EmissiveFactor = Color.black;
 
         /// <summary>
         /// The material's alpha rendering mode enumeration specifying the interpretation of the
@@ -70,10 +70,10 @@ namespace GLTF.Schema
         /// or equal to this value then it is rendered as fully opaque, otherwise, it is rendered
         /// as fully transparent. This value is ignored for other modes.
         /// </summary>
-        public double AlphaCutoff = 0.5;
+        public float AlphaCutoff = 0.5f;
 
         /// <summary>
-        /// Specifies whether the material is double sided. When this value is false, back-face
+        /// Specifies whether the material is float sided. When this value is false, back-face
         /// culling is enabled. When this value is true, back-face culling is disabled and double
         /// sided lighting is enabled. The back-face must have its normals reversed before the
         /// lighting equation is evaluated.
@@ -154,7 +154,7 @@ namespace GLTF.Schema
                         material.BlendMode = reader.ReadStringEnum<BlendMode>();
                         break;
                     case "alphaCutoff":
-                        material.AlphaCutoff = reader.ReadAsDouble().Value;
+                        material.AlphaCutoff = reader.ReadAsFloat();
                         break;
                     case "doubleSided":
                         material.DoubleSided = reader.ReadAsBoolean().Value;
@@ -202,13 +202,13 @@ namespace GLTF.Schema
                 EmissiveTexture.Serialize(writer);
             }
 
-            if (EmissiveFactor != Color.Black)
+            if (EmissiveFactor != Color.black)
             {
                 writer.WritePropertyName("emissiveFactor");
                 writer.WriteStartArray();
-                writer.WriteValue(EmissiveFactor.R);
-                writer.WriteValue(EmissiveFactor.G);
-                writer.WriteValue(EmissiveFactor.B);
+                writer.WriteValue(EmissiveFactor.r);
+                writer.WriteValue(EmissiveFactor.g);
+                writer.WriteValue(EmissiveFactor.b);
                 writer.WriteEndArray();
             }
 

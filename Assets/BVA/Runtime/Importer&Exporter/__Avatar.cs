@@ -22,7 +22,7 @@ namespace BVA
             {
                 IExtension ext = node.Extensions[BVA_humanoid_avatarExtensionFactory.EXTENSION_NAME];
                 var impl = (BVA_humanoid_avatarExtensionFactory)ext;
-                if (impl == null) throw new Exception($"cast {nameof(BVA_humanoid_avatarExtensionFactory)} failed");
+                if (impl == null) throw new InvalidCastException($"cast {nameof(BVA_humanoid_avatarExtensionFactory)} failed");
                 var avatar = AssetManager.avatarLoader.GetAvatar(impl.id);
                 if (avatar == null)
                 {
@@ -34,7 +34,7 @@ namespace BVA
                 }
 
                 var animator = nodeObj.GetOrAddComponent<Animator>();
-                animator.avatar = avatar ?? throw new Exception($"create Avatar failed on {nodeObj.name}");
+                animator.avatar = avatar ?? throw new ArgumentNullException($"create Avatar failed on {nodeObj.name}");
                 animator.avatar.name = animator.name;
                 animator.applyRootMotion = true;
 
@@ -48,7 +48,7 @@ namespace BVA
             {
                 IExtension ext = node.Extensions[BVA_humanoid_dressExtensionFactory.EXTENSION_NAME];
                 var impl = (BVA_humanoid_dressExtensionFactory)ext;
-                if (impl == null) throw new Exception($"cast {nameof(BVA_humanoid_dressExtensionFactory)} failed");
+                if (impl == null) throw new InvalidCastException($"cast {nameof(BVA_humanoid_dressExtensionFactory)} failed");
                 var gltfDress = impl.id.Value.gltfObject;
                 var dressUp = nodeObj.AddComponent<AvatarDressUpConfig>();
                 dressUp.dressUpConfigs = new List<DressUpConfig>();
@@ -76,7 +76,7 @@ namespace BVA
             {
                 IExtension ext = node.Extensions[BVA_humanoid_accessoryExtensionFactory.EXTENSION_NAME];
                 var impl = (BVA_humanoid_accessoryExtensionFactory)ext;
-                if (impl == null) throw new Exception($"cast {nameof(BVA_humanoid_accessoryExtensionFactory)} failed");
+                if (impl == null) throw new InvalidCastException($"cast {nameof(BVA_humanoid_accessoryExtensionFactory)} failed");
 
                 var accessoryConfigs = impl.id.Value.accessoryConfigs;
                 foreach (var config in accessoryConfigs)
@@ -113,9 +113,9 @@ namespace BVA
                 HumanLimit limit = v.limit;
                 GlTFHumanoidBone bone = new GlTFHumanoidBone();
                 bone.axisLength = limit.axisLength;
-                bone.center = limit.center.ToGltfVector3Raw();
-                bone.min = limit.min.ToGltfVector3Raw();
-                bone.max = limit.max.ToGltfVector3Raw();
+                bone.center = limit.center;
+                bone.min = limit.min;
+                bone.max = limit.max;
                 bone.useDefaultValues = limit.useDefaultValues;
                 bone.bone = v.humanName; //convert first character to low case,gltf format require it 
                 var transform = animator.transform.DeepFindChild(v.boneName);
@@ -136,7 +136,7 @@ namespace BVA
         private AvatarId ExportAvatar(Animator animator)
         {
             var avatar = animator.avatar;
-            if (!avatar.isHuman || !avatar.isValid) { throw new System.Exception($"{avatar.name} is not a valid avatar"); }
+            if (!avatar.isHuman || !avatar.isValid) { throw new ArgumentException($"{avatar.name} is not a valid avatar"); }
             var human = GetHumanoidFromAvatar(avatar, animator);
             BVA_humanoid_avatarExtension ext = new BVA_humanoid_avatarExtension(human);
 

@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using GLTF.Math;
+using UnityEngine;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using GLTF.Schema;
@@ -142,11 +142,6 @@ namespace GLTF.Extensions
 					throw new Exception("JToken used for Texture deserialization was not a JObject. It was a " + token.Type.ToString());
 				}
 
-#if DEBUG
-				// Broken on il2cpp. Don't ship debug DLLs there.
-				System.Diagnostics.Debug.WriteLine("textureObject is " + textureObject.Type + " with a value of: " + textureObject[TextureInfo.INDEX].Type + " " + textureObject.ToString());
-#endif
-
 				int indexVal = textureObject[TextureInfo.INDEX].DeserializeAsInt();
 				textureInfo = new TextureInfo()
 				{
@@ -248,10 +243,10 @@ namespace GLTF.Extensions
 
 			var color = new Color
 			{
-				R = (float) reader.ReadAsDouble().Value,
-				G = (float) reader.ReadAsDouble().Value,
-				B = (float) reader.ReadAsDouble().Value,
-				A = (float) reader.ReadAsDouble().Value
+				r = reader.ReadAsFloat(),
+				g = reader.ReadAsFloat(),
+				b = reader.ReadAsFloat(),
+				a = reader.ReadAsFloat()
 			};
 
 			if (reader.Read() && reader.TokenType != JsonToken.EndArray)
@@ -264,7 +259,7 @@ namespace GLTF.Extensions
 		
 		public static Color DeserializeAsColor(this JToken token)
 		{
-			Color color = Color.White;
+			Color color = Color.white;
 
 			if (token != null)
 			{
@@ -280,10 +275,10 @@ namespace GLTF.Extensions
 
 				color = new Color
 				{
-					R = (float)colorArray[0].DeserializeAsDouble(),
-					G = (float)colorArray[1].DeserializeAsDouble(),
-					B = (float)colorArray[2].DeserializeAsDouble(),
-					A = (float)colorArray[3].DeserializeAsDouble()
+					r = colorArray[0].DeserializeAsFloat(),
+					g = colorArray[1].DeserializeAsFloat(),
+					b = colorArray[2].DeserializeAsFloat(),
+					a = colorArray[3].DeserializeAsFloat()
 				};
 			}
 
@@ -299,10 +294,10 @@ namespace GLTF.Extensions
 
 			var color = new Color
 			{
-				R = (float) reader.ReadAsDouble().Value,
-				G = (float) reader.ReadAsDouble().Value,
-				B = (float) reader.ReadAsDouble().Value,
-				A = 1.0f
+				r = reader.ReadAsFloat(),
+				g = reader.ReadAsFloat(),
+				b = reader.ReadAsFloat(),
+				a = 1.0f
 			};
 
 			if (reader.Read() && reader.TokenType != JsonToken.EndArray)
@@ -321,8 +316,8 @@ namespace GLTF.Extensions
 
 			var vector = new Vector2
 			{
-				X = (float)reader.ReadAsDouble().Value,
-				Y = (float)reader.ReadAsDouble().Value
+				x = reader.ReadAsFloat(),
+				y = reader.ReadAsFloat()
 			};
 
 			if (reader.Read() && reader.TokenType != JsonToken.EndArray)
@@ -341,9 +336,9 @@ namespace GLTF.Extensions
 
 			var vector = new Vector3
 			{
-				X = (float) reader.ReadAsDouble().Value,
-				Y = (float) reader.ReadAsDouble().Value,
-				Z = (float) reader.ReadAsDouble().Value
+				x = reader.ReadAsFloat(),
+				y = reader.ReadAsFloat(),
+				z = reader.ReadAsFloat()
 			};
 
 			if (reader.Read() && reader.TokenType != JsonToken.EndArray)
@@ -362,10 +357,10 @@ namespace GLTF.Extensions
 
 			var vector = new Vector4
 			{
-				X = (float)reader.ReadAsDouble().Value,
-				Y = (float)reader.ReadAsDouble().Value,
-				Z = (float)reader.ReadAsDouble().Value,
-				W = (float)reader.ReadAsDouble().Value
+				x = reader.ReadAsFloat(),
+				y = reader.ReadAsFloat(),
+				z = reader.ReadAsFloat(),
+				w = reader.ReadAsFloat()
 			};
 
 			if (reader.Read() && reader.TokenType != JsonToken.EndArray)
@@ -393,8 +388,8 @@ namespace GLTF.Extensions
 
 				vector = new Vector2
 				{
-					X = (float)vectorArray[0].DeserializeAsDouble(),
-					Y = (float)vectorArray[1].DeserializeAsDouble()
+					x = vectorArray[0].DeserializeAsFloat(),
+					y = vectorArray[1].DeserializeAsFloat()
 				};
 			}
 
@@ -419,9 +414,9 @@ namespace GLTF.Extensions
 
 				vector = new Vector3
 				{
-					X = (float)vectorArray[0].DeserializeAsDouble(),
-					Y = (float)vectorArray[1].DeserializeAsDouble(),
-					Z = (float)vectorArray[2].DeserializeAsDouble()
+					x = vectorArray[0].DeserializeAsFloat(),
+					y = vectorArray[1].DeserializeAsFloat(),
+					z = vectorArray[2].DeserializeAsFloat()
 				};
 			}
 
@@ -474,10 +469,10 @@ namespace GLTF.Extensions
 
 			var quat = new Quaternion
 			{
-				X = (float) reader.ReadAsDouble().Value,
-				Y = (float) reader.ReadAsDouble().Value,
-				Z = (float) reader.ReadAsDouble().Value,
-				W = (float) reader.ReadAsDouble().Value
+				x = reader.ReadAsFloat(),
+				y = reader.ReadAsFloat(),
+				z = reader.ReadAsFloat(),
+				w = reader.ReadAsFloat()
 			};
 
 			if (reader.Read() && reader.TokenType != JsonToken.EndArray)

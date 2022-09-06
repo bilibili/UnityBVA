@@ -38,6 +38,7 @@ namespace BVA
                 }
             }
             scenes = null;
+            importer.Dispose();
             importer = null;
         }
         public bool IsSceneLoaded(int index)
@@ -481,7 +482,7 @@ namespace BVA
                     }
                     sceneImporter = Factory.CreateSceneImporter(fileName, importOptions);
                 }
-                sceneImporter.SceneParent = null;
+                sceneImporter.Dispose();
                 sceneImporter.IsMultithreaded = multithreaded;
                 await sceneImporter.LoadAsync();
 

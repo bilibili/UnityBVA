@@ -63,7 +63,7 @@ namespace GLTF.Schema.BVA
                     switch (curProp)
                     {
                         case BVA_Material_ToonSimple_Extra.BASECOLOR:
-                            matCache.SetColor(BVA_Material_ToonSimple_Extra.BASECOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_ToonSimple_Extra.BASECOLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_ToonSimple_Extra.BASEMAP:
                             {
@@ -114,7 +114,7 @@ namespace GLTF.Schema.BVA
         public JProperty Serialize()
         {
             JObject jo = new JObject();
-            jo.Add(parameter__BaseColor.ParamName, parameter__BaseColor.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter__BaseColor.ParamName, parameter__BaseColor.Value.ToJArray());
             if (parameter__BaseMap != null && parameter__BaseMap.Value != null) jo.Add(parameter__BaseMap.ParamName, parameter__BaseMap.Serialize());
             jo.Add(parameter__Smoothness.ParamName, parameter__Smoothness.Value);
             jo.Add(parameter__Curvature.ParamName, parameter__Curvature.Value);

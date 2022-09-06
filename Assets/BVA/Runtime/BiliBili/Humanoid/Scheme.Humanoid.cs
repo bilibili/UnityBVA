@@ -1,4 +1,4 @@
-using GLTF.Math;
+using UnityEngine;
 using Newtonsoft.Json;
 using GLTF.Extensions;
 using System.Collections.Generic;

@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 2f134ebafd3b0654093d7697d9f12af5
 ModelImporter:
-  serializedVersion: 19301
+  serializedVersion: 21300
   internalIDToNameTable: []
   externalObjects:
   - first:
@@ -94,6 +94,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -111,7 +112,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations: []
-    isReadable: 0
+    isReadable: 1
   meshes:
     lODScreenPercentages: []
     globalScale: 1
@@ -123,21 +124,27 @@ ModelImporter:
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
+    nodeNameCollisionStrategy: 0
     fileIdsGeneration: 2
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
     preserveHierarchy: 0
     skinWeightsMode: 1
     maxBonesPerVertex: 8
     minBoneWeight: 0.001
+    optimizeBones: 1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
   tangentSpace:
@@ -901,8 +908,7 @@ ModelImporter:
     - name: DB_HairPonny_D_04
       parentName: DB_HairPonny_D_03
       position: {x: -0.20536453, y: -5.9604643e-10, z: -0.0000006198883}
-      rotation: {x: -0.00000021391303, y: 0.0000014826655, z: -0.000000054016393,
-        w: 1}
+      rotation: {x: -0.00000021391303, y: 0.0000014826655, z: -0.000000054016393, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: DB_HairPonny_D_05
       parentName: DB_HairPonny_D_04
@@ -967,8 +973,7 @@ ModelImporter:
     - name: DB_HairPonny_L_05
       parentName: DB_HairPonny_L_04
       position: {x: -0.20241517, y: 0, z: 0.000000008140559}
-      rotation: {x: 0.00000017720552, y: -0.0000017752398, z: -0.000000029802008,
-        w: 1}
+      rotation: {x: 0.00000017720552, y: -0.0000017752398, z: -0.000000029802008, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: DB_HairPonny_L_06
       parentName: DB_HairPonny_L_05
@@ -1003,8 +1008,7 @@ ModelImporter:
     - name: DB_HairPonny_R_06
       parentName: DB_HairPonny_R_05
       position: {x: 0.15935086, y: -0.0000000035762786, z: 0.00000021755694}
-      rotation: {x: -0.0000012020757, y: -0.0000025406475, z: -0.000000070783564,
-        w: 1}
+      rotation: {x: -0.0000012020757, y: -0.0000025406475, z: -0.000000070783564, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: DB_Hontai_01_L
       parentName: CH_HairRoot
@@ -1159,8 +1163,7 @@ ModelImporter:
     - name: DB_Sode_A_05_L
       parentName: DB_Sode_A_04_L
       position: {x: -0, y: 0.18826438, z: -0.0000000053071925}
-      rotation: {x: -0.000003912051, y: -0.00000007047152, z: -0.000000008540885,
-        w: 1}
+      rotation: {x: -0.000003912051, y: -0.00000007047152, z: -0.000000008540885, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: DB_Sode_A_06_L
       parentName: DB_Sode_A_05_L
@@ -1355,8 +1358,7 @@ ModelImporter:
     - name: DB_Sode_B_04_R
       parentName: DB_Sode_B_03_R
       position: {x: -0, y: 0.20569675, z: 0.0000013242492}
-      rotation: {x: -0.00000005960476, y: -0.0000006867213, z: -0.00000044831225,
-        w: 1}
+      rotation: {x: -0.00000005960476, y: -0.0000006867213, z: -0.00000044831225, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: DB_Sode_B_05_R
       parentName: DB_Sode_B_04_R
@@ -1925,6 +1927,8 @@ ModelImporter:
   animationType: 3
   humanoidOversampling: 1
   avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

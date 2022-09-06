@@ -52,7 +52,8 @@
 				// Conversion Summary
 				// Unity R channel goes into B channel
 				// Unity A channel goes into G channel, then inverted
-				return float4(1, 1 - col.a, col.r, 1);
+				//return float4(1, 1 - col.a, col.r, 1);
+				return col;
 			}
 			ENDHLSL
 		}

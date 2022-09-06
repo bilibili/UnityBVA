@@ -15,7 +15,7 @@ namespace BVA
             {
                 IExtension ext = node.Extensions[BVA_variable_collectionExtensionFactory.EXTENSION_NAME];
                 var impl = (BVA_variable_collectionExtensionFactory)ext;
-                if (impl == null) throw new System.Exception($"cast {nameof(BVA_url_videoExtensionFactory)} failed");
+                if (impl == null) throw new System.InvalidCastException($"cast {nameof(BVA_url_videoExtensionFactory)} failed");
                 await ImportVariableCollection(_gltfRoot.Extensions.VariableCollections[impl.id.Id], node, nodeObj);
             }
         }

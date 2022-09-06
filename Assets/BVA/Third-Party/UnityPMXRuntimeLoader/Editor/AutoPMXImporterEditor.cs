@@ -36,7 +36,7 @@ public class AutoPMXImporterEditor : AssetPostprocessor
                 string outputFileAbsolutePath = outputFolderAbsolutePath + inputFileNameWithoutExtension + PrefabExtension;
 
                 Transform model = await PMXModelLoader.LoadPMXModel(inputFileAbsolutePath, false);
-                if(model == null)
+                if (model == null)
                 {
                     Debug.Log("読み込みに問題がありました");
                     Debug.Log(inputFileAbsolutePath);
@@ -90,7 +90,7 @@ public class AutoPMXImporterEditor : AssetPostprocessor
 
                 foreach (Material material in model.GetComponent<MMDModel>().SkinnedMeshRenderer.sharedMaterials)
                 {
-                    List<(string,Texture)> allTexture = new List<(string, Texture)>();
+                    List<(string, Texture)> allTexture = new List<(string, Texture)>();
                     Shader shader = material.shader;
                     for (int i = 0; i < ShaderUtil.GetPropertyCount(shader); i++)
                     {
@@ -98,14 +98,14 @@ public class AutoPMXImporterEditor : AssetPostprocessor
                         {
                             string propertyName = ShaderUtil.GetPropertyName(shader, i);
                             Texture texture = material.GetTexture(ShaderUtil.GetPropertyName(shader, i));
-                            if (texture!=null)
+                            if (texture != null)
                             {
                                 allTexture.Add((propertyName, texture));
                             }
 
                         }
                     }
-                    if (material != null && allTexture.Count!=0)
+                    if (material != null && allTexture.Count != 0)
                     {
                         foreach (var property in allTexture)
                         {
@@ -120,7 +120,7 @@ public class AutoPMXImporterEditor : AssetPostprocessor
                                 }
                                 AssetDatabase.Refresh();
                             }
-                            var savedTexture= AssetDatabase.LoadAssetAtPath<Texture>(textureRelativePath);
+                            var savedTexture = AssetDatabase.LoadAssetAtPath<Texture>(textureRelativePath);
 #if UNITY_2021_1_OR_NEWER
                             if (material.HasTexture(property.Item1))
                                 material.SetTexture(property.Item1, savedTexture);
@@ -131,7 +131,7 @@ public class AutoPMXImporterEditor : AssetPostprocessor
                         }
 
                     }
-                    
+
                     if (material != null)
                     {
                         var path = outputFolderRelativePath + MaterialsFolderName + material.name + MaterialExtension;

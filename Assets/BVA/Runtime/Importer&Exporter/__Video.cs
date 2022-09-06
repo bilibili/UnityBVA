@@ -18,7 +18,7 @@ namespace BVA
             {
                 IExtension ext = node.Extensions[BVA_url_videoExtensionFactory.EXTENSION_NAME];
                 var impl = (BVA_url_videoExtensionFactory)ext;
-                if (impl == null) throw new Exception($"cast {nameof(BVA_url_videoExtensionFactory)} failed");
+                if (impl == null) throw new InvalidCastException($"cast {nameof(BVA_url_videoExtensionFactory)} failed");
                 ImportVideoPlayer(impl.video, nodeObj);
             }
         }

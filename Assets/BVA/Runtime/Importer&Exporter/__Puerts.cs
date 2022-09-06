@@ -27,7 +27,7 @@ namespace BVA
             {
                 IExtension ext = node.Extensions[BVA_puerts_monoExtensionFactory.EXTENSION_NAME];
                 var impl = (BVA_puerts_monoExtensionFactory)ext;
-                if (impl == null) throw new Exception($"cast {nameof(BVA_puerts_monoExtensionFactory)} failed");
+                if (impl == null) throw new InvalidCastException($"cast {nameof(BVA_puerts_monoExtensionFactory)} failed");
                 foreach (var v in impl.ids)
                 {
                     var puertsEventExt = _gltfRoot.Extensions.PuertsEvents[v.Id];

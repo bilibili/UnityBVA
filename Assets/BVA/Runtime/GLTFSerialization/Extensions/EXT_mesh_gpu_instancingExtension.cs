@@ -1,5 +1,5 @@
 ﻿using GLTF.Extensions;
-using GLTF.Math;
+using UnityEngine;
 using GLTF.Schema;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;

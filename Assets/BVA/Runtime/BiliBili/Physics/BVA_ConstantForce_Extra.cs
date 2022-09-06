@@ -1,17 +1,11 @@
 using Newtonsoft.Json.Linq;
-using GLTF.Math;
-using GLTF.Schema;
 using Newtonsoft.Json;
 using GLTF.Extensions;
 using BVA.Extensions;
-using System.Threading.Tasks;
-using UnityEngine;
-using Color = UnityEngine.Color;
-using Vector4 = UnityEngine.Vector4;
 
 namespace GLTF.Schema.BVA
 {
-public class BVA_ConstantForce_Extra : IExtra
+    public class BVA_ConstantForce_Extra : IExtra
 {
 public const string PROPERTY = "BVA_ConstantForce_Extra";
 public UnityEngine.Vector3 force;
@@ -36,16 +30,16 @@ var curProp = reader.Value.ToString();
 switch (curProp)
 {
 case nameof(BVA_ConstantForce_Extra.force):
-target.force= reader.ReadAsVector3().ToUnityVector3Raw();
+target.force= reader.ReadAsVector3();
 break;
 case nameof(BVA_ConstantForce_Extra.relativeForce):
-target.relativeForce= reader.ReadAsVector3().ToUnityVector3Raw();
+target.relativeForce= reader.ReadAsVector3();
 break;
 case nameof(BVA_ConstantForce_Extra.torque):
-target.torque= reader.ReadAsVector3().ToUnityVector3Raw();
+target.torque= reader.ReadAsVector3();
 break;
 case nameof(BVA_ConstantForce_Extra.relativeTorque):
-target.relativeTorque= reader.ReadAsVector3().ToUnityVector3Raw();
+target.relativeTorque= reader.ReadAsVector3();
 break;
 }
 }
@@ -54,10 +48,10 @@ break;
 public JProperty Serialize()
 {
 JObject jo = new JObject();
-jo.Add(nameof(force), force.ToGltfVector3Raw().ToJArray());
-jo.Add(nameof(relativeForce), relativeForce.ToGltfVector3Raw().ToJArray());
-jo.Add(nameof(torque), torque.ToGltfVector3Raw().ToJArray());
-jo.Add(nameof(relativeTorque), relativeTorque.ToGltfVector3Raw().ToJArray());
+jo.Add(nameof(force), force.ToJArray());
+jo.Add(nameof(relativeForce), relativeForce.ToJArray());
+jo.Add(nameof(torque), torque.ToJArray());
+jo.Add(nameof(relativeTorque), relativeTorque.ToJArray());
 return new JProperty(BVA_ConstantForce_Extra.PROPERTY, jo);
 }
 }

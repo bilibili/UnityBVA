@@ -56,19 +56,19 @@ namespace GLTF.Schema.BVA
                     switch (curProp)
                     {
                         case BVA_Material_ZeldaToon_Extra.BASECOLOR:
-                            matCache.SetColor(BVA_Material_ZeldaToon_Extra.BASECOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_ZeldaToon_Extra.BASECOLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_ZeldaToon_Extra.AMBIENTCOLOR:
-                            matCache.SetColor(BVA_Material_ZeldaToon_Extra.AMBIENTCOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_ZeldaToon_Extra.AMBIENTCOLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_ZeldaToon_Extra.GLOSSINESS:
                             matCache.SetFloat(BVA_Material_ZeldaToon_Extra.GLOSSINESS, reader.ReadAsFloat());
                             break;
                         case BVA_Material_ZeldaToon_Extra.SPECULARCOLOR:
-                            matCache.SetColor(BVA_Material_ZeldaToon_Extra.SPECULARCOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_ZeldaToon_Extra.SPECULARCOLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_ZeldaToon_Extra.RIMCOLOR:
-                            matCache.SetColor(BVA_Material_ZeldaToon_Extra.RIMCOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_ZeldaToon_Extra.RIMCOLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_ZeldaToon_Extra.RIMAMOUNT:
                             matCache.SetFloat(BVA_Material_ZeldaToon_Extra.RIMAMOUNT, reader.ReadAsFloat());
@@ -97,11 +97,11 @@ namespace GLTF.Schema.BVA
         public JProperty Serialize()
         {
             JObject jo = new JObject();
-            jo.Add(parameter__BaseColor.ParamName, parameter__BaseColor.Value.ToNumericsColorRaw().ToJArray());
-            jo.Add(parameter__AmbientColor.ParamName, parameter__AmbientColor.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter__BaseColor.ParamName, parameter__BaseColor.Value.ToJArray());
+            jo.Add(parameter__AmbientColor.ParamName, parameter__AmbientColor.Value.ToJArray());
             jo.Add(parameter__Glossiness.ParamName, parameter__Glossiness.Value);
-            jo.Add(parameter__SpecularColor.ParamName, parameter__SpecularColor.Value.ToNumericsColorRaw().ToJArray());
-            jo.Add(parameter__RimColor.ParamName, parameter__RimColor.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter__SpecularColor.ParamName, parameter__SpecularColor.Value.ToJArray());
+            jo.Add(parameter__RimColor.ParamName, parameter__RimColor.Value.ToJArray());
             jo.Add(parameter__RimAmount.ParamName, parameter__RimAmount.Value);
             jo.Add(parameter_RimTreshold.ParamName, parameter_RimTreshold.Value);
             if (parameter__BaseMap != null && parameter__BaseMap.Value != null) jo.Add(parameter__BaseMap.ParamName, parameter__BaseMap.Serialize());

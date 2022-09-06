@@ -15,7 +15,7 @@ namespace BVA
                 IExtension ext = node.Extensions[BVA_blendShape_blendShapeMixerExtensionFactory.EXTENSION_NAME];
                 var impl = (BVA_blendShape_blendShapeMixerExtensionFactory)ext;
                 if (impl == null)
-                    throw new Exception($"cast {nameof(BVA_blendShape_blendShapeMixerExtensionFactory)} failed");
+                    throw new InvalidCastException($"cast {nameof(BVA_blendShape_blendShapeMixerExtensionFactory)} failed");
 
                 ImportBlendShapeMixer(impl.id, nodeObj);
             }

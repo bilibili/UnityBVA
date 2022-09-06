@@ -68,7 +68,7 @@ var curProp = reader.Value.ToString();
 switch (curProp)
 {
 case BVA_Material_ToonGGX_Extra.BASECOLOR:
-matCache.SetColor(BVA_Material_ToonGGX_Extra.BASECOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+matCache.SetColor(BVA_Material_ToonGGX_Extra.BASECOLOR, reader.ReadAsRGBAColor());
 break;
 case BVA_Material_ToonGGX_Extra.BASEMAP:
 {
@@ -85,10 +85,10 @@ matCache.SetTexture(BVA_Material_ToonGGX_Extra.SSSMAP, tex);
 }
 break;
 case BVA_Material_ToonGGX_Extra.ENVIRONMENTCOLOR:
-matCache.SetColor(BVA_Material_ToonGGX_Extra.ENVIRONMENTCOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+matCache.SetColor(BVA_Material_ToonGGX_Extra.ENVIRONMENTCOLOR, reader.ReadAsRGBAColor());
 break;
 case BVA_Material_ToonGGX_Extra.HIGHLIGHTCOLOR:
-matCache.SetColor(BVA_Material_ToonGGX_Extra.HIGHLIGHTCOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+matCache.SetColor(BVA_Material_ToonGGX_Extra.HIGHLIGHTCOLOR, reader.ReadAsRGBAColor());
 break;
 case BVA_Material_ToonGGX_Extra.NORMALMAP:
 {
@@ -130,11 +130,11 @@ break;
 public JProperty Serialize()
 {
 JObject jo = new JObject();
-jo.Add(parameter__BaseColor.ParamName, parameter__BaseColor.Value.ToNumericsColorRaw().ToJArray());
+jo.Add(parameter__BaseColor.ParamName, parameter__BaseColor.Value.ToJArray());
 if (parameter__BaseMap != null && parameter__BaseMap.Value != null) jo.Add(parameter__BaseMap.ParamName, parameter__BaseMap.Serialize());
 if (parameter__SSSMap != null && parameter__SSSMap.Value != null) jo.Add(parameter__SSSMap.ParamName, parameter__SSSMap.Serialize());
-jo.Add(parameter__EnvironmentColor.ParamName, parameter__EnvironmentColor.Value.ToNumericsColorRaw().ToJArray());
-jo.Add(parameter__HighlightColor.ParamName, parameter__HighlightColor.Value.ToNumericsColorRaw().ToJArray());
+jo.Add(parameter__EnvironmentColor.ParamName, parameter__EnvironmentColor.Value.ToJArray());
+jo.Add(parameter__HighlightColor.ParamName, parameter__HighlightColor.Value.ToJArray());
 if (parameter__NormalMap != null && parameter__NormalMap.Value != null) jo.Add(parameter__NormalMap.ParamName, parameter__NormalMap.Serialize());
 if (parameter__IlliminationMap != null && parameter__IlliminationMap.Value != null) jo.Add(parameter__IlliminationMap.ParamName, parameter__IlliminationMap.Serialize());
 jo.Add(parameter__OutlineWidth.ParamName, parameter__OutlineWidth.Value);

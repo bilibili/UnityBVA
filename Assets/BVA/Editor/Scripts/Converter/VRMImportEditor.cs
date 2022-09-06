@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using ADBRuntime.Mono;
 using System;
 using System.Linq;
+using VRM;
 using BVA;
 using BVA.Component;
 using GLTF.Schema.BVA;
@@ -28,7 +29,8 @@ namespace VRM
             if (Application.isPlaying)
             {
                 Selection.activeGameObject = ImportRuntime(path);
-                SwitchMaterial(Selection.activeGameObject);
+                BVAMaterialExtension.ChangeMaterial(Selection.activeGameObject);
+                BVASpringBoneExtension.TranslateVRMPhysicToBVAPhysics(Selection.activeGameObject);
                 SwitchComponent(Selection.activeGameObject, null);
                 return;
             }
@@ -46,21 +48,8 @@ namespace VRM
                 loaded.EnableUpdateWhenOffscreen();
                 loaded.ShowMeshes();
                 loaded.gameObject.name = loaded.name;
+                data.Dispose();
                 return loaded.gameObject;
-            }
-        }
-
-        static void SwitchMaterial(GameObject go)
-        {
-            Shader replaceShader = Shader.Find("VRM/URP/MToon");
-            var skinnedMeshRenderers = go.GetComponentsInChildren<Renderer>();
-            foreach (var skinnedMeshRenderer in skinnedMeshRenderers)
-            {
-                foreach (var v in skinnedMeshRenderer.sharedMaterials)
-                {
-                    v.shader = replaceShader;
-                    MaterialImporter.MToon.ValidateProperties(v);
-                }
             }
         }
 
@@ -178,13 +167,6 @@ namespace VRM
             }
 
             go.AddComponent<LookAt>();
-            // Don't destroy original VRM Component
-            //GameObject.DestroyImmediate(go.GetComponent<VRMMeta>());
-            //GameObject.DestroyImmediate(go.GetComponent<VRMHumanoidDescription>());
-            //GameObject.DestroyImmediate(go.GetComponent<VRMBlendShapeProxy>());
-            //GameObject.DestroyImmediate(go.GetComponent<VRMFirstPerson>());
-            //GameObject.DestroyImmediate(go.GetComponent<VRMLookAtHead>());
-            //GameObject.DestroyImmediate(go.GetComponent<VRMLookAtBoneApplyer>());
         }
 
         static void SetPresetValue(BlendShapeClip clip, BlendShapeMixer mixer, int preset, GameObject go)
@@ -321,7 +303,8 @@ namespace VRM
                         Directory.CreateDirectory(physicsFolderPath);
                     }
 
-                    SwitchMaterial(model);
+                    BVAMaterialExtension.ChangeMaterial(model);
+                    BVASpringBoneExtension.TranslateVRMPhysicToBVAPhysics(model);
 
                     var renderers = model.GetComponentsInChildren<SkinnedMeshRenderer>();
                     foreach (var renderer in renderers)

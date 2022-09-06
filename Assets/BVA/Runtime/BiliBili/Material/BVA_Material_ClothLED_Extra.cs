@@ -114,7 +114,7 @@ namespace GLTF.Schema.BVA
                             }
                             break;
                         case BVA_Material_ClothLED_Extra.BASECOLOR:
-                            matCache.SetColor(BVA_Material_ClothLED_Extra.BASECOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_ClothLED_Extra.BASECOLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_ClothLED_Extra.USEMAINTEXFIRST:
                             matCache.SetFloat(BVA_Material_ClothLED_Extra.USEMAINTEXFIRST, reader.ReadAsFloat());
@@ -127,7 +127,7 @@ namespace GLTF.Schema.BVA
                             }
                             break;
                         case BVA_Material_ClothLED_Extra.FIRSTSHADE:
-                            matCache.SetColor(BVA_Material_ClothLED_Extra.FIRSTSHADE, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_ClothLED_Extra.FIRSTSHADE, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_ClothLED_Extra.FIRSTSHADETHRED:
                             matCache.SetFloat(BVA_Material_ClothLED_Extra.FIRSTSHADETHRED, reader.ReadAsFloat());
@@ -146,7 +146,7 @@ namespace GLTF.Schema.BVA
                             }
                             break;
                         case BVA_Material_ClothLED_Extra.SECONDSHADE:
-                            matCache.SetColor(BVA_Material_ClothLED_Extra.SECONDSHADE, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_ClothLED_Extra.SECONDSHADE, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_ClothLED_Extra.SECONDSHADETHRED:
                             matCache.SetFloat(BVA_Material_ClothLED_Extra.SECONDSHADETHRED, reader.ReadAsFloat());
@@ -227,15 +227,15 @@ namespace GLTF.Schema.BVA
         {
             JObject jo = new JObject();
             if (parameter__MainTex != null && parameter__MainTex.Value != null) jo.Add(parameter__MainTex.ParamName, parameter__MainTex.Serialize());
-            jo.Add(parameter__BaseColor.ParamName, parameter__BaseColor.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter__BaseColor.ParamName, parameter__BaseColor.Value.ToJArray());
             jo.Add(parameter__UseMainTex_1st.ParamName, parameter__UseMainTex_1st.Value);
             if (parameter__1stShadeTex != null && parameter__1stShadeTex.Value != null) jo.Add(parameter__1stShadeTex.ParamName, parameter__1stShadeTex.Serialize());
-            jo.Add(parameter__1stShade.ParamName, parameter__1stShade.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter__1stShade.ParamName, parameter__1stShade.Value.ToJArray());
             jo.Add(parameter__1stShadeThred.ParamName, parameter__1stShadeThred.Value);
             jo.Add(parameter__1stShadeSpred.ParamName, parameter__1stShadeSpred.Value);
             jo.Add(parameter__UseMainTex_2nd.ParamName, parameter__UseMainTex_2nd.Value);
             if (parameter__2ndShadeTex != null && parameter__2ndShadeTex.Value != null) jo.Add(parameter__2ndShadeTex.ParamName, parameter__2ndShadeTex.Serialize());
-            jo.Add(parameter__2ndShade.ParamName, parameter__2ndShade.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter__2ndShade.ParamName, parameter__2ndShade.Value.ToJArray());
             jo.Add(parameter__2ndShadeThred.ParamName, parameter__2ndShadeThred.Value);
             jo.Add(parameter__2ndShadeSpred.ParamName, parameter__2ndShadeSpred.Value);
             if (parameter__PatternA != null && parameter__PatternA.Value != null) jo.Add(parameter__PatternA.ParamName, parameter__PatternA.Serialize());

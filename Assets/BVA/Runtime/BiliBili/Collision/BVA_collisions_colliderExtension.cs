@@ -1,9 +1,9 @@
 ﻿using GLTF.Extensions;
-using GLTF.Math;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using BVA.Extensions;
+using UnityEngine;
 namespace GLTF.Schema.BVA
 {
     /// <summary>
@@ -12,8 +12,8 @@ namespace GLTF.Schema.BVA
     /// </summary>
     public class BVA_collisions_colliderExtension : IExtension
     {
-        public static readonly Vector3 DEFAULT_CENTER = Vector3.Zero;
-        public static readonly Vector3 DEFAULT_SIZE = Vector3.One;
+        public static readonly Vector3 DEFAULT_CENTER = Vector3.zero;
+        public static readonly Vector3 DEFAULT_SIZE = Vector3.one;
         public static readonly bool DEFAULT_IS_TRIGGER = false;
 
         public CollisionType type;
@@ -107,10 +107,10 @@ namespace GLTF.Schema.BVA
                         size = reader.ReadAsVector3();
                         break;
                     case nameof(radius):
-                        radius = (float)reader.ReadAsDouble().Value;
+                        radius = reader.ReadAsFloat();
                         break;
                     case nameof(height):
-                        height = (float)reader.ReadAsDouble().Value;
+                        height = reader.ReadAsFloat();
                         break;
                     case nameof(direction):
                         direction = reader.ReadStringEnum<Direction>();

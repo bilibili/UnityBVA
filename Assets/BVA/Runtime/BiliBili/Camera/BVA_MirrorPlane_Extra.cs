@@ -1,14 +1,7 @@
 using Newtonsoft.Json.Linq;
-using GLTF.Math;
-using GLTF.Schema;
 using Newtonsoft.Json;
 using GLTF.Extensions;
-using BVA.Extensions;
-using BVA.Component;
-using System.Threading.Tasks;
 using UnityEngine;
-using Color = UnityEngine.Color;
-using Vector4 = UnityEngine.Vector4;
 
 namespace GLTF.Schema.BVA
 {

@@ -1,5 +1,5 @@
 using GLTF.Extensions;
-using GLTF.Math;
+using UnityEngine;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
@@ -19,9 +19,9 @@ namespace GLTF.Schema.BVA
         public static readonly bool DEFAULT_HAS_TRANSLATION_DOF = false;
 
         public static readonly bool DEFAULT_useDefaultValues = true;
-        public static readonly Vector3 DEFAULT_min = Vector3.Zero;
-        public static readonly Vector3 DEFAULT_max = Vector3.Zero;
-        public static readonly Vector3 DEFAULT_center = Vector3.Zero;
+        public static readonly Vector3 DEFAULT_min = Vector3.zero;
+        public static readonly Vector3 DEFAULT_max = Vector3.zero;
+        public static readonly Vector3 DEFAULT_center = Vector3.zero;
         public static readonly float DEFAULT_axisLength = 0.0f;
         public IExtension Clone(GLTFRoot root)
         {
@@ -61,7 +61,7 @@ namespace GLTF.Schema.BVA
 
         public static GlTFHumanoidBone DeserializeHumanoidBone(GLTFRoot root, JsonReader reader)
         {
-            var humanoidBone = new GlTFHumanoidBone() { useDefaultValues = true, min = Vector3.Zero, max = Vector3.Zero, center = Vector3.Zero, axisLength = 0 };
+            var humanoidBone = new GlTFHumanoidBone() { useDefaultValues = true, min = Vector3.zero, max = Vector3.zero, center = Vector3.zero, axisLength = 0 };
 
             while (reader.Read() && reader.TokenType == JsonToken.PropertyName)
             {

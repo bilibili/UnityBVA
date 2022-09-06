@@ -12,21 +12,21 @@ namespace BVA
             {
                 var colObj = nodeObj.AddComponent<BoxCollider>();
                 colObj.isTrigger = ext.isTrigger;
-                colObj.center = ext.center.ToUnityVector3Raw();
-                colObj.size = ext.size.ToUnityVector3Raw();
+                colObj.center = ext.center;
+                colObj.size = ext.size;
             }
             else if (ext.type == CollisionType.Sphere)
             {
                 var colObj = nodeObj.AddComponent<SphereCollider>();
                 colObj.isTrigger = ext.isTrigger;
-                colObj.center = ext.center.ToUnityVector3Raw();
+                colObj.center = ext.center;
                 colObj.radius = ext.radius;
             }
             else if (ext.type == CollisionType.Capsule)
             {
                 var colObj = nodeObj.AddComponent<CapsuleCollider>();
                 colObj.isTrigger = ext.isTrigger;
-                colObj.center = ext.center.ToUnityVector3Raw();
+                colObj.center = ext.center;
                 colObj.radius = ext.radius;
                 colObj.height = ext.height;
                 colObj.direction = (int)ext.direction;
@@ -70,15 +70,15 @@ namespace BVA
             BVA_collisions_colliderExtension ext;
             if (collider is BoxCollider box)
             {
-                ext = new BVA_collisions_colliderExtension(CollisionType.Box, box.isTrigger, box.center.ToGltfVector3Raw(), 0, 0, Direction.x);
+                ext = new BVA_collisions_colliderExtension(CollisionType.Box, box.isTrigger, box.center, 0, 0, Direction.x);
             }
             else if (collider is SphereCollider sphere)
             {
-                ext = new BVA_collisions_colliderExtension(CollisionType.Sphere, sphere.isTrigger, sphere.center.ToGltfVector3Raw(), sphere.radius, 0, Direction.x);
+                ext = new BVA_collisions_colliderExtension(CollisionType.Sphere, sphere.isTrigger, sphere.center, sphere.radius, 0, Direction.x);
             }
             else if (collider is CapsuleCollider capsule)
             {
-                ext = new BVA_collisions_colliderExtension(CollisionType.Capsule, capsule.isTrigger, capsule.center.ToGltfVector3Raw(), capsule.radius, capsule.height, (Direction)capsule.direction);
+                ext = new BVA_collisions_colliderExtension(CollisionType.Capsule, capsule.isTrigger, capsule.center, capsule.radius, capsule.height, (Direction)capsule.direction);
             }
             else if (collider is MeshCollider mesh)
             {

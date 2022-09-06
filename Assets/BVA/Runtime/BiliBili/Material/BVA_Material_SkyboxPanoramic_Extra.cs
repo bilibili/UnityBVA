@@ -56,7 +56,7 @@ namespace GLTF.Schema.BVA
                     switch (curProp)
                     {
                         case BVA_Material_SkyboxPanoramic_Extra.TINT:
-                            matCache.SetColor(BVA_Material_SkyboxPanoramic_Extra.TINT, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_SkyboxPanoramic_Extra.TINT, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_SkyboxPanoramic_Extra.EXPOSURE:
                             matCache.SetFloat(BVA_Material_SkyboxPanoramic_Extra.EXPOSURE, reader.ReadAsFloat());
@@ -97,7 +97,7 @@ namespace GLTF.Schema.BVA
         public JProperty Serialize()
         {
             JObject jo = new JObject();
-            jo.Add(parameter__Tint.ParamName, parameter__Tint.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter__Tint.ParamName, parameter__Tint.Value.ToJArray());
             jo.Add(parameter__Exposure.ParamName, parameter__Exposure.Value);
             jo.Add(parameter__Rotation.ParamName, parameter__Rotation.Value);
             if (parameter__MainTex != null && parameter__MainTex.Value != null) jo.Add(parameter__MainTex.ParamName, parameter__MainTex.Serialize());

@@ -25,6 +25,39 @@ BVA是一个基于GLTF标准，跨平台的格式。这个格式可以被很多�
 
 - Unity 2020.3 或更高，最优版本 - 2021.3 LTS
 
+## 安装方式
+
+1. Unity Package Manager , 手动添加以下条目
+
+| UPM package	|	UPM url           |
+|-----------|-------------------|
+|  "com.bilibili.bva": |"https://github.com/bilibili/UnityBVA.git?path=/Assets/BVA"           |
+|  "com.bilibili.bvavrmhotfix": |"https://github.com/bilibili/UnityBVA.git?path=/Packages/com.BVA.vrmHotfix"           |
+|  "com.vrmc.gltf":| "https://github.com/vrm-c/UniVRM.git?path=/Assets/UniGLTF#v0.102.0"           |
+|  "com.vrmc.univrm":| "https://github.com/vrm-c/UniVRM.git?path=/Assets/VRM#v0.102.0"           |
+|  "com.vrmc.vrmshaders": |"https://github.com/vrm-c/UniVRM.git?path=/Assets/VRMShaders#v0.102.0"           |
+|  "jp.lilium.toongraph":| "https://github.com/bilibili/UnityBVA.git?path=/Packages/jp.lilium.toongraph"           |
+
+或者复制以下文本到 `Packages/manifest.json`
+
+```json
+// manifest.json
+{
+  "dependencies": {
+    ///
+    "com.bilibili.bva": "https://github.com/bilibili/UnityBVA.git?path=/Assets/BVA",
+    "com.bilibili.bvavrmhotfix": "https://github.com/bilibili/UnityBVA.git?path=/Packages/com.BVA.vrmHotfix",
+    "com.vrmc.gltf": "https://github.com/vrm-c/UniVRM.git?path=/Assets/UniGLTF#v0.102.0",
+    "com.vrmc.univrm": "https://github.com/vrm-c/UniVRM.git?path=/Assets/VRM#v0.102.0",
+    "com.vrmc.vrmshaders": "https://github.com/vrm-c/UniVRM.git?path=/Assets/VRMShaders#v0.102.0",
+    "jp.lilium.toongraph": "https://github.com/bilibili/UnityBVA.git?path=/Packages/jp.lilium.toongraph",
+    ///
+  }
+}
+```
+
+2. 直接克隆仓库 `git clone https://github.com/bilibili/UnityBVA.git`
+
 ## 编译平台
 
 - 桌面 (Windows10 测试通过, Mac 或 Linux 应该也没问题)

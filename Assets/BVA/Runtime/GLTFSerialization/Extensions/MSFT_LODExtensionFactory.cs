@@ -1,7 +1,4 @@
-﻿using System;
-using Newtonsoft.Json.Linq;
-using GLTF.Math;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json.Linq;
 using GLTF.Extensions;
 using System.Collections.Generic;
 

@@ -64,10 +64,10 @@ namespace GLTF.Schema.BVA
                             matCache.SetFloat(BVA_Material_SkyboxProcedural_Extra.ATMOSPHERETHICKNESS, reader.ReadAsFloat());
                             break;
                         case BVA_Material_SkyboxProcedural_Extra.SKYTINT:
-                            matCache.SetColor(BVA_Material_SkyboxProcedural_Extra.SKYTINT, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_SkyboxProcedural_Extra.SKYTINT, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_SkyboxProcedural_Extra.GROUNDCOLOR:
-                            matCache.SetColor(BVA_Material_SkyboxProcedural_Extra.GROUNDCOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_SkyboxProcedural_Extra.GROUNDCOLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_SkyboxProcedural_Extra.EXPOSURE:
                             matCache.SetFloat(BVA_Material_SkyboxProcedural_Extra.EXPOSURE, reader.ReadAsFloat());
@@ -90,8 +90,8 @@ namespace GLTF.Schema.BVA
             jo.Add(parameter__SunSize.ParamName, parameter__SunSize.Value);
             jo.Add(parameter__SunSizeConvergence.ParamName, parameter__SunSizeConvergence.Value);
             jo.Add(parameter__AtmosphereThickness.ParamName, parameter__AtmosphereThickness.Value);
-            jo.Add(parameter__SkyTint.ParamName, parameter__SkyTint.Value.ToNumericsColorRaw().ToJArray());
-            jo.Add(parameter__GroundColor.ParamName, parameter__GroundColor.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter__SkyTint.ParamName, parameter__SkyTint.Value.ToJArray());
+            jo.Add(parameter__GroundColor.ParamName, parameter__GroundColor.Value.ToJArray());
             jo.Add(parameter__Exposure.ParamName, parameter__Exposure.Value);
             if (keywords != null && keywords.Length > 0)
             {

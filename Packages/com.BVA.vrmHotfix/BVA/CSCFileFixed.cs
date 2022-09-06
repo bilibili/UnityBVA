@@ -1,6 +1,4 @@
-
-using System.Text;
-using System.Threading;
+#if UNITY_EDITOR
 using UnityEngine;
 using UnityEditor;
 using System.IO;
@@ -9,7 +7,6 @@ using System.Collections.Generic;
 public static class InstalledPackages
 {
     static string[] importText = new string[] { "-r:System.IO.Compression.dll", "-r:System.IO.Compression.FileSystem.dll" };
-
     [InitializeOnLoadMethod]
     private static void InitializeOnLoad()
     {
@@ -40,3 +37,4 @@ public static class InstalledPackages
         Debug.Log("WriteCSC Successful");
     }   
 }
+#endif

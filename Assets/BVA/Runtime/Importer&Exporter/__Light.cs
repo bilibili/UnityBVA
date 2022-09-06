@@ -13,7 +13,7 @@ namespace BVA
         public void ImportLight(KHR_lights_punctualExtension ext, Node node, GameObject nodeObj)
         {
             var lightObj = nodeObj.AddComponent<Light>();
-            lightObj.color = ext.color.ToUnityColorRaw();
+            lightObj.color = ext.color;
             lightObj.intensity = (float)ext.intensity;
             lightObj.type = (UnityEngine.LightType)ext.type;
             lightObj.range = (float)ext.range;
@@ -51,7 +51,7 @@ namespace BVA
 
             IExtension ext = scene.Extensions[BVA_light_lightmapExtensionFactory.EXTENSION_NAME];
             var impl = (BVA_light_lightmapExtensionFactory)ext;
-            if (impl == null) throw new Exception($"cast {nameof(BVA_light_lightmapExtensionFactory)} failed");
+            if (impl == null) throw new InvalidCastException($"cast {nameof(BVA_light_lightmapExtensionFactory)} failed");
             await ImportLightmap(_gltfRoot.Extensions.Lightmaps[impl.id.Id]);
         }
 
@@ -91,7 +91,7 @@ namespace BVA
         }
         private LightId ExportLight(Light unityLight)
         {
-            KHR_lights_punctualExtension ext = new KHR_lights_punctualExtension((GLTF.Schema.LightType)unityLight.type, unityLight.name, unityLight.color.ToNumericsColorRaw(), unityLight.intensity, unityLight.range, Mathf.Deg2Rad * unityLight.innerSpotAngle / 2, Mathf.Deg2Rad * unityLight.spotAngle / 2);
+            KHR_lights_punctualExtension ext = new KHR_lights_punctualExtension((GLTF.Schema.LightType)unityLight.type, unityLight.name, unityLight.color, unityLight.intensity, unityLight.range, Mathf.Deg2Rad * unityLight.innerSpotAngle / 2, Mathf.Deg2Rad * unityLight.spotAngle / 2);
 
             var id = new LightId
             {

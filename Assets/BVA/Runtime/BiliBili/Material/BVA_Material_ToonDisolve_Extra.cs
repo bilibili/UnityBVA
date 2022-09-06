@@ -105,7 +105,7 @@ namespace GLTF.Schema.BVA
                     switch (curProp)
                     {
                         case BVA_Material_ToonDisolve_Extra.BASECOLOR:
-                            matCache.SetColor(BVA_Material_ToonDisolve_Extra.BASECOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_ToonDisolve_Extra.BASECOLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_ToonDisolve_Extra.BASEMAP:
                             {
@@ -115,10 +115,10 @@ namespace GLTF.Schema.BVA
                             }
                             break;
                         case BVA_Material_ToonDisolve_Extra.SHADEENVIRONMENTALCOLOR:
-                            matCache.SetColor(BVA_Material_ToonDisolve_Extra.SHADEENVIRONMENTALCOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_ToonDisolve_Extra.SHADEENVIRONMENTALCOLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_ToonDisolve_Extra.SSSCOLOR:
-                            matCache.SetColor(BVA_Material_ToonDisolve_Extra.SSSCOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_ToonDisolve_Extra.SSSCOLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_ToonDisolve_Extra.SSSMAP:
                             {
@@ -168,7 +168,7 @@ namespace GLTF.Schema.BVA
                             }
                             break;
                         case BVA_Material_ToonDisolve_Extra.EMISSIONCOLOR:
-                            matCache.SetColor(BVA_Material_ToonDisolve_Extra.EMISSIONCOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_ToonDisolve_Extra.EMISSIONCOLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_ToonDisolve_Extra.EMISSIONMAP:
                             {
@@ -200,7 +200,7 @@ namespace GLTF.Schema.BVA
                             matCache.SetFloat(BVA_Material_ToonDisolve_Extra.DISOLVE, reader.ReadAsFloat());
                             break;
                         case BVA_Material_ToonDisolve_Extra.DISOLVECOLOR:
-                            matCache.SetColor(BVA_Material_ToonDisolve_Extra.DISOLVECOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_ToonDisolve_Extra.DISOLVECOLOR, reader.ReadAsRGBAColor());
                             break;
                         case nameof(keywords):
                             {
@@ -216,10 +216,10 @@ namespace GLTF.Schema.BVA
         public JProperty Serialize()
         {
             JObject jo = new JObject();
-            jo.Add(parameter__BaseColor.ParamName, parameter__BaseColor.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter__BaseColor.ParamName, parameter__BaseColor.Value.ToJArray());
             if (parameter__BaseMap != null && parameter__BaseMap.Value != null) jo.Add(parameter__BaseMap.ParamName, parameter__BaseMap.Serialize());
-            jo.Add(parameter__ShadeEnvironmentalColor.ParamName, parameter__ShadeEnvironmentalColor.Value.ToNumericsColorRaw().ToJArray());
-            jo.Add(parameter__SSSColor.ParamName, parameter__SSSColor.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter__ShadeEnvironmentalColor.ParamName, parameter__ShadeEnvironmentalColor.Value.ToJArray());
+            jo.Add(parameter__SSSColor.ParamName, parameter__SSSColor.Value.ToJArray());
             if (parameter__SSSMap != null && parameter__SSSMap.Value != null) jo.Add(parameter__SSSMap.ParamName, parameter__SSSMap.Serialize());
             jo.Add(parameter__Smoothness.ParamName, parameter__Smoothness.Value);
             jo.Add(parameter__Metalic.ParamName, parameter__Metalic.Value);
@@ -229,7 +229,7 @@ namespace GLTF.Schema.BVA
             if (parameter__OcclusionMap != null && parameter__OcclusionMap.Value != null) jo.Add(parameter__OcclusionMap.ParamName, parameter__OcclusionMap.Serialize());
             jo.Add(parameter__ShadeShift.ParamName, parameter__ShadeShift.Value);
             if (parameter__ShadeMap != null && parameter__ShadeMap.Value != null) jo.Add(parameter__ShadeMap.ParamName, parameter__ShadeMap.Serialize());
-            jo.Add(parameter__EmissionColor.ParamName, parameter__EmissionColor.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter__EmissionColor.ParamName, parameter__EmissionColor.Value.ToJArray());
             if (parameter__EmissionMap != null && parameter__EmissionMap.Value != null) jo.Add(parameter__EmissionMap.ParamName, parameter__EmissionMap.Serialize());
             jo.Add(parameter__OutlineWidth.ParamName, parameter__OutlineWidth.Value);
             if (parameter__OutlineMap != null && parameter__OutlineMap.Value != null) jo.Add(parameter__OutlineMap.ParamName, parameter__OutlineMap.Serialize());
@@ -237,7 +237,7 @@ namespace GLTF.Schema.BVA
             jo.Add(parameter__ToonyLighting.ParamName, parameter__ToonyLighting.Value);
             jo.Add(parameter__OutlineIntensity.ParamName, parameter__OutlineIntensity.Value);
             jo.Add(parameter__Disolve.ParamName, parameter__Disolve.Value);
-            jo.Add(parameter__DisolveColor.ParamName, parameter__DisolveColor.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter__DisolveColor.ParamName, parameter__DisolveColor.Value.ToJArray());
             if (keywords != null && keywords.Length > 0)
             {
                 JArray jKeywords = new JArray();

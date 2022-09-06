@@ -1,7 +1,7 @@
 using System;
 using GLTF.Extensions;
-using GLTF.Math;
 using Newtonsoft.Json;
+using UnityEngine;
 
 namespace GLTF.Schema
 {
@@ -10,7 +10,7 @@ namespace GLTF.Schema
 		/// <summary>
 		/// Used to scale the ambient light contributions to this material
 		/// </summary>
-		public Color AmbientFactor = Color.White;
+		public Color AmbientFactor = Color.white;
 
 		/// <summary>
 		/// Texture used to store pre-computed direct lighting
@@ -20,7 +20,7 @@ namespace GLTF.Schema
 		/// <summary>
 		/// Scale factor for the lightmap texture
 		/// </summary>
-		public Color LightmapFactor = Color.White;
+		public Color LightmapFactor = Color.white;
 
 		public MaterialCommonConstant()
 		{
@@ -41,7 +41,7 @@ namespace GLTF.Schema
 
 			if (reader.Read() && reader.TokenType != JsonToken.StartObject)
 			{
-				throw new Exception("Asset must be an object.");
+				throw new ArgumentException("Asset must be an object.");
 			}
 
 			while (reader.Read() && reader.TokenType == JsonToken.PropertyName)
@@ -72,13 +72,13 @@ namespace GLTF.Schema
 		{
 			writer.WriteStartObject();
 
-			if (AmbientFactor != Color.White)
+			if (AmbientFactor != Color.white)
 			{
 				writer.WritePropertyName("ambientFactor");
 				writer.WriteStartArray();
-				writer.WriteValue(AmbientFactor.R);
-				writer.WriteValue(AmbientFactor.G);
-				writer.WriteValue(AmbientFactor.B);
+				writer.WriteValue(AmbientFactor.r);
+				writer.WriteValue(AmbientFactor.g);
+				writer.WriteValue(AmbientFactor.b);
 				writer.WriteEndArray();
 			}
 
@@ -88,13 +88,13 @@ namespace GLTF.Schema
 				LightmapTexture.Serialize(writer);
 			}
 
-			if (LightmapFactor != Color.White)
+			if (LightmapFactor != Color.white)
 			{
 				writer.WritePropertyName("lightmapFactor");
 				writer.WriteStartArray();
-				writer.WriteValue(LightmapFactor.R);
-				writer.WriteValue(LightmapFactor.G);
-				writer.WriteValue(LightmapFactor.B);
+				writer.WriteValue(LightmapFactor.r);
+				writer.WriteValue(LightmapFactor.g);
+				writer.WriteValue(LightmapFactor.b);
 				writer.WriteEndArray();
 			}
 

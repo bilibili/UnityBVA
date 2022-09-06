@@ -26,6 +26,40 @@ Furthermore, it might helps you create metaverse-like game like Roblox easily af
 
 - Unity 2020.3 or later, preferred version - 2021.3 LTS
 
+## Installation
+
+1. Unity Package Manager , add following manually
+
+| UPM package	|	UPM url           |
+|-----------|-------------------|
+|  "com.bilibili.bva": |"https://github.com/bilibili/UnityBVA.git?path=/Assets/BVA"           |
+|  "com.bilibili.bvavrmhotfix": |"https://github.com/bilibili/UnityBVA.git?path=/Packages/com.BVA.vrmHotfix"           |
+|  "com.vrmc.gltf":| "https://github.com/vrm-c/UniVRM.git?path=/Assets/UniGLTF#v0.102.0"           |
+|  "com.vrmc.univrm":| "https://github.com/vrm-c/UniVRM.git?path=/Assets/VRM#v0.102.0"           |
+|  "com.vrmc.vrmshaders": |"https://github.com/vrm-c/UniVRM.git?path=/Assets/VRMShaders#v0.102.0"           |
+|  "jp.lilium.toongraph":| "https://github.com/bilibili/UnityBVA.git?path=/Packages/jp.lilium.toongraph"           |
+
+or copy text into `Packages/manifest.json`
+
+```json
+// manifest.json
+{
+  "dependencies": {
+    ///
+    "com.bilibili.bva": "https://github.com/bilibili/UnityBVA.git?path=/Assets/BVA",
+    "com.bilibili.bvavrmhotfix": "https://github.com/bilibili/UnityBVA.git?path=/Packages/com.BVA.vrmHotfix",
+    "com.vrmc.gltf": "https://github.com/vrm-c/UniVRM.git?path=/Assets/UniGLTF#v0.102.0",
+    "com.vrmc.univrm": "https://github.com/vrm-c/UniVRM.git?path=/Assets/VRM#v0.102.0",
+    "com.vrmc.vrmshaders": "https://github.com/vrm-c/UniVRM.git?path=/Assets/VRMShaders#v0.102.0",
+    "jp.lilium.toongraph": "https://github.com/bilibili/UnityBVA.git?path=/Packages/jp.lilium.toongraph",
+    ///
+  }
+}
+```
+
+2. Clone repository - `git clone https://github.com/bilibili/UnityBVA.git`
+
+
 ## Build Target
 
 - Standalone (Windows10 testified, Mac or Linux should also be OK)

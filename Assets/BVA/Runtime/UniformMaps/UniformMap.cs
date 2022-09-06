@@ -12,17 +12,17 @@ namespace BVA
 
         Texture NormalTexture { get; set; }
         int NormalTexCoord { get; set; }
-        double NormalTexScale { get; set; }
+        float NormalTexScale { get; set; }
         Vector2 NormalXOffset { get; set; }
-        double NormalXRotation { get; set; }
+        float NormalXRotation { get; set; }
         Vector2 NormalXScale { get; set; }
         int NormalXTexCoord { get; set; }
 
         Texture OcclusionTexture { get; set; }
         int OcclusionTexCoord { get; set; }
-        double OcclusionTexStrength { get; set; }
+        float OcclusionTexStrength { get; set; }
         Vector2 OcclusionXOffset { get; set; }
-        double OcclusionXRotation { get; set; }
+        float OcclusionXRotation { get; set; }
         Vector2 OcclusionXScale { get; set; }
         int OcclusionXTexCoord { get; set; }
 
@@ -30,19 +30,19 @@ namespace BVA
         int EmissiveTexCoord { get; set; }
         Color EmissiveFactor { get; set; }
         Vector2 EmissiveXOffset { get; set; }
-        double EmissiveXRotation { get; set; }
+        float EmissiveXRotation { get; set; }
         Vector2 EmissiveXScale { get; set; }
         int EmissiveXTexCoord { get; set; }
 
-        double ClearcoatFactor { get; set; }
+        float ClearcoatFactor { get; set; }
         Texture ClearcoatTexture { get; set; }
-        double ClearcoatRoughnessFactor { get; set; }
+        float ClearcoatRoughnessFactor { get; set; }
         Texture ClearcoatRoughnessTexture { get; set; }
 
 
         GLTF.Schema.AlphaMode AlphaMode { get; set; }
         GLTF.Schema.BlendMode BlendMode { get; set; }
-        double AlphaCutoff { get; set; }
+        float AlphaCutoff { get; set; }
         bool DoubleSided { get; set; }
         bool VertexColorsEnabled { get; set; }
         bool EnableInstance { get; set; }
@@ -54,7 +54,7 @@ namespace BVA
         Texture BaseColorTexture { get; set; }
         int BaseColorTexCoord { get; set; }
         Vector2 BaseColorXOffset { get; set; }
-        double BaseColorXRotation { get; set; }
+        float BaseColorXRotation { get; set; }
         Vector2 BaseColorXScale { get; set; }
         int BaseColorXTexCoord { get; set; }
 
@@ -63,12 +63,12 @@ namespace BVA
         Texture MetallicRoughnessTexture { get; set; }
         int MetallicRoughnessTexCoord { get; set; }
         Vector2 MetallicRoughnessXOffset { get; set; }
-        double MetallicRoughnessXRotation { get; set; }
+        float MetallicRoughnessXRotation { get; set; }
         Vector2 MetallicRoughnessXScale { get; set; }
         int MetallicRoughnessXTexCoord { get; set; }
 
-        double MetallicFactor { get; set; }
-        double RoughnessFactor { get; set; }
+        float MetallicFactor { get; set; }
+        float RoughnessFactor { get; set; }
     }
 
     public interface ISpecGlossUniformMap : IUniformMap
@@ -76,7 +76,7 @@ namespace BVA
         Texture DiffuseTexture { get; set; }
         int DiffuseTexCoord { get; set; }
         Vector2 DiffuseXOffset { get; set; }
-        double DiffuseXRotation { get; set; }
+        float DiffuseXRotation { get; set; }
         Vector2 DiffuseXScale { get; set; }
         int DiffuseXTexCoord { get; set; }
 
@@ -85,12 +85,12 @@ namespace BVA
         Texture SpecularGlossinessTexture { get; set; }
         int SpecularGlossinessTexCoord { get; set; }
         Vector2 SpecularGlossinessXOffset { get; set; }
-        double SpecularGlossinessXRotation { get; set; }
+        float SpecularGlossinessXRotation { get; set; }
         Vector2 SpecularGlossinessXScale { get; set; }
         int SpecularGlossinessXTexCoord { get; set; }
 
         Vector3 SpecularFactor { get; set; }
-        double GlossinessFactor { get; set; }
+        float GlossinessFactor { get; set; }
     }
 
     public interface IUnlitUniformMap : IUniformMap
@@ -98,7 +98,7 @@ namespace BVA
         Texture BaseColorTexture { get; set; }
         int BaseColorTexCoord { get; set; }
         Vector2 BaseColorXOffset { get; set; }
-        double BaseColorXRotation { get; set; }
+        float BaseColorXRotation { get; set; }
         Vector2 BaseColorXScale { get; set; }
         int BaseColorXTexCoord { get; set; }
 

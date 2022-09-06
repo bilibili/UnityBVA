@@ -48,7 +48,7 @@ namespace GLTF.Schema.BVA
             jo.Add(nameof(shadowCastingMode), shadowCastingMode.ToString());
             if (receiveShadows) jo.Add(nameof(receiveShadows), receiveShadows);
             jo.Add(nameof(lightmapIndex), lightmapIndex);
-            jo.Add(nameof(lightmapScaleOffset), lightmapScaleOffset.ToGltfVector4Raw().ToJArray());
+            jo.Add(nameof(lightmapScaleOffset), lightmapScaleOffset.ToJArray());
             return new JProperty(ComponentName, jo);
         }
         public void Deserialize(GLTFRoot root, JsonReader reader, Component component)
@@ -97,7 +97,7 @@ namespace GLTF.Schema.BVA
                             renderer.lightmapIndex = reader.ReadAsInt32().Value;
                             break;
                         case nameof(lightmapScaleOffset):
-                            renderer.lightmapScaleOffset = reader.ReadAsVector4().ToUnityVector4Raw();
+                            renderer.lightmapScaleOffset = reader.ReadAsVector4();
                             break;
                         case nameof(isStatic):
                             renderer.gameObject.isStatic = reader.ReadAsBoolean().Value;

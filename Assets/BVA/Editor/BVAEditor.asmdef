@@ -3,7 +3,6 @@
     "rootNamespace": "",
     "references": [
         "Unity.Collections",
-        "BVAScripts",
         "Unity.RenderPipelines.Core.Runtime",
         "Unity.RenderPipelines.Universal.Runtime",
         "Unity.RenderPipelines.Universal.Editor",
@@ -11,7 +10,8 @@
         "Unity.ShaderGraph.Editor",
         "AutomaticDnamicBone.Editor",
         "AutomaticDynamicBone.Runtime",
-        "VorbisPluginImpl"
+        "VorbisPluginImpl",
+        "BVARuntime"
     ],
     "includePlatforms": [
         "Editor"

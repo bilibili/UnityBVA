@@ -1,4 +1,5 @@
 using System;
+using GLTF.Extensions;
 using Newtonsoft.Json;
 
 namespace GLTF.Schema
@@ -16,7 +17,7 @@ namespace GLTF.Schema
 		/// <minimum>0.0</minimum>
 		/// <maximum>1.0</maximum>
 		/// </summary>
-		public double Strength = 1.0f;
+		public float Strength = 1.0f;
 
 		public OcclusionTextureInfo()
 		{
@@ -33,7 +34,7 @@ namespace GLTF.Schema
 
 			if (reader.Read() && reader.TokenType != JsonToken.StartObject)
 			{
-				throw new Exception("Asset must be an object.");
+				throw new ArgumentException("Asset must be an object.");
 			}
 
 			while (reader.Read() && reader.TokenType == JsonToken.PropertyName)
@@ -49,7 +50,7 @@ namespace GLTF.Schema
 						textureInfo.TexCoord = reader.ReadAsInt32().Value;
 						break;
 					case STRENGTH:
-						textureInfo.Strength = reader.ReadAsDouble().Value;
+						textureInfo.Strength = reader.ReadAsFloat();
 						break;
 					default:
 						textureInfo.DefaultPropertyDeserializer(root, reader);

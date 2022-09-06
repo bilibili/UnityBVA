@@ -336,8 +336,7 @@ namespace BVA.Extensions
 
         public static Matrix4x4 ReverseX(this Matrix4x4 m)
         {
-            Vector3 coordinateSpaceConversionScale = SchemaExtensions.CoordinateSpaceConversionScale.ToUnityVector3Raw();
-            Matrix4x4 convert = Matrix4x4.Scale(coordinateSpaceConversionScale);
+            Matrix4x4 convert = Matrix4x4.Scale(SchemaExtensions.CoordinateSpaceConversionScale);
             Matrix4x4 gltfMat = (convert * m * convert);
             return gltfMat;
         }
@@ -431,7 +430,7 @@ namespace BVA.Extensions
                 path.Insert(0, current.name);
             }
 
-            throw new Exception("no RelativePath");
+            throw new ArgumentException("no RelativePath");
         }
 
         public static Transform GetChildByName(this Transform self, string childName)

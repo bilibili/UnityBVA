@@ -252,7 +252,7 @@ namespace GLTF.Schema.BVA
                             }
                             break;
                         case BVA_Material_ToonLit_Extra.BASECOLOR:
-                            matCache.SetColor(BVA_Material_ToonLit_Extra.BASECOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_ToonLit_Extra.BASECOLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_ToonLit_Extra.SHADOWMAP:
                             {
@@ -262,7 +262,7 @@ namespace GLTF.Schema.BVA
                             }
                             break;
                         case BVA_Material_ToonLit_Extra.SHADOWCOLOR:
-                            matCache.SetColor(BVA_Material_ToonLit_Extra.SHADOWCOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_ToonLit_Extra.SHADOWCOLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_ToonLit_Extra.TEXADDSHADOWSTRENGTH:
                             matCache.SetFloat(BVA_Material_ToonLit_Extra.TEXADDSHADOWSTRENGTH, reader.ReadAsFloat());
@@ -298,7 +298,7 @@ namespace GLTF.Schema.BVA
                             }
                             break;
                         case BVA_Material_ToonLit_Extra.SPECCOLOR:
-                            matCache.SetColor(BVA_Material_ToonLit_Extra.SPECCOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_ToonLit_Extra.SPECCOLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_ToonLit_Extra.SPECGLOSSMAP:
                             {
@@ -318,7 +318,7 @@ namespace GLTF.Schema.BVA
                             }
                             break;
                         case BVA_Material_ToonLit_Extra.TOONSPECCOLOR:
-                            matCache.SetColor(BVA_Material_ToonLit_Extra.TOONSPECCOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_ToonLit_Extra.TOONSPECCOLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_ToonLit_Extra.TOONSPECOPTMAP:
                             {
@@ -328,7 +328,7 @@ namespace GLTF.Schema.BVA
                             }
                             break;
                         case BVA_Material_ToonLit_Extra.TOONSPECOPTMAPST:
-                            matCache.SetVector(BVA_Material_ToonLit_Extra.TOONSPECOPTMAPST, reader.ReadAsVector4().ToUnityVector4Raw());
+                            matCache.SetVector(BVA_Material_ToonLit_Extra.TOONSPECOPTMAPST, reader.ReadAsVector4());
                             break;
                         case BVA_Material_ToonLit_Extra.TOONSPECGLOSS:
                             matCache.SetFloat(BVA_Material_ToonLit_Extra.TOONSPECGLOSS, reader.ReadAsFloat());
@@ -420,13 +420,13 @@ namespace GLTF.Schema.BVA
                             matCache.SetFloat(BVA_Material_ToonLit_Extra.BOUNDSHARP, reader.ReadAsFloat());
                             break;
                         case BVA_Material_ToonLit_Extra.DARKFACECOLOR:
-                            matCache.SetColor(BVA_Material_ToonLit_Extra.DARKFACECOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_ToonLit_Extra.DARKFACECOLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_ToonLit_Extra.DEEPDARKCOLOR:
-                            matCache.SetColor(BVA_Material_ToonLit_Extra.DEEPDARKCOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_ToonLit_Extra.DEEPDARKCOLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_ToonLit_Extra.SSSCOLOR:
-                            matCache.SetColor(BVA_Material_ToonLit_Extra.SSSCOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_ToonLit_Extra.SSSCOLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_ToonLit_Extra.SSSWEIGHT:
                             matCache.SetFloat(BVA_Material_ToonLit_Extra.SSSWEIGHT, reader.ReadAsFloat());
@@ -445,7 +445,7 @@ namespace GLTF.Schema.BVA
                             }
                             break;
                         case BVA_Material_ToonLit_Extra.CLEARCOATCOLOR:
-                            matCache.SetColor(BVA_Material_ToonLit_Extra.CLEARCOATCOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_ToonLit_Extra.CLEARCOATCOLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_ToonLit_Extra.CLEARCOATRANGE:
                             matCache.SetFloat(BVA_Material_ToonLit_Extra.CLEARCOATRANGE, reader.ReadAsFloat());
@@ -464,7 +464,7 @@ namespace GLTF.Schema.BVA
                             }
                             break;
                         case BVA_Material_ToonLit_Extra.SPECULARCOLOR:
-                            matCache.SetColor(BVA_Material_ToonLit_Extra.SPECULARCOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_ToonLit_Extra.SPECULARCOLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_ToonLit_Extra.SPECULARRANGE:
                             matCache.SetFloat(BVA_Material_ToonLit_Extra.SPECULARRANGE, reader.ReadAsFloat());
@@ -486,7 +486,7 @@ namespace GLTF.Schema.BVA
                             matCache.SetFloat(BVA_Material_ToonLit_Extra.TOONTOPBR, reader.ReadAsFloat());
                             break;
                         case BVA_Material_ToonLit_Extra.OUTLINECOLOR:
-                            matCache.SetColor(BVA_Material_ToonLit_Extra.OUTLINECOLOR, reader.ReadAsRGBAColor().ToUnityColorRaw());
+                            matCache.SetColor(BVA_Material_ToonLit_Extra.OUTLINECOLOR, reader.ReadAsRGBAColor());
                             break;
                         case BVA_Material_ToonLit_Extra.OUTLINETHICKNESS:
                             matCache.SetFloat(BVA_Material_ToonLit_Extra.OUTLINETHICKNESS, reader.ReadAsFloat());
@@ -507,9 +507,9 @@ namespace GLTF.Schema.BVA
             JObject jo = new JObject();
             jo.Add(parameter__WorkflowMode.ParamName, parameter__WorkflowMode.Value);
             if (parameter__BaseMap != null && parameter__BaseMap.Value != null) jo.Add(parameter__BaseMap.ParamName, parameter__BaseMap.Serialize());
-            jo.Add(parameter__BaseColor.ParamName, parameter__BaseColor.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter__BaseColor.ParamName, parameter__BaseColor.Value.ToJArray());
             if (parameter__ShadowMap != null && parameter__ShadowMap.Value != null) jo.Add(parameter__ShadowMap.ParamName, parameter__ShadowMap.Serialize());
-            jo.Add(parameter__ShadowColor.ParamName, parameter__ShadowColor.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter__ShadowColor.ParamName, parameter__ShadowColor.Value.ToJArray());
             jo.Add(parameter__TexAddShadowStrength.ParamName, parameter__TexAddShadowStrength.Value);
             if (parameter__ToonMaskMap != null && parameter__ToonMaskMap.Value != null) jo.Add(parameter__ToonMaskMap.ParamName, parameter__ToonMaskMap.Serialize());
             jo.Add(parameter__Cutoff.ParamName, parameter__Cutoff.Value);
@@ -517,13 +517,13 @@ namespace GLTF.Schema.BVA
             jo.Add(parameter__Roughness.ParamName, parameter__Roughness.Value);
             jo.Add(parameter__Metallic.ParamName, parameter__Metallic.Value);
             if (parameter__MetallicGlossMap != null && parameter__MetallicGlossMap.Value != null) jo.Add(parameter__MetallicGlossMap.ParamName, parameter__MetallicGlossMap.Serialize());
-            jo.Add(parameter__SpecColor.ParamName, parameter__SpecColor.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter__SpecColor.ParamName, parameter__SpecColor.Value.ToJArray());
             if (parameter__SpecGlossMap != null && parameter__SpecGlossMap.Value != null) jo.Add(parameter__SpecGlossMap.ParamName, parameter__SpecGlossMap.Serialize());
             jo.Add(parameter__UseToonSpec.ParamName, parameter__UseToonSpec.Value);
             if (parameter__ToonSpecMap != null && parameter__ToonSpecMap.Value != null) jo.Add(parameter__ToonSpecMap.ParamName, parameter__ToonSpecMap.Serialize());
-            jo.Add(parameter__ToonSpecColor.ParamName, parameter__ToonSpecColor.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter__ToonSpecColor.ParamName, parameter__ToonSpecColor.Value.ToJArray());
             if (parameter__ToonSpecOptMap != null && parameter__ToonSpecOptMap.Value != null) jo.Add(parameter__ToonSpecOptMap.ParamName, parameter__ToonSpecOptMap.Serialize());
-            jo.Add(parameter__ToonSpecOptMapST.ParamName, parameter__ToonSpecOptMapST.Value.ToGltfVector4Raw().ToJArray());
+            jo.Add(parameter__ToonSpecOptMapST.ParamName, parameter__ToonSpecOptMapST.Value.ToJArray());
             jo.Add(parameter__ToonSpecGloss.ParamName, parameter__ToonSpecGloss.Value);
             jo.Add(parameter__ToonSpecFeatherLevel.ParamName, parameter__ToonSpecFeatherLevel.Value);
             jo.Add(parameter__ToonSpecMaskScale.ParamName, parameter__ToonSpecMaskScale.Value);
@@ -551,25 +551,25 @@ namespace GLTF.Schema.BVA
             jo.Add(parameter__ToonLightDivid_D.ParamName, parameter__ToonLightDivid_D.Value);
             jo.Add(parameter__ToonDiffuseBright.ParamName, parameter__ToonDiffuseBright.Value);
             jo.Add(parameter__BoundSharp.ParamName, parameter__BoundSharp.Value);
-            jo.Add(parameter__DarkFaceColor.ParamName, parameter__DarkFaceColor.Value.ToNumericsColorRaw().ToJArray());
-            jo.Add(parameter__DeepDarkColor.ParamName, parameter__DeepDarkColor.Value.ToNumericsColorRaw().ToJArray());
-            jo.Add(parameter__SSSColor.ParamName, parameter__SSSColor.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter__DarkFaceColor.ParamName, parameter__DarkFaceColor.Value.ToJArray());
+            jo.Add(parameter__DeepDarkColor.ParamName, parameter__DeepDarkColor.Value.ToJArray());
+            jo.Add(parameter__SSSColor.ParamName, parameter__SSSColor.Value.ToJArray());
             jo.Add(parameter__SSSWeight.ParamName, parameter__SSSWeight.Value);
             jo.Add(parameter__SSSSize.ParamName, parameter__SSSSize.Value);
             jo.Add(parameter__SSForwardAtt.ParamName, parameter__SSForwardAtt.Value);
             if (parameter__ClearCoatMaskMap != null && parameter__ClearCoatMaskMap.Value != null) jo.Add(parameter__ClearCoatMaskMap.ParamName, parameter__ClearCoatMaskMap.Serialize());
-            jo.Add(parameter__ClearCoatColor.ParamName, parameter__ClearCoatColor.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter__ClearCoatColor.ParamName, parameter__ClearCoatColor.Value.ToJArray());
             jo.Add(parameter__ClearCoatRange.ParamName, parameter__ClearCoatRange.Value);
             jo.Add(parameter__ClearCoatGloss.ParamName, parameter__ClearCoatGloss.Value);
             jo.Add(parameter__ClearCoatMult.ParamName, parameter__ClearCoatMult.Value);
             if (parameter__SpecularMaskMap != null && parameter__SpecularMaskMap.Value != null) jo.Add(parameter__SpecularMaskMap.ParamName, parameter__SpecularMaskMap.Serialize());
-            jo.Add(parameter__SpecularColor.ParamName, parameter__SpecularColor.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter__SpecularColor.ParamName, parameter__SpecularColor.Value.ToJArray());
             jo.Add(parameter__SpecularRange.ParamName, parameter__SpecularRange.Value);
             jo.Add(parameter__SpecularMulti.ParamName, parameter__SpecularMulti.Value);
             jo.Add(parameter__SpecularGloss.ParamName, parameter__SpecularGloss.Value);
             if (parameter__ToonToPBRMap != null && parameter__ToonToPBRMap.Value != null) jo.Add(parameter__ToonToPBRMap.ParamName, parameter__ToonToPBRMap.Serialize());
             jo.Add(parameter__ToonToPBR.ParamName, parameter__ToonToPBR.Value);
-            jo.Add(parameter__OutLineColor.ParamName, parameter__OutLineColor.Value.ToNumericsColorRaw().ToJArray());
+            jo.Add(parameter__OutLineColor.ParamName, parameter__OutLineColor.Value.ToJArray());
             jo.Add(parameter__OutLineThickness.ParamName, parameter__OutLineThickness.Value);
             if (keywords != null && keywords.Length > 0)
             {

@@ -257,13 +257,13 @@ namespace BVA
                                                 }
                                             case MaterialPropertyType.Color:
                                                 {
-                                                    sw.WriteLine($"matCache.SetColor({className}.{v.constParameter}, reader.ReadAsRGBAColor().ToUnityColorRaw());");
+                                                    sw.WriteLine($"matCache.SetColor({className}.{v.constParameter}, reader.ReadAsRGBAColor());");
                                                     break;
                                                 }
 
                                             case MaterialPropertyType.Vector:
                                                 {
-                                                    sw.WriteLine($"matCache.SetVector({className}.{v.constParameter}, reader.ReadAsVector4().ToUnityVector4Raw());");
+                                                    sw.WriteLine($"matCache.SetVector({className}.{v.constParameter}, reader.ReadAsVector4());");
                                                     break;
                                                 }
                                             case MaterialPropertyType.Float:
@@ -313,10 +313,10 @@ namespace BVA
                                     sw.WriteLine($"if ({v.parameterName} != null) jo.Add({v.parameterName}.ParamName, {v.parameterName}.Serialize());");
                                     break;
                                 case MaterialPropertyType.Color:
-                                    sw.WriteLine($"jo.Add({v.parameterName}.ParamName, {v.parameterName}.Value.ToNumericsColorRaw().ToJArray());");
+                                    sw.WriteLine($"jo.Add({v.parameterName}.ParamName, {v.parameterName}.Value.ToJArray());");
                                     break;
                                 case MaterialPropertyType.Vector:
-                                    sw.WriteLine($"jo.Add({v.parameterName}.ParamName, {v.parameterName}.Value.ToGltfVector4Raw().ToJArray());");
+                                    sw.WriteLine($"jo.Add({v.parameterName}.ParamName, {v.parameterName}.Value.ToJArray());");
                                     break;
                                 case MaterialPropertyType.Float:
                                     sw.WriteLine($"jo.Add({v.parameterName}.ParamName, {v.parameterName}.Value);");

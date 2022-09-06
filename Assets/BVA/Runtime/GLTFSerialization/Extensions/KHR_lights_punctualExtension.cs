@@ -1,7 +1,8 @@
 ﻿using GLTF.Extensions;
-using GLTF.Math;
+using UnityEngine;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
 
 namespace GLTF.Schema
 {
@@ -19,22 +20,22 @@ namespace GLTF.Schema
     /// </summary>
     public class KHR_lights_punctualExtension : IExtension
     {
-        public static readonly Color DEFAULT_COLOR = Color.White;
-        public const double DEFAULT_INTENSITY = 1.0f;
+        public static readonly Color DEFAULT_COLOR = Color.white;
+        public const float DEFAULT_INTENSITY = 1.0f;
 
         public string name;
         public Color color;
-        public double intensity;
+        public float intensity;
         public LightType type;
-        public double range;
+        public float range;
 
         /// <summary>
         /// Spot lights emit light in a cone in the direction of the local -z axis. 
         /// The angle and falloff of the cone is defined using two numbers, the innerConeAngle and outerConeAngle
         /// </summary>
-        public double innerConeAngle;
-        public double outerConeAngle;
-        public KHR_lights_punctualExtension(LightType _type, string _name, Color _color, double _intensity, double _range, double _innerConeAngle, double _outerConeAngle)
+        public float innerConeAngle;
+        public float outerConeAngle;
+        public KHR_lights_punctualExtension(LightType _type, string _name, Color _color, float _intensity, float _range, float _innerConeAngle, float _outerConeAngle)
         {
             name = _name;
             color = _color;
@@ -64,7 +65,7 @@ namespace GLTF.Schema
             JObject propObj = new JObject();
             propObj.Add(nameof(type), type.ToString());
             if (name != "") propObj.Add(nameof(name), name);
-            if (color != Color.White) propObj.Add(nameof(color), new JArray(color.R, color.G, color.B));
+            if (color != Color.white) propObj.Add(nameof(color), new JArray(color.r, color.g, color.b));
             if (intensity != 1) propObj.Add(nameof(intensity), intensity);
             if (type != LightType.directional) propObj.Add(nameof(range), range);
             if (type == LightType.spot)
@@ -79,7 +80,7 @@ namespace GLTF.Schema
             return jProperty;
         }
 
-        public static void DeserializeSpot(GLTFRoot root, JsonReader reader, ref double innerConeAngle, ref double outerConeAngle)
+        public static void DeserializeSpot(GLTFRoot root, JsonReader reader, ref float innerConeAngle, ref float outerConeAngle)
         {
             reader.Read();
             while (reader.Read() && reader.TokenType == JsonToken.PropertyName)
@@ -89,10 +90,10 @@ namespace GLTF.Schema
                 switch (spotProp)
                 {
                     case nameof(innerConeAngle):
-                        innerConeAngle = reader.ReadAsDouble().Value;
+                        innerConeAngle = reader.ReadAsFloat();
                         break;
                     case nameof(outerConeAngle):
-                        outerConeAngle = reader.ReadAsDouble().Value;
+                        outerConeAngle = reader.ReadAsFloat();
                         break;
                 }
             }
@@ -101,11 +102,11 @@ namespace GLTF.Schema
         {
             LightType type = LightType.directional;
             string name = "";
-            double intensity = 1.0f;
-            Color color = Color.White;
-            double range = 1.0f;
-            double innerConeAngle = 0;
-            double outerConeAngle = System.Math.PI / 4;
+            float intensity = 1.0f;
+            Color color = Color.white;
+            float range = 1.0f;
+            float innerConeAngle = 0;
+            float outerConeAngle = MathF.PI / 4;
             while (reader.Read() && reader.TokenType == JsonToken.PropertyName)
             {
                 var curProp = reader.Value.ToString();

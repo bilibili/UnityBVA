@@ -1,7 +1,7 @@
 using System;
 using GLTF.Extensions;
-using GLTF.Math;
 using Newtonsoft.Json;
+using UnityEngine;
 
 namespace GLTF.Schema
 {
@@ -16,7 +16,7 @@ namespace GLTF.Schema
 		/// The fourth component (A) is the opacity of the material.
 		/// These values are linear.
 		/// </summary>
-		public Color BaseColorFactor = Color.White;
+		public Color BaseColorFactor = Color.white;
 
 		/// <summary>
 		/// The base color texture.
@@ -35,7 +35,7 @@ namespace GLTF.Schema
 		/// dirty metallic surfaces.
 		/// This value is linear.
 		/// </summary>
-		public double MetallicFactor = 1;
+		public float MetallicFactor = 1;
 
 		/// <summary>
 		/// The roughness of the material.
@@ -43,7 +43,7 @@ namespace GLTF.Schema
 		/// A value of 0.0 means the material is completely smooth.
 		/// This value is linear.
 		/// </summary>
-		public double RoughnessFactor = 1;
+		public float RoughnessFactor = 1;
 
 		/// <summary>
 		/// The metallic-roughness texture has two components.
@@ -88,7 +88,7 @@ namespace GLTF.Schema
 
 			if (reader.Read() && reader.TokenType != JsonToken.StartObject)
 			{
-				throw new Exception("Asset must be an object.");
+				throw new ArgumentException("Asset must be an object.");
 			}
 
 			while (reader.Read() && reader.TokenType == JsonToken.PropertyName)
@@ -104,11 +104,11 @@ namespace GLTF.Schema
 						metallicRoughness.BaseColorTexture = TextureInfo.Deserialize(root, reader);
 						break;
 					case "metallicFactor":
-						metallicRoughness.MetallicFactor = reader.ReadAsDouble().Value;
+						metallicRoughness.MetallicFactor = reader.ReadAsFloat();
 						break;
 					case "roughnessFactor":
-						metallicRoughness.RoughnessFactor = reader.ReadAsDouble().Value;
-						break;
+						metallicRoughness.RoughnessFactor = reader.ReadAsFloat();
+                        break;
 					case "metallicRoughnessTexture":
 						metallicRoughness.MetallicRoughnessTexture = TextureInfo.Deserialize(root, reader);
 						break;
@@ -125,14 +125,14 @@ namespace GLTF.Schema
 		{
 			writer.WriteStartObject();
 
-			if (BaseColorFactor != Color.White)
+			if (BaseColorFactor != Color.white)
 			{
 				writer.WritePropertyName("baseColorFactor");
 				writer.WriteStartArray();
-				writer.WriteValue(BaseColorFactor.R);
-				writer.WriteValue(BaseColorFactor.G);
-				writer.WriteValue(BaseColorFactor.B);
-				writer.WriteValue(BaseColorFactor.A);
+				writer.WriteValue(BaseColorFactor.r);
+				writer.WriteValue(BaseColorFactor.g);
+				writer.WriteValue(BaseColorFactor.b);
+				writer.WriteValue(BaseColorFactor.a);
 				writer.WriteEndArray();
 			}
 

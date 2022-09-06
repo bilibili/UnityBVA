@@ -64,7 +64,7 @@ var curProp = reader.Value.ToString();
 switch (curProp)
 {
 case BVA_Material_SkyBox6Sided_Extra.TINT:
-matCache.SetColor(BVA_Material_SkyBox6Sided_Extra.TINT, reader.ReadAsRGBAColor().ToUnityColorRaw());
+matCache.SetColor(BVA_Material_SkyBox6Sided_Extra.TINT, reader.ReadAsRGBAColor());
 break;
 case BVA_Material_SkyBox6Sided_Extra.EXPOSURE:
 matCache.SetFloat(BVA_Material_SkyBox6Sided_Extra.EXPOSURE, reader.ReadAsFloat());
@@ -128,7 +128,7 @@ break;
 public JProperty Serialize()
 {
 JObject jo = new JObject();
-jo.Add(parameter__Tint.ParamName, parameter__Tint.Value.ToNumericsColorRaw().ToJArray());
+jo.Add(parameter__Tint.ParamName, parameter__Tint.Value.ToJArray());
 jo.Add(parameter__Exposure.ParamName, parameter__Exposure.Value);
 jo.Add(parameter__Rotation.ParamName, parameter__Rotation.Value);
 if (parameter__FrontTex != null && parameter__FrontTex.Value != null) jo.Add(parameter__FrontTex.ParamName, parameter__FrontTex.Serialize());

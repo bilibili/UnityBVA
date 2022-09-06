@@ -152,7 +152,7 @@ namespace ADBRuntime
         /// <summary>
         /// Fixed point's rotation or point's parent rotation
         /// </summary>
-        public quaternion rotationNoSelfRotateChange;
+        public quaternion Rotation;
         /// <summary>
         /// velocity
         /// </summary>
@@ -162,6 +162,9 @@ namespace ADBRuntime
         /// Angle velocity
         /// </summary>
         public quaternion deltaRotation;
+        internal float3 oldPosition;
+        public quaternion LoacalRotation;
+        internal quaternion rotationNoSelfRotateChange;
 
         //public quaternion deltaRotationY;
     }
