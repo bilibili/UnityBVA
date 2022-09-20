@@ -14,6 +14,7 @@ namespace BVA
         Playable,
         Node,
         Mesh,
+        Shader,
         Material,
         Light,
         Collision,

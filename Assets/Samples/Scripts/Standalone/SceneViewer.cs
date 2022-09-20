@@ -11,7 +11,7 @@ namespace BVA.Sample
         public bool AppendStreamingAssets = true;
         public bool PlayAnimationOnLoad = true;
         public ImporterFactory Factory = null;
-        public GLTFSceneImporter.ColliderType Collider = GLTFSceneImporter.ColliderType.None;
+        public ColliderType Collider = ColliderType.None;
         public Transform LastLoadedScene;
         public virtual void OnLoaded(AssetType assetType, BVAScene scene)
         {

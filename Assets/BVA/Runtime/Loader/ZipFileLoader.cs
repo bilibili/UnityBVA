@@ -4,17 +4,19 @@ using System.Threading.Tasks;
 using System.IO.Compression;
 using System.Linq;
 using UnityEngine;
+using System.Security.Cryptography;
 
 namespace BVA.Loader
 {
     public class ZipFileLoader : IDataLoader, IDataLoader2
     {
+        CryptoStream stream;
         private readonly ZipArchive zipArchive;
         private readonly string zipArchivePath;
         public ZipFileLoader(string zipFile)
         {
             zipArchive = ZipFile.Open(zipFile, ZipArchiveMode.Update);
-            zipArchivePath = zipFile;
+            zipArchivePath = zipFile;// create an archive
         }
 
         public Task<Stream> LoadStreamAsync(string relativeFilePath)

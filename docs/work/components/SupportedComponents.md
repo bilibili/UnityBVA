@@ -7,7 +7,7 @@ There are some exceptions, like `Collider`, `Light`, for a large number of reusa
 Most Components can be exported by code generator, these have been officially adopted.
 
 
-### Unity build-in components:
+## Unity build-in components:
 
 - Camera (with Universal Render Pipeline Additional Data)
 - Light (Baked Light will not be exported)
@@ -23,7 +23,7 @@ Most Components can be exported by code generator, these have been officially ad
 - TextMesh
 
 
-### BVA components:
+## BVA components:
 
 - BlendshapeMixer
 - MetaInfo
@@ -35,7 +35,6 @@ Most Components can be exported by code generator, these have been officially ad
 - LookAt
 - MirrorObject
 - MirrorPlain
-- CameraViewPoint
 - UrlAudioClipAudioSourceSetter
 - UrlTextureRendererSetter
 - TextureVariableCollection

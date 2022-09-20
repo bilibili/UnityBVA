@@ -32,7 +32,6 @@ These materials (shaders) supported by BVA
 - [LiliumToonGraph](https://github.com/you-ri/LiliumToonGraph)
 - [MToon(URP版本)](https://vrm.dev/univrm/shaders/shader_mtoon.html)
 - [ZeldaToon](https://github.com/ToughNutToCrack/ZeldaShaderURP2019.4.0f1)
-- ToonLit(Toony Lit shader)
 
 
 ![glb](pics/Material_1.png)

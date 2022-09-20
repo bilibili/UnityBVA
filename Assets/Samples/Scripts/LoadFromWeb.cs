@@ -22,10 +22,12 @@ namespace BVA.Sample
         public Toggle enableLight;
         [Tooltip("Disable loaded cameras")]
         public Toggle useMainCamera;
-        string localUrl;
         public float posShift = 0.3f;
-        public int count = 0;
-        public Camera[] cameras;
+        [Tooltip("If dictionary exist,then load shader from assetbundles")]
+        public string shaderAssetBundleLocation;
+        string localUrl;
+        int count = 0;
+        Camera[] cameras;
 
         void OnLightChange(bool isOn)
         {
@@ -44,6 +46,18 @@ namespace BVA.Sample
             Application.logMessageReceived += OnLog;
             enableLight.onValueChanged.AddListener(OnLightChange);
             useMainCamera.onValueChanged.AddListener(OnUseMainCamera);
+
+            if (Directory.Exists(shaderAssetBundleLocation))
+            {
+                var shaderLoader = new AssetBundleShaderLoader(Application.platform);
+                shaderLoader.LoadFiles(shaderAssetBundleLocation);
+                BVASceneManager.Instance.SetShaderLoader(shaderLoader);
+                Debug.Log($"Using AssetBundle as ShaderLoader : {shaderAssetBundleLocation}");
+            }
+            else
+            {
+                Debug.Log($"{shaderAssetBundleLocation} is not valid location,using BuildinShaderLoader");
+            }
 
             BVASceneManager.Instance.onSceneLoaded = (type, scene) =>
             {
@@ -115,6 +129,10 @@ namespace BVA.Sample
         public void DestroyScene()
         {
             BVASceneManager.Instance.UnloadAllScenes();
+        }
+        public void ClearLog()
+        {
+            textLog.text = "";
         }
     }
 }

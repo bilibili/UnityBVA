@@ -97,7 +97,7 @@ namespace ADBRuntime
                 
                 colliderCalcAABB.Run(pointUpdate.colliderCount);
                 pointGet.Schedule(pointTransformsAccessArray).Complete();
-                clacSpringBonePhysics.Run(pointReadNativeArray.Length);
+
                 for (int i = 0; i < iteration; i++)
                 {
                    pointUpdate.Run(pointReadNativeArray.Length);
@@ -113,12 +113,12 @@ namespace ADBRuntime
                         constraintForceUpdateByPoint.Run(pointReadNativeArray.Length);
                     }
                 }
-
+                clacSpringBonePhysics.Run(pointReadNativeArray.Length);
             }
             else
             {
                 Hjob = JobHandle.CombineDependencies(colliderCalcAABB.Schedule(pointUpdate.colliderCount, BatchLength), pointGet.Schedule(pointTransformsAccessArray));
-                Hjob = clacSpringBonePhysics.Schedule(pointReadNativeArray.Length, Hjob);
+
                 CompleteHandleArray.Add(Hjob);
                 NativeList<JobHandle> HJobs = CompleteHandleArray;
 
@@ -158,7 +158,7 @@ namespace ADBRuntime
                         }
                     }
                 }
-
+                Hjob = clacSpringBonePhysics.Schedule(pointReadNativeArray.Length, Hjob);
                 Hjob = JobHandle.CombineDependencies(HJobs.AsArray());
             }
             

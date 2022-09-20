@@ -6,6 +6,7 @@ namespace BVA
 {
     public static class BVAConst
     {
+        public const string COPYRIGHT = "bilibili";
         public const string FORMAT_VERSION = "0.1.0";
         public const string LAYER_SCENE = "BVA Scene";
         public const string LAYER_AVATAR = "BVA Avatar";

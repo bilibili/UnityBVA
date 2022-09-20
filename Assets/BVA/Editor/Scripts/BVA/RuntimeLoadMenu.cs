@@ -17,6 +17,7 @@ namespace BVA
             else
             {
                 var glbPath = EditorUtility.OpenFilePanel("bva/glb/gltf/zip file", "", "bva,glb,gltf,zip");
+                if (string.IsNullOrEmpty(glbPath)) return;
 
                 Load(glbPath);
             }
@@ -32,6 +33,7 @@ namespace BVA
             else
             {
                 var glbPath = EditorUtility.OpenFilePanel("bva/glb/gltf file", "", "bva,glb,gltf");
+                if (string.IsNullOrEmpty(glbPath)) return;
 
                 var importOptions = new ImportOptions
                 {
@@ -56,6 +58,7 @@ namespace BVA
             else
             {
                 var glbPath = EditorUtility.OpenFilePanel("bva/glb/gltf file", "", "bva,glb,gltf");
+                if (string.IsNullOrEmpty(glbPath)) return;
 
                 var importOptions = new ImportOptions
                 {

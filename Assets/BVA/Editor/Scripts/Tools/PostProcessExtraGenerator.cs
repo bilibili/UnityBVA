@@ -12,7 +12,7 @@ namespace BVA
     public partial class PostProcessExtraGenerator : EditorWindow
     {
 
-        [MenuItem("BVA/Developer Tools/Generator PostProcess Extra")]
+        [MenuItem("BVA/Developer Tools/Code-Gen/PostProcess")]
         static void Init()
         {
             PostProcessExtraGenerator window = (PostProcessExtraGenerator)EditorWindow.GetWindow(typeof(PostProcessExtraGenerator), false, "Export Scene Settings");

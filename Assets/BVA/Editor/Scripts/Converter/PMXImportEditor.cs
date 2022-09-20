@@ -19,10 +19,5 @@ namespace LibMMD.Unity3D
         {
             await LoadPMX(MaterialLoader.MaterialType.MToon);
         }
-        [MenuItem("BVA/Runtime Load/Load PMX (Unlit)")]
-        public static async void LoadPMXMDefault()
-        {
-            await LoadPMX(MaterialLoader.MaterialType.Default);
-        }
     }
 }

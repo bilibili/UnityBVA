@@ -177,7 +177,7 @@ PlayerSettings:
     tvOS: 0
   overrideDefaultApplicationIdentifier: 0
   AndroidBundleVersionCode: 1
-  AndroidMinSdkVersion: 28
+  AndroidMinSdkVersion: 30
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 0
   aotOptions: 
@@ -421,7 +421,7 @@ PlayerSettings:
   - m_BuildTarget: CloudRendering
     m_GraphicsJobs: 0
   - m_BuildTarget: AndroidPlayer
-    m_GraphicsJobs: 0
+    m_GraphicsJobs: 1
   - m_BuildTarget: WebGLSupport
     m_GraphicsJobs: 0
   m_BuildTargetGraphicsJobMode:
@@ -800,11 +800,12 @@ PlayerSettings:
   scriptingBackend:
     Android: 1
     Server: 0
-    Standalone: 0
-  il2cppCompilerConfiguration: {}
+    Standalone: 1
+  il2cppCompilerConfiguration:
+    Standalone: 1
   managedStrippingLevel:
-    Android: 0
-    Standalone: 0
+    Android: 3
+    Standalone: 3
     iPhone: 0
   incrementalIl2cppBuild: {}
   suppressCommonWarnings: 1

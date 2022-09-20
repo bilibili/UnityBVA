@@ -132,7 +132,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   dampingMin: 0
   dampingMax: 1
-  dampingValue: 0.2
+  dampingValue: 0.6
   isdampingCurve: 0
   elasticityCurve:
     serializedVersion: 2
@@ -835,7 +835,7 @@ MonoBehaviour:
   circumferenceStretch: 1
   isComputeVirtual: 1
   isAllowComputeOtherConstraint: 0
-  virtualPointAxisLength: 0.1
+  virtualPointAxisLength: 0.07
   ForceLookDown: 0
   isFixedPointFreezeRotation: 0
   isAutoComputeWeight: 1

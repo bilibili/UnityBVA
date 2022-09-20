@@ -198,7 +198,8 @@ namespace ADBRuntime.Internal
                 quaternion currentRotationNoSelfRotateChange = math.mul(parentRotation, pReadPoint->initialLocalRotation);
                 if (pReadPoint->parentIndex == -1)//fixed point
                 {
-                    pReadWritePoint->deltaPosition = (transformPosition - pReadWritePoint->position);
+                    //pReadWritePoint->deltaPosition = (transformPosition - pReadWritePoint->position);
+                    pReadWritePoint->position = transformPosition;
                     pReadWritePoint->deltaRotation = math.slerp(pReadWritePoint->Rotation, currentRotationNoSelfRotateChange, oneDivideIteration);//dampDivIteration^iteration =damping
                 }
                 pReadWritePoint->Rotation = transformRotation;
@@ -247,6 +248,7 @@ namespace ADBRuntime.Internal
                 {
 
                     EvaluatePosition(index, pReadPoint, pReadWritePoint, addForcePower, oneDivideIteration, deltaTime, isOptimize);//Update point physics move.
+                    pReadWritePoint->position += oneDivideIteration * pReadWritePoint->deltaPosition;
                     if (isCollision) //OYM：Update point collision move.
                     {
                         for (int i = 0; i < colliderCount; ++i)
@@ -266,7 +268,7 @@ namespace ADBRuntime.Internal
                         }
                     }
                 }
-                pReadWritePoint->position += oneDivideIteration * pReadWritePoint->deltaPosition * deltaTime * 60;
+
 
 
             }

@@ -342,9 +342,9 @@ namespace BVA
             // add animator
             if (nodeTransform.TryGetComponent<Animator>(out var animator))
             {
-                nodeTransform.localRotation = Quaternion.identity;
-                nodeTransform.localPosition = Vector3.zero;
-                nodeTransform.localScale = Vector3.one;
+                //nodeTransform.localRotation = Quaternion.identity;
+                //nodeTransform.localPosition = Vector3.zero;
+                //nodeTransform.localScale = Vector3.one;
                 _animators.Add(animator);
                 // if is valid human avatar,then enforce it to T Pose
                 if (HasValidHumanAvatar(animator))
@@ -386,11 +386,6 @@ namespace BVA
                 if (videoPlayer.renderMode != VideoRenderMode.MaterialOverride)
                 {
                     LogPool.ExportLogger.LogWarning(LogPart.Node, $"VideoPlayer only support {VideoRenderMode.MaterialOverride} VideoRenderMode");
-                    export = false;
-                }
-                if (videoPlayer.targetMaterialRenderer == null)
-                {
-                    LogPool.ExportLogger.LogWarning(LogPart.Node, $"{nameof(VideoPlayer)} target MaterialRenderer can't be null");
                     export = false;
                 }
                 if (export)

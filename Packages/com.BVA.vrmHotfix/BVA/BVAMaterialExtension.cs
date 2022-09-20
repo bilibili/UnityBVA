@@ -308,6 +308,157 @@ public static class BVAMaterialExtension
     }
 
     #endregion
+    #region UniUnlit
+    public static class UniGLTF
+    {
+        public enum UniUnlitRenderMode
+        {
+            Opaque = 0,
+            Cutout = 1,
+            Transparent = 2,
+        }
+
+        public enum UniUnlitCullMode
+        {
+            Off = 0,
+            // Front = 1,
+            Back = 2,
+        }
+
+        public enum UniUnlitVertexColorBlendOp
+        {
+            None = 0,
+            Multiply = 1,
+        }
+
+        public static class UniUnlitUtil
+        {
+            public const string ShaderName = "UniGLTF/UniUnlit";
+            public const string PropNameMainTex = "_MainTex";
+            public const string PropNameColor = "_Color";
+            public const string PropNameCutoff = "_Cutoff";
+            public const string PropNameBlendMode = "_BlendMode";
+            public const string PropNameCullMode = "_CullMode";
+            [Obsolete("Use PropNameVColBlendMode")]
+            public const string PropeNameVColBlendMode = PropNameVColBlendMode;
+            public const string PropNameVColBlendMode = "_VColBlendMode";
+            public const string PropNameSrcBlend = "_SrcBlend";
+            public const string PropNameDstBlend = "_DstBlend";
+            public const string PropNameZWrite = "_ZWrite";
+
+            public const string PropNameStandardShadersRenderMode = "_Mode";
+
+            public const string KeywordAlphaTestOn = "_ALPHATEST_ON";
+            public const string KeywordAlphaBlendOn = "_ALPHABLEND_ON";
+            public const string KeywordVertexColMul = "_VERTEXCOL_MUL";
+
+            public const string TagRenderTypeKey = "RenderType";
+            public const string TagRenderTypeValueOpaque = "Opaque";
+            public const string TagRenderTypeValueTransparentCutout = "TransparentCutout";
+            public const string TagRenderTypeValueTransparent = "Transparent";
+
+            public static void SetRenderMode(Material material, UniUnlitRenderMode mode)
+            {
+                material.SetInt(PropNameBlendMode, (int)mode);
+            }
+
+            public static void SetCullMode(Material material, UniUnlitCullMode mode)
+            {
+                material.SetInt(PropNameCullMode, (int)mode);
+            }
+
+            public static void SetVColBlendMode(Material material, UniUnlitVertexColorBlendOp mode)
+            {
+                material.SetInt(PropNameVColBlendMode, (int)mode);
+            }
+
+            public static UniUnlitRenderMode GetRenderMode(Material material)
+            {
+                return (UniUnlitRenderMode)material.GetInt(PropNameBlendMode);
+            }
+
+            public static UniUnlitCullMode GetCullMode(Material material)
+            {
+                return (UniUnlitCullMode)material.GetInt(PropNameCullMode);
+            }
+
+            public static UniUnlitVertexColorBlendOp GetVColBlendMode(Material material)
+            {
+                return (UniUnlitVertexColorBlendOp)material.GetInt(PropNameVColBlendMode);
+            }
+
+            /// <summary>
+            /// Validate target material's UniUnlitRenderMode, UniUnlitVertexColorBlendOp.
+            /// Set appropriate hidden properties & keywords.
+            /// This will change RenderQueue independent to UniUnlitRenderMode if isRenderModeChangedByUser is true.
+            /// </summary>
+            /// <param name="material">Target material</param>
+            /// <param name="isRenderModeChangedByUser">Is changed by user</param>
+            public static void ValidateProperties(Material material, bool isRenderModeChangedByUser = false)
+            {
+                SetupBlendMode(material, (UniUnlitRenderMode)material.GetFloat(PropNameBlendMode),
+                    isRenderModeChangedByUser);
+                SetupVertexColorBlendOp(material, (UniUnlitVertexColorBlendOp)material.GetFloat(PropNameVColBlendMode));
+            }
+
+            private static void SetupBlendMode(Material material, UniUnlitRenderMode renderMode,
+                bool isRenderModeChangedByUser = false)
+            {
+                switch (renderMode)
+                {
+                    case UniUnlitRenderMode.Opaque:
+                        material.SetOverrideTag(TagRenderTypeKey, TagRenderTypeValueOpaque);
+                        material.SetInt(PropNameSrcBlend, (int)BlendMode.One);
+                        material.SetInt(PropNameDstBlend, (int)BlendMode.Zero);
+                        material.SetInt(PropNameZWrite, 1);
+                        SetKeyword(material, KeywordAlphaTestOn, false);
+                        SetKeyword(material, KeywordAlphaBlendOn, false);
+                        if (isRenderModeChangedByUser) material.renderQueue = -1;
+                        break;
+                    case UniUnlitRenderMode.Cutout:
+                        material.SetOverrideTag(TagRenderTypeKey, TagRenderTypeValueTransparentCutout);
+                        material.SetInt(PropNameSrcBlend, (int)BlendMode.One);
+                        material.SetInt(PropNameDstBlend, (int)BlendMode.Zero);
+                        material.SetInt(PropNameZWrite, 1);
+                        SetKeyword(material, KeywordAlphaTestOn, true);
+                        SetKeyword(material, KeywordAlphaBlendOn, false);
+                        if (isRenderModeChangedByUser) material.renderQueue = (int)RenderQueue.AlphaTest;
+                        break;
+                    case UniUnlitRenderMode.Transparent:
+                        material.SetOverrideTag(TagRenderTypeKey, TagRenderTypeValueTransparent);
+                        material.SetInt(PropNameSrcBlend, (int)BlendMode.SrcAlpha);
+                        material.SetInt(PropNameDstBlend, (int)BlendMode.OneMinusSrcAlpha);
+                        material.SetInt(PropNameZWrite, 0);
+                        SetKeyword(material, KeywordAlphaTestOn, false);
+                        SetKeyword(material, KeywordAlphaBlendOn, true);
+                        if (isRenderModeChangedByUser) material.renderQueue = (int)RenderQueue.Transparent;
+                        break;
+                }
+            }
+
+            private static void SetupVertexColorBlendOp(Material material, UniUnlitVertexColorBlendOp vColBlendOp)
+            {
+                switch (vColBlendOp)
+                {
+                    case UniUnlitVertexColorBlendOp.None:
+                        SetKeyword(material, KeywordVertexColMul, false);
+                        break;
+                    case UniUnlitVertexColorBlendOp.Multiply:
+                        SetKeyword(material, KeywordVertexColMul, true);
+                        break;
+                }
+            }
+
+            private static void SetKeyword(Material mat, string keyword, bool required)
+            {
+                if (required)
+                    mat.EnableKeyword(keyword);
+                else
+                    mat.DisableKeyword(keyword);
+            }
+        }
+    }
+    #endregion
     public static void ChangeMaterial(GameObject gameObject)
     {
         Shader urpMToonShader = Shader.Find("VRM/URP/MToon");
@@ -316,19 +467,41 @@ public static class BVAMaterialExtension
         var skinnedMeshRenderers = gameObject.GetComponentsInChildren<Renderer>();
         foreach (var skinnedMeshRenderer in skinnedMeshRenderers)
         {
-            foreach (var v in skinnedMeshRenderer.materials)
+            foreach (var v in skinnedMeshRenderer.sharedMaterials)
             {
                 if (v.shader.name.ToLower().Contains("mtoon"))
                 {
                     v.shader = urpMToonShader;
                     MToon.ValidateProperties(v);
                 }
+                /*
                 if (v.shader.name.ToLower().Contains("unlit"))
                 {
                     Texture baseMap = v.GetTexture("_MainTex");
+                    float blend = v.GetFloat("_BlendMode");
+                    float colBlend = v.GetFloat("_VColBlendMode");
+                    float cull = v.GetFloat("_CullMode");
+                    float cutoff = v.GetFloat("_Cutoff");
                     v.shader = urpUnlitShader;
                     v.SetTexture("_BaseMap", baseMap);
-                }
+                    v.SetFloat("_Blend", colBlend);
+                    v.SetFloat("_Cull", cull);
+                    v.SetFloat("_Surface", blend);
+
+                    if (cutoff > 0)
+                    {
+                        v.SetFloat("_SrcBlend", (float)BlendMode.SrcAlpha);
+                        v.SetFloat("_DstBlend", (float)BlendMode.OneMinusSrcAlpha);
+                        v.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
+                    }
+                    else
+                    {
+                        v.SetFloat("_SrcBlend", (float)BlendMode.One);
+                        v.SetFloat("_DstBlend", (float)BlendMode.Zero);
+                        v.DisableKeyword("_SURFACE_TYPE_TRANSPARENT");
+                    }
+                    v.SetOverrideTag("RenderType", cutoff > 0 ? "Transparent" : "Opaque");
+                }*/
                 if (v.shader.name.ToLower().Contains("standard"))
                 {
                     Texture baseMap = v.GetTexture("_MainTex");

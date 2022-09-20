@@ -31,7 +31,6 @@ Unity组件附加在`GameObject`上，由此，大部分的组件将作为Extra�
 - AudioClipContainer
 - MirrorObject
 - MirrorPlain
-- CameraViewPoint
 - UrlAudioClipAudioSourceSetter
 - UrlTextureRendererSetter
 - TextureVariableCollection

@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using GLTF.Extensions;
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace GLTF.Schema.BVA
 {
@@ -16,10 +17,10 @@ namespace GLTF.Schema.BVA
     {
         public CubemapImageType imageType;
         public bool mipmap;
-        public TextureId texture;
-        public BVA_texture_cubemapExtension(TextureId textureInfo, CubemapImageType imageType = CubemapImageType.Row, bool mipmap = true)
+        public List<TextureId> textures;
+        public BVA_texture_cubemapExtension(List<TextureId> textureInfo, CubemapImageType imageType = CubemapImageType.Row, bool mipmap = true)
         {
-            this.texture = textureInfo;
+            this.textures = textureInfo;
             this.imageType = imageType;
             this.mipmap = mipmap;
         }
@@ -27,7 +28,10 @@ namespace GLTF.Schema.BVA
         public JProperty Serialize()
         {
             JObject propObj = new JObject();
-            propObj.Add(nameof(texture), texture.Id);
+            JArray jTextures = new JArray();
+            foreach (var v in textures)
+                jTextures.Add(v.Id);
+            propObj.Add(nameof(textures), jTextures);
             propObj.Add(nameof(imageType), imageType.ToString());
             propObj.Add(nameof(mipmap), mipmap);
             JProperty jProperty = new JProperty(BVA_audio_audioClipExtensionFactory.EXTENSION_NAME, propObj);
@@ -36,7 +40,7 @@ namespace GLTF.Schema.BVA
 
         public static BVA_texture_cubemapExtension Deserialize(GLTFRoot root, JsonReader reader)
         {
-            int index = -1;
+            List<int> textureIds = null;
             CubemapImageType imageType = CubemapImageType.Unknown;
             bool mipmap = true;
             while (reader.Read() && reader.TokenType == JsonToken.PropertyName)
@@ -45,21 +49,27 @@ namespace GLTF.Schema.BVA
 
                 switch (curProp)
                 {
-                    case nameof(texture):
-                        index = reader.ReadAsInt32().Value;
+                    case nameof(BVA_texture_cubemapExtension.textures):
+                        textureIds = reader.ReadInt32List();
                         break;
-                    case nameof(imageType):
+                    case nameof(BVA_texture_cubemapExtension.imageType):
                         imageType = reader.ReadStringEnum<CubemapImageType>();
                         break;
-                    case nameof(mipmap):
+                    case nameof(BVA_texture_cubemapExtension.mipmap):
                         mipmap = reader.ReadAsBoolean().Value;
                         break;
 
                 }
             }
-            if (imageType == CubemapImageType.Unknown || index < 0)
+            if (imageType == CubemapImageType.Unknown || textureIds.Count == 0)
                 throw new System.ArgumentNullException();
-            return new BVA_texture_cubemapExtension(new TextureId() { Id = index, Root = root }, imageType, mipmap);
+
+            List<TextureId> textures = new List<TextureId>();
+            foreach (var v in textureIds)
+            {
+                textures.Add(new TextureId() { Root = root, Id = v });
+            }
+            return new BVA_texture_cubemapExtension(textures, imageType, mipmap);
         }
 
         public IExtension Clone(GLTFRoot root)

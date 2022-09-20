@@ -292,21 +292,14 @@ namespace LibMMD.Unity3D
                 UnityEngine.Material temp = null;
                 switch (MaterialLoader.UseMaterialType)
                 {
-                    case MaterialLoader.MaterialType.Default:
-                        temp = materialLoader.LoadMaterial(model.Parts[i].Material, config);
-                        break;
                     case MaterialLoader.MaterialType.MToon:
-
                         temp = materialLoader.LoadMToonMaterial(model.Parts[i].Material, config);
                         break;
                     case MaterialLoader.MaterialType.Toon:
                         temp = materialLoader.LoadToonMaterial(model.Parts[i].Material, config);
                         break;
-                    case MaterialLoader.MaterialType.URPToonLit:
-                        temp = materialLoader.LoadURPToonLitMaterial(model.Parts[i].Material, config);
-                        break;
                     default:
-                        temp = materialLoader.LoadMaterial(model.Parts[i].Material, config);
+                        temp = materialLoader.LoadMToonMaterial(model.Parts[i].Material, config);
                         break;
                 }
                 ret[i] = temp;

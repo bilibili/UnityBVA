@@ -1,4 +1,5 @@
 using GLTF.Schema.BVA;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
 
@@ -18,12 +19,11 @@ namespace BVA.Extensions
             return cubemapImageType;
         }
         /// <summary>
-        /// Work on Standalone, but loaded failed on Mobile devices
+        /// Create Cubemap without mipmaps
         /// </summary>
         /// <param name="texture"></param>
-        /// <param name="mipmap"></param>
         /// <returns></returns>
-        public static Cubemap CreateCubemapFromTexture(Texture2D texture, bool mipmap)
+        public static Cubemap CreateCubemapFromTexture(Texture2D texture)
         {
             Texture2D exportTexture = null;
             CubemapImageType imageType = GetCubemapImageType(texture.width, texture.height);
@@ -43,7 +43,6 @@ namespace BVA.Extensions
             exportTexture.ReadPixels(new Rect(0, 0, destRenderTexture.width, destRenderTexture.height), 0, 0);
             exportTexture.Apply(updateMipmaps: false, makeNoLongerReadable: false);
             RenderTexture.ReleaseTemporary(destRenderTexture);
-            GameObject.DestroyImmediate(texture);
 
             if (imageType == CubemapImageType.Equirect)
             {
@@ -81,7 +80,73 @@ namespace BVA.Extensions
                 return cubemap;
             }
         }
+        /// <summary>
+        /// With mipmaps
+        /// </summary>
+        /// <param name="textures"></param>
+        /// <returns></returns>
+        public static Cubemap CreateCubemapFromTextures(List<Texture2D> textures)
+        {
+            CubemapImageType imageType = GetCubemapImageType(textures[0].width, textures[0].height);
+            Cubemap cubemap;
+            int srcWidth;
+            if (imageType == CubemapImageType.Equirect)
+            {
+                srcWidth = textures[0].height / 2;
+                cubemap = new Cubemap(srcWidth, TextureFormat.ARGB32, textures.Count);
+            }
+            else
+            {
+                srcWidth = Mathf.Min(textures[0].width, textures[0].height);
+                cubemap = new Cubemap(srcWidth, TextureFormat.ARGB32, textures.Count);
+            }
+            for (int mipmapLevel = 0; mipmapLevel < textures.Count; ++mipmapLevel)
+            {
+                if (imageType == CubemapImageType.Equirect)
+                {
+                    srcWidth = textures[mipmapLevel].height / 2;
+                }
+                else
+                {
+                    srcWidth = Mathf.Min(textures[mipmapLevel].width, textures[mipmapLevel].height);
+                }
+                //sometimes it requires use Non-HDR creation, 
+                var destRenderTexture = RenderTexture.GetTemporary(textures[mipmapLevel].width, textures[mipmapLevel].height, 0, RenderTextureFormat.DefaultHDR, RenderTextureReadWrite.Linear);
 
+                //var flipY = new Material(Shader.Find("Hidden/FlipY"));
+                Graphics.Blit(textures[mipmapLevel], destRenderTexture);
+
+                Texture2D exportTexture = new Texture2D(textures[mipmapLevel].width, textures[mipmapLevel].height, TextureFormat.RGBA32, mipCount: 0, linear: true);
+
+                RenderTexture.active = destRenderTexture;
+                exportTexture.ReadPixels(new Rect(0, 0, destRenderTexture.width, destRenderTexture.height), 0, 0);
+                exportTexture.Apply(updateMipmaps: false, makeNoLongerReadable: false);
+                RenderTexture.ReleaseTemporary(destRenderTexture);
+
+                if (imageType == CubemapImageType.Equirect)
+                {
+                    Texture2D[] cubemapFaces = new Texture2D[6];
+
+                    for (int i = 0; i < 6; ++i)
+                    {
+                        cubemapFaces[i] = EquirectToCubemapTexture(exportTexture, srcWidth, (CubemapFace)i);
+                        Graphics.CopyTexture(cubemapFaces[i], 0, 0, 0, 0, srcWidth, srcWidth, cubemap, i, mipmapLevel, 0, 0);
+                    }
+                }
+                else
+                {
+                    bool isColumn = imageType == CubemapImageType.Column;
+                    for (int i = 0; i < 6; ++i)
+                    {
+                        int srcX = isColumn ? 0 : srcWidth * i;
+                        int srcY = isColumn ? srcWidth * i : 0;
+                        Graphics.CopyTexture(exportTexture, 0, 0, srcX, srcY, srcWidth, srcWidth, cubemap, i, mipmapLevel, 0, 0);
+                    }
+                }
+            }
+            cubemap.Apply(true, true);
+            return cubemap;
+        }
         public static Texture2D[] UnpackTextures(this Cubemap src)
         {
             Texture2D[] textures = new Texture2D[6];
@@ -97,10 +162,10 @@ namespace BVA.Extensions
             return textures;
         }
 
-        public static Texture2D FlatTexture(this Cubemap src, bool isColumn = false)
+        public static Texture2D FlatTexture(this Cubemap src, bool isColumn = false, int mipLevel = 0)
         {
-            int srcWidth = src.width;
-
+            int srcWidth = src.width / (int)(Mathf.Pow(2, mipLevel));
+            Debug.LogError(srcWidth);
             int newWidth = isColumn ? srcWidth : srcWidth * 6;
             int newHeight = isColumn ? srcWidth * 6 : srcWidth;
             var flatCubemap = new Texture2D(newWidth, newHeight, src.format, false, false);
@@ -108,7 +173,7 @@ namespace BVA.Extensions
             {
                 int dstX = isColumn ? 0 : srcWidth * i;
                 int dstY = isColumn ? srcWidth * i : 0;
-                Graphics.CopyTexture(src, i, 0, 0, 0, srcWidth, srcWidth, flatCubemap, 0, 0, dstX, dstY);
+                Graphics.CopyTexture(src, i, mipLevel, 0, 0, srcWidth, srcWidth, flatCubemap, 0, 0, dstX, dstY);
             }
 
 #if UNITY_ANDROID || UNITY_IOS

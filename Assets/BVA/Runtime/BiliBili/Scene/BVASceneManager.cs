@@ -79,7 +79,7 @@ namespace BVA
     /// </summary>
     public class BVASceneManager : MonoSingleton<BVASceneManager>
     {
-        private ImporterFactory Factory;
+        private IShaderLoader ShaderLoader;
         /// <summary>
         /// All loaded scenes
         /// </summary>
@@ -112,6 +112,10 @@ namespace BVA
             onSceneLoadedDelegates = new Queue<Action>();
             cachedSceneImporters = new List<GLTFSceneImporter>();
             loadedAvatars = new List<BVAScene>();
+        }
+        public void SetShaderLoader(IShaderLoader loader)
+        {
+            ShaderLoader = loader;
         }
         public void Update()
         {
@@ -264,8 +268,7 @@ namespace BVA
             {
                 importOptions.DataLoader = new FileLoader(directoryPath);
             }
-            var Factory = ScriptableObject.CreateInstance<DefaultImporterFactory>();
-            var sceneImporter = Factory.CreateSceneImporter(glbPath, importOptions);
+            var sceneImporter = new GLTFSceneImporter(glbPath, importOptions, ShaderLoader);
             bool isSuccess = true;
             try
             {
@@ -457,14 +460,11 @@ namespace BVA
             GLTFSceneImporter sceneImporter;
             //try
             {
-                Factory ??= ScriptableObject.CreateInstance<DefaultImporterFactory>();
-
-
                 if (gltfURL.IsUrl())
                 {
                     string directoryPath = URIHelper.GetDirectoryName(gltfURL);
                     importOptions.DataLoader = new WebRequestLoader(directoryPath);
-                    sceneImporter = Factory.CreateSceneImporter(URIHelper.GetFileFromUri(new Uri(gltfURL)), importOptions);
+                    sceneImporter = new GLTFSceneImporter(URIHelper.GetFileFromUri(new Uri(gltfURL)), importOptions, ShaderLoader);
                 }
                 else
                 {
@@ -480,7 +480,7 @@ namespace BVA
                         string directoryPath = URIHelper.GetDirectoryName(gltfURL);
                         importOptions.DataLoader = new FileLoader(directoryPath);
                     }
-                    sceneImporter = Factory.CreateSceneImporter(fileName, importOptions);
+                    sceneImporter = new GLTFSceneImporter(fileName, importOptions, ShaderLoader);
                 }
                 sceneImporter.Dispose();
                 sceneImporter.IsMultithreaded = multithreaded;

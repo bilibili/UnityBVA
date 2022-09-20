@@ -9,7 +9,7 @@ namespace BVA
 {
     public class MaterialExtraGenerator : EditorWindow
     {
-        [MenuItem("BVA/Developer Tools/Generator Material Extra")]
+        [MenuItem("BVA/Developer Tools/Code-Gen/Material")]
         static void Init()
         {
             MaterialExtraGenerator window = (MaterialExtraGenerator)EditorWindow.GetWindow(typeof(MaterialExtraGenerator), false, "Export Scene Settings");

@@ -172,6 +172,7 @@ namespace BVA
                 Accessors = new List<Accessor>(),
                 Asset = new Asset
                 {
+                    Copyright = BVAConst.COPYRIGHT,
                     Version = "2.0",
                     Generator = BVAConst.GetGeneratorName(_exportOptions.ExportAvatar ? SceneType.Avatar : SceneType.Scene)
                 },
@@ -228,32 +229,11 @@ namespace BVA
         /// <param name="fileName">The name of the GLTF file</param>
         public void SaveGLB(string path, string fileName, string ext = "glb")
         {
-            _shouldUseInternalBufferForImages = true;
             string fullPath = Path.Combine(path, Path.ChangeExtension(fileName, ext));
 
             using (FileStream glbFile = new FileStream(fullPath, FileMode.Create))
             {
                 SaveGLBToStream(glbFile, fileName);
-            }
-
-            if (!_shouldUseInternalBufferForImages)
-            {
-                ExportImages(path);
-            }
-        }
-
-        /// <summary>
-        /// In-memory GLB creation helper. Useful for platforms where no filesystem is available (e.g. WebGL).
-        /// </summary>
-        /// <param name="sceneName"></param>
-        /// <returns></returns>
-        public byte[] SaveGLBToByteArray(string sceneName, bool shouldUseInternalBufferForImages)
-        {
-            _shouldUseInternalBufferForImages = shouldUseInternalBufferForImages;
-            using (var stream = new MemoryStream())
-            {
-                SaveGLBToStream(stream, sceneName);
-                return stream.ToArray();
             }
         }
 
@@ -264,6 +244,7 @@ namespace BVA
         /// <param name="fileName">The name of the GLTF file</param>
         public void SaveGLBToStream(Stream stream, string sceneName)
         {
+            _shouldUseInternalBufferForImages = true;
             var startTime = DateTime.Now;
 
             Stream binStream = new MemoryStream();

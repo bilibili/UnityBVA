@@ -82,16 +82,6 @@ ShaderVariantCollection:
       variants:
       - keywords: 
         passType: 0
-  - first: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-    second:
-      variants:
-      - keywords: 
-        passType: 8
-  - first: {fileID: 106, guid: 0000000000000000f000000000000000, type: 0}
-    second:
-      variants:
-      - keywords: _SUNDISK_SIMPLE
-        passType: 0
   - first: {fileID: 9000, guid: 0000000000000000f000000000000000, type: 0}
     second:
       variants:

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using BVA.Loader;
 
 namespace BVA
 {

@@ -533,7 +533,12 @@ namespace BVA.Extensions
                 return component;
             return gameObject.AddComponent<T>();
         }
-
+        public static UnityEngine.Component GetOrAddComponent(this GameObject gameObject,Type type)
+        {
+            if (gameObject.TryGetComponent( type,out var component))
+                return component;
+            return gameObject.AddComponent(type);
+        }
         public static T GetOrAddComponent<T>(this Transform transform) where T : UnityEngine.Component
         {
             if (transform.TryGetComponent<T>(out var component))

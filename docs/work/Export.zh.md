@@ -32,7 +32,6 @@ GLB文件包含了所有的元素，包括动画，材质，节点和相机到�
 - [LiliumToonGraph](https://github.com/you-ri/LiliumToonGraph)
 - [MToon(URP版本)](https://vrm.dev/univrm/shaders/shader_mtoon.html)
 - [ZeldaToon](https://github.com/ToughNutToCrack/ZeldaShaderURP2019.4.0f1)
-- ToonLit(带卡通效果的Lit)
 
 
 ![glb](pics/Material_1.png)

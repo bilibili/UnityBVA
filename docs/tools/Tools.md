@@ -1,6 +1,6 @@
 # Tools
 
-### Material Code-Gen
+## Material Code-Gen
 
 Enabling developer using their own shaders. 
 - Select shader
@@ -14,7 +14,7 @@ Enabling developer using their own shaders.
 
 [Check this out to know how to use the generated code.](MaterialExtra.md)
 
-### Component Code-Gen
+## Component Code-Gen
 
 - Select a `GameObject` on the scene, then select the `Component` you want to gen
 - Or just drag the script on it
@@ -31,7 +31,7 @@ Enabling developer using their own shaders.
 
 [Check this out to know how to use the generated code.](ComponentExtra.md)
 
-### Cubemap Converter
+## Cubemap Converter
 
 - Texture2Cubemap (convert six `1:1` textures to 1 textures(row,column,panorama))
 - Cubemap2Texture (convert cubemap to 6 textures or 6 on 1 row,column textures, can render the ReflectionProbe to Cubemap)
@@ -42,6 +42,7 @@ Enabling developer using their own shaders.
 ![glb](pics/CubeLayout6Faces.png)
 
 > **Texture->Cubemap**  -  choose six `Texutre`.
+> 
 ![glb](pics/Texture2Cubemap.png)
 
 > **Panorama->Cubemap**  -  choose a `Panorama Texutre`.
@@ -52,11 +53,11 @@ Enabling developer using their own shaders.
 > 
 ![glb](pics/Cubemap2Texture.png)
 
-### Texture Converter
+## Texture Converter
 
 - DownSample
 - Convert Format (png,jpeg,tga,exr)
 
-### Enforce Avatar T-Pose
+## Enforce Avatar T-Pose
 
 Manually enforce an Avatar to `T-Pose` state, `T-Pose` state is a must when exporting `Humanoid` Avatar, or the `Animation` will become abnormal. Usually when exporting the humanoid model, it is necessary to stop all animation first, and set it to T-Pose state.

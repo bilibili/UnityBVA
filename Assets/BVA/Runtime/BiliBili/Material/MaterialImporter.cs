@@ -22,14 +22,14 @@ namespace GLTF.Schema.BVA
         Metallic
     }
 
-    public interface IMaterialExtra : IExtra,ICloneable
+    public interface IMaterialExtra : IExtra, ICloneable
     {
         Task Deserialize(GLTFRoot root, JsonReader reader, Material matCache, AsyncLoadTexture loadTexture, AsyncLoadTexture loadNormalMap, AsyncLoadCubemap loadCubemap);
         void SetData(Material material, ExportTextureInfo exportTextureInfo, ExportTextureInfo exportNormalTextureInfo, ExportCubemap exportCubemapInfo);
         string ShaderName { get; }
         string ExtraName { get; }
     }
-    public class MaterialExtraAttribute : Attribute {}
+    public class MaterialExtraAttribute : Attribute { }
 
     public static class MaterialImporter
     {
@@ -291,6 +291,15 @@ namespace GLTF.Schema.BVA
             {
                 Off, StencilOut, StencilMask
             }
+            public enum _CullingMode
+            {
+                CullingOff, FrontCulling, BackCulling
+            }
+
+            public enum _EmissiveMode
+            {
+                SimpleEmissive, EmissiveAnimation
+            }
 
             public enum _StencilOperation
             {
@@ -324,15 +333,6 @@ namespace GLTF.Schema.BVA
                 NormalDirection, PositionScaling
             }
 
-            public enum _CullingMode
-            {
-                CullingOff, FrontCulling, BackCulling
-            }
-
-            public enum _EmissiveMode
-            {
-                SimpleEmissive, EmissiveAnimation
-            }
             const string ShaderDefineSHADINGGRADEMAP = "_SHADINGGRADEMAP";
             const string ShaderDefineANGELRING_ON = "_IS_ANGELRING_ON";
             const string ShaderDefineANGELRING_OFF = "_IS_ANGELRING_OFF";
@@ -361,6 +361,17 @@ namespace GLTF.Schema.BVA
 
             const string ShaderDefineIS_TRANSCLIPPING_OFF = "_IS_TRANSCLIPPING_OFF";
             const string ShaderDefineIS_TRANSCLIPPING_ON = "_IS_TRANSCLIPPING_ON";
+
+            public static void ValidateProperties(Material material)
+            {
+                EnableOutline(material, true);
+                ApplyAngelRing(material);
+                ApplyClippingMode(material);
+                ApplyMatCapMode(material);
+                ApplyQueueAndRenderType(material);
+                ApplyStencilMode(material);
+                ApplyEmissiveMode(material);
+            }
             public static void ApplyQueueAndRenderType(Material material)
             {
                 _UTS_Transparent _Transparent_Setting = (_UTS_Transparent)material.GetInt(ShaderPropTransparentEnabled);
@@ -535,13 +546,27 @@ namespace GLTF.Schema.BVA
                     }
                 }
             }
+            public static void ApplyEmissiveMode(Material material)
+            {
+                _EmissiveMode emissiveMode = (_EmissiveMode)material.GetInt("_EMISSIVE");
 
+                if (emissiveMode == _EmissiveMode.SimpleEmissive)
+                {
+                    material.SetFloat("_EMISSIVE", 0);
+                    material.EnableKeyword("_EMISSIVE_SIMPLE");
+                    material.DisableKeyword("_EMISSIVE_ANIMATION");
+                }
+                else
+                {
+                    material.SetFloat("_EMISSIVE", 1);
+                    material.EnableKeyword("_EMISSIVE_ANIMATION");
+                    material.DisableKeyword("_EMISSIVE_SIMPLE");
+                }
+            }
             const string srpDefaultLightModeName = "SRPDefaultUnlit";
             const string ShaderPropOutline = "_OUTLINE";
             public static void EnableOutline(Material material, bool isOutlineEnabled)
             {
-                var srpDefaultLightModeTag = material.GetTag("LightMode", false, srpDefaultLightModeName);
-
                 material.SetShaderPassEnabled(srpDefaultLightModeName, isOutlineEnabled);
                 if (!isOutlineEnabled)
                     return;
@@ -867,43 +892,32 @@ namespace GLTF.Schema.BVA
         }
 
         #endregion
-        public static async Task<Material> ImportMaterial(string shaderName, GLTFMaterial materialDef, GLTFRoot root, JsonReader reader, AsyncLoadTexture loadTexture, AsyncLoadTexture loadNormalMap, AsyncLoadCubemap loadCubemap)
+        public static async Task<Material> ImportMaterial(IShaderLoader shaderLoader,string shaderName, GLTFMaterial materialDef, GLTFRoot root, JsonReader reader, AsyncLoadTexture loadTexture, AsyncLoadTexture loadNormalMap, AsyncLoadCubemap loadCubemap)
         {
-            if (!CustomShaders.ContainsKey(shaderName)) return null;
+            if (!CustomShaders.ContainsKey(shaderName))
+                return null;
 
-            //if (!CUSTOM_SHADER_LIST.ContainsKey(shaderName)){ return null;  }
-
-            Shader shader = Shader.Find(shaderName);
+            Shader shader = shaderLoader.Find(shaderName);
 
             if (shader == null)
+            {
+#if UNITY_EDITOR
                 throw new ShaderNotFoundException(shaderName + " not found. Did you forget to add it to the build?");
-
+#else
+                LogPool.ImportLogger.LogError(LogPart.Shader,shaderName + " not found. Did you forget to add it to the build?");
+#endif
+            }
             Material matCache = new Material(shader);
             matCache.name = materialDef.Name;
-
-            //await CUSTOM_SHADER_LIST[shaderName].Item2(root, reader, matCache, loadTexture, loadNormalMap, loadCubemap);
             await CustomShaders[shaderName].Deserialize(root, reader, matCache, loadTexture, loadNormalMap, loadCubemap);
 
             SetCommonMaterialKeywords(matCache);
 
-            /*if (shaderName == BVA_Material_ToonLit_Extra.SHADER_NAME)
-            {
-                ToonLit.SetupMaterialBlendMode(matCache);
-                ToonLit.SetMaterialKeywords(matCache);
-            }
-            else if (shaderName == BVA_Material_UTS_Extra.SHADER_NAME)
-            {
-                UTS.EnableOutline(matCache, true);
-                UTS.ApplyAngelRing(matCache);
-                UTS.ApplyClippingMode(matCache);
-                UTS.ApplyMatCapMode(matCache);
-                UTS.ApplyQueueAndRenderType(matCache);
-                UTS.ApplyStencilMode(matCache);
-            }
-            else */if (shaderName == BVA_Material_MToon_Extra.SHADER_NAME)
-            {
+            if (shaderName == BVA_Material_MToon_Extra.SHADER_NAME)
                 MToon.ValidateProperties(matCache, false);
-            }
+            else if (shaderName == BVA_Material_UTS_Extra.SHADER_NAME)
+                UTS.ValidateProperties(matCache);
+
             return matCache;
         }
     }

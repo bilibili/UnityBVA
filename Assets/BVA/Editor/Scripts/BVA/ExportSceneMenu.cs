@@ -1,11 +1,15 @@
 using UnityEditor;
 using System.Collections.Generic;
 using UnityEngine;
-using BVA;
 using UnityEngine.SceneManagement;
 using UnityEditor.SceneManagement;
 using BVA.Extensions;
 using System;
+using System.IO;
+
+#if ENABLE_CRYPTO
+using BVA.FileEncryptor;
+#endif
 
 namespace BVA
 {
@@ -33,11 +37,10 @@ namespace BVA
         };
         bool foldCommonProperty = true;
         ExportFileType exportType;
-        //Collect material info which are not supported by exporter
-        void CheckMaterialValidity()
-        {
-
-        }
+#if ENABLE_CRYPTO
+        bool encrypto;
+        string password;
+#endif
 
         private void OnEnable()
         {
@@ -92,8 +95,9 @@ namespace BVA
             GUILayout.Space(10);
             exportType = (ExportFileType)EditorGUILayout.EnumPopup(ExportCommon.Localization("导出格式", "Export Format"), exportType);
 
-
-
+#if ENABLE_CRYPTO
+            encrypto = EditorConfidential.GUIPassword(out password);
+#endif
             switch (exportMode)
             {
                 case 0:
@@ -147,10 +151,17 @@ namespace BVA
             if (!string.IsNullOrEmpty(path))
             {
                 EditorPrefs.SetString(pref, path);
+#if ENABLE_CRYPTO
+                if (encrypto)
+                    exporter.SaveBVACompressed(Path.Combine(path, sceneName) + $".{BVAConst.EXTENSION_BVA}", sceneName, password);
+                else
+                    exporter.SaveGLB(path, sceneName);
+#else
                 if (exportType == ExportFileType.GLTF)
                     exporter.SaveGLTFandBin(path, sceneName);
                 else
                     exporter.SaveGLB(path, sceneName, ext);
+#endif
                 EditorUtility.DisplayDialog(ExportCommon.Localization("导出成功","export success"), ExportCommon.Localization($"导出花了{exporter.ExportDuration.TotalSeconds}秒!",$"spend {exporter.ExportDuration.TotalSeconds}s finish export!"), "OK");
             }
         }
@@ -173,8 +184,6 @@ namespace BVA
             }
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.Separator();
-
-            CheckMaterialValidity();
 
             if (GUILayout.Button(ExportCommon.Localization("导出根节点", "Export Root")))
             {

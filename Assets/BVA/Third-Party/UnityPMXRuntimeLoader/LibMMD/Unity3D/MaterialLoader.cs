@@ -21,8 +21,7 @@ namespace LibMMD.Unity3D
         {
             Default,
             MToon,
-            Toon,
-            URPToonLit,
+            Toon
         }
         public static MaterialType UseMaterialType = MaterialType.MToon;
 
@@ -31,15 +30,6 @@ namespace LibMMD.Unity3D
         public MaterialLoader(TextureLoader textureLoader)
         {
             _textureLoader = textureLoader;
-        }
-
-        public UnityEngine.Material LoadMaterial(MMDMaterial mmdMaterial, MMDUnityConfig config)
-        {
-            var mainTexture = _textureLoader.LoadTexture(mmdMaterial.Texture);
-            var isTransparent = mmdMaterial.DiffuseColor.a < 0.9999f || mmdMaterial.EdgeColor.a < 0.9999f || IsTextureTransparent(mainTexture);
-            var material = new UnityEngine.Material(GetShader(mmdMaterial, config, isTransparent));
-            ConfigMaterial(mmdMaterial, config, material, mainTexture);
-            return material;
         }
 
         public UnityEngine.Material LoadMToonMaterial(MMDMaterial mmdMaterial, MMDUnityConfig config)

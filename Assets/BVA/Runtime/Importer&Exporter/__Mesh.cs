@@ -18,6 +18,18 @@ namespace BVA
     // Known issues, submeshs while first primitive is not contains all vertex
     public partial class GLTFSceneImporter
     {
+        protected static MeshTopology GetTopology(DrawMode mode)
+        {
+            switch (mode)
+            {
+                case DrawMode.Points: return MeshTopology.Points;
+                case DrawMode.Lines: return MeshTopology.Lines;
+                case DrawMode.LineStrip: return MeshTopology.LineStrip;
+                case DrawMode.Triangles: return MeshTopology.Triangles;
+            }
+
+            throw new Exception("Unity does not support glTF draw mode: " + mode);
+        }
         /// <summary>
         /// Load a Mesh from the glTF by index
         /// </summary>

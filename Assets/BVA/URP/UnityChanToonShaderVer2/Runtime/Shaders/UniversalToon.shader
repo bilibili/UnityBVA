@@ -1,5 +1,5 @@
 ﻿﻿//UTS2/UniversalToon
-//v.2.3.0
+//v.2.5.0
 //nobuyuki@unity3d.com
 //toshiyuki@unity3d.com (Universal RP/HDRP) 
 //https://github.com/unity3d-jp/UnityChanToonShaderVer2_Project
@@ -10,8 +10,8 @@ Shader "Universal Render Pipeline/Toon" {
         [HideInInspector] _simpleUI("SimpleUI", Int) = 0
         // Versioning of material to help for upgrading
         [HideInInspector] _utsVersionX("VersionX", Float) = 2
-        [HideInInspector] _utsVersionY("VersionY", Float) = 3
-        [HideInInspector] _utsVersionZ("VersionZ", Float) = 0
+        [HideInInspector] _utsVersionY("VersionY", Float) = 5
+        [HideInInspector] _utsVersionZ("VersionZ", Float) = 1
 
         [HideInInspector] _utsTechnique("Technique", int) = 0 //DWF
         [HideInInspector] _AutoRenderQueue("Automatic Render Queue ", int) = 1
@@ -19,8 +19,8 @@ Shader "Universal Render Pipeline/Toon" {
         // these are set in UniversalToonGUI.cs in accordance with _StencilMode
         _StencilComp("Stencil Comparison", Float) = 8
         _StencilNo("Stencil No", Float) = 1
-        _StencilOpPass("Stencil Operation Pass", Float) = 0
-        _StencilOpFail("Stencil Operation Fail", Float) = 0
+        _StencilOpPass("Stencil Operation", Float) = 0
+        _StencilOpFail("Stencil Operation", Float) = 0
         [Enum(OFF,0,ON,1)] _TransparentEnabled("Transparent Mode", int) = 0
 
         // These three are used in Lit shader.
@@ -56,7 +56,7 @@ Shader "Universal Render Pipeline/Toon" {
 
 
         _MainTex ("BaseMap", 2D) = "white" {}
-        //[HideInInspector] _BaseMap ("BaseMap", 2D) = "white" {}
+        [HideInInspector] _BaseMap ("BaseMap", 2D) = "white" {}
         _BaseColor ("BaseColor", Color) = (1,1,1,1)
         //v.2.0.5 : Clipping/TransClipping for SSAO Problems in PostProcessing Stack.
         //If you want to go back the former SSAO results, comment out the below line.
@@ -215,6 +215,7 @@ Shader "Universal Render Pipeline/Toon" {
     SubShader {
         Tags {
             "RenderType"="Opaque"
+            "RenderPipeline" = "UniversalPipeline"
         }
         Pass {
             Name "Outline"
@@ -238,7 +239,7 @@ Shader "Universal Render Pipeline/Toon" {
             #pragma fragment frag
 
 
-            #pragma target 3.0
+            #pragma target 2.0
             //V.2.0.4
             #pragma multi_compile _IS_OUTLINE_CLIPPING_NO _IS_OUTLINE_CLIPPING_YES
             #pragma multi_compile _OUTLINE_NML _OUTLINE_POS
@@ -271,30 +272,33 @@ Shader "Universal Render Pipeline/Toon" {
             HLSLPROGRAM
             #pragma prefer_hlslcc gles
             #pragma exclude_renderers d3d11_9x
-            #pragma target 3.0
+            #pragma target 2.0
 
             #pragma vertex vert
             #pragma fragment frag
 
+
+
+
+
+
             // -------------------------------------
             // Material Keywords
             // -------------------------------------
             // Material Keywords
-            #pragma shader_feature _NORMALMAP
-            //#pragma shader_feature _ALPHATEST_ON
-            #pragma shader_feature _ALPHAPREMULTIPLY_ON
+//            #pragma multi_compile _NORMALMAP
+//            #pragma multi_compile _ALPHATEST_ON
+//            #pragma multi_compile _ALPHAPREMULTIPLY_ON
             #pragma multi_compile _EMISSION
-            #pragma multi_compile _METALLICSPECGLOSSMAP
-            //#pragma multi_compile _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
-            #pragma multi_compile _OCCLUSIONMAP
+//            #pragma multi_compile _METALLICSPECGLOSSMAP
+//            #pragma multi_compile _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+//            #pragma multi_compile _OCCLUSIONMAP
 
             //#pragma shader_feature _SPECULARHIGHLIGHTS_OFF
             //#pragma shader_feature _ENVIRONMENTREFLECTIONS_OFF
             //#pragma shader_feature _SPECULAR_SETUP
             //#pragma shader_feature _RECEIVE_SHADOWS_OFF
-            #define _ENVIRONMENTREFLECTIONS_OFF
-            #define _SPECULARHIGHLIGHTS_OFF
-    
+
             // -------------------------------------
             // Lightweight Pipeline keywords
             #pragma multi_compile _ _MAIN_LIGHT_SHADOWS
@@ -308,24 +312,23 @@ Shader "Universal Render Pipeline/Toon" {
             // Unity defined keywords
             //#pragma multi_compile _ DIRLIGHTMAP_COMBINED
             //#pragma multi_compile _ LIGHTMAP_ON
-            //#pragma multi_compile_fog
+            #pragma multi_compile_fog
 
-            #pragma multi_compile _IS_PASS_FWDBASE
+            #pragma multi_compile  _IS_PASS_FWDBASE
+            #pragma multi_compile  _ENVIRONMENTREFLECTIONS_OFF
             // DoubleShadeWithFeather and ShadingGradeMap use different fragment shader.  
             #pragma multi_compile _ _SHADINGGRADEMAP
 
-
             // used in ShadingGradeMap
-            #pragma shader_feature _IS_TRANSCLIPPING_OFF _IS_TRANSCLIPPING_ON
-            #pragma shader_feature _IS_ANGELRING_OFF _IS_ANGELRING_ON
+            #pragma multi_compile _IS_TRANSCLIPPING_OFF _IS_TRANSCLIPPING_ON
+            #pragma multi_compile _IS_ANGELRING_OFF _IS_ANGELRING_ON
 
             // used in Shadow calculation 
-            //#pragma shader_feature _ UTS_USE_RAYTRACING_SHADOW
+            #pragma multi_compile _ UTS_USE_RAYTRACING_SHADOW
             // used in DoubleShadeWithFeather
-            #pragma shader_feature _IS_CLIPPING_OFF _IS_CLIPPING_MODE _IS_CLIPPING_TRANSMODE
-            //#define _IS_CLIPPING_OFF
+            #pragma multi_compile _IS_CLIPPING_OFF _IS_CLIPPING_MODE _IS_CLIPPING_TRANSMODE
 
-//            #pragma shader_feature _EMISSIVE_SIMPLE _EMISSIVE_ANIMATION
+            #pragma multi_compile _EMISSIVE_SIMPLE _EMISSIVE_ANIMATION
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
             #include "UniversalToonInput.hlsl"
@@ -350,16 +353,16 @@ Shader "Universal Render Pipeline/Toon" {
             // Required to compile gles 2.0 with standard srp library
             #pragma prefer_hlslcc gles
             #pragma exclude_renderers d3d11_9x
-            #pragma target 3.0
+            #pragma target 2.0
 
             // -------------------------------------
             // Material Keywords
-            #pragma shader_feature _ALPHATEST_ON
+            #pragma multi_compile _ _ALPHATEST_ON
 
             //--------------------------------------
             // GPU Instancing
-            #pragma multi_compile_instancing
-            #pragma shader_feature _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+            //#pragma multi_compile_instancing
+            //#pragma multi_compile _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
 
             #pragma vertex ShadowPassVertex
             #pragma fragment ShadowPassFragment
@@ -382,22 +385,58 @@ Shader "Universal Render Pipeline/Toon" {
             // Required to compile gles 2.0 with standard srp library
             #pragma prefer_hlslcc gles
             #pragma exclude_renderers d3d11_9x
-            #pragma target 3.0
+            #pragma target 2.0
 
             #pragma vertex DepthOnlyVertex
             #pragma fragment DepthOnlyFragment
 
             // -------------------------------------
             // Material Keywords
-            #pragma shader_feature _ALPHATEST_ON
-            #pragma shader_feature _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+            #pragma multi_compile _ _ALPHATEST_ON
+            //#pragma multi_compile _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
 
             //--------------------------------------
             // GPU Instancing
-            #pragma multi_compile_instancing
+            //#pragma multi_compile_instancing
 
             #include "UniversalToonInput.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/Shaders/DepthOnlyPass.hlsl"
+            ENDHLSL
+        }
+        // This pass is used when drawing to a _CameraNormalsTexture texture
+        Pass
+        {
+            Name "DepthNormals"
+            Tags{"LightMode" = "DepthNormals"}
+
+            ZWrite On
+            Cull[_Cull]
+
+            HLSLPROGRAM
+#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Version.hlsl"
+#if (VERSION_GREATER_EQUAL(10, 0))
+            // Required to compile gles 2.0 with standard srp library
+            #pragma prefer_hlslcc gles
+            #pragma exclude_renderers d3d11_9x
+            #pragma target 2.0
+
+            #pragma vertex DepthNormalsVertex
+            #pragma fragment DepthNormalsFragment
+
+            // -------------------------------------
+            // Material Keywords
+            #pragma multi_compile _ _NORMALMAP
+            #pragma multi_compile _ _PARALLAXMAP
+            #pragma multi_compile _ _ALPHATEST_ON
+            //#pragma multi_compile _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+
+            //--------------------------------------
+            // GPU Instancing
+            //#pragma multi_compile_instancing
+
+            #include "UniversalToonInput.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/Shaders/DepthNormalsPass.hlsl"
+#endif
             ENDHLSL
         }
 

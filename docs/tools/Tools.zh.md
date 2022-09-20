@@ -1,6 +1,6 @@
 # 工具
 
-### Material Code-Gen（材质生成工具）
+## Material Code-Gen（材质生成工具）
 
 允许开发者使用他们自己的着色器。
 - 选择材质
@@ -14,7 +14,7 @@
 
 [查看本文，了解如何使用生成的代码](MaterialExtra.md)
 
-### Component Code-Gen（代码生成工具）
+## Component Code-Gen（代码生成工具）
 
 - 选择一个物体到工具栏, 然后选择对应的组件
 - 或者直接将脚本拖拽上去
@@ -31,7 +31,7 @@
 
 [Check this out to know how to use the generated code.](ComponentExtra.md)
 
-### Cubemap Converter（Cubemap贴图转换）
+## Cubemap Converter（Cubemap贴图转换）
 
 - Texture2Cubemap (转换六张 `1:1` 的贴图到一个贴图上(row,column,panorama 3中模式都支持))
 - Cubemap2Texture (转换cubemap到6张贴图或者到一张贴图上, 也可以直接将`ReflectionProbe`上捕捉输出到贴图)
@@ -52,11 +52,11 @@
 > 
 ![glb](pics/Cubemap2Texture.png)
 
-### Texture Converter（贴图转换格式，降分辨率工具）
+## Texture Converter（贴图转换格式，降分辨率工具）
 
 - 降低分辨率
 - 转换格式为 (png,jpeg,tga,exr)
 
-### Enforce Avatar T-Pose（强制Avatar T-Pose）
+## Enforce Avatar T-Pose（强制Avatar T-Pose）
 
 手动强制化身为“T-Pose”状态，当导出“Humanoid”化身时，“T-Pose”状态是必须的，否则导入播放动画将会异常。通常在导出人形模型时，需要先停止所有的动画，并将其设置为T-Pose状态。

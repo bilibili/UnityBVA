@@ -11519,6 +11519,8 @@ GameObject:
   - component: {fileID: 3518494961066700743}
   - component: {fileID: 3518494961066700742}
   - component: {fileID: 1161978310}
+  - component: {fileID: -5422480397472649490}
+  - component: {fileID: 1613029047170025646}
   m_Layer: 0
   m_Name: Character2
   m_TagString: Untagged
@@ -11533,8 +11535,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4897059383481364618}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -1.53, y: 0.015000239, z: -0.996}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11872,6 +11874,158 @@ MonoBehaviour:
   isGenerateOnStart: 0
   generatorMode: 0
   isOpenMonitor: 0
+--- !u!114 &-5422480397472649490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4897059383481364618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd9a28bd1c1a0d44bbe7662368e36c27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  metaInfo: {fileID: 11400000, guid: 314e36fabaa11be468c142024b911612, type: 2}
+--- !u!114 &1613029047170025646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4897059383481364618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f11830f50f03c1649ba6d99ad15d3093, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keys:
+  - keyName: Neutral
+    preset: 0
+    blendShapeValues: []
+    materialVector4Values: []
+    materialColorValues: []
+    materialFloatValues: []
+    isBinary: 0
+  - keyName: A
+    preset: 1
+    blendShapeValues: []
+    materialVector4Values: []
+    materialColorValues: []
+    materialFloatValues: []
+    isBinary: 0
+  - keyName: I
+    preset: 2
+    blendShapeValues: []
+    materialVector4Values: []
+    materialColorValues: []
+    materialFloatValues: []
+    isBinary: 0
+  - keyName: U
+    preset: 3
+    blendShapeValues: []
+    materialVector4Values: []
+    materialColorValues: []
+    materialFloatValues: []
+    isBinary: 0
+  - keyName: E
+    preset: 4
+    blendShapeValues: []
+    materialVector4Values: []
+    materialColorValues: []
+    materialFloatValues: []
+    isBinary: 0
+  - keyName: O
+    preset: 5
+    blendShapeValues: []
+    materialVector4Values: []
+    materialColorValues: []
+    materialFloatValues: []
+    isBinary: 0
+  - keyName: Blink
+    preset: 6
+    blendShapeValues: []
+    materialVector4Values: []
+    materialColorValues: []
+    materialFloatValues: []
+    isBinary: 0
+  - keyName: Blink_L
+    preset: 7
+    blendShapeValues: []
+    materialVector4Values: []
+    materialColorValues: []
+    materialFloatValues: []
+    isBinary: 0
+  - keyName: Blink_R
+    preset: 8
+    blendShapeValues: []
+    materialVector4Values: []
+    materialColorValues: []
+    materialFloatValues: []
+    isBinary: 0
+  - keyName: Joy
+    preset: 9
+    blendShapeValues: []
+    materialVector4Values: []
+    materialColorValues: []
+    materialFloatValues: []
+    isBinary: 0
+  - keyName: Angry
+    preset: 10
+    blendShapeValues: []
+    materialVector4Values: []
+    materialColorValues: []
+    materialFloatValues: []
+    isBinary: 0
+  - keyName: Sorrow
+    preset: 11
+    blendShapeValues: []
+    materialVector4Values: []
+    materialColorValues: []
+    materialFloatValues: []
+    isBinary: 0
+  - keyName: Fun
+    preset: 12
+    blendShapeValues: []
+    materialVector4Values: []
+    materialColorValues: []
+    materialFloatValues: []
+    isBinary: 0
+  - keyName: LookUp
+    preset: 13
+    blendShapeValues: []
+    materialVector4Values: []
+    materialColorValues: []
+    materialFloatValues: []
+    isBinary: 0
+  - keyName: LookDown
+    preset: 14
+    blendShapeValues: []
+    materialVector4Values: []
+    materialColorValues: []
+    materialFloatValues: []
+    isBinary: 0
+  - keyName: LookLeft
+    preset: 15
+    blendShapeValues: []
+    materialVector4Values: []
+    materialColorValues: []
+    materialFloatValues: []
+    isBinary: 0
+  - keyName: LookRight
+    preset: 16
+    blendShapeValues: []
+    materialVector4Values: []
+    materialColorValues: []
+    materialFloatValues: []
+    isBinary: 0
+  - keyName: Custom
+    preset: 17
+    blendShapeValues: []
+    materialVector4Values: []
+    materialColorValues: []
+    materialFloatValues: []
+    isBinary: 0
 --- !u!1 &4922931211265815164
 GameObject:
   m_ObjectHideFlags: 0
@@ -17810,7 +17964,38 @@ SkinnedMeshRenderer:
   - {fileID: 3363878793168127445}
   - {fileID: 3773212771399205895}
   - {fileID: 5401072262834126899}
-  m_BlendShapeWeights: []
+  m_BlendShapeWeights:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   m_RootBone: {fileID: 2550826360282942700}
   m_AABB:
     m_Center: {x: -0.000078737736, y: 0.59593797, z: -0.090892054}

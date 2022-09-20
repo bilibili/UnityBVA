@@ -1,9 +1,12 @@
+using BVA.Component;
+using BVA.Extensions;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 namespace GLTF.Schema.BVA
 {
@@ -124,7 +127,7 @@ namespace GLTF.Schema.BVA
         {
             if (CustomComponents.TryGetValue(componentName, out var extra))
             {
-                var component = gameObject.GetComponent(extra.ComponentType) ?? gameObject.AddComponent(extra.ComponentType);
+                var component = gameObject.GetOrAddComponent(extra.ComponentType);
                 if (component == null)
                 {
                     Debug.LogError($"Gameobject {gameObject.name} doesn't have component {componentName}");
@@ -135,7 +138,8 @@ namespace GLTF.Schema.BVA
             }
             if (CustomAsyncComponents.TryGetValue(componentName, out var extra2))
             {
-                var component = gameObject.GetComponent(extra2.ComponentType) ?? gameObject.AddComponent(extra2.ComponentType);
+                Debug.Log(extra2.GetType());
+                Component component = gameObject.GetOrAddComponent(extra2.ComponentType);
                 if (component == null)
                 {
                     Debug.LogError($"Gameobject {gameObject.name} doesn't have component {componentName}");

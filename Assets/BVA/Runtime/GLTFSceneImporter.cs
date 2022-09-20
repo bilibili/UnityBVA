@@ -20,10 +20,6 @@ namespace BVA
 {
     public class ImportOptions
     {
-#pragma warning disable CS0618 // Type or member is obsolete
-        public ILoader ExternalDataLoader = null;
-#pragma warning restore CS0618 // Type or member is obsolete
-
         /// <summary>
         /// Optional <see cref="IDataLoader"/> for loading references from the GLTF to external streams.  May also optionally implement <see cref="IDataLoader2"/>.
         /// </summary>
@@ -164,6 +160,18 @@ namespace BVA
         public long VertexCount;
         public long TextureCount;
     }
+    public struct GLBStream
+    {
+        public Stream Stream;
+        public long StartPosition;
+    }
+    public enum ColliderType
+    {
+        None,
+        Box,
+        Mesh,
+        MeshConvex
+    }
 
     /// <summary>
     /// Converts gltf animation data to unity
@@ -172,20 +180,36 @@ namespace BVA
 
     public partial class GLTFSceneImporter : IDisposable
     {
-        public enum ColliderType
-        {
-            None,
-            Box,
-            Mesh,
-            MeshConvex
-        }
-
-        /// <summary>
-        /// Maximum LOD
-        /// </summary>
-        public int MaximumLod = 300;
 
         private bool _isMultithreaded = true;
+
+        /// <summary>
+        /// Statistics from the scene
+        /// </summary>
+        public ImportStatistics Statistics;
+
+        protected ImportOptions _options;
+        protected MemoryChecker _memoryChecker;
+
+        protected GameObject _lastLoadedScene;
+        protected readonly GLTFMaterial DefaultMaterial = new GLTFMaterial();
+        protected MaterialCacheData _defaultLoadedMaterial = null;
+
+        protected string _gltfFileName;
+        protected GLBStream _gltfStream;
+        protected GLTFRoot _gltfRoot;
+        protected AssetCache _assetCache;
+        protected AssetManager _assetManager;
+        protected bool _isRunning = false;
+        protected SceneType _sceneType;
+
+        protected ImportProgress progressStatus = default(ImportProgress);
+        protected IProgress<ImportProgress> progress = null;
+
+        protected IShaderLoader _shaderLoader;
+        public GLTFRoot Root => _gltfRoot;
+        public GameObject LastLoadedScene => _lastLoadedScene;
+        public AssetManager AssetManager => _assetManager;
 
         /// <summary>
         /// Use Multithreading or not.
@@ -206,52 +230,22 @@ namespace BVA
         /// <summary>
         /// The parent transform for the created GameObject
         /// </summary>
-        public Transform SceneParent { get; set; }
+        public Transform SceneParent { get; private set; }
 
         /// <summary>
         /// The last created object
         /// </summary>
         public GameObject CreatedObject { get; private set; }
 
-        /// <summary>
-        /// Statistics from the scene
-        /// </summary>
-        public ImportStatistics Statistics;
-        protected struct GLBStream
-        {
-            public Stream Stream;
-            public long StartPosition;
-        }
 
-        protected ImportOptions _options;
-        protected MemoryChecker _memoryChecker;
-
-        protected GameObject _lastLoadedScene;
-        protected readonly GLTFMaterial DefaultMaterial = new GLTFMaterial();
-        protected MaterialCacheData _defaultLoadedMaterial = null;
-
-        protected string _gltfFileName;
-        protected GLBStream _gltfStream;
-        protected GLTFRoot _gltfRoot;
-        protected AssetCache _assetCache;
-        protected AssetManager _assetManager;
-        public GLTFRoot Root => _gltfRoot;
-        public GameObject LastLoadedScene => _lastLoadedScene;
-        public AssetManager AssetManager => _assetManager;
-        protected bool _isRunning = false;
-        protected SceneType _sceneType;
-
-        protected ImportProgress progressStatus = default(ImportProgress);
-        protected IProgress<ImportProgress> progress = null;
-
-        public GLTFSceneImporter(string gltfFileName, ImportOptions options)
+        public GLTFSceneImporter(string gltfFileName, ImportOptions options, IShaderLoader shaderLoader = null)
         {
             _gltfFileName = gltfFileName;
             _options = options;
-            if (_options.DataLoader == null)
-            {
-                _options.DataLoader = LegacyLoaderWrapper.Wrap(_options.ExternalDataLoader);
-            }
+            _shaderLoader = shaderLoader;
+
+            if (_shaderLoader == null)
+                _shaderLoader = new BuildinShaerLoader();
         }
 
         public GLTFSceneImporter(GLTFRoot rootNode, Stream gltfStream, ImportOptions options)
@@ -264,25 +258,7 @@ namespace BVA
             }
 
             _options = options;
-            if (_options.DataLoader == null)
-            {
-                _options.DataLoader = LegacyLoaderWrapper.Wrap(_options.ExternalDataLoader);
-            }
-        }
-
-        public void Dispose()
-        {
-            SceneParent = null;
-            CreatedObject = null;
-            _gltfStream.Stream?.Dispose();
-            if (_assetCache != null && _assetCache.BufferCache != null)
-            {
-                foreach (var buffer in _assetCache.BufferCache)
-                {
-                    buffer?.Dispose();
-                }
-            }
-            Cleanup();
+            _shaderLoader = new BuildinShaerLoader();
         }
 
         /// <summary>
@@ -373,12 +349,6 @@ namespace BVA
 
             onLoadComplete?.Invoke(LastLoadedScene, null);
         }
-
-        public IEnumerator LoadScene(int sceneIndex = -1, bool showSceneObj = true, Action<GameObject, ExceptionDispatchInfo> onLoadComplete = null)
-        {
-            return LoadSceneAsync(sceneIndex, showSceneObj, onLoadComplete).AsCoroutine();
-        }
-
         /// <summary>
         /// Initializes the top-level created node by adding an instantiated GLTF object component to it,
         /// so that it can cleanup after itself properly when destroyed
@@ -406,14 +376,6 @@ namespace BVA
                 }
             }
 
-            /*if (node.Children != null)
-            {
-                foreach (NodeId child in node.Children)
-                {
-                    await ConstructBufferData(child.Value, cancellationToken);
-                }
-            }*/
-
             const string msft_LODExtName = MSFT_LODExtensionFactory.EXTENSION_NAME;
             if (_gltfRoot.ExtensionsUsed != null
                 && _gltfRoot.ExtensionsUsed.Contains(msft_LODExtName)
@@ -432,35 +394,11 @@ namespace BVA
             }
         }
 
-        protected IEnumerator WaitUntilEnum(WaitUntil waitUntil)
-        {
-            yield return waitUntil;
-        }
-
         private async Task LoadJson(string jsonFilePath)
         {
             _gltfStream.Stream = await _options.DataLoader.LoadStreamAsync(jsonFilePath);
             _gltfStream.StartPosition = 0;
             GLTFParser.ParseJson(_gltfStream.Stream, out _gltfRoot, _gltfStream.StartPosition);
-        }
-
-        private static void RunCoroutineSync(IEnumerator streamEnum)
-        {
-            var stack = new Stack<IEnumerator>();
-            stack.Push(streamEnum);
-            while (stack.Count > 0)
-            {
-                var enumerator = stack.Pop();
-                if (enumerator.MoveNext())
-                {
-                    stack.Push(enumerator);
-                    var subEnumerator = enumerator.Current as IEnumerator;
-                    if (subEnumerator != null)
-                    {
-                        stack.Push(subEnumerator);
-                    }
-                }
-            }
         }
 
         /// <summary>
@@ -527,10 +465,8 @@ namespace BVA
 
             // Total textures
             progressStatus.TextureTotal += _gltfRoot.Textures?.Count ?? 0;
-
             // Total buffers
             progressStatus.BuffersTotal += _gltfRoot.Buffers?.Count ?? 0;
-
             // Send report
             progress?.Report(progressStatus);
         }
@@ -664,6 +600,7 @@ namespace BVA
                 return 1.0f / (lodIndex + 2);
             }
         }
+
         /// <summary>
         /// Allocate a generic type 2D array. The size is depending on the given parameters.
         /// </summary>		
@@ -686,6 +623,7 @@ namespace BVA
                 ChunkOffset = (uint)_gltfStream.Stream.Position
             };
         }
+
         protected BufferCacheData ConstructMemoryBufferFromGLB(int bufferIndex)
         {
             GLTFParser.SeekToBinaryChunk(_gltfStream.Stream, bufferIndex, _gltfStream.StartPosition);
@@ -707,7 +645,6 @@ namespace BVA
             }
         }
 
-
         /// <summary>
         ///	 Get the absolute path to a gltf uri reference.
         /// </summary>
@@ -718,32 +655,6 @@ namespace BVA
             var uri = new Uri(gltfPath);
             var partialPath = uri.AbsoluteUri.Remove(uri.AbsoluteUri.Length - uri.Query.Length - uri.Segments[uri.Segments.Length - 1].Length);
             return partialPath;
-        }
-
-        /// <summary>
-        /// Get the absolute path a gltf file directory
-        /// </summary>
-        /// <param name="gltfPath">The path to the gltf file</param>
-        /// <returns>A path without the filename or extension</returns>
-        protected static string AbsoluteFilePath(string gltfPath)
-        {
-            var fileName = Path.GetFileName(gltfPath);
-            var lastIndex = gltfPath.IndexOf(fileName);
-            var partialPath = gltfPath.Substring(0, lastIndex);
-            return partialPath;
-        }
-
-        protected static MeshTopology GetTopology(DrawMode mode)
-        {
-            switch (mode)
-            {
-                case DrawMode.Points: return MeshTopology.Points;
-                case DrawMode.Lines: return MeshTopology.Lines;
-                case DrawMode.LineStrip: return MeshTopology.LineStrip;
-                case DrawMode.Triangles: return MeshTopology.Triangles;
-            }
-
-            throw new Exception("Unity does not support glTF draw mode: " + mode);
         }
 
         /// <summary>
@@ -761,6 +672,21 @@ namespace BVA
                 _assetManager.Dispose();
                 _assetManager = null;
             }
+        }
+
+        public void Dispose()
+        {
+            SceneParent = null;
+            CreatedObject = null;
+            _gltfStream.Stream?.Dispose();
+            if (_assetCache != null && _assetCache.BufferCache != null)
+            {
+                foreach (var buffer in _assetCache.BufferCache)
+                {
+                    buffer?.Dispose();
+                }
+            }
+            Cleanup();
         }
     }
 }

@@ -8,6 +8,7 @@ using BVA.Cache;
 using GLTF.Schema.BVA;
 using BVA.Extensions;
 using Unity.Collections;
+using UnityEngine.Rendering;
 #if UNITY_EDITOR
 using System.Linq;
 using UnityEditor;
@@ -33,27 +34,44 @@ namespace BVA
             {
                 return cubemap;
             }
-            return await ConstructCubemap(id, ext.texture, ext.mipmap);
+            return await ConstructCubemap(id, ext.textures, ext.mipmap);
         }
 
-        protected async Task<Cubemap> ConstructCubemap(CubemapId cubemapId, TextureId textureId, bool mipmap)
+        protected async Task<Cubemap> ConstructCubemap(CubemapId cubemapId, List<TextureId> textureId, bool mipmap)
         {
             await ConstructUnityCubemap(cubemapId, textureId, mipmap);
             return _assetCache.CubemapCache[cubemapId.Id];
         }
 
-        protected async Task ConstructUnityCubemap(CubemapId cubemapId, TextureId textureId, bool mipmap)
+        protected async Task ConstructUnityCubemap(CubemapId cubemapId, List<TextureId> textureId, bool mipmap)
         {
-            await ConstructImageBuffer(textureId.Value, textureId.Id);
-            await ConstructTexture(textureId.Value, textureId.Id, !_options.KeepCPUCopyOfTexture);
-            Texture2D texture = _assetCache.TextureCache[textureId.Id].Texture as Texture2D;
-            string name = texture.name;
-            Cubemap cubemap = CubemapExtensions.CreateCubemapFromTexture(texture, mipmap);
-            cubemap.name = name;
-            if (Application.isEditor)
-                Object.DestroyImmediate(texture);
+            List<Texture2D> textures = new List<Texture2D>();
+            foreach(var id in textureId)
+            {
+                await ConstructImageBuffer(id.Value, id.Id);
+                await ConstructTexture(id.Value, id.Id, !_options.KeepCPUCopyOfTexture,false,true);
+                Texture2D texture = _assetCache.TextureCache[id.Id].Texture as Texture2D;
+                string name = texture.name;
+                textures.Add(texture);
+            }
+            Cubemap cubemap;
+            if (mipmap && textureId.Count > 1)
+            {
+                cubemap = CubemapExtensions.CreateCubemapFromTextures(textures);
+            }
             else
-                Object.Destroy(texture);
+            {
+
+                cubemap = CubemapExtensions.CreateCubemapFromTexture(textures[0]);
+            }
+            cubemap.name = textures[0].name;
+            foreach(var texture in textures)
+            {
+                if (Application.isEditor)
+                    Object.DestroyImmediate(texture);
+                else
+                    Object.Destroy(texture);
+            }
             _assetCache.CubemapCache[cubemapId.Id] = cubemap;
         }
         protected async Task<Texture2D> GetLightmap(TextureId textureId)
@@ -281,7 +299,7 @@ namespace BVA
             }
         }
 
-        protected async Task ConstructTexture(GLTFTexture texture, int textureIndex, bool markGpuOnly, bool isLinear = false)
+        protected async Task ConstructTexture(GLTFTexture texture, int textureIndex, bool markGpuOnly, bool isLinear = false,bool forceNonMipmap = false)
         {
             if (_assetCache.TextureCache[textureIndex].Texture == null)
             {
@@ -343,7 +361,8 @@ namespace BVA
                     desiredFilterMode = FilterMode.Bilinear;
                     desiredWrapMode = TextureWrapMode.Repeat;
                 }
-
+                if (forceNonMipmap)
+                    mipmap = false;
                 await ConstructImage(image, sourceId, markGpuOnly, isLinear, mipmap, desiredWrapMode, desiredFilterMode);
                 var unityTexture = _assetCache.ImageCache[sourceId];
                 _assetCache.TextureCache[textureIndex].Texture = unityTexture;
@@ -712,7 +731,13 @@ namespace BVA
             }
             return null;
         }
-        private CubemapId ExportCubemap(Cubemap textureObj) { return ExportCubemap(textureObj, CubemapImageType.Row, textureObj.mipmapCount > 0); }
+        private CubemapId ExportCubemap(Cubemap textureObj)
+        {
+            if (textureObj.mipmapCount > 1)
+                return ExportCubemapMipmaps(textureObj, CubemapImageType.Row);
+
+            return ExportCubemap(textureObj, CubemapImageType.Row);
+        }
         /// <summary>
         /// 
         /// </summary>
@@ -721,7 +746,7 @@ namespace BVA
         /// <param name="textureId"></param>
         /// <param name=""></param>
         /// <returns></returns>
-        private CubemapId ExportCubemap(Cubemap textureObj, CubemapImageType cubemapImageType, bool mipmap)
+        private CubemapId ExportCubemap(Cubemap textureObj, CubemapImageType cubemapImageType)
         {
 #pragma warning disable CS0162
 #if UNITY_ANDROID || UNITY_IOS
@@ -776,7 +801,7 @@ namespace BVA
             Texture2D flated = cubemapImageType == CubemapImageType.Row ? textureObj.FlatTexture() : textureObj.FlatTexture(true);
             textureId = ExportTexture(flated, TextureMapType.Main);
 #endif
-            BVA_texture_cubemapExtension ext = new BVA_texture_cubemapExtension(textureId, cubemapImageType, mipmap);
+            BVA_texture_cubemapExtension ext = new BVA_texture_cubemapExtension(new List<TextureId>() { textureId }, cubemapImageType, false);
             _root.AddExtension(_root, BVA_texture_cubemapExtensionFactory.EXTENSION_NAME, null, RequireExtensions);
 
             id = new CubemapId
@@ -788,7 +813,37 @@ namespace BVA
             _root.Extensions.AddCubemap(ext);
             return id;
         }
+        private CubemapId ExportCubemapMipmaps(Cubemap textureObj, CubemapImageType cubemapImageType)
+        {
+#pragma warning disable CS0162
+#if UNITY_ANDROID || UNITY_IOS
+            throw new EditorExportOnlyException("Please switch to Standalone from Build Setting!");
+#endif
+            if (textureObj == null)
+                return null;
+            CubemapId id = GetCubemapId(_root, textureObj);
+            if (id != null)
+                return id;
+            List<TextureId> textureIds = new List<TextureId>();
 
+            for (int i = 0; i < textureObj.mipmapCount; i++)
+            {
+                Texture2D flated = cubemapImageType == CubemapImageType.Row ? textureObj.FlatTexture(false, i) : textureObj.FlatTexture(true, i);
+                textureIds.Add(ExportTexture(flated, TextureMapType.Main));
+            }
+
+            BVA_texture_cubemapExtension ext = new BVA_texture_cubemapExtension(textureIds, cubemapImageType, true);
+            _root.AddExtension(_root, BVA_texture_cubemapExtensionFactory.EXTENSION_NAME, null, RequireExtensions);
+
+            id = new CubemapId
+            {
+                Id = _root.Extensions.Cubemaps.Count,
+                Root = _root
+            };
+            _cubemaps.Add(textureObj);
+            _root.Extensions.AddCubemap(ext);
+            return id;
+        }
         private TextureId ExportTexture(Texture textureObj, TextureMapType textureMapType)
         {
             TextureId id = GetTextureId(_root, textureObj);

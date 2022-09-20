@@ -31,8 +31,12 @@ namespace BVA
 
             _sceneType = SceneType.Avatar;
             _assetCache = new AssetCache(_gltfRoot);
-            _assetCache.BufferCache[0] = ConstructBufferFromGLB(0);
-
+            _assetCache.BufferCache[0] =
+#if UNITY_EDITOR
+                ConstructMemoryBufferFromGLB(0);
+#else
+                ConstructBufferFromGLB(0);
+#endif
             Thread loadMesh = new Thread(PreloadMeshPrimitives);
             loadMesh.Start();
             await PreloadTextures();

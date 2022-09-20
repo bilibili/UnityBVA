@@ -82,6 +82,7 @@ namespace BVA
 
         private static void LogConfigurationWarnings()
         {
+            if (EditorApplication.isPlaying || EditorApplication.isCompiling) return;
             logConfigurationWarnings = new List<string>();
             logConfigurationWarnings.AddRange(UnityTools.ValidateRenderPipelineSettings());
             logConfigurationWarnings.AddRange(UnityTools.ValidateColorSpaceSettings());
@@ -162,7 +163,7 @@ namespace BVA
                     }
                     else
                     {
-                        EditorGUILayout.HelpBox(validator.HeaderDescription, MessageType.Warning); 
+                        EditorGUILayout.HelpBox(validator.HeaderDescription, MessageType.Warning);
                     }
                 }
 

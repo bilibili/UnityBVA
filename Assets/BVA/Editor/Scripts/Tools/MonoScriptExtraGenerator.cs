@@ -13,7 +13,7 @@ namespace BVA
     public partial class MonoScriptExtraGenerator : EditorWindow
     {
 
-        [MenuItem("BVA/Developer Tools/Generate Component Extra")]
+        [MenuItem("BVA/Developer Tools/Code-Gen/Component")]
         static void Init()
         {
             MonoScriptExtraGenerator window = (MonoScriptExtraGenerator)EditorWindow.GetWindow(typeof(MonoScriptExtraGenerator), false, "Export Component as Extra");
@@ -135,7 +135,7 @@ namespace BVA
             bool hasSprite = monoFields.Any(monoField => monoField.IsSprite);
             bool hasCubemap = monoFields.Any(monoField => monoField.IsCubemap);
             bool isTaskMethod = hasMaterial || hasTexture || hasCubemap;
-            string[] namespaceField = new string[] { "Newtonsoft.Json.Linq", "GLTF.Math", "GLTF.Schema", "Newtonsoft.Json", "GLTF.Extensions", "BVA.Extensions", "BVA.Component", "System.Threading.Tasks", "UnityEngine", "Color = UnityEngine.Color", "Vector4 = UnityEngine.Vector4" };
+            string[] namespaceField = new string[] { "Newtonsoft.Json.Linq", "Newtonsoft.Json", "GLTF.Extensions", "BVA.Extensions", "BVA.Component", "System.Threading.Tasks", "UnityEngine", "Color = UnityEngine.Color", "Vector4 = UnityEngine.Vector4" };
             const string namespaceHeader = "namespace GLTF.Schema.BVA";
             const string startScope = "{", endScope = "}";
             string className = Path.GetFileNameWithoutExtension(exportPath);

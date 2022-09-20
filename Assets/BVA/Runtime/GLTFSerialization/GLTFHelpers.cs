@@ -401,14 +401,6 @@ namespace GLTF
             MergeScenes(mergeToRoot, mergeFromRootCopy, previousGLTFSize);
         }
 
-#if UNITY_WEBGL
-        private static byte[] _streamBuffer;
-
-        public static void ClearStreamBuffer()
-        {
-            _streamBuffer = null;
-        }
-#endif
         public static uint LoadBufferView(AttributeAccessor attributeAccessor, out byte[] bufferViewCache)
         {
             lock (attributeAccessor.Stream)
@@ -428,13 +420,9 @@ namespace GLTF
 #else
 #if UNITY_WEBGL
                     if (_streamBuffer == null)
-                    {
                         bufferViewCache = _streamBuffer = memoryStream.ToArray();
-                    }
                     else
-                    {
                         bufferViewCache = _streamBuffer;
-                    }
 #else
                     bufferViewCache = memoryStream.GetBuffer();
 #endif

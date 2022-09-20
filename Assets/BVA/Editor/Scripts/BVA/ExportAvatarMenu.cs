@@ -1,9 +1,13 @@
 using System.Collections.Generic;
 using UnityEditor;
-using BVA;
 using UnityEngine;
 using BVA.Component;
 using System.Linq;
+using System.IO;
+
+#if ENABLE_CRYPTO
+using BVA.FileEncryptor;
+#endif
 
 namespace BVA
 {
@@ -107,7 +111,20 @@ namespace BVA
             }
             #endregion
 
-
+            #region Root Transform Check
+            if (Root.transform.localRotation != Quaternion.identity || Root.transform.localPosition != Vector3.zero || Root.transform.localScale != Vector3.one)
+            {
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.HelpBox(ExportCommon.Localization("需要重置根节点", "Please reset the root transform!"), MessageType.Error);
+                if (GUILayout.Button(TextFixIt))
+                {
+                    Root.transform.localRotation = Quaternion.identity;
+                    Root.transform.localPosition = Vector3.zero;
+                    Root.transform.localScale = Vector3.one;
+                }
+                EditorGUILayout.EndHorizontal();
+            }
+            #endregion
             #region MetaInfo Check
             bool isValid = true;
             var meta = Root.GetComponent<BVAMetaInfo>();
@@ -185,6 +202,9 @@ namespace BVA
             EditorGUILayout.EndToggleGroup();
             ////////////////////////////////////////////////////////////////////////////////
             EditorGUILayout.Separator();
+#if ENABLE_CRYPTO
+            bool encrypto = EditorConfidential.GUIPassword(out string password);
+#endif
             if (GUILayout.Button(ExportCommon.Localization("导出", "Export")))
             {
                 var exportOptions = new ExportOptions { TexturePathRetriever = AssetDatabase.GetAssetPath, ExportAvatar = true };
@@ -194,13 +214,17 @@ namespace BVA
                 if (!string.IsNullOrEmpty(path))
                 {
                     EditorPrefs.SetString("avatar_export_path", path);
+#if ENABLE_CRYPTO
+                    if (encrypto)
+                        exporter.SaveBVACompressed(Path.Combine(path, Root.name) + $".{BVAConst.EXTENSION_BVA}", Root.name, password);
+                    else
+                        exporter.SaveGLB(path, Root.name);
+#else
                     exporter.SaveGLB(path, Root.name);
+#endif
                     EditorUtility.DisplayDialog(ExportCommon.Localization("导出成功", "export success"), ExportCommon.Localization($"花费{exporter.ExportDuration.TotalSeconds}秒完成导出", $"spend {exporter.ExportDuration.TotalSeconds}s finish export!"), "OK");
                 }
             }
-
-
-
         }
         void OnGUI()
         {

@@ -105,14 +105,14 @@ namespace ADBRuntime.Mono
         {
             if (updateMode==UpdateMode.Update)
             {
-                Run(Time.deltaTime* timeScale);
+                Run(Time.smoothDeltaTime* timeScale);
             }
         }
         private void FixedUpdate()
         {
             if (updateMode == UpdateMode.FixedUpdate)
             {
-                Run(Time.fixedDeltaTime* timeScale);
+                Run(1/60f* timeScale);
             }
 
         }
@@ -121,7 +121,7 @@ namespace ADBRuntime.Mono
         {
             if (updateMode == UpdateMode.LateUpdate)
             {
-                Run(Time.unscaledDeltaTime* timeScale);
+                Run(Time.smoothDeltaTime * timeScale);
             }
         }
         private void OnDisable()
@@ -153,8 +153,16 @@ namespace ADBRuntime.Mono
                 startVelocityDamp = 0;
                 return;
             }
-            //deltaTime =Mathf.Min(0.02f, Mathf.Lerp(deltaTime, inputDeltaTime, 1 / (bufferTime * 60)));
-            deltaTime = inputDeltaTime;
+            if (deltaTime==0)
+            {
+                deltaTime = inputDeltaTime;
+            }
+            else
+            {
+                deltaTime = Mathf.Min(0.02f, Mathf.Lerp(deltaTime, inputDeltaTime, 1 / (bufferTime * 60)));
+            }
+            
+            
             startVelocityDamp =math.saturate (startVelocityDamp+ inputDeltaTime / bufferTime);
 
 

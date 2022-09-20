@@ -145,7 +145,7 @@ namespace BVA
             var (shaderName, reader) = GetExtraProperty(def.Extras[0]);
 
             // Currently, we don't preprocess NormalMap as it won't affect the actual render.
-            Material matCache = await MaterialImporter.ImportMaterial(shaderName, def, _gltfRoot, reader, loadTexture, loadTexture, LoadCubemap);
+            Material matCache = await MaterialImporter.ImportMaterial(_shaderLoader, shaderName, def, _gltfRoot, reader, loadTexture, loadTexture, LoadCubemap);
             if (matCache == null) return;
             MaterialCacheData materialWrapper = new MaterialCacheData
             {
@@ -175,11 +175,11 @@ namespace BVA
             if (_gltfRoot.ExtensionsUsed != null && _gltfRoot.ExtensionsUsed.Contains(specGlossExtName)
             && def.Extensions != null && def.Extensions.ContainsKey(specGlossExtName))
             {
-                mapper = new UrpSpecGlossMap(isClearcoat, MaximumLod);
+                mapper = new UrpSpecGlossMap(isClearcoat);
             }
             else
             {
-                mapper = new UrpMetalRoughMap(isClearcoat, MaximumLod);
+                mapper = new UrpMetalRoughMap(isClearcoat);
             }
 
             mapper.Material.name = def.Name;
@@ -632,6 +632,10 @@ namespace BVA
                     {
                         pbr.BaseColorTexture = ExportTextureInfo(mainTex, TextureMapType.Main);
                         ExportTextureTransform(pbr.BaseColorTexture, material, baseMapProperty);
+                    }
+                    else if (mainTex is RenderTexture)
+                    {
+                        LogPool.ExportLogger.Log(LogPart.Material, "RenderTexture doesn't need to export");
                     }
                     else
                     {

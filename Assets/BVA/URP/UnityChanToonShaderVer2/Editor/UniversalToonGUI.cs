@@ -6,8 +6,8 @@ namespace UnityEditor.Rendering.Universal.Toon.ShaderGUI
     public class UniversalToonGUI : UnityEditor.ShaderGUI
     {
         protected const float kVersionX = 2.0f;
-        protected const float kVersionY = 3.0f;
-        protected const float kVersionZ = 0.0f;
+        protected const float kVersionY = 5.0f;
+        protected const float kVersionZ = 1.0f;
 
         const string ShaderDefineSHADINGGRADEMAP = "_SHADINGGRADEMAP";
         const string ShaderDefineANGELRING_ON = "_IS_ANGELRING_ON";
@@ -561,6 +561,8 @@ namespace UnityEditor.Rendering.Universal.Toon.ShaderGUI
             Material material = materialEditor.target as Material;
 
             UpdateVersionInMaterial(material);
+
+            _autoRenderQueue = (int)material.GetInt(ShaderPropAutoRenderQueue);
             _Transparent_Setting = (_UTS_Transparent)material.GetInt(ShaderPropTransparentEnabled);
             _StencilNo_Setting = material.GetInt(ShaderPropStencilNo);
 
@@ -811,13 +813,12 @@ namespace UnityEditor.Rendering.Universal.Toon.ShaderGUI
 
                 EditorGUILayout.Space();
             }
-
             ApplyClippingMode(material);
             ApplyStencilMode(material);
             ApplyAngelRing(material);
+
             ApplyMatCapMode(material);
             ApplyQueueAndRenderType(technique, material);
-
             if (EditorGUI.EndChangeCheck())
             {
                 m_MaterialEditor.PropertiesChanged();

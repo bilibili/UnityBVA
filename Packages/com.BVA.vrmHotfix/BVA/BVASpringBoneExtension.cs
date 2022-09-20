@@ -77,6 +77,7 @@ public static class BVASpringBoneExtension
                 setting.isComputeStructuralVertical = false;
                 setting.structuralShrinkHorizontal = 0.5f;
                 setting.structuralStretchHorizontal = 1.5f;
+                setting.frictionValue = 1f;
                 setting.isComputeVirtual = false;
 
             }
