@@ -11,7 +11,8 @@
         "AutomaticDnamicBone.Editor",
         "AutomaticDynamicBone.Runtime",
         "VorbisPluginImpl",
-        "BVARuntime"
+        "BVARuntime",
+        "BVA.crypto"
     ],
     "includePlatforms": [
         "Editor"
@@ -22,6 +23,12 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": [],
+    "versionDefines": [
+        {
+            "name": "com.bilibili.crypto",
+            "expression": "[1,2]",
+            "define": "ENABLE_CRYPTO"
+        }
+    ],
     "noEngineReferences": false
 }

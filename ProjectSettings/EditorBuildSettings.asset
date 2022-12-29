@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Samples/WebLoad.unity
-    guid: f707c5c52f8c4da40bfe2885a61b223c
+    path: Assets/Samples/FileViewer.unity
+    guid: a190949429a65024dae6a549faf2ed9a
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 7e06b7ed59532fe4cafadb92157b9a6f, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 4c9068c9e131b4b4d911bcde295379c2, type: 2}

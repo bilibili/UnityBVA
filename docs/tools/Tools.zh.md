@@ -1,5 +1,11 @@
 # 工具
 
+## AssetBundle 打包工具
+
+将Shader打包成AssetBundle
+
+> #shader_feature关键字的变体并不会被打进AssetBundle，请合理使用#multi-compile,防止变体数过多
+
 ## Material Code-Gen（材质生成工具）
 
 允许开发者使用他们自己的着色器。

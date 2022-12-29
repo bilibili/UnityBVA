@@ -26,6 +26,7 @@ namespace GLTF.Schema.BVA
                 case nameof(ADBChainProcessor):
                     typeName = nameof(ADBChainProcessorMeta);
                     var chainProcessor = ADBPhysicer as ADBChainProcessor;
+                    chainProcessor.Initialize();
                     chainProcessorMeta = new ADBChainProcessorMeta(chainProcessor, nodeCache);
                     break;
                 case nameof(ADBColliderReader):

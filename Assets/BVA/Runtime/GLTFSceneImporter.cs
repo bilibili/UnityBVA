@@ -45,11 +45,6 @@ namespace BVA
         public bool KeepCPUCopyOfTexture = false;
 
         /// <summary>
-        /// Specifies whether the MipMap chain should be generated for model textures
-        /// </summary>
-        public bool GenerateMipMapsForTextures = true;
-
-        /// <summary>
         /// Specifies whether Environment Reflection should be enabled for materials 
         /// </summary>
         public bool EnableEnvironmentReflection = false;

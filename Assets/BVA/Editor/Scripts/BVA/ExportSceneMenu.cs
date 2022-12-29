@@ -94,7 +94,6 @@ namespace BVA
 
             GUILayout.Space(10);
             exportType = (ExportFileType)EditorGUILayout.EnumPopup(ExportCommon.Localization("导出格式", "Export Format"), exportType);
-
 #if ENABLE_CRYPTO
             encrypto = EditorConfidential.GUIPassword(out password);
 #endif

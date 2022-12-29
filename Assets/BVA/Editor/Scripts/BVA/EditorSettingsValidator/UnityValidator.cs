@@ -282,14 +282,6 @@ namespace BVA
         }
         string GetHeaderDescription()
         {
-            if (
-                PlayerSettings.GetManagedStrippingLevel(BuildTargetGroup.Standalone) != ManagedStrippingLevel.Disabled ||
-                 PlayerSettings.GetManagedStrippingLevel(BuildTargetGroup.Android) != ManagedStrippingLevel.Disabled ||
-                  PlayerSettings.GetManagedStrippingLevel(BuildTargetGroup.iOS) != ManagedStrippingLevel.Disabled
-            )
-            {
-                return ExportCommon.Localization("Managed Stripping Level 没有关闭", "Managed Stripping Level is not Disabled");
-            }
             if (PlayerSettings.assemblyVersionValidation)
             {
                 return ExportCommon.Localization("Assembly Version Validation 应该不勾选", "Assembly Version Validation should be false");

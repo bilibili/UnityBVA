@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace ADBRuntime.Mono
 {
@@ -40,6 +41,26 @@ namespace ADBRuntime.Mono
         private int maxPointDepth;
         private float maxChainLength;
 
+        private void OnDisable()
+        {
+            Refresh();
+        }
+        void OnEnable()
+        {
+            Refresh();
+        }
+        void Refresh()
+        {
+            for (int i = 0; i < allPointList.Count; i++)
+            {
+                if (allPointList[i]==null)
+                {
+                    allPointList.RemoveAt(i);
+                    i--;
+                }
+            }
+            allPointTransforms = allPointList.Select(x => x.transform).ToArray();
+        }
         public static ADBChainProcessor CreateADBChainProcessor(Transform rootTransform, string keyWord, ADBPhysicsSetting setting) 
         {
             ADBChainProcessor chainProcessor = rootTransform.gameObject.AddComponent<ADBChainProcessor>();
@@ -80,11 +101,7 @@ namespace ADBRuntime.Mono
         }
         public void Initialize()
         {
-            if (isInitialize)
-            {
-                Clear();
-            }
-
+            Clear();
             SerializeAndSearchAllPoints(this, ref allPointList, out maxPointDepth);
             CreatePointStruct1(allPointList);
             SortFixedPoint();

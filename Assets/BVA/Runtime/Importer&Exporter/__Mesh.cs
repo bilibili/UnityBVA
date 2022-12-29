@@ -97,23 +97,15 @@ namespace BVA
                 {
                     int jointId = -1;
                     int weightId = -1;
-                    int id = 0;
-                    foreach (var v in Attributes)
+                    if (Attributes.ContainsKey(SemanticProperties.JOINTS_0))
                     {
-                        if (v.Key == SemanticProperties.COLOR_0 || v.Key == SemanticProperties.TEXCOORD_0)
-                            continue;
-                        else if (v.Key == SemanticProperties.JOINTS_0)
-                            jointId = id;
-                        else if (v.Key == SemanticProperties.WEIGHTS_0)
-                            weightId = id;
-
-                        id++;
-
+                        jointId = Attributes.Count - 3;
+                        weightId = Attributes.Count - 2;
                     }
                     return (jointId, weightId);
                 }
                 var (weightId, jointId) = GetBoneWeightAttributeId(firstPrim.Attributes);*/
-                Mesh unityMesh = await meshLoader.ConvertDracoMeshToUnity(dracoData/*, false, false, weightId, jointId, true*/);
+                Mesh unityMesh = await meshLoader.ConvertDracoMeshToUnity(dracoData/*, false, false, weightId, jointId, false*/);
                 unityMesh.name = mesh.Name;
 
                 _assetCache.MeshCache[meshIndex].LoadedMesh = unityMesh;
@@ -232,7 +224,7 @@ namespace BVA
                         Indices = new int[mesh.Primitives.Count][],
                         FirstPrimContainsAllVertex = firstPrimContainsAll
                     };
-                    
+
                     if (_sceneType != SceneType.Avatar)
                     {
                         unityData.Uv2 = firstPrim.Attributes.ContainsKey(SemanticProperties.TEXCOORD_1) ? new Vector2[firstPrimVertexCount] : null;

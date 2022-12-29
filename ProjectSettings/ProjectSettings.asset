@@ -789,7 +789,7 @@ PlayerSettings:
     PS4: UNITY_POST_PROCESSING_STACK_V2
     PS5: UNITY_POST_PROCESSING_STACK_V2
     Stadia: UNITY_POST_PROCESSING_STACK_V2
-    Standalone: CROSS_PLATFORM_INPUT
+    Standalone: CROSS_PLATFORM_INPUT;ENABLE_CRYPTO
     WebGL: 
     Windows Store Apps: MOBILE_INPUT;UNITY_POST_PROCESSING_STACK_V2
     XboxOne: UNITY_POST_PROCESSING_STACK_V2
@@ -800,12 +800,12 @@ PlayerSettings:
   scriptingBackend:
     Android: 1
     Server: 0
-    Standalone: 1
+    Standalone: 0
   il2cppCompilerConfiguration:
     Standalone: 1
   managedStrippingLevel:
     Android: 3
-    Standalone: 3
+    Standalone: 0
     iPhone: 0
   incrementalIl2cppBuild: {}
   suppressCommonWarnings: 1

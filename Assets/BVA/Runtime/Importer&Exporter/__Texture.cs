@@ -235,7 +235,7 @@ namespace BVA
             }
             //Texture2D texture = isLinear ? new Texture2D(0, 0, UnityEngine.Experimental.Rendering.DefaultFormat.LDR, UnityEngine.Experimental.Rendering.TextureCreationFlags.None) :
             //new Texture2D(0, 0, UnityEngine.Experimental.Rendering.DefaultFormat.LDR, UnityEngine.Experimental.Rendering.TextureCreationFlags.None);
-            Texture2D texture = new Texture2D(0, 0, TextureFormat.ARGB32, mipmap && _options.GenerateMipMapsForTextures, isLinear);
+            Texture2D texture = new Texture2D(0, 0, TextureFormat.ARGB32, mipmap , isLinear);
             texture.name = image.Name ?? "No name";
             texture.filterMode = filterMode;
             texture.wrapMode = wrapMode;

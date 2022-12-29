@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.SceneManagement;
 using UnityEditor.SceneManagement;
+using BVA.Extensions;
 
 namespace BVA
 {
@@ -29,34 +30,37 @@ namespace BVA
         }
         public static string Localization(string zh, string en) => EditorLanguage == EditorLanguage.Zh ? zh : en;
 
-        public static void ShowLanguageSwitchButton(float positionLerp=0.8f,float width=60)
+        public static void ShowLanguageSwitchButton(float positionLerp = 0.8f, float width = 60)
         {
             EditorGUILayout.Space(10);
             EditorGUILayout.BeginHorizontal();
-           Rect rect= EditorGUILayout.GetControlRect();
-            Rect resultRect =new Rect(
+            Rect rect = EditorGUILayout.GetControlRect();
+            Rect resultRect = new Rect(
                 Mathf.Lerp(rect.xMin, rect.xMax, positionLerp),
                 rect.yMin,
                 width,
                 rect.height
                 );
 
-            EditorLanguage = (EditorLanguage)GUI.Toolbar(resultRect, (int)EditorLanguage,new string[] {"CN", "EN"});
+            EditorLanguage = (EditorLanguage)GUI.Toolbar(resultRect, (int)EditorLanguage, new string[] { "CN", "EN" });
             EditorGUILayout.EndHorizontal();
         }
 
         public static void FixMissingMetaInfo(GameObject Root)
         {
-            var metaComp = Root.AddComponent<BVAMetaInfo>();
-            var meta = ScriptableObject.CreateInstance<BVAMetaInfoScriptableObject>();
-            var savePath = $"{ASSET_DIR}{Root.name}_MetaInfo.asset";
-            AssetDatabase.CreateAsset(meta, savePath);
-            metaComp.metaInfo = AssetDatabase.LoadAssetAtPath<BVAMetaInfoScriptableObject>(savePath);
+            var metaComp = Root.GetOrAddComponent<BVAMetaInfo>();
+            if (metaComp.metaInfo == null)
+            {
+                var meta = ScriptableObject.CreateInstance<BVAMetaInfoScriptableObject>();
+                var savePath = $"{ASSET_DIR}{Root.name}_MetaInfo.asset";
+                AssetDatabase.CreateAsset(meta, savePath);
+                metaComp.metaInfo = AssetDatabase.LoadAssetAtPath<BVAMetaInfoScriptableObject>(savePath);
+            }
         }
 
         public static void FixMissingBlendshapeMixer(GameObject Root)
         {
-            var metaComp = Root.AddComponent<BlendShapeMixer>();
+            var blendShape = Root.GetOrAddComponent<BlendShapeMixer>();
             Selection.activeGameObject = Root;
         }
 
@@ -113,7 +117,7 @@ namespace BVA
                 }
             }
         }
-       
+
         public static List<Material> CheckModelShaderIsVaild(List<SceneAsset> sceneAssets)
         {
             var scenes = sceneAssets.Select(x => EditorSceneManager.GetSceneByPath(AssetDatabase.GetAssetPath(x))).ToArray();
@@ -122,15 +126,15 @@ namespace BVA
         public static List<Material> CheckModelShaderIsVaild(params Scene[] scenes)
         {
             List<Material> result = new List<Material>();
-            if (scenes==null|| scenes.Length==0)
+            if (scenes == null || scenes.Length == 0)
             {
                 return result;
             }
 
-            for (int i = 0; i < scenes.Length ; i++)
+            for (int i = 0; i < scenes.Length; i++)
             {
                 var scene = scenes[i];
-                if (!scene.IsValid()||scene.rootCount==0)
+                if (!scene.IsValid() || scene.rootCount == 0)
                 {
                     continue;
                 }
@@ -148,10 +152,10 @@ namespace BVA
         public static List<Material> CheckModelShaderIsVaild(GameObject model)
         {
             List<Material> errorList = new List<Material>();
-            if (model==null)
+            if (model == null)
             {
                 return errorList;
-             }
+            }
             Renderer[] allRenderer = model.GetComponentsInChildren<Renderer>();
             bool isShow_EnvironmentReflectionsOnce = false;
             foreach (var renderer in allRenderer)
@@ -208,7 +212,7 @@ namespace BVA
                             material.SetFloat("_EnvironmentReflections", 0);
                         }
                     }
-                    
+
                 }
                 EditorGUILayout.EndHorizontal();
             }

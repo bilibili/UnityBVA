@@ -11,7 +11,11 @@ public interface IShaderLoader
 
 ## BuildinShaderLoader
 
-It's just a wrapping method, call `Shader.Find` method.
+It's just a wrapping method, call `Shader.Find` method. If passing null into `GLTFSceneImporter` construction, `BuildinShaderLoader` will be used.
+
+```csharp
+public GLTFSceneImporter(string gltfFileName, ImportOptions options, IShaderLoader shaderLoader = null)
+```
 
 ## AssetBundleShaderLoader
 

@@ -29,6 +29,7 @@ namespace BVA
             EditorApplication.projectChanged += ResetNullableBoolState;
             CompilationPipeline.compilationStarted += CompilationPipeline_compilationStarted;
         }
+
         static ProjectConfigurationWindow()
         {
             // Detect when we enter player mode so we can try checking for optimal configuration
@@ -36,22 +37,20 @@ namespace BVA
 
             // Subscribe to editor application update which will call us once the editor is initialized and running
             EditorApplication.update += OnInit;
-
-
-
         }
 
         private static void OnInit()
         {
             // We only want to execute once to initialize, unsubscribe from update event
             EditorApplication.update -= OnInit;
-
             ShowWindow();
         }
+
         private void CompilationPipeline_compilationStarted(object obj)
         {
             ResetNullableBoolState();
         }
+
         private void ResetNullableBoolState()
         {
         }
@@ -88,7 +87,6 @@ namespace BVA
             logConfigurationWarnings.AddRange(UnityTools.ValidateColorSpaceSettings());
             logConfigurationWarnings.AddRange(UnityTools.ValidateLightmapSettings());
             logConfigurationWarnings.AddRange(UnityTools.ValidatePlayerSettings());
-            //UnityTools.ValidateReflectionProbeSettings();
         }
 
         public void OnActiveBuildTargetChanged(BuildTarget previousTarget, BuildTarget newTarget)
@@ -107,6 +105,7 @@ namespace BVA
                 }
             }
         }
+
         private void OnGUI()
         {
             ExportCommon.ShowLanguageSwitchButton(); ;

@@ -71,12 +71,6 @@ public class MiscEditorTools
         Debug.Log("set T-Pose success!");
     }
 
-    [MenuItem("BVA/Manual", priority = 99)]
-    public static void OpenManual()
-    {
-        Application.OpenURL("https://github.com/bilibili/UnityBVA");
-    }
-
     [MenuItem("BVA/Developer Tools/Set Material GlobalIllumination-Baked(Static GameObject Only)", priority = 100)]
     public static void SetMaterialGlobalIllumination()
     {

@@ -28,7 +28,6 @@ namespace BVA
     {
         [SerializeField] private bool _removeEmptyRootObjects = true;
         [SerializeField] private float _scaleFactor = 1.0f;
-        [SerializeField] private int _maximumLod = 300;
         [SerializeField] private bool _readWriteEnabled = true;
         [SerializeField] private bool _swapUvs = false;
         [SerializeField] private GLTFImporterNormals _importNormals = GLTFImporterNormals.Import;

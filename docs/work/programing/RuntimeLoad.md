@@ -2,7 +2,7 @@
 
 `RuntimeLoad` scene show you how to load avatar assets.
 
-## GLB file
+## Simplest Method
 
 ### Common Method (Auto detect whether the model is for Avatar or Scene)
 
@@ -22,20 +22,50 @@ await BVASceneManager.Instance.LoadAvatar(path);
 await BVASceneManager.Instance.LoadSceneAsync(path);
 ```
 
-## PMX (MMD model)
+### Using Shader Loader
+
+Before execute load method, set Shader Loader firstly.
 
 ```csharp
-Transform alicia = await PMXModelLoader.LoadPMXModel(path, SampleAnimatorController);
+var shaderLoader = new AssetBundleShaderLoader(Application.platform);
+shaderLoader.LoadFiles(shaderAssetBundleLocation);
+BVASceneManager.Instance.SetShaderLoader(shaderLoader);
 ```
 
-## VRM (VRoid model)
+## General Method
 
 ```csharp
-var data = new GlbFileParser(path).Parse();
-var vrm = new VRMData(data);
-var context = new VRMImporterContext(vrm);
-var loaded = context.Load();
+if (string.IsNullOrEmpty(path)) return;
+var importOptions = new ImportOptions
+{
+    RuntimeImport = true,
+};
+
+string directoryPath = URIHelper.GetDirectoryName(path);
+importOptions.DataLoader = new CryptoZipFileLoader(directoryPath);
+
+var Factory = ScriptableObject.CreateInstance<DefaultImporterFactory>();
+var sceneImporter = Factory.CreateSceneImporter(path, importOptions);
+await sceneImporter.LoadAsync();
 ```
+
+## Using Shader Loader
+pass `IShaderLoader` to `GLTFSceneImporter` construction method.
+
+```csharp
+public GLTFSceneImporter(string gltfFileName, ImportOptions options, IShaderLoader shaderLoader = null)
+```
+
+By default, BVA privide 2 Shader Loader:
+- BuildinShaderLoader
+- AssetBundleShaderLoader
+
+
+```csharp
+var shaderLoader = new AssetBundleShaderLoader(Application.platform);
+shaderLoader.LoadFiles(shaderAssetBundleLocation);
+```
+For more information, check [Shader Loader](ShaderLoader.md)
 
 ## Editor Entry
 

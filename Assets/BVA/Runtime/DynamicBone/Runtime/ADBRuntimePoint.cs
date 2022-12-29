@@ -12,7 +12,7 @@ namespace ADBRuntime.Mono
     {
         public MonoBehaviour Target => this;
         public ADBRuntimePoint Parent { get { return parent; }set { parent = value; } }
-        public List<ADBRuntimePoint> ChildPoints { get { return childPoints; } }
+        public List<ADBRuntimePoint> ChildPoints { get { Refresh(); return childPoints; } }
         public bool isFixed { get { return depth == 0; } }
 
         public bool isRoot { get { return depth == -1; } }
@@ -36,6 +36,18 @@ namespace ADBRuntime.Mono
         public float pointDepthRateMaxPointDepth;
         internal float centerPointDirectionRotates;
 
+
+        public void Refresh()
+        {
+            for (int i = 0; i < childPoints?.Count; i++)
+            {
+                if (childPoints[i]==null)
+                {
+                    childPoints.RemoveAt(i);
+                    i--;
+                }
+            }
+        }
         /// <summary>
         /// Create a phyiscs bone by Transform
         /// </summary>
